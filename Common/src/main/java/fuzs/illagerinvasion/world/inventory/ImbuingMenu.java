@@ -1,16 +1,14 @@
 package fuzs.illagerinvasion.world.inventory;
 
 import fuzs.illagerinvasion.init.ModRegistry;
-import me.sandbox.item.ItemRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.ResultContainer;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -19,10 +17,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import java.util.Map;
 
 public class ImbuingMenu extends AbstractContainerMenu {
-    public static boolean bigBook;
-    public static boolean badEnchant;
-    public static boolean lowEnchant;
-    public static boolean badItem;
     private final Container input = new SimpleContainer(3) {
 
         @Override
@@ -33,6 +27,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
     };
     private final ResultContainer output = new ResultContainer();
     private final ContainerLevelAccess access;
+    public final DataSlot invalidState;
 
     public ImbuingMenu(int containerId, Inventory inventory) {
         this(containerId, inventory, ContainerLevelAccess.NULL);
@@ -41,6 +36,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
     public ImbuingMenu(int containerId, Inventory inventory, final ContainerLevelAccess access) {
         super(ModRegistry.IMBUING_MENU_TYPE.get(), containerId);
         this.access = access;
+        this.invalidState = this.addDataSlot(DataSlot.standalone());
         this.addSlot(new Slot(this.input, 0, 26, 54) {
 
             @Override
@@ -50,26 +46,26 @@ public class ImbuingMenu extends AbstractContainerMenu {
 
             @Override
             public void onTake(Player playerEntity, ItemStack itemStack) {
-                ImbuingMenu.this.updateBooleans(false);
+                ImbuingMenu.this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
             }
         });
         this.addSlot(new Slot(this.input, 1, 80, 54) {
 
             @Override
             public void onTake(Player playerEntity, ItemStack itemStack) {
-                ImbuingMenu.this.updateBooleans(false);
+                ImbuingMenu.this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
             }
         });
         this.addSlot(new Slot(this.input, 2, 134, 54) {
 
             @Override
             public void onTake(Player playerEntity, ItemStack itemStack) {
-                ImbuingMenu.this.updateBooleans(false);
+                ImbuingMenu.this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
             }
 
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(ItemRegistry.HALLOWED_GEM);
+                return stack.is(ModRegistry.HALLOWED_GEM_ITEM.get());
             }
         });
         this.addSlot(new Slot(this.output, 3, 80, 14) {
@@ -89,8 +85,8 @@ public class ImbuingMenu extends AbstractContainerMenu {
                 ImbuingMenu.this.input.setItem(0, ItemStack.EMPTY);
                 ImbuingMenu.this.input.setItem(1, ItemStack.EMPTY);
                 ImbuingMenu.this.input.getItem(2).grow(-1);
-                ImbuingMenu.this.updateBooleans(false);
-                playerEntity.playSound(ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT, 1.0f, 1.0f);
+                ImbuingMenu.this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
+                playerEntity.playSound(ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT.get(), 1.0f, 1.0f);
             }
         });
         for (int i = 0; i < 3; ++i) {
@@ -113,53 +109,43 @@ public class ImbuingMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return true;
-    }
-
-    protected boolean isUsableAsAddition(ItemStack stack) {
-        return false;
-    }
-
-    public void updateBooleans(boolean value) {
-        bigBook = value;
-        badEnchant = value;
-        lowEnchant = value;
-        badItem = value;
+        return stillValid(this.access, player, ModRegistry.IMBUING_TABLE_BLOCK.get());
     }
 
     public void updateResult() {
         ItemStack imbuingItem = this.input.getItem(1);
-        ItemStack book = this.input.getItem(0);
+        ItemStack bookStack = this.input.getItem(0);
         ItemStack gem = this.input.getItem(2);
         ItemStack imbuingResult = imbuingItem.copy();
-        Map<Enchantment, Integer> bookmap = EnchantmentHelper.getEnchantments(book);
-        if (!book.isEmpty() && !gem.isEmpty() && !imbuingItem.isEmpty()) {
-            for (Enchantment bookEnchantment : bookmap.keySet()) {
-                if (bookmap.size() > 1) {
-                    bigBook = true;
-                } else if (!BuiltInRegistries.ENCHANTMENT.wrapAsHolder(bookEnchantment).is(ModRegistry.IMBUING_ENCHANTMENT_TAG)) {
-                    badEnchant = true;
-                } else if (bookmap.getOrDefault(bookEnchantment, 0) != bookEnchantment.getMaxLevel()) {
-                    lowEnchant = true;
-                } else if (!bookEnchantment.canEnchant(imbuingItem)) {
-                    badItem = true;
+        if (!bookStack.isEmpty() && !gem.isEmpty() && !imbuingItem.isEmpty()) {
+            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(bookStack);
+            if (enchantments.size() != 1) {
+                this.invalidState.set(InvalidImbuingState.TOO_MANY_ENCHANTMENTS.ordinal());
+            } else {
+                Enchantment enchantment = enchantments.keySet().iterator().next();
+                if (!BuiltInRegistries.ENCHANTMENT.wrapAsHolder(enchantment).is(ModRegistry.IMBUING_ENCHANTMENT_TAG)) {
+                    this.invalidState.set(InvalidImbuingState.INVALID_ENCHANTMENT.ordinal());
+                } else if (enchantments.getOrDefault(enchantment, 0) != enchantment.getMaxLevel()) {
+                    this.invalidState.set(InvalidImbuingState.NOT_AT_MAX_LEVEL.ordinal());
+                } else if (!enchantment.canEnchant(imbuingItem)) {
+                    this.invalidState.set(InvalidImbuingState.INVALID_ITEM.ordinal());
                 } else {
-                    int imbueLevel = bookmap.get(bookEnchantment) + 1;
+                    this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
+                    int imbueLevel = enchantments.get(enchantment) + 1;
                     Map<Enchantment, Integer> imbueMap = EnchantmentHelper.getEnchantments(imbuingItem);
                     for (Enchantment imbueEnchant : imbueMap.keySet()) {
                         int level = imbueMap.getOrDefault(imbueEnchant, 0);
-                        bookmap.put(imbueEnchant, level);
+                        enchantments.put(imbueEnchant, level);
                     }
-                    bookmap.put(bookEnchantment, imbueLevel);
-                    EnchantmentHelper.setEnchantments(bookmap, imbuingResult);
+                    enchantments.put(enchantment, imbueLevel);
+                    EnchantmentHelper.setEnchantments(enchantments, imbuingResult);
                     this.output.setItem(0, imbuingResult);
-                    this.updateBooleans(false);
-                    this.broadcastChanges();
                 }
             }
         } else {
             this.output.setItem(0, ItemStack.EMPTY);
         }
+        this.broadcastChanges();
     }
 
     @Override
@@ -179,8 +165,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 3 && index < 39) {
-                int i = this.isUsableAsAddition(itemStack) ? 1 : 0;
-                if (!this.moveItemStackTo(itemStack2, i, 3, false)) {
+                if (!this.moveItemStackTo(itemStack2, 0, 3, false)) {
                     return ItemStack.EMPTY;
                 }
             }
@@ -203,5 +188,19 @@ public class ImbuingMenu extends AbstractContainerMenu {
         this.access.execute((level, blockPos) -> {
             this.clearContainer(player, this.input);
         });
+    }
+
+    public enum InvalidImbuingState {
+        ALL_GOOD(CommonComponents.EMPTY),
+        TOO_MANY_ENCHANTMENTS(Component.translatable("container.imbue.tooManyEnchantments")),
+        NOT_AT_MAX_LEVEL(Component.translatable("container.imbue.notAtMaxLevel")),
+        INVALID_ENCHANTMENT(Component.translatable("container.imbue.invalidEnchantment")),
+        INVALID_ITEM(Component.translatable("container.imbue.invalidItem"));
+
+        public final Component component;
+
+        InvalidImbuingState(Component component) {
+            this.component = component;
+        }
     }
 }

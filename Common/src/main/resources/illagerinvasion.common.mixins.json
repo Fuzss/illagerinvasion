@@ -8,6 +8,8 @@
   "mixins": [
   ],
   "client": [
+    "client.IllagerModelMixin",
+    "client.SkeletonModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

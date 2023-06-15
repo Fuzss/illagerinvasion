@@ -1,9 +1,9 @@
 package me.sandbox.world.features;
 
-import me.sandbox.IllagerExpansion;
+import fuzs.illagerinvasion.IllagerInvasion;
 import me.sandbox.config.IllagerExpansionConfig;
-import me.sandbox.mixin.ConfiguredStructureFeaturesAccessor;
-import me.sandbox.mixin.StructureFeatureAccessor;
+import fuzs.illagerinvasion.mixin.ConfiguredStructureFeaturesAccessor;
+import fuzs.illagerinvasion.mixin.StructureFeatureAccessor;
 import me.sandbox.world.features.structurefeatures.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.Holder;
@@ -38,10 +38,10 @@ public class StructureRegistry<C extends FeatureConfiguration> {
     public static final ResourceKey<StructureSet> LABYRINTH_STRUCTURE_SET_KEY = StructureRegistry.setof("labyrinth");
 
     public static void registerStructureFeatures() {
-        StructureFeatureAccessor.callRegister(IllagerExpansion.MOD_ID + ":illusioner_tower", ILLUSIONER_TOWER, GenerationStep.Decoration.SURFACE_STRUCTURES);
-        StructureFeatureAccessor.callRegister(IllagerExpansion.MOD_ID + ":illager_fort", ILLAGER_FORT, GenerationStep.Decoration.SURFACE_STRUCTURES);
-        StructureFeatureAccessor.callRegister(IllagerExpansion.MOD_ID + ":sorcerer_hut", SORCERER_HUT, GenerationStep.Decoration.SURFACE_STRUCTURES);
-        StructureFeatureAccessor.callRegister(IllagerExpansion.MOD_ID + ":labyrinth", LABYRINTH, GenerationStep.Decoration.SURFACE_STRUCTURES);
+        StructureFeatureAccessor.callRegister(IllagerInvasion.MOD_ID + ":illusioner_tower", ILLUSIONER_TOWER, GenerationStep.Decoration.SURFACE_STRUCTURES);
+        StructureFeatureAccessor.callRegister(IllagerInvasion.MOD_ID + ":illager_fort", ILLAGER_FORT, GenerationStep.Decoration.SURFACE_STRUCTURES);
+        StructureFeatureAccessor.callRegister(IllagerInvasion.MOD_ID + ":sorcerer_hut", SORCERER_HUT, GenerationStep.Decoration.SURFACE_STRUCTURES);
+        StructureFeatureAccessor.callRegister(IllagerInvasion.MOD_ID + ":labyrinth", LABYRINTH, GenerationStep.Decoration.SURFACE_STRUCTURES);
 
         LabyrinthGenerator.init();
     }
@@ -52,9 +52,9 @@ public class StructureRegistry<C extends FeatureConfiguration> {
         LABYRINTHS = StructureSets.register(StructureRegistry.LABYRINTH_STRUCTURE_SET_KEY, StructureRegistry.CONFIGURED_LABYRINTH, new RandomSpreadStructurePlacement(48, 40, RandomSpreadType.LINEAR, 1687452161));
     }
     private static ResourceKey<ConfiguredStructureFeature<?, ?>> of(String id) {
-        return ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, new ResourceLocation(IllagerExpansion.MOD_ID, id));
+        return ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, new ResourceLocation(IllagerInvasion.MOD_ID, id));
     }
     private static ResourceKey<StructureSet> setof(String id) {
-        return ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(IllagerExpansion.MOD_ID, id));
+        return ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(IllagerInvasion.MOD_ID, id));
     }
 }

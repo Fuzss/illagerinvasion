@@ -1,7 +1,7 @@
 package me.sandbox.world;
 
 import com.google.common.collect.ImmutableList;
-import me.sandbox.IllagerExpansion;
+import fuzs.illagerinvasion.IllagerInvasion;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
@@ -17,10 +17,10 @@ public class ProcessorRegistry {
 
 
     public static void registerProcessors() {
-        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(IllagerExpansion.MOD_ID, "waterlog"), NO_WATERLOG_PROCESSOR);
+        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(IllagerInvasion.MOD_ID, "waterlog"), NO_WATERLOG_PROCESSOR);
     }
     public static Holder<StructureProcessorList> register(String id, ImmutableList<StructureProcessor> processorList) {
-        ResourceLocation identifier = new ResourceLocation(IllagerExpansion.MOD_ID, id);
+        ResourceLocation identifier = new ResourceLocation(IllagerInvasion.MOD_ID, id);
         StructureProcessorList structureProcessorList = new StructureProcessorList(processorList);
         return BuiltinRegistries.register(BuiltinRegistries.PROCESSOR_LIST, identifier, structureProcessorList);
     }

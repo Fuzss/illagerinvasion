@@ -2,21 +2,31 @@ package fuzs.illagerinvasion.init;
 
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.core.CommonAbstractions;
+import fuzs.illagerinvasion.world.entity.monster.*;
+import fuzs.illagerinvasion.world.entity.projectile.FlyingMagma;
+import fuzs.illagerinvasion.world.entity.projectile.Hatchet;
 import fuzs.illagerinvasion.world.inventory.ImbuingMenu;
+import fuzs.illagerinvasion.world.item.HatchetItem;
+import fuzs.illagerinvasion.world.item.HornOfSightItem;
+import fuzs.illagerinvasion.world.item.IllusionaryDustItem;
 import fuzs.illagerinvasion.world.level.block.ImbuingTableBlock;
 import fuzs.illagerinvasion.world.level.block.MagicFireBlock;
 import fuzs.puzzleslib.api.init.v2.RegistryManager;
 import fuzs.puzzleslib.api.init.v2.RegistryReference;
-import me.sandbox.entity.monster.EntityRegistry;
+import fuzs.puzzleslib.api.item.v2.ItemEquipmentFactories;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,9 +34,54 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
 public class ModRegistry {
+    public static final Tier PLATINUM_INFUSED_NETHERITE_TIER = ItemEquipmentFactories.registerTier(4, 2531, 9.0f, 4.0f, 17, () -> Ingredient.of(ModRegistry.PLATINUM_SHEET_ITEM.get()));
+    public static final ArmorMaterial PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL = ItemEquipmentFactories.registerArmorMaterial(IllagerInvasion.id("platinum_infused_netherite"), 40, new int[]{3, 6, 8, 3}, 17, () -> SoundEvents.ARMOR_EQUIP_NETHERITE, 3.0f, 0.2f, () -> Ingredient.of(ModRegistry.PLATINUM_SHEET_ITEM.get()));
+
     static final RegistryManager REGISTRY = RegistryManager.instant(IllagerInvasion.MOD_ID);
     public static final RegistryReference<Block> IMBUING_TABLE_BLOCK = REGISTRY.registerBlock("imbuing_table", () -> new ImbuingTableBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
     public static final RegistryReference<Block> MAGIC_FIRE_BLOCK = REGISTRY.registerBlock("magic_fire", () -> new MagicFireBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_FIRE).mapColor(MapColor.COLOR_PURPLE)));
+    public static final RegistryReference<Item> IMBUIING_TABLE_ITEM = REGISTRY.registerBlockItem(ModRegistry.IMBUING_TABLE_BLOCK);
+    public static final RegistryReference<Item> UNUSUAL_DUST_ITEM = REGISTRY.registerItem("unusual_dust", () -> new Item(new Item.Properties()));
+    public static final RegistryReference<Item> ILLUSIONARY_DUST_ITEM = REGISTRY.registerItem("illusionary_dust", () -> new IllusionaryDustItem(new Item.Properties()));
+    public static final RegistryReference<Item> RAVAGER_HORN_ITEM = REGISTRY.registerItem("ravager_horn", () -> new Item(new Item.Properties()));
+    public static final RegistryReference<Item> GILDED_HORN_ITEM = REGISTRY.registerItem("gilded_horn", () -> new Item(new Item.Properties()));
+    public static final RegistryReference<Item> HORN_OF_SIGHT_ITEM = REGISTRY.registerItem("horn_of_sight", () -> new HornOfSightItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryReference<Item> HALLOWED_GEM_ITEM = REGISTRY.registerItem("hallowed_gem", () -> new Item(new Item.Properties()));
+    public static final RegistryReference<Item> PRIMAL_ESSENCE_ITEM = REGISTRY.registerItem("primal_essence", () -> new Item(new Item.Properties()));
+    public static final RegistryReference<Item> PLATINUM_CHUNK_ITEM = REGISTRY.registerItem("platinum_chunk", () -> new Item(new Item.Properties()));
+    public static final RegistryReference<Item> PLATINUM_SHEET_ITEM = REGISTRY.registerItem("platinum_sheet", () -> new Item(new Item.Properties()));
+    public static final RegistryReference<Item> HATCHET_ITEM = REGISTRY.registerItem("hatchet", () -> new HatchetItem(new Item.Properties().durability(250)));
+    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_SHOVEL_ITEM = REGISTRY.registerItem("platinum_infused_netherite_shovel", () -> new ShovelItem(PLATINUM_INFUSED_NETHERITE_TIER, 1.5f, -3.0f, new Item.Properties().fireResistant()));
+    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_SWORD_ITEM = REGISTRY.registerItem("platinum_infused_netherite_sword", () -> new SwordItem(PLATINUM_INFUSED_NETHERITE_TIER, 3, -2.4f, new Item.Properties().fireResistant()));
+    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_HOE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_hoe", () -> new HoeItem(PLATINUM_INFUSED_NETHERITE_TIER, -2, 0.0f, new Item.Properties().fireResistant()));
+    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_AXE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_axe", () -> new AxeItem(PLATINUM_INFUSED_NETHERITE_TIER, 5, -3.0f, new Item.Properties().fireResistant()));
+    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_PICKAXE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_pickaxe", () -> new PickaxeItem(PLATINUM_INFUSED_NETHERITE_TIER, 1, -2.8f, new Item.Properties().fireResistant()));
+    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_BOOTS_ITEM = REGISTRY.registerItem("platinum_infused_netherite_boots", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant()));
+    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_LEGGINGS_ITEM = REGISTRY.registerItem("platinum_infused_netherite_leggings", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()));
+    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_CHESTPLATE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_chestplate", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant()));
+    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_HELMET_ITEM = REGISTRY.registerItem("platinum_infused_netherite_helmet", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));
+    public static final RegistryReference<Item> PROVOKER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.PROVOKER_ENTITY_TYPE, 9541270, 9399876);
+    public static final RegistryReference<Item> BASHER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.BASHER_ENTITY_TYPE, 9541270, 5985087);
+    public static final RegistryReference<Item> SORCERER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.SORCERER_ENTITY_TYPE, 9541270, 10899592);
+    public static final RegistryReference<Item> ARCHIVIST_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.ARCHIVIST_ENTITY_TYPE, 9541270, 13251893);
+    public static final RegistryReference<Item> INQUISITOR_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.INQUISITOR_ENTITY_TYPE, 9541270, 4934471);
+    public static final RegistryReference<Item> MARAUDER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.MARAUDER_ENTITY_TYPE, 5441030, 9541270);
+    public static final RegistryReference<Item> ALCHEMIST_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.ALCHEMIST_ENTITY_TYPE, 9541270, 7550099);
+    public static final RegistryReference<Item> FIRECALLER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.FIRECALLER_ENTITY_TYPE, 9541270, 14185784);
+    public static final RegistryReference<Item> SURRENDERED_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.SURRENDERED_ENTITY_TYPE, 11260369, 11858160);
+    public static final RegistryReference<EntityType<Provoker>> PROVOKER_ENTITY_TYPE = REGISTRY.registerEntityType("provoker", () -> EntityType.Builder.of(Provoker::new, MobCategory.MONSTER).sized(0.5F, 1.92F));
+    public static final RegistryReference<EntityType<Invoker>> INVOKER_ENTITY_TYPE = REGISTRY.registerEntityType("invoker", () -> EntityType.Builder.of(Invoker::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
+    public static final RegistryReference<EntityType<Basher>> BASHER_ENTITY_TYPE = REGISTRY.registerEntityType("basher", () -> EntityType.Builder.of(Basher::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
+    public static final RegistryReference<EntityType<Sorcerer>> SORCERER_ENTITY_TYPE = REGISTRY.registerEntityType("sorcerer", () -> EntityType.Builder.of(Sorcerer::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
+    public static final RegistryReference<EntityType<Archivist>> ARCHIVIST_ENTITY_TYPE = REGISTRY.registerEntityType("archivist", () -> EntityType.Builder.of(Archivist::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
+    public static final RegistryReference<EntityType<Inquisitor>> INQUISITOR_ENTITY_TYPE = REGISTRY.registerEntityType("inquisitor", () -> EntityType.Builder.of(Inquisitor::new, MobCategory.MONSTER).sized(0.5f, 2.48f));
+    public static final RegistryReference<EntityType<Marauder>> MARAUDER_ENTITY_TYPE = REGISTRY.registerEntityType("marauder", () -> EntityType.Builder.of(Marauder::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
+    public static final RegistryReference<EntityType<Alchemist>> ALCHEMIST_ENTITY_TYPE = REGISTRY.registerEntityType("alchemist", () -> EntityType.Builder.of(Alchemist::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
+    public static final RegistryReference<EntityType<Firecaller>> FIRECALLER_ENTITY_TYPE = REGISTRY.registerEntityType("firecaller", () -> EntityType.Builder.of(Firecaller::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
+    public static final RegistryReference<EntityType<Surrendered>> SURRENDERED_ENTITY_TYPE = REGISTRY.registerEntityType("surrendered", () -> EntityType.Builder.of(Surrendered::new, MobCategory.MONSTER).fireImmune().sized(0.5f, 1.42f));
+    public static final RegistryReference<EntityType<Hatchet>> HATCHET_ENTITY_TYPE = REGISTRY.placeholder(Registries.ENTITY_TYPE, "hatchet");
+    public static final RegistryReference<EntityType<InvokerFangs>> INVOKER_FANGS_ENTITY_TYPE = REGISTRY.registerEntityType("invoker_fangs", () -> EntityType.Builder.<InvokerFangs>of(InvokerFangs::new, MobCategory.MISC).sized(0.65f, 1.05f));
+    public static final RegistryReference<EntityType<FlyingMagma>> FLYING_MAGMA_ENTITY_TYPE = REGISTRY.registerEntityType("flying_magma", () -> EntityType.Builder.<FlyingMagma>of(FlyingMagma::new, MobCategory.MISC).sized(0.95f, 1.05f));
     public static final RegistryReference<Potion> BERSERKING_POTION = REGISTRY.registerPotion("berserking", () -> new Potion(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1), new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 1)));
     public static final RegistryReference<Potion> LONG_BERSERKING_POTION = REGISTRY.registerPotion("long_berserking", () -> new Potion("berserking", new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 0), new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 0)));
     public static final RegistryReference<Potion> STRONG_BERSERKING_POTION = REGISTRY.registerPotion("strong_berserking", () -> new Potion("berserking", new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 2), new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, 2)));
@@ -74,21 +129,14 @@ public class ModRegistry {
 
     public static final TagKey<Enchantment> IMBUING_ENCHANTMENT_TAG = REGISTRY.registerEnchantmentTag("imbuing");
 
-    public static final Object ENCHANT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.createIllagerSpell("ENCHANT", 0.8, 0.8, 0.2);
-    public static final Object CONJURE_FLAMES_ILLAGER_SPELL = CommonAbstractions.INSTANCE.createIllagerSpell("CONJURE_FLAMES", 1.8, 0.0, 1.8);    
-    public static final Object CONJURE_TELEPORT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.createIllagerSpell("CONJURE_TELEPORT", 1.5, 1.5, 0.8);
-    public static final Object NECRORAISE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.createIllagerSpell("NECRORAISE", 0.3, 0.8, 0.05);
-    public static final Object CONJURE_SKULLBOLT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.createIllagerSpell("CONJURE_SKULLBOLT", 0.5, 0.05, 0.05);
-    public static final Object PROVOKE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.createIllagerSpell("PROVOKE", 1.0, 0.8, 0.75);
+    public static final Object ENCHANT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("ENCHANT", 0.8, 0.8, 0.2);
+    public static final Object CONJURE_FLAMES_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_FLAMES", 1.8, 0.0, 1.8);
+    public static final Object CONJURE_TELEPORT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_TELEPORT", 1.5, 1.5, 0.8);
+    public static final Object NECRORAISE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("NECRORAISE", 0.3, 0.8, 0.05);
+    public static final Object CONJURE_SKULLBOLT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_SKULLBOLT", 0.5, 0.05, 0.05);
+    public static final Object PROVOKE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("PROVOKE", 1.0, 0.8, 0.75);
 
     public static void touch() {
-        CommonAbstractions.INSTANCE.createRaiderType("BASHER", EntityRegistry.BASHER, new int[]{1, 1, 2, 1, 2, 2, 3, 3});
-        CommonAbstractions.INSTANCE.createRaiderType("PROVOKER", EntityRegistry.PROVOKER, new int[]{0, 1, 1, 0, 1, 1, 2, 2});
-        CommonAbstractions.INSTANCE.createRaiderType("SORCERER", EntityRegistry.SORCERER, new int[]{0, 0, 0, 0, 0, 1, 1, 1});
-        CommonAbstractions.INSTANCE.createRaiderType("ILLUSIONER", EntityType.ILLUSIONER, new int[]{0, 0, 0, 0, 0, 1, 0, 1});
-        CommonAbstractions.INSTANCE.createRaiderType("ARCHIVIST", EntityRegistry.ARCHIVIST, new int[]{0, 1, 0, 1, 1, 1, 2, 3});
-        CommonAbstractions.INSTANCE.createRaiderType("MARAUDER", EntityRegistry.MARAUDER, new int[]{0, 1, 1, 1, 2, 2, 3, 3});
-        CommonAbstractions.INSTANCE.createRaiderType("INQUISITOR", EntityRegistry.INQUISITOR, new int[]{0, 0, 0, 0, 1, 0, 1, 1});
-        CommonAbstractions.INSTANCE.createRaiderType("ALCHEMIST", EntityRegistry.ALCHEMIST, new int[]{0, 0, 0, 1, 2, 1, 2, 2});
+        
     }
 }
