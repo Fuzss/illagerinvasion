@@ -1,0 +1,19 @@
+{
+
+  "structures": [
+    {
+      "structure": "illagerexp:illager_fort",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 169476082,
+
+    "spacing": 42,
+
+
+    "separation": 28,
+
+    "type": "minecraft:random_spread"
+  }
+}

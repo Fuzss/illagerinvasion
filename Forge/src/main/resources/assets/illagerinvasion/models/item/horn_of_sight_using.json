@@ -1,0 +1,28 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "illagerexp:item/horn_of_sight"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [ 0, -90, 0 ],
+      "translation": [ -3, 1, 2.5 ],
+      "scale": [ 0.55, 0.55, 0.55 ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [ 0, 90, 0 ],
+      "translation": [ -3, 1, 2.5 ],
+      "scale": [ 0.55, 0.55, 0.55 ]
+    },
+    "firstperson_righthand": {
+      "rotation": [ 0, -90, 0],
+      "translation": [ 2, 1.0, -4.0],
+      "scale": [ 0.68, 0.68, 0.68 ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [ 0, 90, 0 ],
+      "translation": [ 2, 1.0, -4],
+      "scale": [ 0.68, 0.68, 0.68 ]
+    }
+  }
+}

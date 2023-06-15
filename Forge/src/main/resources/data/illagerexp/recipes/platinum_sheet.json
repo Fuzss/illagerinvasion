@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "illagerexp:platinum_chunk"
+    },
+    {
+      "item": "illagerexp:platinum_chunk"
+    },
+    {
+      "item": "illagerexp:platinum_chunk"
+    },
+    {
+      "item": "illagerexp:platinum_chunk"
+    }
+  ],
+  "result": {
+    "item": "illagerexp:platinum_sheet",
+    "count": 1
+  }
+}

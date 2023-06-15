@@ -1,0 +1,41 @@
+{
+  "parent": "illagerexp:adventure/defeat_invoker",
+  "display": {
+    "icon": {
+      "item": "illagerexp:imbuing_table",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.adventure.imbuing_table.title"
+    },
+    "description": {
+      "translate": "advancements.adventure.imbuing_table.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "netherite_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "illagerexp:imbuing_table"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "netherite_hoe"
+    ]
+  ]
+}

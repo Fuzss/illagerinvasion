@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:netherite_pickaxe"
+  },
+  "addition": {
+    "item": "illagerexp:platinum_sheet"
+  },
+  "result": {
+    "item": "illagerexp:platinum_infused_netherite_pickaxe"
+  }
+}

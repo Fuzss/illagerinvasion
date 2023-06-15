@@ -1,0 +1,15 @@
+{
+
+  "type": "minecraft:village",
+
+  "config": {
+    "start_pool": "illagerexp:firecaller_hut/firecaller_hut_baseplate_pool",
+
+    "size": 1
+  },
+
+  "biomes": "#illagerexp:has_structure/firecaller_hut",
+
+  "adapt_noise": true,
+  "spawn_overrides": {}
+}

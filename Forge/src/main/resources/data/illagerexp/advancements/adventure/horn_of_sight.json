@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:adventure/voluntary_exile",
+  "display": {
+    "icon": {
+      "item": "illagerexp:horn_of_sight",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.adventure.horn_of_sight.title"
+    },
+    "description": {
+      "translate": "advancements.adventure.horn_of_sight.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "netherite_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "illagerexp:horn_of_sight"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "netherite_hoe"
+    ]
+  ]
+}

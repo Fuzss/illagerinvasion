@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "illagerexp:item/platinum_infused_netherite_shovel"
+  }
+}

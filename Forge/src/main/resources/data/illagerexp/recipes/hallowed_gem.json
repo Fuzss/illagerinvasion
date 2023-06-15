@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#B#",
+    "RDR",
+    "#B#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "B": {
+      "item": "illagerexp:unusual_dust"
+    },
+    "R": {
+      "item": "illagerexp:illusionary_dust"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "illagerexp:hallowed_gem",
+    "count": 1
+  }
+}

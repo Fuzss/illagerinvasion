@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "illagerexp:item/platinum_infused_netherite_leggings"
+  }
+}

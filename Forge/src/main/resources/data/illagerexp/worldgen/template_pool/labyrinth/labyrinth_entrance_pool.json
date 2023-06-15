@@ -1,0 +1,15 @@
+{
+  "name": "illagerexp:labyrinth_entrance_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "illagerexp:labyrinth/labyrinth_entrance",
+        "processors": "illagerexp:nowater",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

@@ -1,0 +1,280 @@
+{
+  "surrendered_hurt": {
+    "subtitle": "illagerexp.surrendered",
+    "sounds": [
+      "illagerexp:surrendered_hurt1",
+      "illagerexp:surrendered_hurt2",
+      "illagerexp:surrendered_hurt3"
+    ]
+  },
+  "surrendered_ambient": {
+    "subtitle": "illagerexp.surrendered_hurt",
+    "sounds": [
+      "illagerexp:surrendered_ambient1",
+      "illagerexp:surrendered_ambient2",
+      "illagerexp:surrendered_ambient3"
+    ]
+  },
+  "surrendered_charge": {
+    "subtitle": "illagerexp.surrendered_charge",
+    "sounds": [
+      "illagerexp:surrendered_charge"
+    ]
+  },
+  "surrendered_death": {
+    "subtitle": "illagerexp.surrendered_death",
+    "sounds": [
+      "illagerexp:surrendered_death"
+    ]
+  },
+  "archivist_ambient": {
+    "subtitle": "illagerexp.archivist.ambient",
+    "sounds": [
+      "illagerexp:archivist_idle1",
+      "illagerexp:archivist_idle2",
+      "illagerexp:archivist_idle3"
+    ]
+  },
+  "archivist_hurt": {
+    "subtitle": "illagerexp.archivist.hurt",
+    "sounds": [
+      "illagerexp:archivist_hurt1",
+      "illagerexp:archivist_hurt2",
+      "illagerexp:archivist_hurt3"
+    ]
+  },
+  "archivist_death": {
+    "subtitle": "illagerexp.archivist.death",
+    "sounds": [
+      "illagerexp:archivist_death1",
+      "illagerexp:archivist_death2",
+      "illagerexp:archivist_death3"
+    ]
+  },
+  "sorcerer_cast": {
+    "subtitle": "illagerexp.sorcerer.cast",
+    "sounds": [
+      "illagerexp:sorcerer_cast"
+    ]
+  },
+  "sorcerer_complete_cast": {
+    "subtitle": "illagerexp.sorcerer.complete_cast",
+    "sounds": [
+      "illagerexp:sorcerer_completecast"
+    ]
+  },
+  "firecaller_cast": {
+    "subtitle": "illagerexp.firecaller_cast",
+    "sounds": [
+      "illagerexp:firecaller_cast"
+    ]
+  },
+  "horn_of_sight": {
+    "subtitle": "illagerexp.horn_of_sight",
+    "sounds": [
+      "illagerexp:horn_of_sight"
+    ]
+  },
+  "invoker_fangs": {
+    "subtitle": "illagerexp.invoker_fangs",
+    "sounds": [
+      "illagerexp:invoker_fangs"
+    ]
+  },
+  "invoker_hurt": {
+    "subtitle": "illagerexp.invoker_hurt",
+    "sounds": [
+      "illagerexp:invoker_hurt1",
+      "illagerexp:invoker_hurt2"
+    ]
+  },
+  "invoker_ambient": {
+    "subtitle": "illagerexp.invoker_ambient",
+    "sounds": [
+      "illagerexp:invoker_idle1",
+      "illagerexp:invoker_idle2",
+      "illagerexp:invoker_idle3",
+      "illagerexp:invoker_idle4"
+    ]
+  },
+  "invoker_death": {
+    "subtitle": "illagerexp.invoker_death",
+    "sounds": [
+      "illagerexp:invoker_death"
+    ]
+  },
+  "invoker_big_cast": {
+    "subtitle": "illagerexp.invoker_big_cast",
+    "sounds": [
+      "illagerexp:invoker_big_cast"
+    ]
+  },
+  "invoker_fangs_cast": {
+    "subtitle": "illagerexp.invoker_fangs_cast",
+    "sounds": [
+      "illagerexp:invoker_fangs_cast"
+    ]
+  },
+  "invoker_teleport_cast": {
+    "subtitle": "illagerexp.invoker_teleport_cast",
+    "sounds": [
+      "illagerexp:invoker_teleport_cast"
+    ]
+  },
+  "invoker_completecast": {
+    "subtitle": "illagerexp.invoker_completecast",
+    "sounds": [
+      "illagerexp:invoker_completecast"
+    ]
+  },
+  "invoker_summon_cast": {
+    "subtitle": "illagerexp.invoker_summon_cast",
+    "sounds": [
+      "illagerexp:invoker_summon_cast"
+    ]
+  },
+  "invoker_shield_create": {
+    "subtitle": "illagerexp.invoker_shield_create",
+    "sounds": [
+      "illagerexp:invoker_shield_create"
+    ]
+  },
+  "invoker_shield_break": {
+    "subtitle": "illagerexp.invoker_shield_break",
+    "sounds": [
+      "illagerexp:invoker_shield_break"
+    ]
+  },
+  "illager_brute_ambient": {
+    "subtitle": "illagerexp.illager_brute_ambient",
+    "sounds": [
+      "illagerexp:illager_brute_idle1",
+      "illagerexp:illager_brute_idle2",
+      "illagerexp:illager_brute_idle3",
+      "illagerexp:illager_brute_idle4",
+      "illagerexp:illager_brute_idle5"
+    ]
+  },
+  "illager_brute_hurt": {
+    "subtitle": "illagerexp.illager_brute_hurt",
+    "sounds": [
+      "illagerexp:illager_brute_hurt1",
+      "illagerexp:illager_brute_hurt2",
+      "illagerexp:illager_brute_hurt3"
+    ]
+  },
+  "illager_brute_death": {
+    "subtitle": "illagerexp.illager_brute_death",
+    "sounds": [
+      "illagerexp:illager_brute_death1"
+    ]
+  },
+  "provoker_death": {
+    "subtitle": "illagerexp.provoker_death",
+    "sounds": [
+      "illagerexp:provoker_death"
+    ]
+  },
+  "provoker_hurt": {
+    "subtitle": "illagerexp.provoker_hurt",
+    "sounds": [
+      "illagerexp:provoker_hurt1",
+      "illagerexp:provoker_hurt2",
+      "illagerexp:provoker_hurt3"
+    ]
+  },
+  "provoker_idle": {
+    "subtitle": "illagerexp.provoker_idle",
+    "sounds": [
+      "illagerexp:provoker_idle1",
+      "illagerexp:provoker_idle2",
+      "illagerexp:provoker_idle3"
+    ]
+  },
+  "provoker_celebrate": {
+    "subtitle": "illagerexp.provoker_celebrate",
+    "sounds": [
+      "illagerexp:provoker_celebrate"
+    ]
+  },
+  "basher_celebrate": {
+    "subtitle": "illagerexp.basher_celebrate",
+    "sounds": [
+      "illagerexp:basher_celebrate"
+    ]
+  },
+  "basher_idle": {
+    "subtitle": "illagerexp.basher_idle",
+    "sounds": [
+      "illagerexp:basher_idle1",
+      "illagerexp:basher_idle2",
+      "illagerexp:basher_idle3"
+    ]
+  },
+  "basher_hurt": {
+    "subtitle": "illagerexp.basher_hurt",
+    "sounds": [
+      "illagerexp:basher_hurt1",
+      "illagerexp:basher_hurt2"
+    ]
+  },
+  "basher_death": {
+    "subtitle": "illagerexp.basher_death",
+    "sounds": [
+      "illagerexp:basher_death"
+    ]
+  },
+  "firecaller_death": {
+    "subtitle": "illagerexp.firecaller_death",
+    "sounds": [
+      "illagerexp:firecaller_death1",
+      "illagerexp:firecaller_death2"
+    ]
+  },
+  "firecaller_idle": {
+    "subtitle": "illagerexp.firecaller_idle",
+    "sounds": [
+      "illagerexp:firecaller_idle1",
+      "illagerexp:firecaller_idle2",
+      "illagerexp:firecaller_idle3",
+      "illagerexp:firecaller_idle4"
+    ]
+  },
+  "firecaller_hurt": {
+    "subtitle": "illagerexp.firecaller_hurt",
+    "sounds": [
+      "illagerexp:firecaller_hurt1",
+      "illagerexp:firecaller_hurt2",
+      "illagerexp:firecaller_hurt3"
+    ]
+  },
+  "sorcerer_hurt": {
+    "subtitle": "illagerexp.sorcerer_hurt",
+    "sounds": [
+      "illagerexp:sorcerer_hurt1",
+      "illagerexp:sorcerer_hurt2",
+      "illagerexp:sorcerer_hurt3"
+    ]
+  },
+  "sorcerer_idle": {
+    "subtitle": "illagerexp.sorcerer_idle",
+    "sounds": [
+      "illagerexp:sorcerer_idle1",
+      "illagerexp:sorcerer_idle2",
+      "illagerexp:sorcerer_idle3",
+      "illagerexp:sorcerer_idle4"
+    ]
+  },
+  "sorcerer_death": {
+    "subtitle": "illagerexp.sorcerer_death",
+    "sounds": [
+      "illagerexp:sorcerer_death1"
+    ]
+  },
+  "sorcerer_celebrate": {
+    "subtitle": "illagerexp.sorcerer_celebrate",
+    "sounds": [
+      "illagerexp:sorcerer_celebrate"
+    ]
+  }
+}

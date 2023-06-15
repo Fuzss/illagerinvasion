@@ -1,0 +1,19 @@
+{
+
+  "structures": [
+    {
+      "structure": "illagerexp:illusioner_tower",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 169476081,
+
+    "spacing": 42,
+
+
+    "separation": 28,
+
+    "type": "minecraft:random_spread"
+  }
+}

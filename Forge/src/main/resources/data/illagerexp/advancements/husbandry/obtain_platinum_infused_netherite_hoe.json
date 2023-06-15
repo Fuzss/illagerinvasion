@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:husbandry/obtain_netherite_hoe",
+  "display": {
+    "icon": {
+      "item": "illagerexp:platinum_infused_netherite_hoe",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.husbandry.platinum_infused_netherite_hoe.title"
+    },
+    "description": {
+      "translate": "advancements.husbandry.platinum_infused_netherite_hoe.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "netherite_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "illagerexp:platinum_infused_netherite_hoe"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "netherite_hoe"
+    ]
+  ]
+}
