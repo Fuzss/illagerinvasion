@@ -2,8 +2,6 @@ package fuzs.illagerinvasion.data;
 
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v1.AbstractModelProvider;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.data.event.GatherDataEvent;
 
 public class ModModelProvider extends AbstractModelProvider {
@@ -20,9 +18,7 @@ public class ModModelProvider extends AbstractModelProvider {
         this.spawnEgg(ModRegistry.BASHER_SPAWN_EGG_ITEM.get());
         this.spawnEgg(ModRegistry.FIRECALLER_SPAWN_EGG_ITEM.get());
         this.basicItem(ModRegistry.HALLOWED_GEM_ITEM.get());
-        this.handheldItem(ModRegistry.HATCHET_ITEM.get());
-        ItemModelBuilder hornOfSightUsing = this.basicItem(this.modLoc("horn_of_sight_using"), ModRegistry.HORN_OF_SIGHT_ITEM.get()).transforms().transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, -90, 0).translation(-3, 1, 2.5F).scale(0.55F, 0.55F, 0.55F).end().transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, -90, 0).translation(-3, 1, 2.5F).scale(0.55F, 0.55F, 0.55F).end().transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, -90, 0).translation(2, 1.0F, -4.0F).scale(0.68F, 0.68F, 0.68F).end().transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 90, 0).translation(2, 1.0F, -4).scale(0.68F, 0.68F, 0.68F).end().end();
-        this.basicItem(ModRegistry.HORN_OF_SIGHT_ITEM.get()).transforms().transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 0, 0).translation(0, 2, 0).scale(0.55F, 0.55F, 0.55F).end().transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 0, 0).translation(0, 2, 0).scale(0.55F, 0.55F, 0.55F).end().transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, -90, 0).translation(1.13F, 0, 1.13F).scale(0.68F, 0.68F, 0.68F).end().transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, -90, 0).translation(1.13F, 3.2F, 1.13F).scale(0.68F, 0.68F, 0.68F).end().end().override().model(hornOfSightUsing).predicate(this.modLoc("using"), 1.0F).end();
+        this.handheldItem(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get());
         this.basicItem(ModRegistry.ILLUSIONARY_DUST_ITEM.get());
         this.simpleBlockItem(ModRegistry.IMBUING_TABLE_BLOCK.get(), this.existingBlockModel(ModRegistry.IMBUING_TABLE_BLOCK.get()));
         this.spawnEgg(ModRegistry.INQUISITOR_SPAWN_EGG_ITEM.get());

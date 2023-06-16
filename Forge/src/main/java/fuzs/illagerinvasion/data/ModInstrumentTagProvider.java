@@ -15,6 +15,6 @@ public class ModInstrumentTagProvider extends AbstractTagProvider.Intrinsic<Inst
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        this.tag(ModRegistry.HORN_OF_SIGHT_INSTRUMENT_TAG).add(ModRegistry.HORN_OF_SIGHT_INSTRUMENT.get());
+        this.tag(ModRegistry.HORN_OF_SIGHT_INSTRUMENT_TAG).add(ModRegistry.REVEAL_INSTRUMENT.get());
     }
 }

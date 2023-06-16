@@ -41,7 +41,7 @@ public class ModRegistry {
     public static final Tier PLATINUM_INFUSED_NETHERITE_TIER = ItemEquipmentFactories.registerTier(4, 2531, 9.0f, 4.0f, 17, () -> Ingredient.of(ModRegistry.PLATINUM_SHEET_ITEM.get()));
     public static final ArmorMaterial PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL = ItemEquipmentFactories.registerArmorMaterial(IllagerInvasion.id("platinum_infused_netherite"), 40, new int[]{3, 6, 8, 3}, 17, () -> SoundEvents.ARMOR_EQUIP_NETHERITE, 3.0f, 0.2f, () -> Ingredient.of(ModRegistry.PLATINUM_SHEET_ITEM.get()));
 
-    static final RegistryManager REGISTRY = RegistryManager.deferred(IllagerInvasion.MOD_ID);
+    static final RegistryManager REGISTRY = RegistryManager.instant(IllagerInvasion.MOD_ID);
     public static final RegistryReference<Block> IMBUING_TABLE_BLOCK = REGISTRY.registerBlock("imbuing_table", () -> new ImbuingTableBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
     public static final RegistryReference<Block> MAGIC_FIRE_BLOCK = REGISTRY.registerBlock("magic_fire", () -> new MagicFireBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_FIRE).mapColor(MapColor.COLOR_PURPLE).randomTicks()));
     public static final RegistryReference<Item> IMBUIING_TABLE_ITEM = REGISTRY.registerBlockItem(ModRegistry.IMBUING_TABLE_BLOCK);
@@ -49,11 +49,11 @@ public class ModRegistry {
     public static final RegistryReference<Item> ILLUSIONARY_DUST_ITEM = REGISTRY.registerItem("illusionary_dust", () -> new IllusionaryDustItem(new Item.Properties()));
     public static final RegistryReference<Item> LOST_CANDLE_ITEM = REGISTRY.registerItem("lost_candle", () -> new LostCandleItem(new Item.Properties()));
     public static final RegistryReference<Item> HORN_OF_SIGHT_ITEM = REGISTRY.registerItem("horn_of_sight", () -> new HornOfSightItem(new Item.Properties().stacksTo(1), ModRegistry.HORN_OF_SIGHT_INSTRUMENT_TAG));
-    public static final RegistryReference<Item> HALLOWED_GEM_ITEM = REGISTRY.registerItem("hallowed_gem", () -> new Item(new Item.Properties()));
+    public static final RegistryReference<Item> HALLOWED_GEM_ITEM = REGISTRY.registerItem("hallowed_gem", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryReference<Item> PRIMAL_ESSENCE_ITEM = REGISTRY.registerItem("primal_essence", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryReference<Item> PLATINUM_CHUNK_ITEM = REGISTRY.registerItem("platinum_chunk", () -> new Item(new Item.Properties()));
     public static final RegistryReference<Item> PLATINUM_SHEET_ITEM = REGISTRY.registerItem("platinum_sheet", () -> new Item(new Item.Properties()));
-    public static final RegistryReference<Item> HATCHET_ITEM = REGISTRY.registerItem("hatchet", () -> new HatchetItem(new Item.Properties().durability(250)));
+    public static final RegistryReference<Item> PLATINUM_INFUSED_HATCHET_ITEM = REGISTRY.registerItem("platinum_infused_hatchet", () -> new HatchetItem(new Item.Properties().durability(327)));
     public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_SHOVEL_ITEM = REGISTRY.registerItem("platinum_infused_netherite_shovel", () -> new ShovelItem(PLATINUM_INFUSED_NETHERITE_TIER, 1.5f, -3.0f, new Item.Properties().fireResistant()));
     public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_SWORD_ITEM = REGISTRY.registerItem("platinum_infused_netherite_sword", () -> new SwordItem(PLATINUM_INFUSED_NETHERITE_TIER, 3, -2.4f, new Item.Properties().fireResistant()));
     public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_HOE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_hoe", () -> new HoeItem(PLATINUM_INFUSED_NETHERITE_TIER, -2, 0.0f, new Item.Properties().fireResistant()));
@@ -63,7 +63,6 @@ public class ModRegistry {
     public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_LEGGINGS_ITEM = REGISTRY.registerItem("platinum_infused_netherite_leggings", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()));
     public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_CHESTPLATE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_chestplate", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant()));
     public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_HELMET_ITEM = REGISTRY.registerItem("platinum_infused_netherite_helmet", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));
-    public static final RegistryReference<Instrument> HORN_OF_SIGHT_INSTRUMENT = REGISTRY.register(Registries.INSTRUMENT, "horn_of_sight", () -> new Instrument(ModRegistry.HORN_OF_SIGHT_SOUND_EVENT.holder(), 80, 48.0F));
     public static final RegistryReference<EntityType<Provoker>> PROVOKER_ENTITY_TYPE = REGISTRY.registerEntityType("provoker", () -> EntityType.Builder.of(Provoker::new, MobCategory.MONSTER).sized(0.5F, 1.92F));
     public static final RegistryReference<EntityType<Invoker>> INVOKER_ENTITY_TYPE = REGISTRY.registerEntityType("invoker", () -> EntityType.Builder.of(Invoker::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Necromancer>> NECROMANCER_ENTITY_TYPE = REGISTRY.registerEntityType("necromancer", () -> EntityType.Builder.of(Necromancer::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
@@ -141,6 +140,7 @@ public class ModRegistry {
     public static final RegistryReference<SoundEvent> SORCERER_DEATH_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.death");
     public static final RegistryReference<SoundEvent> SORCERER_AMBIENT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.idle");
     public static final RegistryReference<SoundEvent> SORCERER_CELEBRATE_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.celebrate");
+    public static final RegistryReference<Instrument> REVEAL_INSTRUMENT = REGISTRY.register(Registries.INSTRUMENT, "reveal", () -> new Instrument(ModRegistry.HORN_OF_SIGHT_SOUND_EVENT.holder(), 120, 48.0F));
 
     public static final TagKey<Enchantment> IMBUING_ENCHANTMENT_TAG = REGISTRY.registerEnchantmentTag("imbuing");
     public static final TagKey<Instrument> HORN_OF_SIGHT_INSTRUMENT_TAG = REGISTRY.registerTag(Registries.INSTRUMENT, "horn_of_sight");
@@ -160,14 +160,14 @@ public class ModRegistry {
     public static final ResourceLocation PILLAGER_INJECT_LOOT_TABLE = REGISTRY.makeKey("entities/inject/pillager");
     public static final ResourceLocation RAVAGER_INJECT_LOOT_TABLE = REGISTRY.makeKey("entities/inject/ravager");
 
-    public static final Object ENCHANT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("ENCHANT", 0.8, 0.8, 0.2);
-    public static final Object CONJURE_FLAMES_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_FLAMES", 1.8, 0.0, 1.8);
-    public static final Object CONJURE_TELEPORT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_TELEPORT", 1.5, 1.5, 0.8);
-    public static final Object NECRO_RAISE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("NECRO_RAISE", 0.3, 0.8, 0.05);
-    public static final Object CONJURE_SKULL_BOLT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_SKULL_BOLT", 0.5, 0.05, 0.05);
-    public static final Object PROVOKE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("PROVOKE", 1.0, 0.8, 0.75);
+    public static final Object ENCHANT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("ENCHANT", 121.0 / 255.0, 161.0 / 255.0, 161.0 / 255.0);
+    public static final Object CONJURE_FLAMES_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_FLAMES", 194.0 / 255.0, 41.0 / 255.0, 36.0 / 255.0);
+    public static final Object CONJURE_TELEPORT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_TELEPORT", 64.0 / 255.0, 35.0 / 255.0, 81.0 / 255.0);
+    public static final Object NECRO_RAISE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("NECRO_RAISE", 78.0 / 255.0, 73.0 / 255.0, 52.0 / 255.0);
+    public static final Object CONJURE_SKULL_BOLT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_SKULL_BOLT", 44.0 / 255.0, 53.0 / 255.0, 26.0 / 255.0);
+    public static final Object PROVOKE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("PROVOKE", 235.0 / 255.0, 123.0 / 255.0, 109.0 / 255.0);
 
     public static void touch() {
-        REGISTRY.applyRegistration();
+
     }
 }

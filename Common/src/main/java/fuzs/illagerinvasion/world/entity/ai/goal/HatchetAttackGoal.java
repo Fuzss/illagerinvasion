@@ -28,7 +28,7 @@ public class HatchetAttackGoal extends RangedAttackGoal {
 
     @Override
     public boolean canUse() {
-        return super.canUse() && this.hostile.getMainHandItem().is(ModRegistry.HATCHET_ITEM.get());
+        return super.canUse() && this.hostile.getMainHandItem().is(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get());
     }
 
     @Override

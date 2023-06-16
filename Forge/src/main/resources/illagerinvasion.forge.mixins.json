@@ -6,8 +6,8 @@
   "refmap": "illagerinvasion.refmap.json",
   "plugin": "fuzs.illagerinvasion.mixin.ModMixinConfigPlugin",
   "mixins": [
-    "IllagerSpellMixin$IllagerSpellForgeMixin",
-    "IllagerSpellMixin$IllagerSpellForgeMixin2"
+    "SpellcasterIllagerImpl$IllagerSpellForgeMixin",
+    "SpellcasterIllagerImpl$IllagerSpellForgeAccessor"
   ],
   "client": [
   ],

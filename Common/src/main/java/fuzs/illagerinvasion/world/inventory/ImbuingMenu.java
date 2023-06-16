@@ -18,14 +18,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import java.util.Map;
 
 public class ImbuingMenu extends AbstractContainerMenu {
-    private final Container input = new SimpleContainer(3) {
-
-        @Override
-        public void setChanged() {
-            super.setChanged();
-            ImbuingMenu.this.slotsChanged(this);
-        }
-    };
+    private final Container input;
     private final ResultContainer output = new ResultContainer();
     private final ContainerLevelAccess access;
     public final DataSlot invalidState;
@@ -38,6 +31,14 @@ public class ImbuingMenu extends AbstractContainerMenu {
         super(ModRegistry.IMBUING_MENU_TYPE.get(), containerId);
         this.access = access;
         this.invalidState = this.addDataSlot(DataSlot.standalone());
+        this.input = new SimpleContainer(3) {
+
+            @Override
+            public void setChanged() {
+                super.setChanged();
+                ImbuingMenu.this.slotsChanged(this);
+            }
+        };
         this.addSlot(new Slot(this.input, 0, 26, 54) {
 
             @Override

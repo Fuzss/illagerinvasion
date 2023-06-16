@@ -1,6 +1,5 @@
 package fuzs.illagerinvasion.world.item;
 
-import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.init.ModRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -22,7 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.function.Supplier;
 
 public class LostCandleItem extends Item {
-    public static final String FOUND_NEARBY_TRANSLATION_KEY = "item." + IllagerInvasion.MOD_ID + ".lost_candle.foundNearby";
 
     public LostCandleItem(Item.Properties settings) {
         super(settings);
@@ -36,7 +34,7 @@ public class LostCandleItem extends Item {
             for (BlockPos pos : BlockPos.withinManhattan(player.blockPosition(), 8, 8, 8)) {
                 BlockState state = level.getBlockState(pos);
                 for (CandleOreType type : CandleOreType.values()) {
-                    if (tryPlayOreSound(level, player, state, type)) {
+                    if (this.tryPlayOreSound(level, player, state, type)) {
                         break $1;
                     }
                 }
@@ -48,10 +46,10 @@ public class LostCandleItem extends Item {
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    private static boolean tryPlayOreSound(Level level, Player player, BlockState state, CandleOreType type) {
+    private boolean tryPlayOreSound(Level level, Player player, BlockState state, CandleOreType type) {
         if (state.is(type.blocks)) {
             level.playSound(player, player.blockPosition(), type.soundEvent.get(), SoundSource.AMBIENT, 1.0F, 1.0F);
-            player.displayClientMessage(Component.translatable(FOUND_NEARBY_TRANSLATION_KEY, type.component), true);
+            player.displayClientMessage(Component.translatable(this.getDescriptionId() + ".foundNearby", type.component), true);
             return true;
         }
         return false;
@@ -60,9 +58,9 @@ public class LostCandleItem extends Item {
     public enum CandleOreType {
         DIAMOND(Blocks.DIAMOND_ORE, BlockTags.DIAMOND_ORES, ModRegistry.LOST_CANDLE_DIAMOND_SOUND_EVENT::get, ChatFormatting.AQUA),
         IRON(Blocks.IRON_ORE, BlockTags.IRON_ORES, ModRegistry.LOST_CANDLE_IRON_SOUND_EVENT::get, ChatFormatting.GRAY),
-        GOLD(Blocks.GOLD_ORE, BlockTags.GOLD_ORES, ModRegistry.LOST_CANDLE_GOLD_SOUND_EVENT::get, ChatFormatting.YELLOW),
+        GOLD(Blocks.GOLD_ORE, BlockTags.GOLD_ORES, ModRegistry.LOST_CANDLE_GOLD_SOUND_EVENT::get, ChatFormatting.GOLD),
         COPPER(Blocks.COPPER_BLOCK, BlockTags.COPPER_ORES, ModRegistry.LOST_CANDLE_COPPER_SOUND_EVENT::get, ChatFormatting.GOLD),
-        COAL(Blocks.COAL_ORE, BlockTags.COAL_ORES, ModRegistry.LOST_CANDLE_COAL_SOUND_EVENT::get, ChatFormatting.DARK_GRAY);
+        COAL(Blocks.COAL_ORE, BlockTags.COAL_ORES, ModRegistry.LOST_CANDLE_COAL_SOUND_EVENT::get, ChatFormatting.GRAY);
 
         public final TagKey<Block> blocks;
         public final Supplier<SoundEvent> soundEvent;

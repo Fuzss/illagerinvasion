@@ -27,7 +27,7 @@ public class HornOfSightItem extends InstrumentItem {
     private static void tryAddInstrument(ItemStack stack) {
         if (!stack.hasTag() || !stack.getTag().contains("instrument", Tag.TAG_STRING)) {
             CompoundTag compoundTag = stack.getOrCreateTag();
-            compoundTag.putString("instrument", ModRegistry.HORN_OF_SIGHT_INSTRUMENT.getResourceLocation().toString());
+            compoundTag.putString("instrument", ModRegistry.REVEAL_INSTRUMENT.getResourceLocation().toString());
         }
     }
 

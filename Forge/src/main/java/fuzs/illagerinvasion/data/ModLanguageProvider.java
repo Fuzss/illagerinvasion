@@ -3,11 +3,8 @@ package fuzs.illagerinvasion.data;
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.world.inventory.ImbuingMenu;
-import fuzs.illagerinvasion.world.item.LostCandleItem;
 import fuzs.puzzleslib.api.data.v1.AbstractLanguageProvider;
-import fuzs.puzzleslib.api.init.v2.RegistryReference;
-import net.minecraft.data.PackOutput;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.Util;
 import net.minecraftforge.data.event.GatherDataEvent;
 
 public class ModLanguageProvider extends AbstractLanguageProvider {
@@ -25,13 +22,14 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         this.add(ImbuingMenu.InvalidImbuingState.AT_WRONG_LEVEL.getTranslationKey(), "Item enchantment level is wrong!");
         this.add(ImbuingMenu.InvalidImbuingState.INVALID_ENCHANTMENT.getTranslationKey(), "Book enchantment cannot be imbued!");
         this.add(ImbuingMenu.InvalidImbuingState.INVALID_ITEM.getTranslationKey(), "Item is not compatible with this enchantment!");
-        this.add(LostCandleItem.FOUND_NEARBY_TRANSLATION_KEY, "%s found nearby");
+        this.add(ModRegistry.LOST_CANDLE_ITEM.get().getDescriptionId() + ".foundNearby", "%s found nearby");
+        this.add(Util.makeDescriptionId("instrument", ModRegistry.REVEAL_INSTRUMENT.getResourceLocation()), "Reveal");
         this.add(ModRegistry.UNUSUAL_DUST_ITEM.get(), "Unusual Dust");
         this.add(ModRegistry.ILLUSIONARY_DUST_ITEM.get(), "Illusionary Dust");
         this.add(ModRegistry.LOST_CANDLE_ITEM.get(), "Lost Candle");
         this.add(ModRegistry.HORN_OF_SIGHT_ITEM.get(), "Horn of Sight");
         this.add(ModRegistry.HALLOWED_GEM_ITEM.get(), "Hallowed Gem");
-        this.add(ModRegistry.HATCHET_ITEM.get(), "Hatchet");
+        this.add(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get(), "Platinum Infused Hatchet");
         this.add(ModRegistry.PLATINUM_CHUNK_ITEM.get(), "Platinum Chunk");
         this.add(ModRegistry.PLATINUM_SHEET_ITEM.get(), "Platinum Sheet");
         this.add(ModRegistry.PRIMAL_ESSENCE_ITEM.get(), "Primal Essence");

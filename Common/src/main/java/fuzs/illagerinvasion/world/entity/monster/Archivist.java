@@ -157,7 +157,7 @@ public class Archivist extends SpellcasterIllager {
             if (Archivist.this.getTarget() == null) {
                 return false;
             }
-            return Archivist.this.levitateTargetsCooldown < 0 && this.getTargets().stream().anyMatch(entity -> !(entity instanceof Monster));
+            return Archivist.this.levitateTargetsCooldown < 0 && !this.getTargets().isEmpty();
         }
 
         private void knockBack(Entity entity) {
@@ -173,7 +173,9 @@ public class Archivist extends SpellcasterIllager {
         }
 
         private List<LivingEntity> getTargets() {
-            return Archivist.this.level().getEntitiesOfClass(LivingEntity.class, Archivist.this.getBoundingBox().inflate(6), entity -> !(entity instanceof Monster));
+            return Archivist.this.level().getEntitiesOfClass(LivingEntity.class, Archivist.this.getBoundingBox().inflate(6), entity -> {
+                return !(entity instanceof Monster) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity);
+            });
         }
 
         @Override

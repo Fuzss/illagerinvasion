@@ -29,12 +29,12 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
 
     public Hatchet(EntityType<? extends Hatchet> entityType, Level world) {
         super(entityType, world);
-        this.hatchetStack = new ItemStack(ModRegistry.HATCHET_ITEM.get());
+        this.hatchetStack = new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get());
     }
 
     public Hatchet(Level world, LivingEntity owner, ItemStack stack) {
         super(ModRegistry.HATCHET_ENTITY_TYPE.get(), owner, world);
-        this.hatchetStack = new ItemStack(ModRegistry.HATCHET_ITEM.get());
+        this.hatchetStack = new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get());
         this.hatchetStack = stack.copy();
         this.entityData.set(DATA_ENCHANTED, stack.hasFoil());
     }
@@ -141,7 +141,7 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStack(ModRegistry.HATCHET_ITEM.get());
+        return new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get());
     }
 
     public float getAgeException() {

@@ -13,10 +13,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.storage.loot.LootDataManager;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -25,11 +23,6 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.IntPredicate;
 
@@ -62,20 +55,6 @@ public class IllagerInvasion implements ModConstructor {
     public void onCommonSetup(ModLifecycleContext context) {
         registerRaiderTypes();
         registerPotionRecipes();
-        try {
-            Class<?> aClass = Class.forName("net.minecraft.world.entity.monster.SpellcasterIllager$IllagerSpell");
-            for (Field field : aClass.getDeclaredFields()) {
-                LOGGER.info("field in illager spell: {} (constant: {}, type: {}, final: {})", field.getName(), field.isEnumConstant(), field.getType(), Modifier.isFinal(field.getModifiers()));
-            }
-            for (Method method : aClass.getDeclaredMethods()) {
-                LOGGER.info("method in illager spell: {} (params: {})", method.getName(), Arrays.toString(method.getParameterTypes()));
-            }
-            for (Constructor<?> method : aClass.getDeclaredConstructors()) {
-                LOGGER.info("constructor in illager spell: {} (params: {})", method.getName(), Arrays.toString(method.getParameterTypes()));
-            }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private static void registerRaiderTypes() {
@@ -123,7 +102,7 @@ public class IllagerInvasion implements ModConstructor {
             output.accept(ModRegistry.PRIMAL_ESSENCE_ITEM.get());
             output.accept(ModRegistry.PLATINUM_CHUNK_ITEM.get());
             output.accept(ModRegistry.PLATINUM_SHEET_ITEM.get());
-            output.accept(ModRegistry.HATCHET_ITEM.get());
+            output.accept(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get());
             output.accept(ModRegistry.PLATINUM_INFUSED_NETHERITE_SHOVEL_ITEM.get());
             output.accept(ModRegistry.PLATINUM_INFUSED_NETHERITE_SWORD_ITEM.get());
             output.accept(ModRegistry.PLATINUM_INFUSED_NETHERITE_HOE_ITEM.get());

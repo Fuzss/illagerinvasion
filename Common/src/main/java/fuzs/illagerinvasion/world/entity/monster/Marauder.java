@@ -62,7 +62,7 @@ public class Marauder extends AbstractIllager implements RangedAttackMob {
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData, @Nullable CompoundTag entityNbt) {
-        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModRegistry.HATCHET_ITEM.get()));
+        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get()));
         return super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
@@ -75,7 +75,7 @@ public class Marauder extends AbstractIllager implements RangedAttackMob {
 
     @Override
     public void performRangedAttack(LivingEntity target, float pullProgress) {
-        Hatchet hatchet = new Hatchet(this.level(), this, new ItemStack(ModRegistry.HATCHET_ITEM.get()));
+        Hatchet hatchet = new Hatchet(this.level(), this, new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get()));
         double d = target.getX() - this.getX();
         double e = target.getY(0.3333333333333333) - hatchet.getY();
         double f = target.getZ() - this.getZ();
