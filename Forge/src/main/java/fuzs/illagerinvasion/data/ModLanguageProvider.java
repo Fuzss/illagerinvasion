@@ -2,32 +2,39 @@ package fuzs.illagerinvasion.data;
 
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.world.inventory.ImbuingMenu;
+import fuzs.illagerinvasion.world.item.LostCandleItem;
 import fuzs.puzzleslib.api.data.v1.AbstractLanguageProvider;
+import fuzs.puzzleslib.api.init.v2.RegistryReference;
 import net.minecraft.data.PackOutput;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 public class ModLanguageProvider extends AbstractLanguageProvider {
 
-    public ModLanguageProvider(PackOutput packOutput, String modId) {
-        super(packOutput, modId);
+    public ModLanguageProvider(GatherDataEvent evt, String modId) {
+        super(evt, modId);
     }
 
     @Override
     protected void addTranslations() {
         this.addCreativeModeTab(IllagerInvasion.MOD_NAME);
         this.add("container.imbue", "Imbue");
-        this.add("container.imbue.tooManyEnchantments", "Book has too many enchantment!");
-        this.add("container.imbue.notAtMaxLevel", "Book enchantment level is too low!");
-        this.add("container.imbue.invalidEnchantment", "Book enchantment cannot be imbued!");
-        this.add("container.imbue.invalidItem", "Item is not compatible with this enchantment!");
+        this.add(ImbuingMenu.InvalidImbuingState.TOO_MANY_ENCHANTMENTS.getTranslationKey(), "Book has too many enchantment!");
+        this.add(ImbuingMenu.InvalidImbuingState.NOT_AT_MAX_LEVEL.getTranslationKey(), "Book enchantment level is too low!");
+        this.add(ImbuingMenu.InvalidImbuingState.AT_WRONG_LEVEL.getTranslationKey(), "Item enchantment level is wrong!");
+        this.add(ImbuingMenu.InvalidImbuingState.INVALID_ENCHANTMENT.getTranslationKey(), "Book enchantment cannot be imbued!");
+        this.add(ImbuingMenu.InvalidImbuingState.INVALID_ITEM.getTranslationKey(), "Item is not compatible with this enchantment!");
+        this.add(LostCandleItem.FOUND_NEARBY_TRANSLATION_KEY, "%s found nearby");
         this.add(ModRegistry.UNUSUAL_DUST_ITEM.get(), "Unusual Dust");
-        this.add(ModRegistry.ILLUSIONARY_DUST_ITEM.get(), "Unusual Dust");
+        this.add(ModRegistry.ILLUSIONARY_DUST_ITEM.get(), "Illusionary Dust");
         this.add(ModRegistry.LOST_CANDLE_ITEM.get(), "Lost Candle");
         this.add(ModRegistry.HORN_OF_SIGHT_ITEM.get(), "Horn of Sight");
         this.add(ModRegistry.HALLOWED_GEM_ITEM.get(), "Hallowed Gem");
         this.add(ModRegistry.HATCHET_ITEM.get(), "Hatchet");
         this.add(ModRegistry.PLATINUM_CHUNK_ITEM.get(), "Platinum Chunk");
         this.add(ModRegistry.PLATINUM_SHEET_ITEM.get(), "Platinum Sheet");
-        this.add(ModRegistry.PRIMAL_ESSENCE_ITEM.get(), "§bPrimal Essence");
+        this.add(ModRegistry.PRIMAL_ESSENCE_ITEM.get(), "Primal Essence");
         this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_HELMET_ITEM.get(), "Platinum Infused Netherite Helmet");
         this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_CHESTPLATE_ITEM.get(), "Platinum Infused Netherite Chestplate");
         this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_LEGGINGS_ITEM.get(), "Platinum Infused Netherite Leggings");
@@ -61,17 +68,52 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         this.add(ModRegistry.MARAUDER_ENTITY_TYPE.get(), "Marauder");
         this.add(ModRegistry.ALCHEMIST_ENTITY_TYPE.get(), "Alchemist");
         this.add(ModRegistry.FIRECALLER_ENTITY_TYPE.get(), "Firecaller");
-        this.add("advancements.husbandry.platinum_infused_netherite_hoe.title", "Why?");
-        this.add("advancements.husbandry.platinum_infused_netherite_hoe.description", "Use a platinum sheet to upgrade a hoe); and then definitely decide why you made this decision");
-        this.add("advancements.adventure_find_mansion.title", "Home Sweet Mansion");
-        this.add("advancements.adventure.find_mansion.description", "Enter a Woodland Mansion); what are those illagers hiding?");
-        this.add("advancements.adventure.defeat_invoker.title", "Invoking Some Good Memories");
-        this.add("advancements.adventure.defeat_invoker.description", "Defeat the Invoker");
-        this.add("advancements.adventure.imbuing_table.title", "Untapped Potential");
-        this.add("advancements.adventure.imbuing_table.description", "Obtain an Imbuing Table");
-        this.add("advancements.nether.platinum_infused_netherite_armor.title", "Cover me in Platinum");
-        this.add("advancements.nether.platinum_infused_netherite_armor.description", "Get a full suit of Platinum Infused Netherite armor");
-        this.add("advancements.adventure.horn_of_sight.title", "Don't Toot Your Own Horn");
-        this.add("advancements.adventure.horn_of_sight.description", "Obtain a Horn of Sight");
+        this.add(ModRegistry.HORN_OF_SIGHT_SOUND_EVENT.get(),"Horn of Sight blows");
+        this.add(ModRegistry.LOST_CANDLE_DIAMOND_SOUND_EVENT.get(),"Diamonds ring");
+        this.add(ModRegistry.LOST_CANDLE_IRON_SOUND_EVENT.get(),"Iron rings");
+        this.add(ModRegistry.LOST_CANDLE_COAL_SOUND_EVENT.get(),"Coal rings");
+        this.add(ModRegistry.LOST_CANDLE_COPPER_SOUND_EVENT.get(),"Copper rings");
+        this.add(ModRegistry.LOST_CANDLE_GOLD_SOUND_EVENT.get(),"Gold rings");
+        this.add(ModRegistry.SURRENDERED_AMBIENT_SOUND_EVENT.get(),"Surrendered clanks");
+        this.add(ModRegistry.SURRENDERED_HURT_SOUND_EVENT.get(),"Surrendered hurts");
+        this.add(ModRegistry.SURRENDERED_CHARGE_SOUND_EVENT.get(),"Surrendered charges");
+        this.add(ModRegistry.SURRENDERED_DEATH_SOUND_EVENT.get(),"Surrendered dies");
+        this.add(ModRegistry.NECROMANCER_SUMMON_SOUND_EVENT.get(),"Necromancer summons");
+        this.add(ModRegistry.ARCHIVIST_AMBIENT_SOUND_EVENT.get(),"Archivist murmurs");
+        this.add(ModRegistry.ARCHIVIST_HURT_SOUND_EVENT.get(),"Archivist hurts");
+        this.add(ModRegistry.ARCHIVIST_DEATH_SOUND_EVENT.get(),"Archivist dies");
+        this.add(ModRegistry.INVOKER_FANGS_SOUND_EVENT.get(),"Fangs attack");
+        this.add(ModRegistry.INVOKER_HURT_SOUND_EVENT.get(),"Invoker hurts");
+        this.add(ModRegistry.INVOKER_DEATH_SOUND_EVENT.get(),"Invoker dies");
+        this.add(ModRegistry.INVOKER_AMBIENT_SOUND_EVENT.get(),"Invoker murmurs");
+        this.add(ModRegistry.INVOKER_COMPLETE_CAST_SOUND_EVENT.get(),"Invoker casts");
+        this.add(ModRegistry.INVOKER_TELEPORT_CAST_SOUND_EVENT.get(),"Invoker casts");
+        this.add(ModRegistry.INVOKER_FANGS_CAST_SOUND_EVENT.get(),"Invoker casts");
+        this.add(ModRegistry.INVOKER_BIG_CAST_SOUND_EVENT.get(),"Invoker casts");
+        this.add(ModRegistry.INVOKER_SUMMON_CAST_SOUND_EVENT.get(),"Invoker casts");
+        this.add(ModRegistry.INVOKER_SHIELD_BREAK_SOUND_EVENT.get(),"Shield breaks");
+        this.add(ModRegistry.INVOKER_SHIELD_CREATE_SOUND_EVENT.get(),"Shield summoned");
+        this.add(ModRegistry.ILLAGER_BRUTE_AMBIENT_SOUND_EVENT.get(),"Illager Brute grunts");
+        this.add(ModRegistry.ILLAGER_BRUTE_HURT_SOUND_EVENT.get(),"Illager Brute hurts");
+        this.add(ModRegistry.ILLAGER_BRUTE_DEATH_SOUND_EVENT.get(),"Illager Brute dies");
+        this.add(ModRegistry.PROVOKER_AMBIENT_SOUND_EVENT.get(),"Provoker murmurs");
+        this.add(ModRegistry.PROVOKER_HURT_SOUND_EVENT.get(),"Provoker hurts");
+        this.add(ModRegistry.PROVOKER_DEATH_SOUND_EVENT.get(),"Provoker dies");
+        this.add(ModRegistry.PROVOKER_CELEBRATE_SOUND_EVENT.get(),"Provoker celebrates");
+        this.add(ModRegistry.BASHER_AMBIENT_SOUND_EVENT.get(),"Basher murmurs");
+        this.add(ModRegistry.BASHER_HURT_SOUND_EVENT.get(),"Basher hurts");
+        this.add(ModRegistry.BASHER_DEATH_SOUND_EVENT.get(),"Basher dies");
+        this.add(ModRegistry.BASHER_CELEBRATE_SOUND_EVENT.get(),"Basher celebrates");
+        this.add(ModRegistry.FIRECALLER_AMBIENT_SOUND_EVENT.get(),"Firecaller murmurs");
+        this.add(ModRegistry.FIRECALLER_HURT_SOUND_EVENT.get(),"Firecaller hurts");
+        this.add(ModRegistry.FIRECALLER_DEATH_SOUND_EVENT.get(),"Firecaller dies");
+        this.add(ModRegistry.FIRECALLER_CAST_SOUND_EVENT.get(),"Firecaller casts");
+        this.add(ModRegistry.SORCERER_CAST_SOUND_EVENT.get(),"Sorcerer casts");
+        this.add(ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT.get(),"Sorcerer casts");
+        this.add(ModRegistry.SORCERER_HURT_SOUND_EVENT.get(),"Sorcerer hurts");
+        this.add(ModRegistry.SORCERER_DEATH_SOUND_EVENT.get(),"Sorcerer dies");
+        this.add(ModRegistry.SORCERER_AMBIENT_SOUND_EVENT.get(),"Sorcerer murmurs");
+        this.add(ModRegistry.SORCERER_CELEBRATE_SOUND_EVENT.get(),"Sorcerer celebrates");
+        
     }
 }

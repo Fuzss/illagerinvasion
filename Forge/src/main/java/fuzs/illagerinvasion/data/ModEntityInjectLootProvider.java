@@ -2,7 +2,6 @@ package fuzs.illagerinvasion.data;
 
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v1.AbstractLootProvider;
-import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -14,11 +13,12 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerC
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 public class ModEntityInjectLootProvider extends AbstractLootProvider.Simple {
 
-    public ModEntityInjectLootProvider(PackOutput packOutput) {
-        super(packOutput, LootContextParamSets.ENTITY);
+    public ModEntityInjectLootProvider(GatherDataEvent evt, String modId) {
+        super(LootContextParamSets.ENTITY, evt, modId);
     }
 
     @Override
@@ -53,6 +53,14 @@ public class ModEntityInjectLootProvider extends AbstractLootProvider.Simple {
                                 .setRolls(ConstantValue.exactly(1.0F))
                                 .add(LootItem.lootTableItem(ModRegistry.PLATINUM_CHUNK_ITEM.get())
                                         .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 0.0625F))
+                                        .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                )
+                ).withPool(
+                        LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1.0F))
+                                .add(LootItem.lootTableItem(Items.EMERALD)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
+                                        .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
                                 )
                 )

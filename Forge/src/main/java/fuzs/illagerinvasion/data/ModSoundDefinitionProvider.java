@@ -4,11 +4,12 @@ import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v1.AbstractSoundDefinitionProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 public class ModSoundDefinitionProvider extends AbstractSoundDefinitionProvider {
 
-    public ModSoundDefinitionProvider(PackOutput packOutput, String modId, ExistingFileHelper fileHelper) {
-        super(packOutput, modId, fileHelper);
+    public ModSoundDefinitionProvider(GatherDataEvent evt, String modId) {
+        super(evt, modId);
     }
 
     @Override

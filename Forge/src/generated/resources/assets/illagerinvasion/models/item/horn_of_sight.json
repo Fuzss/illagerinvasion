@@ -1,0 +1,74 @@
+{
+  "parent": "minecraft:item/generated",
+  "display": {
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        -90,
+        0
+      ],
+      "scale": [
+        0.68,
+        0.68,
+        0.68
+      ],
+      "translation": [
+        1.13,
+        3.2,
+        1.13
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        0
+      ],
+      "scale": [
+        0.68,
+        0.68,
+        0.68
+      ],
+      "translation": [
+        1.13,
+        0,
+        1.13
+      ]
+    },
+    "thirdperson_lefthand": {
+      "scale": [
+        0.55,
+        0.55,
+        0.55
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ]
+    },
+    "thirdperson_righthand": {
+      "scale": [
+        0.55,
+        0.55,
+        0.55
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ]
+    }
+  },
+  "overrides": [
+    {
+      "model": "illagerinvasion:item/horn_of_sight_using",
+      "predicate": {
+        "illagerinvasion:using": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "illagerinvasion:item/horn_of_sight"
+  }
+}

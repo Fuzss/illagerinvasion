@@ -31,7 +31,7 @@ public class ImbuingScreen extends AbstractContainerScreen<ImbuingMenu> {
         ImbuingMenu.InvalidImbuingState state = ImbuingMenu.InvalidImbuingState.values()[this.menu.invalidState.get()];
         if (state != ImbuingMenu.InvalidImbuingState.ALL_GOOD) {
             guiGraphics.blit(TEXTURE_LOCATION, this.leftPos + 74, this.topPos + 32, 176, 0, 28, 21);
-            if (this.isHovering(this.leftPos + 74, this.topPos + 32, 28, 21, mouseX, mouseY)) {
+            if (this.isHovering(74, 32, 28, 21, mouseX, mouseY)) {
                 this.setTooltipForNextRenderPass(state.component);
             }
         }

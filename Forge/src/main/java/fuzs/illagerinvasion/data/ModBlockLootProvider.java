@@ -2,16 +2,17 @@ package fuzs.illagerinvasion.data;
 
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v1.AbstractLootProvider;
-import net.minecraft.data.PackOutput;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 public class ModBlockLootProvider extends AbstractLootProvider.Blocks {
 
-    public ModBlockLootProvider(PackOutput packOutput, String modId) {
-        super(packOutput, modId);
+    public ModBlockLootProvider(GatherDataEvent evt, String modId) {
+        super(evt, modId);
     }
 
     @Override
     public void generate() {
         this.dropSelf(ModRegistry.IMBUING_TABLE_BLOCK.get());
+        this.add(ModRegistry.MAGIC_FIRE_BLOCK.get(), noDrop());
     }
 }

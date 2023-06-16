@@ -8,17 +8,53 @@ import fuzs.illagerinvasion.client.render.entity.*;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.*;
+import fuzs.puzzleslib.api.client.event.v1.ItemTooltipCallback;
 import fuzs.puzzleslib.api.core.v1.context.ModLifecycleContext;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 
 public class IllagerInvasionClient implements ClientModConstructor {
+
+    @Override
+    public void onConstructMod() {
+        ItemTooltipCallback.EVENT.register((stack, player, lines, context) -> {
+            for (Component component : lines) {
+                if (component instanceof MutableComponent mutableComponent && component.getContents() instanceof TranslatableContents contents) {
+                    if (contents.getKey().startsWith("enchantment.")) {
+                        for (Component sibling : component.getSiblings()) {
+                            if (sibling.getContents() instanceof TranslatableContents contents1) {
+                                if (contents1.getKey().startsWith("enchantment.level.")) {
+                                    String level = contents1.getKey().replace("enchantment.level.", "");
+                                    int i = Integer.parseInt(level);
+                                    String replace = contents.getKey().replace("enchantment.", "").replace(".", ":");
+                                    ResourceLocation resourceLocation = ResourceLocation.tryParse(replace);
+                                    if (resourceLocation != null) {
+                                        Enchantment enchantment = BuiltInRegistries.ENCHANTMENT.get(resourceLocation);
+                                        if (i > enchantment.getMaxLevel()) {
+                                            mutableComponent.withStyle(ChatFormatting.LIGHT_PURPLE);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
 
     @Override
     public void onClientSetup(ModLifecycleContext context) {

@@ -4,6 +4,7 @@ import fuzs.illagerinvasion.init.ModRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -43,25 +44,15 @@ public class ImbuingMenu extends AbstractContainerMenu {
             public boolean mayPlace(ItemStack stack) {
                 return stack.is(Items.ENCHANTED_BOOK);
             }
-
-            @Override
-            public void onTake(Player playerEntity, ItemStack itemStack) {
-                ImbuingMenu.this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
-            }
         });
         this.addSlot(new Slot(this.input, 1, 80, 54) {
 
             @Override
-            public void onTake(Player playerEntity, ItemStack itemStack) {
-                ImbuingMenu.this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
+            public boolean mayPlace(ItemStack stack) {
+                return stack.isEnchanted();
             }
         });
         this.addSlot(new Slot(this.input, 2, 134, 54) {
-
-            @Override
-            public void onTake(Player playerEntity, ItemStack itemStack) {
-                ImbuingMenu.this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
-            }
 
             @Override
             public boolean mayPlace(ItemStack stack) {
@@ -84,7 +75,9 @@ public class ImbuingMenu extends AbstractContainerMenu {
             public void onTake(Player playerEntity, ItemStack itemStack) {
                 ImbuingMenu.this.input.setItem(0, ItemStack.EMPTY);
                 ImbuingMenu.this.input.setItem(1, ItemStack.EMPTY);
-                ImbuingMenu.this.input.getItem(2).grow(-1);
+                ItemStack stack = ImbuingMenu.this.input.getItem(2);
+                stack.shrink(1);
+                ImbuingMenu.this.input.setItem(2, stack);
                 ImbuingMenu.this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
                 playerEntity.playSound(ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT.get(), 1.0f, 1.0f);
             }
@@ -101,10 +94,10 @@ public class ImbuingMenu extends AbstractContainerMenu {
 
     @Override
     public void slotsChanged(Container inventory) {
-        super.slotsChanged(inventory);
         if (inventory == this.input) {
             this.updateResult();
         }
+        super.slotsChanged(inventory);
     }
 
     @Override
@@ -130,22 +123,23 @@ public class ImbuingMenu extends AbstractContainerMenu {
                 } else if (!enchantment.canEnchant(imbuingItem)) {
                     this.invalidState.set(InvalidImbuingState.INVALID_ITEM.ordinal());
                 } else {
-                    this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
-                    int imbueLevel = enchantments.get(enchantment) + 1;
                     Map<Enchantment, Integer> imbueMap = EnchantmentHelper.getEnchantments(imbuingItem);
-                    for (Enchantment imbueEnchant : imbueMap.keySet()) {
-                        int level = imbueMap.getOrDefault(imbueEnchant, 0);
-                        enchantments.put(imbueEnchant, level);
+                    if (imbueMap.getOrDefault(enchantment, 0) != enchantment.getMaxLevel()) {
+                        this.invalidState.set(InvalidImbuingState.AT_WRONG_LEVEL.ordinal());
+                    } else {
+                        int imbueLevel = enchantments.get(enchantment) + 1;
+                        imbueMap.put(enchantment, imbueLevel);
+                        EnchantmentHelper.setEnchantments(imbueMap, imbuingResult);
+                        this.output.setItem(0, imbuingResult);
+                        this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
+                        return;
                     }
-                    enchantments.put(enchantment, imbueLevel);
-                    EnchantmentHelper.setEnchantments(enchantments, imbuingResult);
-                    this.output.setItem(0, imbuingResult);
                 }
             }
         } else {
-            this.output.setItem(0, ItemStack.EMPTY);
+            this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
         }
-        this.broadcastChanges();
+        this.output.setItem(0, ItemStack.EMPTY);
     }
 
     @Override
@@ -194,6 +188,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
         ALL_GOOD(CommonComponents.EMPTY),
         TOO_MANY_ENCHANTMENTS(Component.translatable("container.imbue.tooManyEnchantments")),
         NOT_AT_MAX_LEVEL(Component.translatable("container.imbue.notAtMaxLevel")),
+        AT_WRONG_LEVEL(Component.translatable("container.imbue.atWrongLevel")),
         INVALID_ENCHANTMENT(Component.translatable("container.imbue.invalidEnchantment")),
         INVALID_ITEM(Component.translatable("container.imbue.invalidItem"));
 
@@ -201,6 +196,10 @@ public class ImbuingMenu extends AbstractContainerMenu {
 
         InvalidImbuingState(Component component) {
             this.component = component;
+        }
+
+        public String getTranslationKey() {
+            return ((TranslatableContents) this.component.getContents()).getKey();
         }
     }
 }

@@ -41,16 +41,16 @@ public class ModRegistry {
     public static final Tier PLATINUM_INFUSED_NETHERITE_TIER = ItemEquipmentFactories.registerTier(4, 2531, 9.0f, 4.0f, 17, () -> Ingredient.of(ModRegistry.PLATINUM_SHEET_ITEM.get()));
     public static final ArmorMaterial PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL = ItemEquipmentFactories.registerArmorMaterial(IllagerInvasion.id("platinum_infused_netherite"), 40, new int[]{3, 6, 8, 3}, 17, () -> SoundEvents.ARMOR_EQUIP_NETHERITE, 3.0f, 0.2f, () -> Ingredient.of(ModRegistry.PLATINUM_SHEET_ITEM.get()));
 
-    static final RegistryManager REGISTRY = RegistryManager.instant(IllagerInvasion.MOD_ID);
+    static final RegistryManager REGISTRY = RegistryManager.deferred(IllagerInvasion.MOD_ID);
     public static final RegistryReference<Block> IMBUING_TABLE_BLOCK = REGISTRY.registerBlock("imbuing_table", () -> new ImbuingTableBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
-    public static final RegistryReference<Block> MAGIC_FIRE_BLOCK = REGISTRY.registerBlock("magic_fire", () -> new MagicFireBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_FIRE).mapColor(MapColor.COLOR_PURPLE)));
+    public static final RegistryReference<Block> MAGIC_FIRE_BLOCK = REGISTRY.registerBlock("magic_fire", () -> new MagicFireBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_FIRE).mapColor(MapColor.COLOR_PURPLE).randomTicks()));
     public static final RegistryReference<Item> IMBUIING_TABLE_ITEM = REGISTRY.registerBlockItem(ModRegistry.IMBUING_TABLE_BLOCK);
     public static final RegistryReference<Item> UNUSUAL_DUST_ITEM = REGISTRY.registerItem("unusual_dust", () -> new Item(new Item.Properties()));
     public static final RegistryReference<Item> ILLUSIONARY_DUST_ITEM = REGISTRY.registerItem("illusionary_dust", () -> new IllusionaryDustItem(new Item.Properties()));
     public static final RegistryReference<Item> LOST_CANDLE_ITEM = REGISTRY.registerItem("lost_candle", () -> new LostCandleItem(new Item.Properties()));
-    public static final RegistryReference<Item> HORN_OF_SIGHT_ITEM = REGISTRY.registerItem("horn_of_sight", () -> new HornOfSightItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryReference<Item> HORN_OF_SIGHT_ITEM = REGISTRY.registerItem("horn_of_sight", () -> new HornOfSightItem(new Item.Properties().stacksTo(1), ModRegistry.HORN_OF_SIGHT_INSTRUMENT_TAG));
     public static final RegistryReference<Item> HALLOWED_GEM_ITEM = REGISTRY.registerItem("hallowed_gem", () -> new Item(new Item.Properties()));
-    public static final RegistryReference<Item> PRIMAL_ESSENCE_ITEM = REGISTRY.registerItem("primal_essence", () -> new Item(new Item.Properties()));
+    public static final RegistryReference<Item> PRIMAL_ESSENCE_ITEM = REGISTRY.registerItem("primal_essence", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryReference<Item> PLATINUM_CHUNK_ITEM = REGISTRY.registerItem("platinum_chunk", () -> new Item(new Item.Properties()));
     public static final RegistryReference<Item> PLATINUM_SHEET_ITEM = REGISTRY.registerItem("platinum_sheet", () -> new Item(new Item.Properties()));
     public static final RegistryReference<Item> HATCHET_ITEM = REGISTRY.registerItem("hatchet", () -> new HatchetItem(new Item.Properties().durability(250)));
@@ -63,6 +63,7 @@ public class ModRegistry {
     public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_LEGGINGS_ITEM = REGISTRY.registerItem("platinum_infused_netherite_leggings", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()));
     public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_CHESTPLATE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_chestplate", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant()));
     public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_HELMET_ITEM = REGISTRY.registerItem("platinum_infused_netherite_helmet", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));
+    public static final RegistryReference<Instrument> HORN_OF_SIGHT_INSTRUMENT = REGISTRY.register(Registries.INSTRUMENT, "horn_of_sight", () -> new Instrument(ModRegistry.HORN_OF_SIGHT_SOUND_EVENT.holder(), 80, 48.0F));
     public static final RegistryReference<EntityType<Provoker>> PROVOKER_ENTITY_TYPE = REGISTRY.registerEntityType("provoker", () -> EntityType.Builder.of(Provoker::new, MobCategory.MONSTER).sized(0.5F, 1.92F));
     public static final RegistryReference<EntityType<Invoker>> INVOKER_ENTITY_TYPE = REGISTRY.registerEntityType("invoker", () -> EntityType.Builder.of(Invoker::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Necromancer>> NECROMANCER_ENTITY_TYPE = REGISTRY.registerEntityType("necromancer", () -> EntityType.Builder.of(Necromancer::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
@@ -94,6 +95,12 @@ public class ModRegistry {
     public static final RegistryReference<MenuType<ImbuingMenu>> IMBUING_MENU_TYPE = REGISTRY.registerMenuType("imbuing", () -> ImbuingMenu::new);
     public static final RegistryReference<SimpleParticleType> MAGIC_FLAME_PARTICLE_TYPE = REGISTRY.register(Registries.PARTICLE_TYPE, "magic_flame", () -> new SimpleParticleType(false));
     public static final RegistryReference<SimpleParticleType> NECROMANCER_BUFF_PARTICLE_TYPE = REGISTRY.register(Registries.PARTICLE_TYPE, "necromancer_buff", () -> new SimpleParticleType(false));
+    public static final RegistryReference<SoundEvent> HORN_OF_SIGHT_SOUND_EVENT = REGISTRY.registerSoundEvent("item.horn_of_sight.blow");
+    public static final RegistryReference<SoundEvent> LOST_CANDLE_DIAMOND_SOUND_EVENT = REGISTRY.registerSoundEvent("item.lost_candle.diamond");
+    public static final RegistryReference<SoundEvent> LOST_CANDLE_IRON_SOUND_EVENT = REGISTRY.registerSoundEvent("item.lost_candle.iron");
+    public static final RegistryReference<SoundEvent> LOST_CANDLE_COAL_SOUND_EVENT = REGISTRY.registerSoundEvent("item.lost_candle.coal");
+    public static final RegistryReference<SoundEvent> LOST_CANDLE_COPPER_SOUND_EVENT = REGISTRY.registerSoundEvent("item.lost_candle.copper");
+    public static final RegistryReference<SoundEvent> LOST_CANDLE_GOLD_SOUND_EVENT = REGISTRY.registerSoundEvent("item.lost_candle.gold");
     public static final RegistryReference<SoundEvent> SURRENDERED_AMBIENT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.surrendered.ambient");
     public static final RegistryReference<SoundEvent> SURRENDERED_HURT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.surrendered.hurt");
     public static final RegistryReference<SoundEvent> SURRENDERED_CHARGE_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.surrendered.charge");
@@ -102,9 +109,6 @@ public class ModRegistry {
     public static final RegistryReference<SoundEvent> ARCHIVIST_AMBIENT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.archivist.ambient");
     public static final RegistryReference<SoundEvent> ARCHIVIST_HURT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.archivist.hurt");
     public static final RegistryReference<SoundEvent> ARCHIVIST_DEATH_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.archivist.death");
-    public static final RegistryReference<SoundEvent> SORCERER_CAST_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.cast");
-    public static final RegistryReference<SoundEvent> SORCERER_COMPLETE_CAST_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.complete_cast");
-    public static final RegistryReference<SoundEvent> HORN_OF_SIGHT_SOUND_EVENT = REGISTRY.registerSoundEvent("item.horn_of_sight.blow");
     public static final RegistryReference<SoundEvent> INVOKER_FANGS_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.invoker.fangs");
     public static final RegistryReference<SoundEvent> INVOKER_HURT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.invoker.hurt");
     public static final RegistryReference<SoundEvent> INVOKER_DEATH_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.invoker.death");
@@ -131,29 +135,27 @@ public class ModRegistry {
     public static final RegistryReference<SoundEvent> FIRECALLER_HURT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.firecaller.hurt");
     public static final RegistryReference<SoundEvent> FIRECALLER_DEATH_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.firecaller.death");
     public static final RegistryReference<SoundEvent> FIRECALLER_CAST_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.firecaller.cast");
+    public static final RegistryReference<SoundEvent> SORCERER_CAST_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.cast");
+    public static final RegistryReference<SoundEvent> SORCERER_COMPLETE_CAST_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.complete_cast");
     public static final RegistryReference<SoundEvent> SORCERER_HURT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.hurt");
     public static final RegistryReference<SoundEvent> SORCERER_DEATH_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.death");
     public static final RegistryReference<SoundEvent> SORCERER_AMBIENT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.idle");
     public static final RegistryReference<SoundEvent> SORCERER_CELEBRATE_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.celebrate");
-    public static final RegistryReference<SoundEvent> LOST_CANDLE_DIAMOND_SOUND_EVENT = REGISTRY.registerSoundEvent("item.lost_candle.diamond");
-    public static final RegistryReference<SoundEvent> LOST_CANDLE_IRON_SOUND_EVENT = REGISTRY.registerSoundEvent("item.lost_candle.iron");
-    public static final RegistryReference<SoundEvent> LOST_CANDLE_COAL_SOUND_EVENT = REGISTRY.registerSoundEvent("item.lost_candle.coal");
-    public static final RegistryReference<SoundEvent> LOST_CANDLE_COPPER_SOUND_EVENT = REGISTRY.registerSoundEvent("item.lost_candle.copper");
-    public static final RegistryReference<SoundEvent> LOST_CANDLE_GOLD_SOUND_EVENT = REGISTRY.registerSoundEvent("item.lost_candle.gold");
 
     public static final TagKey<Enchantment> IMBUING_ENCHANTMENT_TAG = REGISTRY.registerEnchantmentTag("imbuing");
+    public static final TagKey<Instrument> HORN_OF_SIGHT_INSTRUMENT_TAG = REGISTRY.registerTag(Registries.INSTRUMENT, "horn_of_sight");
     public static final TagKey<Biome> HAS_FIRECALLER_HUT_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/firecaller_hut");
     public static final TagKey<Biome> HAS_ILLAGER_FORT_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/illager_fort");
     public static final TagKey<Biome> HAS_ILLUSIONER_TOWER_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/illusioner_tower");
     public static final TagKey<Biome> HAS_SORCERER_HUT_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/sorcerer_hut");
 
     public static final ResourceLocation ILLAGER_FORT_GOOD_LOOT_TABLE = REGISTRY.makeKey("chests/illager_fort_good");
-    public static final ResourceLocation illager_fort_normal_LOOT_TABLE = REGISTRY.makeKey("chests/illager_fort_normal");
-    public static final ResourceLocation illusioner_tower_good_LOOT_TABLE = REGISTRY.makeKey("chests/illusioner_tower_good");
-    public static final ResourceLocation illusioner_tower_normal_LOOT_TABLE = REGISTRY.makeKey("chests/illusioner_tower_normal");
-    public static final ResourceLocation labyrinth_LOOT_TABLE = REGISTRY.makeKey("chests/labyrinth");
-    public static final ResourceLocation labyrinth_map_LOOT_TABLE = REGISTRY.makeKey("chests/labyrinth_map");
-    public static final ResourceLocation sorcerer_hut_LOOT_TABLE = REGISTRY.makeKey("chests/sorcerer_hut");
+    public static final ResourceLocation ILLAGER_FORT_NORMAL_LOOT_TABLE = REGISTRY.makeKey("chests/illager_fort_normal");
+    public static final ResourceLocation ILLUSIONER_TOWER_GOOD_LOOT_TABLE = REGISTRY.makeKey("chests/illusioner_tower_good");
+    public static final ResourceLocation ILLUSIONER_TOWER_NORMAL_LOOT_TABLE = REGISTRY.makeKey("chests/illusioner_tower_normal");
+    public static final ResourceLocation LABYRINTH_LOOT_TABLE = REGISTRY.makeKey("chests/labyrinth");
+    public static final ResourceLocation LABYRINTH_MAP_LOOT_TABLE = REGISTRY.makeKey("chests/labyrinth_map");
+    public static final ResourceLocation SORCERER_HUT_LOOT_TABLE = REGISTRY.makeKey("chests/sorcerer_hut");
     public static final ResourceLocation ILLUSIONER_INJECT_LOOT_TABLE = REGISTRY.makeKey("entities/inject/illusioner");
     public static final ResourceLocation PILLAGER_INJECT_LOOT_TABLE = REGISTRY.makeKey("entities/inject/pillager");
     public static final ResourceLocation RAVAGER_INJECT_LOOT_TABLE = REGISTRY.makeKey("entities/inject/ravager");
@@ -166,6 +168,6 @@ public class ModRegistry {
     public static final Object PROVOKE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("PROVOKE", 1.0, 0.8, 0.75);
 
     public static void touch() {
-        
+        REGISTRY.applyRegistration();
     }
 }

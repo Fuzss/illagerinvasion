@@ -1,13 +1,15 @@
 package fuzs.illagerinvasion.data;
 
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.puzzleslib.api.data.v1.AbstractParticleDescriptionProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 public class ModParticleDescriptionProvider extends AbstractParticleDescriptionProvider {
 
-    public ModParticleDescriptionProvider(PackOutput packOutput, ExistingFileHelper fileHelper) {
-        super(packOutput, fileHelper);
+    public ModParticleDescriptionProvider(GatherDataEvent evt, String modId) {
+        super(evt, modId);
     }
 
     @Override

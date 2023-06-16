@@ -1,23 +1,20 @@
 package fuzs.illagerinvasion.data;
 
-import com.google.common.base.Preconditions;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v1.AbstractRecipeProvider;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ModRecipeProvider extends AbstractRecipeProvider {
 
-    public ModRecipeProvider(PackOutput packOutput) {
-        super(packOutput);
+    public ModRecipeProvider(GatherDataEvent evt, String modId) {
+        super(evt, modId);
     }
 
     @Override
@@ -56,15 +53,5 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
                 .pattern(" # ")
                 .unlockedBy(getHasName(ModRegistry.HALLOWED_GEM_ITEM.get()), has(ModRegistry.HALLOWED_GEM_ITEM.get()))
                 .save(exporter);
-    }
-
-    protected static String getHasName(ItemLike... items) {
-        Preconditions.checkPositionIndex(0, items.length - 1, "items is empty");
-        return "has_" + Stream.of(items).map(RecipeProvider::getItemName).collect(Collectors.joining("_and_"));
-    }
-
-    protected static InventoryChangeTrigger.TriggerInstance has(ItemLike... items) {
-        Preconditions.checkPositionIndex(0, items.length - 1, "items is empty");
-        return inventoryTrigger(ItemPredicate.Builder.item().of(items).build());
     }
 }

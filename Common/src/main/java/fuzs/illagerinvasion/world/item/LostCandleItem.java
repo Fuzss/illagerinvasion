@@ -1,8 +1,10 @@
 package fuzs.illagerinvasion.world.item;
 
-import com.google.common.collect.ImmutableMap;
+import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.init.ModRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,19 +16,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Map;
 import java.util.function.Supplier;
 
 public class LostCandleItem extends Item {
-    private static final Map<TagKey<Block>, Supplier<SoundEvent>> ORE_SOUND_EVENTS = ImmutableMap.of(
-            BlockTags.DIAMOND_ORES, ModRegistry.LOST_CANDLE_DIAMOND_SOUND_EVENT::get,
-            BlockTags.IRON_ORES, ModRegistry.LOST_CANDLE_IRON_SOUND_EVENT::get,
-            BlockTags.GOLD_ORES, ModRegistry.LOST_CANDLE_GOLD_SOUND_EVENT::get,
-            BlockTags.COPPER_ORES, ModRegistry.LOST_CANDLE_COPPER_SOUND_EVENT::get,
-            BlockTags.COAL_ORES, ModRegistry.LOST_CANDLE_COAL_SOUND_EVENT::get
-    );
+    public static final String FOUND_NEARBY_TRANSLATION_KEY = "item." + IllagerInvasion.MOD_ID + ".lost_candle.foundNearby";
 
     public LostCandleItem(Item.Properties settings) {
         super(settings);
@@ -37,10 +33,10 @@ public class LostCandleItem extends Item {
         Level level = context.getLevel();
         Player player = context.getPlayer();
         $1: if (level.isClientSide) {
-            for (BlockPos pos : BlockPos.withinManhattan(player.blockPosition(), 10, 10, 10)) {
+            for (BlockPos pos : BlockPos.withinManhattan(player.blockPosition(), 8, 8, 8)) {
                 BlockState state = level.getBlockState(pos);
-                for (Map.Entry<TagKey<Block>, Supplier<SoundEvent>> entry : ORE_SOUND_EVENTS.entrySet()) {
-                    if (tryPlayOreSound(level, player, state, entry.getKey(), entry.getValue().get())) {
+                for (CandleOreType type : CandleOreType.values()) {
+                    if (tryPlayOreSound(level, player, state, type)) {
                         break $1;
                     }
                 }
@@ -52,11 +48,30 @@ public class LostCandleItem extends Item {
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    private static boolean tryPlayOreSound(Level level, Player player, BlockState state, TagKey<Block> tagKey, SoundEvent soundEvent) {
-        if (state.is(tagKey)) {
-            level.playSound(player, player.blockPosition(), soundEvent, SoundSource.AMBIENT, 1.0F, 1.0F);
+    private static boolean tryPlayOreSound(Level level, Player player, BlockState state, CandleOreType type) {
+        if (state.is(type.blocks)) {
+            level.playSound(player, player.blockPosition(), type.soundEvent.get(), SoundSource.AMBIENT, 1.0F, 1.0F);
+            player.displayClientMessage(Component.translatable(FOUND_NEARBY_TRANSLATION_KEY, type.component), true);
             return true;
         }
         return false;
+    }
+
+    public enum CandleOreType {
+        DIAMOND(Blocks.DIAMOND_ORE, BlockTags.DIAMOND_ORES, ModRegistry.LOST_CANDLE_DIAMOND_SOUND_EVENT::get, ChatFormatting.AQUA),
+        IRON(Blocks.IRON_ORE, BlockTags.IRON_ORES, ModRegistry.LOST_CANDLE_IRON_SOUND_EVENT::get, ChatFormatting.GRAY),
+        GOLD(Blocks.GOLD_ORE, BlockTags.GOLD_ORES, ModRegistry.LOST_CANDLE_GOLD_SOUND_EVENT::get, ChatFormatting.YELLOW),
+        COPPER(Blocks.COPPER_BLOCK, BlockTags.COPPER_ORES, ModRegistry.LOST_CANDLE_COPPER_SOUND_EVENT::get, ChatFormatting.GOLD),
+        COAL(Blocks.COAL_ORE, BlockTags.COAL_ORES, ModRegistry.LOST_CANDLE_COAL_SOUND_EVENT::get, ChatFormatting.DARK_GRAY);
+
+        public final TagKey<Block> blocks;
+        public final Supplier<SoundEvent> soundEvent;
+        public final Component component;
+
+        CandleOreType(Block name, TagKey<Block> blocks, Supplier<SoundEvent> soundEvent, ChatFormatting chatFormatting) {
+            this.blocks = blocks;
+            this.soundEvent = soundEvent;
+            this.component = name.getName().withStyle(chatFormatting);
+        }
     }
 }
