@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "B": {
+      "item": "illagerinvasion:unusual_dust"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "R": {
+      "item": "illagerinvasion:illusionary_dust"
+    }
+  },
+  "pattern": [
+    "#B#",
+    "RDR",
+    "#B#"
+  ],
+  "result": {
+    "item": "illagerinvasion:hallowed_gem"
+  },
+  "show_notification": true
+}

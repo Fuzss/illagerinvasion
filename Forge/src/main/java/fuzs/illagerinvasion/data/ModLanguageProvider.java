@@ -21,8 +21,7 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         this.add("container.imbue.invalidItem", "Item is not compatible with this enchantment!");
         this.add(ModRegistry.UNUSUAL_DUST_ITEM.get(), "Unusual Dust");
         this.add(ModRegistry.ILLUSIONARY_DUST_ITEM.get(), "Unusual Dust");
-        this.add(ModRegistry.RAVAGER_HORN_ITEM.get(), "Ravager Horn");
-        this.add(ModRegistry.GILDED_HORN_ITEM.get(), "Gilded Horn");
+        this.add(ModRegistry.LOST_CANDLE_ITEM.get(), "Lost Candle");
         this.add(ModRegistry.HORN_OF_SIGHT_ITEM.get(), "Horn of Sight");
         this.add(ModRegistry.HALLOWED_GEM_ITEM.get(), "Hallowed Gem");
         this.add(ModRegistry.HATCHET_ITEM.get(), "Hatchet");

@@ -47,12 +47,22 @@ public class ModEntityInjectLootProvider extends AbstractLootProvider.Simple {
                                 .when(LootItemKilledByPlayerCondition.killedByPlayer())
                 )
         );
+        this.add(ModRegistry.PILLAGER_INJECT_LOOT_TABLE, LootTable.lootTable()
+                .withPool(
+                        LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1.0F))
+                                .add(LootItem.lootTableItem(ModRegistry.PLATINUM_CHUNK_ITEM.get())
+                                        .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 0.0625F))
+                                        .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                )
+                )
+        );
         this.add(ModRegistry.RAVAGER_INJECT_LOOT_TABLE, LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1.0F))
                                 .add(LootItem.lootTableItem(ModRegistry.PLATINUM_CHUNK_ITEM.get())
-                                        .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 0.15F))
+                                        .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 0.0625F))
                                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
                                 )
                 )

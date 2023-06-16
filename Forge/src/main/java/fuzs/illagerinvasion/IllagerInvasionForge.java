@@ -1,6 +1,9 @@
 package fuzs.illagerinvasion;
 
 import fuzs.illagerinvasion.data.ModEnchantmentTagsProvider;
+import fuzs.illagerinvasion.data.ModParticleDescriptionProvider;
+import fuzs.illagerinvasion.data.ModRecipeProvider;
+import fuzs.illagerinvasion.data.ModSoundDefinitionProvider;
 import fuzs.illagerinvasion.init.ForgeModRegistry;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import net.minecraft.core.HolderLookup;
@@ -31,5 +34,8 @@ public class IllagerInvasionForge {
         final CompletableFuture<HolderLookup.Provider> lookupProvider = evt.getLookupProvider();
         final ExistingFileHelper fileHelper = evt.getExistingFileHelper();
         dataGenerator.addProvider(true, new ModEnchantmentTagsProvider(packOutput, lookupProvider, IllagerInvasion.MOD_ID, fileHelper));
+        dataGenerator.addProvider(true, new ModRecipeProvider(packOutput));
+        dataGenerator.addProvider(true, new ModParticleDescriptionProvider(packOutput, fileHelper));
+        dataGenerator.addProvider(true, new ModSoundDefinitionProvider(packOutput, IllagerInvasion.MOD_ID, fileHelper));
     }
 }

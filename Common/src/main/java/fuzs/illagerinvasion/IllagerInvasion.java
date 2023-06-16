@@ -40,6 +40,7 @@ public class IllagerInvasion implements ModConstructor {
     private static void registerHandlers() {
         LootTableLoadEvents.MODIFY.register((LootDataManager lootManager, ResourceLocation identifier, Consumer<LootPool> addPool, IntPredicate removePool) -> {
             injectLootPool(identifier, addPool, EntityType.ILLUSIONER.getDefaultLootTable(), ModRegistry.ILLUSIONER_INJECT_LOOT_TABLE);
+            injectLootPool(identifier, addPool, EntityType.PILLAGER.getDefaultLootTable(), ModRegistry.PILLAGER_INJECT_LOOT_TABLE);
             injectLootPool(identifier, addPool, EntityType.RAVAGER.getDefaultLootTable(), ModRegistry.RAVAGER_INJECT_LOOT_TABLE);
         });
     }
@@ -69,7 +70,7 @@ public class IllagerInvasion implements ModConstructor {
     }
 
     private static void registerPotionRecipes() {
-        PotionBrewingRegistry.INSTANCE.registerPotionRecipe(Potions.AWKWARD, ModRegistry.RAVAGER_HORN_ITEM.get(), ModRegistry.BERSERKING_POTION.get());
+        PotionBrewingRegistry.INSTANCE.registerPotionRecipe(Potions.AWKWARD, Items.GOAT_HORN, ModRegistry.BERSERKING_POTION.get());
         PotionBrewingRegistry.INSTANCE.registerPotionRecipe(ModRegistry.BERSERKING_POTION.get(), Items.REDSTONE, ModRegistry.LONG_BERSERKING_POTION.get());
         PotionBrewingRegistry.INSTANCE.registerPotionRecipe(ModRegistry.BERSERKING_POTION.get(), Items.GLOWSTONE_DUST, ModRegistry.STRONG_BERSERKING_POTION.get());
     }
@@ -95,8 +96,7 @@ public class IllagerInvasion implements ModConstructor {
             output.accept(ModRegistry.IMBUIING_TABLE_ITEM.get());
             output.accept(ModRegistry.UNUSUAL_DUST_ITEM.get());
             output.accept(ModRegistry.ILLUSIONARY_DUST_ITEM.get());
-            output.accept(ModRegistry.RAVAGER_HORN_ITEM.get());
-            output.accept(ModRegistry.GILDED_HORN_ITEM.get());
+            output.accept(ModRegistry.LOST_CANDLE_ITEM.get());
             output.accept(ModRegistry.HORN_OF_SIGHT_ITEM.get());
             output.accept(ModRegistry.HALLOWED_GEM_ITEM.get());
             output.accept(ModRegistry.PRIMAL_ESSENCE_ITEM.get());

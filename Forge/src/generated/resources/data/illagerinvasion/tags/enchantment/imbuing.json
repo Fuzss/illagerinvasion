@@ -1,0 +1,24 @@
+{
+  "values": [
+    "minecraft:feather_falling",
+    "minecraft:thorns",
+    "minecraft:sharpness",
+    "minecraft:smite",
+    "minecraft:bane_of_arthropods",
+    "minecraft:knockback",
+    "minecraft:fire_aspect",
+    "minecraft:looting",
+    "minecraft:sweeping",
+    "minecraft:efficiency",
+    "minecraft:unbreaking",
+    "minecraft:fortune",
+    "minecraft:power",
+    "minecraft:punch",
+    "minecraft:luck_of_the_sea",
+    "minecraft:lure",
+    "minecraft:loyalty",
+    "minecraft:riptide",
+    "minecraft:impaling",
+    "minecraft:piercing"
+  ]
+}

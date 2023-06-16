@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "illagerinvasion:hallowed_gem"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_unusual_dust_and_illusionary_dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "illagerinvasion:unusual_dust",
+              "illagerinvasion:illusionary_dust"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_unusual_dust_and_illusionary_dust",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "illagerinvasion:hallowed_gem"
+    ]
+  },
+  "sends_telemetry_event": false
+}

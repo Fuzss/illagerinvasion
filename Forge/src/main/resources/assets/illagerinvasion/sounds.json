@@ -282,5 +282,35 @@
     "sounds": [
       "illagerexp:sorcerer_celebrate"
     ]
+  },
+  "lost_candle_coal": {
+    "subtitle": "sandbox.lost_candle_coal",
+    "sounds": [
+      "sandbox:lost_candle_coal"
+    ]
+  },
+  "lost_candle_copper": {
+    "subtitle": "sandbox.lost_candle_copper",
+    "sounds": [
+      "sandbox:lost_candle_copper"
+    ]
+  },
+  "lost_candle_iron": {
+    "subtitle": "sandbox.lost_candle_iron",
+    "sounds": [
+      "sandbox:lost_candle_iron"
+    ]
+  },
+  "lost_candle_diamond": {
+    "subtitle": "sandbox.lost_candle_diamond",
+    "sounds": [
+      "sandbox:lost_candle_diamond"
+    ]
+  },
+  "lost_candle_gold": {
+    "subtitle": "sandbox.lost_candle_gold",
+    "sounds": [
+      "sandbox:lost_candle_gold"
+    ]
   }
 }

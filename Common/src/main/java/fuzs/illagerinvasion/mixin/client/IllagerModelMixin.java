@@ -29,7 +29,7 @@ abstract class IllagerModelMixin<T extends AbstractIllager> extends Hierarchical
     @Final
     private ModelPart leftArm;
 
-    @Inject(method = "setupAnim", at = @At("TAIL"), cancellable = true)
+    @Inject(method = "setupAnim(Lnet/minecraft/world/entity/Entity;FFFFF)V", at = @At("TAIL"), cancellable = true)
     public void setupAnim(T illagerEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo callback) {
         ItemStack item = illagerEntity.getMainHandItem();
         HumanoidArm mainArm = illagerEntity.getMainArm();
