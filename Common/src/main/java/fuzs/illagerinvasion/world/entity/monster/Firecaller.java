@@ -11,8 +11,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -20,29 +18,28 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.Sheep;
-import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.Ravager;
+import net.minecraft.world.entity.monster.SpellcasterIllager;
+import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class Firecaller extends SpellcasterIllager {
-    @Nullable
-    private Sheep wololoTarget;
-    private int cooldown = 160;
-    private int aoecooldown = 300;
-    private AttributeMap attributeContainer;
+    private int conjureSkullCooldown = 160;
+    private int areaDamageCooldown = 300;
 
     public Firecaller(final EntityType<? extends Firecaller> entityType, final Level world) {
         super(entityType, world);
         this.xpReward = 15;
     }
 
+    @Override
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -60,41 +57,40 @@ public class Firecaller extends SpellcasterIllager {
 
     }
 
-    public AttributeMap getAttributes() {
-        if (this.attributeContainer == null) {
-            this.attributeContainer = new AttributeMap(Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 32.0).add(Attributes.MOVEMENT_SPEED, 0.38).build());
-        }
-        return this.attributeContainer;
-    }
-
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
     }
 
-
+    @Override
     public void readAdditionalSaveData(final CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
     }
 
+    @Override
     public SoundEvent getCelebrateSound() {
         return SoundEvents.ILLUSIONER_AMBIENT;
     }
 
+    @Override
     public void addAdditionalSaveData(final CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
     }
 
+    @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        --this.cooldown;
-        --this.aoecooldown;
+        --this.conjureSkullCooldown;
+        --this.areaDamageCooldown;
     }
 
+    @Override
     public boolean hurt(final DamageSource source, final float amount) {
         final boolean bl2 = super.hurt(source, amount);
         return bl2;
     }
 
+    @Override
     public boolean isAlliedTo(final Entity other) {
         if (other == null) {
             return false;
@@ -111,29 +107,32 @@ public class Firecaller extends SpellcasterIllager {
         return other instanceof LivingEntity && ((LivingEntity) other).getMobType() == MobType.ILLAGER && this.getTeam() == null && other.getTeam() == null;
     }
 
+    @Override
     protected SoundEvent getAmbientSound() {
         return ModRegistry.FIRECALLER_AMBIENT_SOUND_EVENT.get();
     }
 
+    @Override
     protected SoundEvent getDeathSound() {
         return ModRegistry.FIRECALLER_DEATH_SOUND_EVENT.get();
     }
 
+    @Override
     protected SoundEvent getHurtSound(final DamageSource source) {
         return ModRegistry.FIRECALLER_HURT_SOUND_EVENT.get();
     }
 
-    @Nullable Sheep getWololoTarget() {
-        return this.wololoTarget;
-    }
-
+    @Override
     protected SoundEvent getCastingSoundEvent() {
         return SoundEvents.FIRECHARGE_USE;
     }
 
+    @Override
     public void applyRaidBuffs(final int wave, final boolean unused) {
+
     }
 
+    @Override
     public AbstractIllager.IllagerArmPose getArmPose() {
         if (this.isCastingSpell()) {
             return AbstractIllager.IllagerArmPose.SPELLCASTING;
@@ -147,8 +146,6 @@ public class Firecaller extends SpellcasterIllager {
         public void tick() {
             if (Firecaller.this.getTarget() != null) {
                 Firecaller.this.getLookControl().setLookAt(Firecaller.this.getTarget(), Firecaller.this.getMaxHeadYRot(), Firecaller.this.getMaxHeadXRot());
-            } else if (Firecaller.this.getWololoTarget() != null) {
-                Firecaller.this.getLookControl().setLookAt(Firecaller.this.getWololoTarget(), Firecaller.this.getMaxHeadYRot(), Firecaller.this.getMaxHeadXRot());
             }
         }
     }
@@ -163,10 +160,10 @@ public class Firecaller extends SpellcasterIllager {
             if (Firecaller.this.getTarget() == null) {
                 return false;
             }
-            if (Firecaller.this.cooldown > 0) {
+            if (Firecaller.this.conjureSkullCooldown > 0) {
                 return false;
             }
-            return Firecaller.this.cooldown < 0 && !Firecaller.this.isCastingSpell() && this.getTargets().isEmpty();
+            return Firecaller.this.conjureSkullCooldown < 0 && !Firecaller.this.isCastingSpell() && this.getTargets().isEmpty();
         }
 
         @Override
@@ -209,7 +206,7 @@ public class Firecaller extends SpellcasterIllager {
                 double z = Firecaller.this.getZ();
                 ((ServerLevel) Firecaller.this.level()).sendParticles(ParticleTypes.SMOKE, x, y, z, 40, 0.4D, 0.4D, 0.4D, 0.15D);
             }
-            Firecaller.this.cooldown = 160;
+            Firecaller.this.conjureSkullCooldown = 160;
         }
 
         @Override
@@ -248,13 +245,12 @@ public class Firecaller extends SpellcasterIllager {
             if (Firecaller.this.isCastingSpell()) {
                 return false;
             }
-            return Firecaller.this.aoecooldown <= 0;
+            return Firecaller.this.areaDamageCooldown <= 0;
         }
 
         private List<LivingEntity> getTargets() {
             return Firecaller.this.level().getEntitiesOfClass(LivingEntity.class, Firecaller.this.getBoundingBox().inflate(6), entity -> !(entity instanceof AbstractIllager) && !(entity instanceof Surrendered) && !(entity instanceof Ravager));
         }
-
 
         @Override
         public void stop() {
@@ -276,7 +272,7 @@ public class Firecaller extends SpellcasterIllager {
         @Override
         protected void performSpellCasting() {
             this.getTargets().forEach(this::buff);
-            Firecaller.this.aoecooldown = 300;
+            Firecaller.this.areaDamageCooldown = 300;
         }
 
         @Override

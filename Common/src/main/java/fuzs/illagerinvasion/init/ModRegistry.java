@@ -5,6 +5,7 @@ import fuzs.illagerinvasion.core.CommonAbstractions;
 import fuzs.illagerinvasion.world.entity.monster.*;
 import fuzs.illagerinvasion.world.entity.projectile.FlyingMagma;
 import fuzs.illagerinvasion.world.entity.projectile.Hatchet;
+import fuzs.illagerinvasion.world.entity.projectile.SkullBolt;
 import fuzs.illagerinvasion.world.inventory.ImbuingMenu;
 import fuzs.illagerinvasion.world.item.HatchetItem;
 import fuzs.illagerinvasion.world.item.HornOfSightItem;
@@ -16,6 +17,7 @@ import fuzs.puzzleslib.api.init.v2.RegistryReference;
 import fuzs.puzzleslib.api.item.v2.ItemEquipmentFactories;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
@@ -28,6 +30,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -69,8 +72,10 @@ public class ModRegistry {
     public static final RegistryReference<Item> ALCHEMIST_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.ALCHEMIST_ENTITY_TYPE, 9541270, 7550099);
     public static final RegistryReference<Item> FIRECALLER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.FIRECALLER_ENTITY_TYPE, 9541270, 14185784);
     public static final RegistryReference<Item> SURRENDERED_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.SURRENDERED_ENTITY_TYPE, 11260369, 11858160);
+    public static final RegistryReference<Item> NECROMANCER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ModRegistry.NECROMANCER_ENTITY_TYPE, 9541270, 9585210);
     public static final RegistryReference<EntityType<Provoker>> PROVOKER_ENTITY_TYPE = REGISTRY.registerEntityType("provoker", () -> EntityType.Builder.of(Provoker::new, MobCategory.MONSTER).sized(0.5F, 1.92F));
     public static final RegistryReference<EntityType<Invoker>> INVOKER_ENTITY_TYPE = REGISTRY.registerEntityType("invoker", () -> EntityType.Builder.of(Invoker::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
+    public static final RegistryReference<EntityType<Necromancer>> NECROMANCER_ENTITY_TYPE = REGISTRY.registerEntityType("necromancer", () -> EntityType.Builder.of(Necromancer::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Basher>> BASHER_ENTITY_TYPE = REGISTRY.registerEntityType("basher", () -> EntityType.Builder.of(Basher::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Sorcerer>> SORCERER_ENTITY_TYPE = REGISTRY.registerEntityType("sorcerer", () -> EntityType.Builder.of(Sorcerer::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Archivist>> ARCHIVIST_ENTITY_TYPE = REGISTRY.registerEntityType("archivist", () -> EntityType.Builder.of(Archivist::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
@@ -79,6 +84,7 @@ public class ModRegistry {
     public static final RegistryReference<EntityType<Alchemist>> ALCHEMIST_ENTITY_TYPE = REGISTRY.registerEntityType("alchemist", () -> EntityType.Builder.of(Alchemist::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Firecaller>> FIRECALLER_ENTITY_TYPE = REGISTRY.registerEntityType("firecaller", () -> EntityType.Builder.of(Firecaller::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Surrendered>> SURRENDERED_ENTITY_TYPE = REGISTRY.registerEntityType("surrendered", () -> EntityType.Builder.of(Surrendered::new, MobCategory.MONSTER).fireImmune().sized(0.5f, 1.42f));
+    public static final RegistryReference<EntityType<SkullBolt>> SKULL_BOLT_ENTITY_TYPE = REGISTRY.placeholder(Registries.ENTITY_TYPE, "skull_bolt");
     public static final RegistryReference<EntityType<Hatchet>> HATCHET_ENTITY_TYPE = REGISTRY.placeholder(Registries.ENTITY_TYPE, "hatchet");
     public static final RegistryReference<EntityType<InvokerFangs>> INVOKER_FANGS_ENTITY_TYPE = REGISTRY.registerEntityType("invoker_fangs", () -> EntityType.Builder.<InvokerFangs>of(InvokerFangs::new, MobCategory.MISC).sized(0.65f, 1.05f));
     public static final RegistryReference<EntityType<FlyingMagma>> FLYING_MAGMA_ENTITY_TYPE = REGISTRY.registerEntityType("flying_magma", () -> EntityType.Builder.<FlyingMagma>of(FlyingMagma::new, MobCategory.MISC).sized(0.95f, 1.05f));
@@ -87,10 +93,12 @@ public class ModRegistry {
     public static final RegistryReference<Potion> STRONG_BERSERKING_POTION = REGISTRY.registerPotion("strong_berserking", () -> new Potion("berserking", new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 2), new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, 2)));
     public static final RegistryReference<MenuType<ImbuingMenu>> IMBUING_MENU_TYPE = REGISTRY.registerMenuType("imbuing", () -> ImbuingMenu::new);
     public static final RegistryReference<SimpleParticleType> MAGIC_FLAME_PARTICLE_TYPE = REGISTRY.register(Registries.PARTICLE_TYPE, "magic_flame", () -> new SimpleParticleType(false));
+    public static final RegistryReference<SimpleParticleType> NECROMANCER_BUFF_PARTICLE_TYPE = REGISTRY.register(Registries.PARTICLE_TYPE, "necromancer_buff", () -> new SimpleParticleType(false));
     public static final RegistryReference<SoundEvent> SURRENDERED_AMBIENT_SOUND_EVENT = REGISTRY.registerSoundEvent("surrendered_ambient");
     public static final RegistryReference<SoundEvent> SURRENDERED_HURT_SOUND_EVENT = REGISTRY.registerSoundEvent("surrendered_hurt");
     public static final RegistryReference<SoundEvent> SURRENDERED_CHARGE_SOUND_EVENT = REGISTRY.registerSoundEvent("surrendered_charge");
     public static final RegistryReference<SoundEvent> SURRENDERED_DEATH_SOUND_EVENT = REGISTRY.registerSoundEvent("surrendered_death");
+    public static final RegistryReference<SoundEvent> NECROMANCER_SUMMON_SOUND_EVENT = REGISTRY.registerSoundEvent("necromancer_summon");
     public static final RegistryReference<SoundEvent> ARCHIVIST_AMBIENT_SOUND_EVENT = REGISTRY.registerSoundEvent("archivist_ambient");
     public static final RegistryReference<SoundEvent> ARCHIVIST_HURT_SOUND_EVENT = REGISTRY.registerSoundEvent("archivist_hurt");
     public static final RegistryReference<SoundEvent> ARCHIVIST_DEATH_SOUND_EVENT = REGISTRY.registerSoundEvent("archivist_death");
@@ -129,11 +137,19 @@ public class ModRegistry {
 
     public static final TagKey<Enchantment> IMBUING_ENCHANTMENT_TAG = REGISTRY.registerEnchantmentTag("imbuing");
 
+    public static final TagKey<Biome> HAS_FIRECALLER_HUT_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/firecaller_hut");
+    public static final TagKey<Biome> HAS_ILLAGER_FORT_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/illager_fort");
+    public static final TagKey<Biome> HAS_ILLUSIONER_TOWER_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/illusioner_tower");
+    public static final TagKey<Biome> HAS_SORCERER_HUT_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/sorcerer_hut");
+
+    public static final ResourceLocation ILLUSIONER_INJECT_LOOT_TABLE = REGISTRY.makeKey("entities/inject/illusioner");
+    public static final ResourceLocation RAVAGER_INJECT_LOOT_TABLE = REGISTRY.makeKey("entities/inject/ravager");
+
     public static final Object ENCHANT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("ENCHANT", 0.8, 0.8, 0.2);
     public static final Object CONJURE_FLAMES_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_FLAMES", 1.8, 0.0, 1.8);
     public static final Object CONJURE_TELEPORT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_TELEPORT", 1.5, 1.5, 0.8);
-    public static final Object NECRORAISE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("NECRORAISE", 0.3, 0.8, 0.05);
-    public static final Object CONJURE_SKULLBOLT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_SKULLBOLT", 0.5, 0.05, 0.05);
+    public static final Object NECRO_RAISE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("NECRO_RAISE", 0.3, 0.8, 0.05);
+    public static final Object CONJURE_SKULL_BOLT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_SKULL_BOLT", 0.5, 0.05, 0.05);
     public static final Object PROVOKE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("PROVOKE", 1.0, 0.8, 0.75);
 
     public static void touch() {

@@ -18,8 +18,6 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -30,7 +28,6 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
@@ -53,7 +50,6 @@ public class Basher extends AbstractIllager {
 
     public int stunTick = 60;
     public int blockedCount;
-    private AttributeMap attributeContainer;
 
     public Basher(EntityType<? extends Basher> entityType, Level world) {
         super(entityType, world);
@@ -135,15 +131,6 @@ public class Basher extends AbstractIllager {
     protected boolean isImmobile() {
         return super.isImmobile() || this.getStunnedState();
     }
-
-    @Override
-    public AttributeMap getAttributes() {
-        if (this.attributeContainer == null) {
-            this.attributeContainer = new AttributeMap(Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 28.0D).add(Attributes.MOVEMENT_SPEED, 0.31D).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ATTACK_KNOCKBACK, 0.2D).build());
-        }
-        return this.attributeContainer;
-    }
-
 
     @Override
     public AbstractIllager.IllagerArmPose getArmPose() {

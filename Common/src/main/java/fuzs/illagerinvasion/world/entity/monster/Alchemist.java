@@ -13,8 +13,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
@@ -22,7 +20,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.npc.AbstractVillager;
@@ -47,12 +44,10 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
     private static final EntityDataAccessor<Boolean> DATA_HOLDING_POTION = SynchedEntityData.defineId(Alchemist.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_HOLDING_BOW = SynchedEntityData.defineId(Alchemist.class, EntityDataSerializers.BOOLEAN);
 
-    public int potionCooldown;
-    private AttributeMap attributeContainer;
+    public int potionCooldown = 160;
 
     public Alchemist(final EntityType<? extends Alchemist> entityType, final Level world) {
         super(entityType, world);
-        this.potionCooldown = 160;
         this.xpReward = 10;
     }
 
@@ -68,14 +63,6 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, false));
-    }
-
-    @Override
-    public AttributeMap getAttributes() {
-        if (this.attributeContainer == null) {
-            this.attributeContainer = new AttributeMap(Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 23.0).add(Attributes.MOVEMENT_SPEED, 0.38).build());
-        }
-        return this.attributeContainer;
     }
 
     @Override

@@ -9,8 +9,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -19,7 +17,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
@@ -33,16 +30,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class Archivist extends SpellcasterIllager {
-    private final int damagedelay = 60;
-    public float bookanimation;
-    public float bookanimation1;
-    @Nullable
-    private Sheep wololoTarget;
     private AbstractIllager enchantTarget;
-    private int cooldown;
-    private boolean isLevitating;
-    private int buffcooldown;
-    private AttributeMap attributeContainer;
+    private int levitateTargetsCooldown;
+    private int enchantAlliesCooldown;
 
     public Archivist(EntityType<? extends Archivist> entityType, Level world) {
         super(entityType, world);
@@ -67,19 +57,6 @@ public class Archivist extends SpellcasterIllager {
     }
 
     @Override
-    public AttributeMap getAttributes() {
-        if (this.attributeContainer == null) {
-            this.attributeContainer = new AttributeMap(Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 22.0D).add(Attributes.MOVEMENT_SPEED, 0.36D).build());
-        }
-        return this.attributeContainer;
-    }
-
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-    }
-
-    @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
     }
@@ -97,8 +74,8 @@ public class Archivist extends SpellcasterIllager {
 
     @Override
     protected void customServerAiStep() {
-        --this.cooldown;
-        --this.buffcooldown;
+        --this.levitateTargetsCooldown;
+        --this.enchantAlliesCooldown;
         super.customServerAiStep();
     }
 
@@ -137,14 +114,6 @@ public class Archivist extends SpellcasterIllager {
         return ModRegistry.ARCHIVIST_HURT_SOUND_EVENT.get();
     }
 
-    @Nullable Sheep getWololoTarget() {
-        return this.wololoTarget;
-    }
-
-    void setWololoTarget(@Nullable Sheep sheep) {
-        this.wololoTarget = sheep;
-    }
-
     @Nullable AbstractIllager getEnchantTarget() {
         return this.enchantTarget;
     }
@@ -177,8 +146,6 @@ public class Archivist extends SpellcasterIllager {
         public void tick() {
             if (Archivist.this.getTarget() != null) {
                 Archivist.this.getLookControl().setLookAt(Archivist.this.getTarget(), Archivist.this.getMaxHeadYRot(), Archivist.this.getMaxHeadXRot());
-            } else if (Archivist.this.getWololoTarget() != null) {
-                Archivist.this.getLookControl().setLookAt(Archivist.this.getWololoTarget(), Archivist.this.getMaxHeadYRot(), Archivist.this.getMaxHeadXRot());
             }
         }
     }
@@ -190,7 +157,7 @@ public class Archivist extends SpellcasterIllager {
             if (Archivist.this.getTarget() == null) {
                 return false;
             }
-            return Archivist.this.cooldown < 0 && this.getTargets().stream().anyMatch(entity -> !(entity instanceof Monster));
+            return Archivist.this.levitateTargetsCooldown < 0 && this.getTargets().stream().anyMatch(entity -> !(entity instanceof Monster));
         }
 
         private void knockBack(Entity entity) {
@@ -221,7 +188,7 @@ public class Archivist extends SpellcasterIllager {
 
         @Override
         protected void performSpellCasting() {
-            Archivist.this.cooldown = 220;
+            Archivist.this.levitateTargetsCooldown = 220;
             this.getTargets().forEach(this::buff);
             double x = Archivist.this.getX();
             double y = Archivist.this.getY() + 1;
@@ -269,7 +236,7 @@ public class Archivist extends SpellcasterIllager {
             if (Archivist.this.getTarget() == null) {
                 return false;
             }
-            if (Archivist.this.buffcooldown >= 0) {
+            if (Archivist.this.enchantAlliesCooldown >= 0) {
                 return false;
             }
             if (Archivist.this.isCastingSpell()) {
@@ -306,7 +273,7 @@ public class Archivist extends SpellcasterIllager {
             if (Archivist.this.level() instanceof ServerLevel) {
                 ((ServerLevel) Archivist.this.level()).sendParticles(ParticleTypes.ENCHANT, x, y, z, 50, 1.0D, 2.0D, 1.0D, 0.1D);
             }
-            Archivist.this.buffcooldown = 300;
+            Archivist.this.enchantAlliesCooldown = 300;
         }
 
         @Override

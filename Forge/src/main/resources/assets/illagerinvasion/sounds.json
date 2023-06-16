@@ -27,6 +27,12 @@
       "illagerexp:surrendered_death"
     ]
   },
+  "necromancer_summon": {
+    "subtitle": "illagerexp.necromancer_summon",
+    "sounds": [
+      "illagerexp:necroraise"
+    ]
+  },
   "archivist_ambient": {
     "subtitle": "illagerexp.archivist.ambient",
     "sounds": [

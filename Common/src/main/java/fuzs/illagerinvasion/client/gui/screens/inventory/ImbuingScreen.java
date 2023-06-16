@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ImbuingScreen extends AbstractContainerScreen<ImbuingMenu> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/gui/imbue_table.png");
+    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/gui/container/imbuing_table.png");
 
     public ImbuingScreen(ImbuingMenu handler, Inventory inventory, Component title) {
         super(handler, inventory, title);

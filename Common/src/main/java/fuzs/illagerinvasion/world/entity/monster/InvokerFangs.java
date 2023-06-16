@@ -40,6 +40,7 @@ public class InvokerFangs extends Entity {
 
     @Override
     protected void defineSynchedData() {
+
     }
 
     @Nullable

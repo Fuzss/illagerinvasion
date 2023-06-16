@@ -41,6 +41,7 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         this.add(ModRegistry.BERSERKING_POTION.get(), "Berserking");
         this.add(ModRegistry.PROVOKER_SPAWN_EGG_ITEM.get(), "Provoker Spawn Egg");
         this.add(ModRegistry.SURRENDERED_SPAWN_EGG_ITEM.get(), "Surrendered Spawn Egg");
+        this.add(ModRegistry.NECROMANCER_SPAWN_EGG_ITEM.get(), "Necromancer Egg");
         this.add(ModRegistry.BASHER_SPAWN_EGG_ITEM.get(), "Basher Spawn Egg");
         this.add(ModRegistry.SORCERER_SPAWN_EGG_ITEM.get(), "Sorcerer Spawn Egg");
         this.add(ModRegistry.ARCHIVIST_SPAWN_EGG_ITEM.get(), "Archivist Spawn Egg");
@@ -53,6 +54,7 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         this.add(ModRegistry.PROVOKER_ENTITY_TYPE.get(), "Provoker");
         this.add(ModRegistry.INVOKER_ENTITY_TYPE.get(), "Invoker");
         this.add(ModRegistry.SURRENDERED_ENTITY_TYPE.get(), "Surrendered");
+        this.add(ModRegistry.NECROMANCER_ENTITY_TYPE.get(), "Necromancer");
         this.add(ModRegistry.BASHER_ENTITY_TYPE.get(), "Basher");
         this.add(ModRegistry.SORCERER_ENTITY_TYPE.get(), "Sorcerer");
         this.add(ModRegistry.ARCHIVIST_ENTITY_TYPE.get(), "Archivist");

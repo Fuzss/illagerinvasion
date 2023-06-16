@@ -9,8 +9,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -19,7 +17,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.npc.AbstractVillager;
@@ -30,9 +27,8 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class Sorcerer extends SpellcasterIllager {
-    private int castteleportCooldown;
+    private int castTeleportCooldown;
     private int conjureFlamesCooldown;
-    private AttributeMap attributeContainer;
 
     public Sorcerer(EntityType<? extends Sorcerer> entityType, Level world) {
         super(entityType, world);
@@ -54,14 +50,6 @@ public class Sorcerer extends SpellcasterIllager {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<AbstractVillager>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<IronGolem>(this, IronGolem.class, false));
-    }
-
-    @Override
-    public AttributeMap getAttributes() {
-        if (this.attributeContainer == null) {
-            this.attributeContainer = new AttributeMap(Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 26.0D).add(Attributes.MOVEMENT_SPEED, 0.38D).build());
-        }
-        return this.attributeContainer;
     }
 
     @Override
@@ -87,7 +75,7 @@ public class Sorcerer extends SpellcasterIllager {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        --this.castteleportCooldown;
+        --this.castTeleportCooldown;
         --this.conjureFlamesCooldown;
     }
 
@@ -164,7 +152,7 @@ public class Sorcerer extends SpellcasterIllager {
             if (Sorcerer.this.isCastingSpell()) {
                 return false;
             }
-            return Sorcerer.this.castteleportCooldown < 0 && !(this.getTargets().isEmpty());
+            return Sorcerer.this.castTeleportCooldown < 0 && !(this.getTargets().isEmpty());
         }
 
         private List<LivingEntity> getTargets() {
@@ -184,7 +172,7 @@ public class Sorcerer extends SpellcasterIllager {
 
         @Override
         protected void performSpellCasting() {
-            Sorcerer.this.castteleportCooldown = 220;
+            Sorcerer.this.castTeleportCooldown = 220;
             double x = Sorcerer.this.getX();
             double y = Sorcerer.this.getY() + 1;
             double z = Sorcerer.this.getZ();

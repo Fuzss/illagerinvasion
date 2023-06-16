@@ -16,8 +16,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -26,7 +24,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
@@ -42,13 +39,12 @@ import java.util.EnumSet;
 public class Surrendered extends Skeleton {
     protected static final EntityDataAccessor<Byte> DATA_VEX_FLAGS = SynchedEntityData.defineId(Surrendered.class, EntityDataSerializers.BYTE);
     private static final int CHARGING_FLAG = 1;
+
     @Nullable Mob owner;
     @Nullable
     private BlockPos bounds;
     private boolean alive;
     private int lifeTicks;
-    private AttributeMap attributeContainer;
-
 
     public Surrendered(EntityType<? extends Surrendered> entityType, Level world) {
         super(entityType, world);
@@ -81,15 +77,7 @@ public class Surrendered extends Skeleton {
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
         this.targetSelector.addGoal(2, new Surrendered.TrackOwnerTargetGoal(this));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
-    }
-
-    @Override
-    public AttributeMap getAttributes() {
-        if (this.attributeContainer == null) {
-            this.attributeContainer = new AttributeMap(Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 18.0D).add(Attributes.ATTACK_DAMAGE, 5.0D).build());
-        }
-        return this.attributeContainer;
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
     @Override

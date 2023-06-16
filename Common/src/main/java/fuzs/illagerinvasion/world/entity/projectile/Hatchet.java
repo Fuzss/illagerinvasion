@@ -22,7 +22,8 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class Hatchet extends AbstractArrow implements ItemSupplier {
-    private static final EntityDataAccessor<Boolean> ENCHANTED = SynchedEntityData.defineId(Hatchet.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_ENCHANTED = SynchedEntityData.defineId(Hatchet.class, EntityDataSerializers.BOOLEAN);
+
     private ItemStack hatchetStack;
     private boolean dealtDamage;
 
@@ -35,13 +36,13 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
         super(ModRegistry.HATCHET_ENTITY_TYPE.get(), owner, world);
         this.hatchetStack = new ItemStack(ModRegistry.HATCHET_ITEM.get());
         this.hatchetStack = stack.copy();
-        this.entityData.set(ENCHANTED, stack.hasFoil());
+        this.entityData.set(DATA_ENCHANTED, stack.hasFoil());
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(ENCHANTED, false);
+        this.entityData.define(DATA_ENCHANTED, false);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
     }
 
     public boolean isEnchanted() {
-        return this.entityData.get(ENCHANTED);
+        return this.entityData.get(DATA_ENCHANTED);
     }
 
     @Override

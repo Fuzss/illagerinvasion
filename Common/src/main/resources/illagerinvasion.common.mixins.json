@@ -6,6 +6,9 @@
   "refmap": "illagerinvasion.refmap.json",
   "plugin": "fuzs.illagerinvasion.mixin.ModMixinConfigPlugin",
   "mixins": [
+    "IllusionerMixin",
+    "PatrolSpawnerMixin",
+    "WoodlandMansionPieceMixin"
   ],
   "client": [
     "client.IllagerModelMixin",

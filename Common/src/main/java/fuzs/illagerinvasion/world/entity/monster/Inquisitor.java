@@ -65,15 +65,14 @@ import java.util.List;
 public class Inquisitor extends AbstractIllager {
     private static final EntityDataAccessor<Boolean> STUNNED = SynchedEntityData.defineId(Inquisitor.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FINAL_ROAR = SynchedEntityData.defineId(Inquisitor.class, EntityDataSerializers.BOOLEAN);
+
     public boolean finalRoar;
-    public int stunTick;
+    public int stunTick = 40;
     public boolean isStunned;
     public int blockedCount;
-    private AttributeMap attributeContainer;
 
     public Inquisitor(final EntityType<? extends Inquisitor> entityType, final Level world) {
         super(entityType, world);
-        this.stunTick = 40;
         this.xpReward = 25;
         this.setPathfindingMalus(BlockPathTypes.LEAVES, 0.0F);
     }
@@ -99,14 +98,6 @@ public class Inquisitor extends AbstractIllager {
             ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(bl);
         }
         super.customServerAiStep();
-    }
-
-    @Override
-    public AttributeMap getAttributes() {
-        if (this.attributeContainer == null) {
-            this.attributeContainer = new AttributeMap(Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 80.0).add(Attributes.MOVEMENT_SPEED, 0.33).add(Attributes.ATTACK_DAMAGE, 10.0).add(Attributes.ATTACK_KNOCKBACK, 1.6).add(Attributes.KNOCKBACK_RESISTANCE, 0.8).build());
-        }
-        return this.attributeContainer;
     }
 
     @Override

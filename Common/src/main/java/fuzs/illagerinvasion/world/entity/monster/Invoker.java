@@ -23,8 +23,6 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -56,19 +54,15 @@ import java.util.List;
 public class Invoker extends SpellcasterIllager implements PowerableMob {
     private static final EntityDataAccessor<Boolean> SHIELDED = SynchedEntityData.defineId(WitherBoss.class, EntityDataSerializers.BOOLEAN);
     private final ServerBossEvent bossBar = (ServerBossEvent) new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.YELLOW, BossEvent.BossBarOverlay.PROGRESS).setDarkenScreen(true);
+
     public boolean inSecondPhase = false;
     public int cooldown;
     public int tpcooldown;
     public boolean isAoeCasting = false;
     public int fangaoecooldown;
-    public boolean isShielded = false;
-    public boolean currentlyShielded;
-    public int shieldduration;
-    public boolean canCastShield;
     public int damagecount;
     @Nullable
     private Sheep wololoTarget;
-    private AttributeMap attributeContainer;
 
     public Invoker(EntityType<? extends Invoker> entityType, Level world) {
         super(entityType, world);
@@ -99,14 +93,6 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
     @Override
     public boolean isPowered() {
         return this.getShieldedState();
-    }
-
-    @Override
-    public AttributeMap getAttributes() {
-        if (this.attributeContainer == null) {
-            this.attributeContainer = new AttributeMap(Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 250.0D).add(Attributes.MOVEMENT_SPEED, 0.36D).add(Attributes.KNOCKBACK_RESISTANCE, 0.3D).add(Attributes.ATTACK_DAMAGE, 8.0D).build());
-        }
-        return this.attributeContainer;
     }
 
     @Override
@@ -148,7 +134,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
     @Override
     public void addAdditionalSaveData(CompoundTag nbt) {
-        nbt.putBoolean("Invul", this.isShielded);
+        nbt.putBoolean("Invul", this.getShieldedState());
         super.addAdditionalSaveData(nbt);
     }
 

@@ -4,30 +4,25 @@ import fuzs.illagerinvasion.init.ModRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class FlyingMagma extends AbstractHurtingProjectile {
+public class SkullBolt extends AbstractHurtingProjectile {
 
-    public FlyingMagma(EntityType<? extends FlyingMagma> entityType, Level world) {
+    public SkullBolt(EntityType<? extends SkullBolt> entityType, Level world) {
         super(entityType, world);
     }
 
-    public FlyingMagma(Level world, LivingEntity owner, double directionX, double directionY, double directionZ) {
-        super(ModRegistry.FLYING_MAGMA_ENTITY_TYPE.get(), owner, directionX, directionY, directionZ, world);
-    }
-
-    @Override
-    public void tick() {
-        if (this.level() instanceof ServerLevel) {
-            ((ServerLevel) this.level()).sendParticles(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(), this.getZ(), 3, 0.3D, 0.3D, 0.3D, 0.05D);
-        }
-        super.tick();
+    public SkullBolt(Level world, LivingEntity owner, double directionX, double directionY, double directionZ) {
+        super(ModRegistry.SKULL_BOLT_ENTITY_TYPE.get(), owner, directionX, directionY, directionZ, world);
     }
 
     @Override
@@ -43,24 +38,25 @@ public class FlyingMagma extends AbstractHurtingProjectile {
         }
         Entity entity = entityHitResult.getEntity();
         Entity entity2 = this.getOwner();
-        entity.hurt(this.damageSources().indirectMagic(this, entity2), 12.0f);
         if (entity2 instanceof LivingEntity) {
-            this.doEnchantDamageEffects((LivingEntity) entity2, entity);
-        }
-        if (this.level() instanceof ServerLevel) {
-            ((ServerLevel) this.level()).sendParticles(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 15, 0.4D, 0.4D, 0.4D, 0.15D);
+            if (((LivingEntity) entity).getMobType() == MobType.UNDEAD) {
+                ((LivingEntity) entity).heal(5.0f);
+                ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 2));
+            } else {
+                entity.hurt(this.damageSources().magic(), 7.0f);
+                ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
+            }
         }
     }
 
     @Override
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
-        if (!this.level().isClientSide) {
-            this.level().explode(null, this.getX(), this.getY(), this.getZ(), 1, true, Level.ExplosionInteraction.MOB);
-            this.discard();
-        }
         if (this.level() instanceof ServerLevel) {
-            ((ServerLevel) this.level()).sendParticles(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 15, 0.4D, 0.4D, 0.4D, 0.15D);
+            double x = this.getX();
+            double y = this.getY() + 0.2;
+            double z = this.getZ();
+            ((ServerLevel) this.level()).sendParticles(ParticleTypes.SMOKE, x, y, z, 25, 0.25D, 0.25D, 0.25D, 0.05D);
         }
         this.discard();
 
@@ -81,4 +77,3 @@ public class FlyingMagma extends AbstractHurtingProjectile {
         return false;
     }
 }
-
