@@ -15,5 +15,6 @@ public class ModBlockTagProvider extends AbstractTagProvider.Blocks {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(ModRegistry.IMBUING_TABLE_BLOCK.get());
+        this.tag(BlockTags.FIRE).add(ModRegistry.MAGIC_FIRE_BLOCK.get());
     }
 }

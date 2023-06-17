@@ -13,6 +13,6 @@ public class ModBlockLootProvider extends AbstractLootProvider.Blocks {
     @Override
     public void generate() {
         this.dropSelf(ModRegistry.IMBUING_TABLE_BLOCK.get());
-        this.add(ModRegistry.MAGIC_FIRE_BLOCK.get(), noDrop());
+        this.dropNothing(ModRegistry.MAGIC_FIRE_BLOCK.get());
     }
 }

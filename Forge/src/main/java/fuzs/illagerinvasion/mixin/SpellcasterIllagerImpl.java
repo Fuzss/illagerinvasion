@@ -6,7 +6,10 @@ import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
+
+import java.util.function.IntFunction;
 
 // this is just a dummy class to get us access to net.minecraft.world.entity.monster.SpellcasterIllager$IllagerSpell
 public abstract class SpellcasterIllagerImpl extends SpellcasterIllager {
@@ -30,8 +33,17 @@ public abstract class SpellcasterIllagerImpl extends SpellcasterIllager {
 
         // access to internal enum constructor
         @Invoker("<init>")
-        static IllagerSpell getValues(String internalName, int ordinalId, int spellId, double spellColorRed, double spellColorGreen, double spellColorBlue) {
+        static IllagerSpell illagerinvasion$init(String internalName, int ordinalId, int spellId, double spellColorRed, double spellColorGreen, double spellColorBlue) {
             throw new RuntimeException();
         }
+
+        @Accessor("BY_ID")
+        @Mutable
+        static void illagerinvasion$setById(IntFunction<IllagerSpell> byId) {
+            throw new RuntimeException();
+        }
+
+        @Accessor("id")
+        int illagerinvasion$getId();
     }
 }

@@ -1,10 +1,14 @@
 package fuzs.illagerinvasion.data;
 
 import fuzs.illagerinvasion.IllagerInvasion;
+import fuzs.illagerinvasion.handler.PlatinumTrimHandler;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.world.inventory.ImbuingMenu;
 import fuzs.puzzleslib.api.data.v1.AbstractLanguageProvider;
+import fuzs.puzzleslib.api.init.v2.RegistryReference;
 import net.minecraft.Util;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.data.event.GatherDataEvent;
 
 public class ModLanguageProvider extends AbstractLanguageProvider {
@@ -23,8 +27,14 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         this.add(ImbuingMenu.InvalidImbuingState.INVALID_ENCHANTMENT.getTranslationKey(), "Book enchantment cannot be imbued!");
         this.add(ImbuingMenu.InvalidImbuingState.INVALID_ITEM.getTranslationKey(), "Item is not compatible with this enchantment!");
         this.add(ModRegistry.LOST_CANDLE_ITEM.get().getDescriptionId() + ".foundNearby", "%s found nearby");
-        this.add(Util.makeDescriptionId("instrument", ModRegistry.REVEAL_INSTRUMENT.getResourceLocation()), "Reveal");
+        this.add("instrument", ModRegistry.REVEAL_INSTRUMENT, "Reveal");
+        this.add("trim_material", ModRegistry.PLATINUM_TRIM_MATERIAL, "Platinum Material");
+        this.add(PlatinumTrimHandler.INSIGHT_TRANSLATION_KEY, "Insight Effect");
+        this.add(PlatinumTrimHandler.AGILITY_TRANSLATION_KEY, "Agility Effect");
+        this.add(PlatinumTrimHandler.ENDURANCE_TRANSLATION_KEY, "Endurance Effect");
+        this.add(PlatinumTrimHandler.FEATHERWEIGHT_TRANSLATION_KEY, "Featherweight Effect");
         this.add(ModRegistry.UNUSUAL_DUST_ITEM.get(), "Unusual Dust");
+        this.add(ModRegistry.MAGICAL_FIRE_CHARGE_ITEM.get(), "Magical Fire Charge");
         this.add(ModRegistry.ILLUSIONARY_DUST_ITEM.get(), "Illusionary Dust");
         this.add(ModRegistry.LOST_CANDLE_ITEM.get(), "Lost Candle");
         this.add(ModRegistry.HORN_OF_SIGHT_ITEM.get(), "Horn of Sight");
@@ -45,12 +55,14 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         this.add(ModRegistry.BERSERKING_POTION.get(), "Berserking");
         this.add(ModRegistry.PROVOKER_SPAWN_EGG_ITEM.get(), "Provoker Spawn Egg");
         this.add(ModRegistry.SURRENDERED_SPAWN_EGG_ITEM.get(), "Surrendered Spawn Egg");
+        this.add(ModRegistry.ILLUSIONER_SPAWN_EGG_ITEM.get(), "Illusioner Spawn Egg");
         this.add(ModRegistry.NECROMANCER_SPAWN_EGG_ITEM.get(), "Necromancer Egg");
         this.add(ModRegistry.BASHER_SPAWN_EGG_ITEM.get(), "Basher Spawn Egg");
         this.add(ModRegistry.SORCERER_SPAWN_EGG_ITEM.get(), "Sorcerer Spawn Egg");
         this.add(ModRegistry.ARCHIVIST_SPAWN_EGG_ITEM.get(), "Archivist Spawn Egg");
         this.add(ModRegistry.INQUISITOR_SPAWN_EGG_ITEM.get(), "Inquisitor Spawn Egg");
         this.add(ModRegistry.MARAUDER_SPAWN_EGG_ITEM.get(), "Marauder Spawn Egg");
+        this.add(ModRegistry.INVOKER_SPAWN_EGG_ITEM.get(), "Invoker Spawn Egg");
         this.add(ModRegistry.ALCHEMIST_SPAWN_EGG_ITEM.get(), "Alchemist Spawn Egg");
         this.add(ModRegistry.FIRECALLER_SPAWN_EGG_ITEM.get(), "Firecaller Spawn Egg");
         this.add(ModRegistry.IMBUING_TABLE_BLOCK.get(), "Imbuing Table");
@@ -112,6 +124,17 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         this.add(ModRegistry.SORCERER_DEATH_SOUND_EVENT.get(),"Sorcerer dies");
         this.add(ModRegistry.SORCERER_AMBIENT_SOUND_EVENT.get(),"Sorcerer murmurs");
         this.add(ModRegistry.SORCERER_CELEBRATE_SOUND_EVENT.get(),"Sorcerer celebrates");
-        
+    }
+
+    public void add(String registry, RegistryReference<?> registryReference, String value) {
+        this.add(registry, registryReference.getResourceLocation(), value);
+    }
+
+    public void add(String registry, ResourceKey<?> resourceKey, String value) {
+        this.add(registry, resourceKey.location(), value);
+    }
+
+    public void add(String registry, ResourceLocation resourceLocation, String value) {
+        this.add(Util.makeDescriptionId(registry, resourceLocation), value);
     }
 }

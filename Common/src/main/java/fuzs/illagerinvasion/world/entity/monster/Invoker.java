@@ -32,7 +32,6 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Sheep;
-import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Ravager;
@@ -52,7 +51,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class Invoker extends SpellcasterIllager implements PowerableMob {
-    private static final EntityDataAccessor<Boolean> SHIELDED = SynchedEntityData.defineId(WitherBoss.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_IS_SHIELDED = SynchedEntityData.defineId(Invoker.class, EntityDataSerializers.BOOLEAN);
     private final ServerBossEvent bossBar = (ServerBossEvent) new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.YELLOW, BossEvent.BossBarOverlay.PROGRESS).setDarkenScreen(true);
 
     public boolean inSecondPhase = false;
@@ -108,7 +107,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(SHIELDED, false);
+        this.entityData.define(DATA_IS_SHIELDED, false);
         super.defineSynchedData();
     }
 
@@ -139,11 +138,11 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
     }
 
     public boolean getShieldedState() {
-        return this.entityData.get(SHIELDED);
+        return this.entityData.get(DATA_IS_SHIELDED);
     }
 
     public void setShieldedState(boolean isShielded) {
-        this.entityData.set(SHIELDED, isShielded);
+        this.entityData.set(DATA_IS_SHIELDED, isShielded);
     }
 
     @Override
@@ -285,12 +284,11 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
     @Override
     public void applyRaidBuffs(int wave, boolean unused) {
+
     }
 
 
     class LookAtTargetOrWololoTarget extends SpellcasterIllager.SpellcasterCastingSpellGoal {
-        LookAtTargetOrWololoTarget() {
-        }
 
         @Override
         public void tick() {
@@ -304,9 +302,6 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
     class SummonVexGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
         private final TargetingConditions closeVexPredicate = TargetingConditions.forNonCombat().range(16.0).ignoreLineOfSight().ignoreInvisibilityTesting();
-
-        SummonVexGoal() {
-        }
 
         @Override
         public boolean canUse() {
@@ -357,9 +352,8 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
     }
 
     class ConjureFangsGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
-        ConjureFangsGoal() {
-        }
 
+        @Override
         public boolean canUse() {
             if (!super.canUse()) {
                 return false;
@@ -532,10 +526,6 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
             return false;
         }
 
-        private List<LivingEntity> getTargets() {
-            return Invoker.this.level().getEntitiesOfClass(LivingEntity.class, Invoker.this.getBoundingBox().inflate(6), entity -> !(entity instanceof AbstractIllager) && !(entity instanceof Surrendered) && !(entity instanceof Ravager));
-        }
-
         private void knockBack(Entity entity) {
             double d = entity.getX() - Invoker.this.getX();
             double e = entity.getZ() - Invoker.this.getZ();
@@ -547,7 +537,6 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
             this.knockBack(target);
             target.hurtMarked = true;
         }
-
 
         @Override
         public void stop() {
@@ -567,7 +556,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
         @Override
         protected void performSpellCasting() {
             Invoker.this.cooldown = 300;
-            this.getTargets().forEach(this::buff);
+            Invoker.this.level().getEntitiesOfClass(LivingEntity.class, Invoker.this.getBoundingBox().inflate(6), entity -> !(entity instanceof AbstractIllager) && !(entity instanceof Surrendered) && !(entity instanceof Ravager) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity)).forEach(this::buff);
             Invoker.this.isAoeCasting = false;
             double posx = Invoker.this.getX();
             double posy = Invoker.this.getY();
@@ -602,7 +591,6 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
     }
 
     public class CastTeleportGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
-        Invoker sorcerer = Invoker.this;
 
         @Override
         public boolean canUse() {
@@ -637,10 +625,10 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
         @Override
         protected void performSpellCasting() {
-            double x = this.sorcerer.getX();
-            double y = this.sorcerer.getY() + 1;
-            double z = this.sorcerer.getZ();
-            if (this.sorcerer.level() instanceof ServerLevel) {
+            double x = Invoker.this.getX();
+            double y = Invoker.this.getY() + 1;
+            double z = Invoker.this.getZ();
+            if (Invoker.this.level() instanceof ServerLevel) {
                 ((ServerLevel) Invoker.this.level()).sendParticles(ParticleTypes.SMOKE, x, y, z, 30, 0.3D, 0.5D, 0.3D, 0.015D);
             }
             TeleportUtil.tryRandomTeleport(Invoker.this);

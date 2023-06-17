@@ -2,7 +2,11 @@ package fuzs.illagerinvasion.data;
 
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v1.AbstractModelProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModModelProvider extends AbstractModelProvider {
 
@@ -21,8 +25,10 @@ public class ModModelProvider extends AbstractModelProvider {
         this.handheldItem(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get());
         this.basicItem(ModRegistry.ILLUSIONARY_DUST_ITEM.get());
         this.simpleBlockItem(ModRegistry.IMBUING_TABLE_BLOCK.get(), this.existingBlockModel(ModRegistry.IMBUING_TABLE_BLOCK.get()));
+        this.basicItem(ForgeRegistries.ITEMS.getKey(ModRegistry.MAGICAL_FIRE_CHARGE_ITEM.get()), this.mcLoc("entity/enderdragon/dragon_fireball"));
         this.spawnEgg(ModRegistry.INQUISITOR_SPAWN_EGG_ITEM.get());
         this.spawnEgg(ModRegistry.MARAUDER_SPAWN_EGG_ITEM.get());
+        this.spawnEgg(ModRegistry.INVOKER_SPAWN_EGG_ITEM.get());
         this.spawnEgg(ModRegistry.NECROMANCER_SPAWN_EGG_ITEM.get());
         this.basicItem(ModRegistry.PLATINUM_CHUNK_ITEM.get());
         this.basicItem(ModRegistry.PLATINUM_SHEET_ITEM.get());
@@ -30,7 +36,12 @@ public class ModModelProvider extends AbstractModelProvider {
         this.spawnEgg(ModRegistry.PROVOKER_SPAWN_EGG_ITEM.get());
         this.spawnEgg(ModRegistry.SORCERER_SPAWN_EGG_ITEM.get());
         this.spawnEgg(ModRegistry.SURRENDERED_SPAWN_EGG_ITEM.get());
+        this.spawnEgg(ModRegistry.ILLUSIONER_SPAWN_EGG_ITEM.get());
         this.basicItem(ModRegistry.UNUSUAL_DUST_ITEM.get());
         this.basicItem(ModRegistry.LOST_CANDLE_ITEM.get());
+    }
+
+    public ItemModelBuilder basicItem(ResourceLocation item, ResourceLocation texture) {
+        return this.itemModels().getBuilder(item.toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", texture);
     }
 }

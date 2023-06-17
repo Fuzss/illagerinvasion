@@ -95,7 +95,7 @@ public class HatchetItem extends Item implements Vanishable {
 
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
-        return ingredient.is(ModRegistry.PLATINUM_CHUNK_ITEM.get()) || super.isValidRepairItem(stack, ingredient);
+        return ingredient.is(ModRegistry.PLATINUM_SHEET_ITEM.get()) || super.isValidRepairItem(stack, ingredient);
     }
 
     @Override

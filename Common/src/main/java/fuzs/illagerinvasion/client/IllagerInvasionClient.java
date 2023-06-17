@@ -12,7 +12,7 @@ import fuzs.puzzleslib.api.client.core.v1.context.*;
 import fuzs.puzzleslib.api.client.event.v1.ItemTooltipCallback;
 import fuzs.puzzleslib.api.core.v1.context.ModLifecycleContext;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.model.IllagerModel;
+import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.renderer.RenderType;
@@ -28,7 +28,8 @@ public class IllagerInvasionClient implements ClientModConstructor {
     }
 
     private static void registerHandlers() {
-        ItemTooltipCallback.EVENT.register(EnchantmentTooltipHandler::onItemTooltip);
+        ItemTooltipCallback.EVENT.register(EnchantmentTooltipHandler::onItemTooltip$1);
+        ItemTooltipCallback.EVENT.register(EnchantmentTooltipHandler::onItemTooltip$2);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class IllagerInvasionClient implements ClientModConstructor {
     public void onRegisterLayerDefinitions(LayerDefinitionsContext context) {
         context.registerLayerDefinition(ClientModRegistry.CAPED_ILLAGER, InvokerEntityModel::getTexturedModelData);
         context.registerLayerDefinition(ClientModRegistry.INVOKER_SHIELD, InvokerEntityModel::getTexturedModelData);
-        context.registerLayerDefinition(ClientModRegistry.NECROMANCER_SHIELD, IllagerModel::createBodyLayer);
+        context.registerLayerDefinition(ClientModRegistry.NECROMANCER_SHIELD, () -> ClientModRegistry.createIllagerBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION));
         context.registerLayerDefinition(ClientModRegistry.INVOKER_FANGS, InvokerFangsModel::getTexturedModelData);
         context.registerLayerDefinition(ClientModRegistry.ARMORED_ILLAGER, ArmoredIllagerEntityModel::getTexturedModelData);
         context.registerLayerDefinition(ClientModRegistry.HAT_ILLAGER, HatIllagerEntityModel::getTexturedModelData);

@@ -7,17 +7,20 @@ import fuzs.illagerinvasion.world.entity.projectile.FlyingMagma;
 import fuzs.illagerinvasion.world.entity.projectile.Hatchet;
 import fuzs.illagerinvasion.world.entity.projectile.SkullBolt;
 import fuzs.illagerinvasion.world.inventory.ImbuingMenu;
-import fuzs.illagerinvasion.world.item.HatchetItem;
-import fuzs.illagerinvasion.world.item.HornOfSightItem;
-import fuzs.illagerinvasion.world.item.IllusionaryDustItem;
-import fuzs.illagerinvasion.world.item.LostCandleItem;
+import fuzs.illagerinvasion.world.item.*;
 import fuzs.illagerinvasion.world.level.block.ImbuingTableBlock;
 import fuzs.illagerinvasion.world.level.block.MagicFireBlock;
 import fuzs.puzzleslib.api.init.v2.RegistryManager;
 import fuzs.puzzleslib.api.init.v2.RegistryReference;
 import fuzs.puzzleslib.api.item.v2.ItemEquipmentFactories;
+import net.minecraft.Util;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -29,6 +32,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.biome.Biome;
@@ -36,6 +40,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+
+import java.util.Map;
 
 public class ModRegistry {
     public static final Tier PLATINUM_INFUSED_NETHERITE_TIER = ItemEquipmentFactories.registerTier(4, 2531, 9.0f, 4.0f, 17, () -> Ingredient.of(ModRegistry.PLATINUM_SHEET_ITEM.get()));
@@ -46,6 +52,7 @@ public class ModRegistry {
     public static final RegistryReference<Block> MAGIC_FIRE_BLOCK = REGISTRY.registerBlock("magic_fire", () -> new MagicFireBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_FIRE).mapColor(MapColor.COLOR_PURPLE).randomTicks()));
     public static final RegistryReference<Item> IMBUIING_TABLE_ITEM = REGISTRY.registerBlockItem(ModRegistry.IMBUING_TABLE_BLOCK);
     public static final RegistryReference<Item> UNUSUAL_DUST_ITEM = REGISTRY.registerItem("unusual_dust", () -> new Item(new Item.Properties()));
+    public static final RegistryReference<Item> MAGICAL_FIRE_CHARGE_ITEM = REGISTRY.registerItem("magical_fire_charge", () -> new MagicalFireChargeItem(new Item.Properties()));
     public static final RegistryReference<Item> ILLUSIONARY_DUST_ITEM = REGISTRY.registerItem("illusionary_dust", () -> new IllusionaryDustItem(new Item.Properties()));
     public static final RegistryReference<Item> LOST_CANDLE_ITEM = REGISTRY.registerItem("lost_candle", () -> new LostCandleItem(new Item.Properties()));
     public static final RegistryReference<Item> HORN_OF_SIGHT_ITEM = REGISTRY.registerItem("horn_of_sight", () -> new HornOfSightItem(new Item.Properties().stacksTo(1), ModRegistry.HORN_OF_SIGHT_INSTRUMENT_TAG));
@@ -83,11 +90,13 @@ public class ModRegistry {
     public static final RegistryReference<Item> SORCERER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(SORCERER_ENTITY_TYPE, 9541270, 10899592);
     public static final RegistryReference<Item> ARCHIVIST_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ARCHIVIST_ENTITY_TYPE, 9541270, 13251893);
     public static final RegistryReference<Item> INQUISITOR_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(INQUISITOR_ENTITY_TYPE, 9541270, 4934471);
-    public static final RegistryReference<Item> MARAUDER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(MARAUDER_ENTITY_TYPE, 5441030, 9541270);
+    public static final RegistryReference<Item> MARAUDER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(MARAUDER_ENTITY_TYPE, 9541270, 5441030);
+    public static final RegistryReference<Item> INVOKER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(INVOKER_ENTITY_TYPE, 9541270, 0xCEC987);
     public static final RegistryReference<Item> ALCHEMIST_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(ALCHEMIST_ENTITY_TYPE, 9541270, 7550099);
     public static final RegistryReference<Item> FIRECALLER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(FIRECALLER_ENTITY_TYPE, 9541270, 14185784);
-    public static final RegistryReference<Item> SURRENDERED_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(SURRENDERED_ENTITY_TYPE, 11260369, 11858160);
     public static final RegistryReference<Item> NECROMANCER_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(NECROMANCER_ENTITY_TYPE, 9541270, 9585210);
+    public static final RegistryReference<Item> SURRENDERED_SPAWN_EGG_ITEM = REGISTRY.registerSpawnEggItem(SURRENDERED_ENTITY_TYPE, 11260369, 11858160);
+    public static final RegistryReference<Item> ILLUSIONER_SPAWN_EGG_ITEM = REGISTRY.registerItem("illusioner_spawn_egg", () -> new SpawnEggItem(EntityType.ILLUSIONER, 0x135893, 9541270, new Item.Properties()));
     public static final RegistryReference<Potion> BERSERKING_POTION = REGISTRY.registerPotion("berserking", () -> new Potion(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1), new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 1)));
     public static final RegistryReference<Potion> LONG_BERSERKING_POTION = REGISTRY.registerPotion("long_berserking", () -> new Potion("berserking", new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 0), new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 0)));
     public static final RegistryReference<Potion> STRONG_BERSERKING_POTION = REGISTRY.registerPotion("strong_berserking", () -> new Potion("berserking", new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 2), new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, 2)));
@@ -149,10 +158,12 @@ public class ModRegistry {
     public static final TagKey<Biome> HAS_ILLUSIONER_TOWER_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/illusioner_tower");
     public static final TagKey<Biome> HAS_SORCERER_HUT_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/sorcerer_hut");
 
-    public static final ResourceLocation ILLAGER_FORT_GOOD_LOOT_TABLE = REGISTRY.makeKey("chests/illager_fort_good");
-    public static final ResourceLocation ILLAGER_FORT_NORMAL_LOOT_TABLE = REGISTRY.makeKey("chests/illager_fort_normal");
-    public static final ResourceLocation ILLUSIONER_TOWER_GOOD_LOOT_TABLE = REGISTRY.makeKey("chests/illusioner_tower_good");
-    public static final ResourceLocation ILLUSIONER_TOWER_NORMAL_LOOT_TABLE = REGISTRY.makeKey("chests/illusioner_tower_normal");
+    public static final ResourceKey<TrimMaterial> PLATINUM_TRIM_MATERIAL = REGISTRY.registerResourceKey(Registries.TRIM_MATERIAL, "platinum");
+
+    public static final ResourceLocation ILLAGER_FORT_TOWER_LOOT_TABLE = REGISTRY.makeKey("chests/illager_fort_tower");
+    public static final ResourceLocation ILLAGER_FORT_GROUND_LOOT_TABLE = REGISTRY.makeKey("chests/illager_fort_ground");
+    public static final ResourceLocation ILLUSIONER_TOWER_ENTRANCE_LOOT_TABLE = REGISTRY.makeKey("chests/illusioner_tower_entrance");
+    public static final ResourceLocation ILLUSIONER_TOWER_STAIRS_LOOT_TABLE = REGISTRY.makeKey("chests/illusioner_tower_stairs");
     public static final ResourceLocation LABYRINTH_LOOT_TABLE = REGISTRY.makeKey("chests/labyrinth");
     public static final ResourceLocation LABYRINTH_MAP_LOOT_TABLE = REGISTRY.makeKey("chests/labyrinth_map");
     public static final ResourceLocation SORCERER_HUT_LOOT_TABLE = REGISTRY.makeKey("chests/sorcerer_hut");
@@ -169,5 +180,15 @@ public class ModRegistry {
 
     public static void touch() {
 
+    }
+
+    public static void bootstrapTrimMaterials(BootstapContext<TrimMaterial> context) {
+        register(context, PLATINUM_TRIM_MATERIAL, PLATINUM_SHEET_ITEM.get(), 0x527D7C, 0.2F);
+    }
+
+    private static void register(BootstapContext<TrimMaterial> bootstapContext, ResourceKey<TrimMaterial> resourceKey, Item ingredient, int descriptionColor, float itemModelIndex) {
+        Component description = Component.translatable(Util.makeDescriptionId("trim_material", resourceKey.location())).withStyle(Style.EMPTY.withColor(descriptionColor));
+        TrimMaterial trimMaterial = TrimMaterial.create(resourceKey.location().getPath(), ingredient, itemModelIndex, description, Map.of());
+        bootstapContext.register(resourceKey, trimMaterial);
     }
 }

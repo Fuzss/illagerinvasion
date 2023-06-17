@@ -1,4 +1,4 @@
-// 1.20	2023-06-17T00:48:44.246955	Block States: illagerinvasion
+// 1.20	2023-06-17T14:50:32.221355	Block States: illagerinvasion
 8bb3b85722fc5551bd04d509816ef24f7c86a875 assets/illagerinvasion/blockstates/imbuing_table.json
 4b394c428640e003f6ec052a8b596748454e2279 assets/illagerinvasion/models/block/imbuing_table.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/illagerinvasion/models/item/alchemist_spawn_egg.json
@@ -7,9 +7,12 @@
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/illagerinvasion/models/item/firecaller_spawn_egg.json
 0758723dde81b24424e9a85eb1793791ca7b68fb assets/illagerinvasion/models/item/hallowed_gem.json
 ca1d440b973ad73de74ca84aa20e46779280fe78 assets/illagerinvasion/models/item/illusionary_dust.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/illagerinvasion/models/item/illusioner_spawn_egg.json
 9d8b7e3d746fa05a7f518d950d0ad0d0f0b8264d assets/illagerinvasion/models/item/imbuing_table.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/illagerinvasion/models/item/inquisitor_spawn_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/illagerinvasion/models/item/invoker_spawn_egg.json
 0905119c192e4e63063b06af3b11716e0a7cacae assets/illagerinvasion/models/item/lost_candle.json
+e7518d9a3b3ce3f492ce5b6916327d928fa96dd8 assets/illagerinvasion/models/item/magical_fire_charge.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/illagerinvasion/models/item/marauder_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/illagerinvasion/models/item/necromancer_spawn_egg.json
 b084245562d4bf435da100dceb8aeac7b59bb29d assets/illagerinvasion/models/item/platinum_chunk.json

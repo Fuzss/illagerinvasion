@@ -59,7 +59,7 @@ public class LostCandleItem extends Item {
         DIAMOND(Blocks.DIAMOND_ORE, BlockTags.DIAMOND_ORES, ModRegistry.LOST_CANDLE_DIAMOND_SOUND_EVENT::get, ChatFormatting.AQUA),
         IRON(Blocks.IRON_ORE, BlockTags.IRON_ORES, ModRegistry.LOST_CANDLE_IRON_SOUND_EVENT::get, ChatFormatting.GRAY),
         GOLD(Blocks.GOLD_ORE, BlockTags.GOLD_ORES, ModRegistry.LOST_CANDLE_GOLD_SOUND_EVENT::get, ChatFormatting.GOLD),
-        COPPER(Blocks.COPPER_BLOCK, BlockTags.COPPER_ORES, ModRegistry.LOST_CANDLE_COPPER_SOUND_EVENT::get, ChatFormatting.GOLD),
+        COPPER(Blocks.COPPER_ORE, BlockTags.COPPER_ORES, ModRegistry.LOST_CANDLE_COPPER_SOUND_EVENT::get, ChatFormatting.GOLD),
         COAL(Blocks.COAL_ORE, BlockTags.COAL_ORES, ModRegistry.LOST_CANDLE_COAL_SOUND_EVENT::get, ChatFormatting.GRAY);
 
         public final TagKey<Block> blocks;

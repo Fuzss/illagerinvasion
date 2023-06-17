@@ -26,9 +26,12 @@
   "item.illagerinvasion.hallowed_gem": "Hallowed Gem",
   "item.illagerinvasion.horn_of_sight": "Horn of Sight",
   "item.illagerinvasion.illusionary_dust": "Illusionary Dust",
+  "item.illagerinvasion.illusioner_spawn_egg": "Illusioner Spawn Egg",
   "item.illagerinvasion.inquisitor_spawn_egg": "Inquisitor Spawn Egg",
+  "item.illagerinvasion.invoker_spawn_egg": "Invoker Spawn Egg",
   "item.illagerinvasion.lost_candle": "Lost Candle",
   "item.illagerinvasion.lost_candle.foundNearby": "%s found nearby",
+  "item.illagerinvasion.magical_fire_charge": "Magical Fire Charge",
   "item.illagerinvasion.marauder_spawn_egg": "Marauder Spawn Egg",
   "item.illagerinvasion.necromancer_spawn_egg": "Necromancer Egg",
   "item.illagerinvasion.platinum_chunk": "Platinum Chunk",
@@ -98,5 +101,10 @@
   "subtitles.item.lost_candle.copper": "Copper rings",
   "subtitles.item.lost_candle.diamond": "Diamonds ring",
   "subtitles.item.lost_candle.gold": "Gold rings",
-  "subtitles.item.lost_candle.iron": "Iron rings"
+  "subtitles.item.lost_candle.iron": "Iron rings",
+  "trim_material.illagerinvasion.platinum": "Platinum Material",
+  "trim_material.illagerinvasion.platinum.effect.agility": "Agility Effect",
+  "trim_material.illagerinvasion.platinum.effect.endurance": "Endurance Effect",
+  "trim_material.illagerinvasion.platinum.effect.featherweight": "Featherweight Effect",
+  "trim_material.illagerinvasion.platinum.effect.insight": "Insight Effect"
 }
