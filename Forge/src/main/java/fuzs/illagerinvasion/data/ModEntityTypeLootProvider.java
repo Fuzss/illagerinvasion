@@ -2,6 +2,8 @@ package fuzs.illagerinvasion.data;
 
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v1.AbstractLootProvider;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -222,5 +224,11 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                                 .when(LootItemKilledByPlayerCondition.killedByPlayer())
                 )
         );
+        this.add(ModRegistry.SURRENDERED_ENTITY_TYPE.get(), LootTable.lootTable());
+    }
+
+    @Override
+    protected boolean canHaveLootTable(EntityType<?> entityType) {
+        return entityType.getCategory() != MobCategory.MISC;
     }
 }

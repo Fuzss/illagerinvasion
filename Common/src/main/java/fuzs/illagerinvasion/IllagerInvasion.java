@@ -1,11 +1,11 @@
 package fuzs.illagerinvasion;
 
+import fuzs.illagerinvasion.config.RaidWavesConfigHelper;
 import fuzs.illagerinvasion.config.ServerConfig;
 import fuzs.illagerinvasion.core.CommonAbstractions;
 import fuzs.illagerinvasion.handler.IllusionerFireworksHandler;
 import fuzs.illagerinvasion.handler.PlatinumTrimHandler;
 import fuzs.illagerinvasion.init.ModRegistry;
-import fuzs.illagerinvasion.config.RaidWavesConfigHelper;
 import fuzs.puzzleslib.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.api.core.v1.context.CreativeModeTabContext;
@@ -14,6 +14,7 @@ import fuzs.puzzleslib.api.core.v1.context.ModLifecycleContext;
 import fuzs.puzzleslib.api.core.v1.context.SpawnPlacementsContext;
 import fuzs.puzzleslib.api.event.v1.entity.ServerEntityLevelEvents;
 import fuzs.puzzleslib.api.event.v1.entity.living.LivingExperienceDropCallback;
+import fuzs.puzzleslib.api.event.v1.entity.player.PlayerEvents;
 import fuzs.puzzleslib.api.event.v1.entity.player.PlayerTickEvents;
 import fuzs.puzzleslib.api.event.v1.level.BlockEvents;
 import fuzs.puzzleslib.api.event.v1.server.LootTableLoadEvents;
@@ -54,6 +55,7 @@ public class IllagerInvasion implements ModConstructor {
 
     private static void registerHandlers() {
         ServerEntityLevelEvents.LOAD.register(IllusionerFireworksHandler::onEntityLoad);
+        PlayerEvents.BREAK_SPEED.register(PlatinumTrimHandler::onBreakSpeed);
         PlayerTickEvents.START.register(PlatinumTrimHandler::onStartPlayerTick);
         PlayerTickEvents.END.register(PlatinumTrimHandler::onEndPlayerTick);
         LivingExperienceDropCallback.EVENT.register(PlatinumTrimHandler::onLivingExperienceDrop);

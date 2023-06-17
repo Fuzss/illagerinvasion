@@ -12,28 +12,23 @@ import fuzs.illagerinvasion.world.level.block.ImbuingTableBlock;
 import fuzs.illagerinvasion.world.level.block.MagicFireBlock;
 import fuzs.puzzleslib.api.init.v2.RegistryManager;
 import fuzs.puzzleslib.api.init.v2.RegistryReference;
-import fuzs.puzzleslib.api.item.v2.ItemEquipmentFactories;
-import net.minecraft.Util;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Instrument;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.armortrim.TrimMaterial;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -41,12 +36,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
-import java.util.Map;
-
 public class ModRegistry {
-    public static final Tier PLATINUM_INFUSED_NETHERITE_TIER = ItemEquipmentFactories.registerTier(4, 2531, 9.0f, 4.0f, 17, () -> Ingredient.of(ModRegistry.PLATINUM_SHEET_ITEM.get()));
-    public static final ArmorMaterial PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL = ItemEquipmentFactories.registerArmorMaterial(IllagerInvasion.id("platinum_infused_netherite"), 40, new int[]{3, 6, 8, 3}, 17, () -> SoundEvents.ARMOR_EQUIP_NETHERITE, 3.0f, 0.2f, () -> Ingredient.of(ModRegistry.PLATINUM_SHEET_ITEM.get()));
-
     static final RegistryManager REGISTRY = RegistryManager.instant(IllagerInvasion.MOD_ID);
     public static final RegistryReference<Block> IMBUING_TABLE_BLOCK = REGISTRY.registerBlock("imbuing_table", () -> new ImbuingTableBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
     public static final RegistryReference<Block> MAGIC_FIRE_BLOCK = REGISTRY.registerBlock("magic_fire", () -> new MagicFireBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_FIRE).mapColor(MapColor.COLOR_PURPLE).randomTicks()));
@@ -61,15 +51,6 @@ public class ModRegistry {
     public static final RegistryReference<Item> PLATINUM_CHUNK_ITEM = REGISTRY.registerItem("platinum_chunk", () -> new Item(new Item.Properties()));
     public static final RegistryReference<Item> PLATINUM_SHEET_ITEM = REGISTRY.registerItem("platinum_sheet", () -> new Item(new Item.Properties()));
     public static final RegistryReference<Item> PLATINUM_INFUSED_HATCHET_ITEM = REGISTRY.registerItem("platinum_infused_hatchet", () -> new HatchetItem(new Item.Properties().durability(327)));
-    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_SHOVEL_ITEM = REGISTRY.registerItem("platinum_infused_netherite_shovel", () -> new ShovelItem(PLATINUM_INFUSED_NETHERITE_TIER, 1.5f, -3.0f, new Item.Properties().fireResistant()));
-    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_SWORD_ITEM = REGISTRY.registerItem("platinum_infused_netherite_sword", () -> new SwordItem(PLATINUM_INFUSED_NETHERITE_TIER, 3, -2.4f, new Item.Properties().fireResistant()));
-    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_HOE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_hoe", () -> new HoeItem(PLATINUM_INFUSED_NETHERITE_TIER, -2, 0.0f, new Item.Properties().fireResistant()));
-    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_AXE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_axe", () -> new AxeItem(PLATINUM_INFUSED_NETHERITE_TIER, 5, -3.0f, new Item.Properties().fireResistant()));
-    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_PICKAXE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_pickaxe", () -> new PickaxeItem(PLATINUM_INFUSED_NETHERITE_TIER, 1, -2.8f, new Item.Properties().fireResistant()));
-    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_BOOTS_ITEM = REGISTRY.registerItem("platinum_infused_netherite_boots", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant()));
-    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_LEGGINGS_ITEM = REGISTRY.registerItem("platinum_infused_netherite_leggings", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()));
-    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_CHESTPLATE_ITEM = REGISTRY.registerItem("platinum_infused_netherite_chestplate", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant()));
-    public static final RegistryReference<Item> PLATINUM_INFUSED_NETHERITE_HELMET_ITEM = REGISTRY.registerItem("platinum_infused_netherite_helmet", () -> new ArmorItem(PLATINUM_INFUSED_NETHERITE_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));
     public static final RegistryReference<EntityType<Provoker>> PROVOKER_ENTITY_TYPE = REGISTRY.registerEntityType("provoker", () -> EntityType.Builder.of(Provoker::new, MobCategory.MONSTER).sized(0.5F, 1.92F));
     public static final RegistryReference<EntityType<Invoker>> INVOKER_ENTITY_TYPE = REGISTRY.registerEntityType("invoker", () -> EntityType.Builder.of(Invoker::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Necromancer>> NECROMANCER_ENTITY_TYPE = REGISTRY.registerEntityType("necromancer", () -> EntityType.Builder.of(Necromancer::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
@@ -180,15 +161,5 @@ public class ModRegistry {
 
     public static void touch() {
 
-    }
-
-    public static void bootstrapTrimMaterials(BootstapContext<TrimMaterial> context) {
-        register(context, PLATINUM_TRIM_MATERIAL, PLATINUM_SHEET_ITEM.get(), 0x527D7C, 0.2F);
-    }
-
-    private static void register(BootstapContext<TrimMaterial> bootstapContext, ResourceKey<TrimMaterial> resourceKey, Item ingredient, int descriptionColor, float itemModelIndex) {
-        Component description = Component.translatable(Util.makeDescriptionId("trim_material", resourceKey.location())).withStyle(Style.EMPTY.withColor(descriptionColor));
-        TrimMaterial trimMaterial = TrimMaterial.create(resourceKey.location().getPath(), ingredient, itemModelIndex, description, Map.of());
-        bootstapContext.register(resourceKey, trimMaterial);
     }
 }

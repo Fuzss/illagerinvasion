@@ -6,6 +6,8 @@ import fuzs.puzzleslib.api.config.v3.ConfigCore;
 import java.util.function.Supplier;
 
 public class ServerConfig implements ConfigCore {
+    @Config(category = "general", description = {"Will platinum armor trims provide special effects to the player depending on the piece of armor they are applied to.", "Helmet: More experience from killing mobs.", "Chestplate: Faster block breaking speed when using an incorrect or no tool.", "Leggings: Slower hunger drain when performaing actions.", "Boots: Farmland can no longer be trampled."})
+    public boolean platinumTrimEffects = true;
     @Config
     public final IllagerConfig basher = new IllagerConfig(RaidWavesConfigHelper.BASHER_RAID_WAVES, RaidWavesConfigHelper::getBasherRaidWaves);
     @Config

@@ -1,8 +1,10 @@
 package fuzs.illagerinvasion.handler;
 
 import fuzs.illagerinvasion.IllagerInvasion;
+import fuzs.illagerinvasion.config.ServerConfig;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.event.v1.core.EventResult;
+import fuzs.puzzleslib.api.event.v1.data.DefaultedFloat;
 import fuzs.puzzleslib.api.event.v1.data.DefaultedInt;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -36,6 +38,15 @@ public class PlatinumTrimHandler {
 
     private static float foodExhaustion;
 
+    public static EventResult onBreakSpeed(Player player, BlockState state, DefaultedFloat breakSpeed) {
+        if (player.getInventory().getDestroySpeed(state) == 1.0F) {
+            if (PlatinumTrimHandler.hasPlatinumTrim(player, EquipmentSlot.CHEST)) {
+                breakSpeed.mapFloat(f -> f * 1.5F);
+            }
+        }
+        return EventResult.PASS;
+    }
+
     public static void onStartPlayerTick(Player player) {
         foodExhaustion = player.getFoodData().getExhaustionLevel();
     }
@@ -63,6 +74,7 @@ public class PlatinumTrimHandler {
     }
 
     public static Optional<ArmorTrim> getPlatinumTrim(Level level, ItemStack stack) {
+        if (!IllagerInvasion.CONFIG.get(ServerConfig.class).platinumTrimEffects) return Optional.empty();
         return ArmorTrim.getTrim(level.registryAccess(), stack).filter(armorTrim -> armorTrim.material().is(ModRegistry.PLATINUM_TRIM_MATERIAL));
     }
 }

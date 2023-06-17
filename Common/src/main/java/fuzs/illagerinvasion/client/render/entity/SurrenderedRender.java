@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.SkeletonRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
+import net.minecraft.world.phys.Vec3;
 
 
 public class SurrenderedRender extends SkeletonRenderer {
@@ -21,6 +22,11 @@ public class SurrenderedRender extends SkeletonRenderer {
     @Override
     protected void scale(AbstractSkeleton abstractSkeletonEntity, PoseStack matrixStack, float f) {
         matrixStack.scale(0.85f, 0.85f, 0.85f);
+    }
+
+    @Override
+    public Vec3 getRenderOffset(AbstractSkeleton entity, float partialTicks) {
+        return new Vec3(0.0, -0.35, 0.0);
     }
 
     @Override

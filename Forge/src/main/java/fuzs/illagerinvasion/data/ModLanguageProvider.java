@@ -43,15 +43,6 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         this.add(ModRegistry.PLATINUM_CHUNK_ITEM.get(), "Platinum Chunk");
         this.add(ModRegistry.PLATINUM_SHEET_ITEM.get(), "Platinum Sheet");
         this.add(ModRegistry.PRIMAL_ESSENCE_ITEM.get(), "Primal Essence");
-        this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_HELMET_ITEM.get(), "Platinum Infused Netherite Helmet");
-        this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_CHESTPLATE_ITEM.get(), "Platinum Infused Netherite Chestplate");
-        this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_LEGGINGS_ITEM.get(), "Platinum Infused Netherite Leggings");
-        this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_BOOTS_ITEM.get(), "Platinum Infused Netherite Boots");
-        this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_SWORD_ITEM.get(), "Platinum Infused Netherite Sword");
-        this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_PICKAXE_ITEM.get(), "Platinum Infused Netherite Pickaxe");
-        this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_AXE_ITEM.get(), "Platinum Infused Netherite Axe");
-        this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_HOE_ITEM.get(), "Platinum Infused Netherite Hoe");
-        this.add(ModRegistry.PLATINUM_INFUSED_NETHERITE_SHOVEL_ITEM.get(), "Platinum Infused Netherite Shovel");
         this.add(ModRegistry.BERSERKING_POTION.get(), "Berserking");
         this.add(ModRegistry.PROVOKER_SPAWN_EGG_ITEM.get(), "Provoker Spawn Egg");
         this.add(ModRegistry.SURRENDERED_SPAWN_EGG_ITEM.get(), "Surrendered Spawn Egg");
