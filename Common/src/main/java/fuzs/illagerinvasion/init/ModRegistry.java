@@ -58,7 +58,7 @@ public class ModRegistry {
     public static final RegistryReference<EntityType<Sorcerer>> SORCERER_ENTITY_TYPE = REGISTRY.registerEntityType("sorcerer", () -> EntityType.Builder.of(Sorcerer::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Archivist>> ARCHIVIST_ENTITY_TYPE = REGISTRY.registerEntityType("archivist", () -> EntityType.Builder.of(Archivist::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Inquisitor>> INQUISITOR_ENTITY_TYPE = REGISTRY.registerEntityType("inquisitor", () -> EntityType.Builder.of(Inquisitor::new, MobCategory.MONSTER).sized(0.5f, 2.48f));
-    public static final RegistryReference<EntityType<Marauder>> MARAUDER_ENTITY_TYPE = REGISTRY.registerEntityType("marauder", () -> EntityType.Builder.of(Marauder::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
+    public static final RegistryReference<EntityType<Marauder>> MARAUDER_ENTITY_TYPE = REGISTRY.registerEntityType("marauder", () -> EntityType.Builder.of(Marauder::new, MobCategory.MONSTER).sized(0.5f, 1.92f).canSpawnFarFromPlayer());
     public static final RegistryReference<EntityType<Alchemist>> ALCHEMIST_ENTITY_TYPE = REGISTRY.registerEntityType("alchemist", () -> EntityType.Builder.of(Alchemist::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Firecaller>> FIRECALLER_ENTITY_TYPE = REGISTRY.registerEntityType("firecaller", () -> EntityType.Builder.of(Firecaller::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
     public static final RegistryReference<EntityType<Surrendered>> SURRENDERED_ENTITY_TYPE = REGISTRY.registerEntityType("surrendered", () -> EntityType.Builder.of(Surrendered::new, MobCategory.MONSTER).fireImmune().sized(0.5f, 1.42f));
@@ -138,6 +138,7 @@ public class ModRegistry {
     public static final TagKey<Biome> HAS_ILLAGER_FORT_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/illager_fort");
     public static final TagKey<Biome> HAS_ILLUSIONER_TOWER_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/illusioner_tower");
     public static final TagKey<Biome> HAS_SORCERER_HUT_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/sorcerer_hut");
+    public static final TagKey<Biome> HAS_LABYRINTH_BIOME_TAG = REGISTRY.registerTag(Registries.BIOME, "has_structure/labyrinth");
 
     public static final ResourceKey<TrimMaterial> PLATINUM_TRIM_MATERIAL = REGISTRY.registerResourceKey(Registries.TRIM_MATERIAL, "platinum");
 

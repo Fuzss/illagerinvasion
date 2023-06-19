@@ -22,8 +22,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -51,8 +49,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.WebBlock;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
@@ -83,9 +83,9 @@ public class Inquisitor extends AbstractIllager {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(4, new AttackGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<AbstractVillager>(this, AbstractVillager.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<IronGolem>(this, IronGolem.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
@@ -106,16 +106,13 @@ public class Inquisitor extends AbstractIllager {
             boolean bl = false;
             final AABB box = this.getBoundingBox().inflate(1.0);
             for (final BlockPos blockPos : BlockPos.betweenClosed(Mth.floor(box.minX), Mth.floor(box.minY), Mth.floor(box.minZ), Mth.floor(box.maxX), Mth.floor(box.maxY), Mth.floor(box.maxZ))) {
-                final BlockState blockState = this.level().getBlockState(blockPos);
-                final Block block = blockState.getBlock();
-                if (!(block instanceof LeavesBlock) && !(block instanceof DoorBlock) && !(block instanceof GlassBlock) && !(block instanceof HayBlock) && !(block instanceof SugarCaneBlock) && !(block instanceof WebBlock)) {
-                    continue;
+                final Block block = this.level().getBlockState(blockPos).getBlock();
+                if (block instanceof LeavesBlock || block instanceof DoorBlock || block instanceof WebBlock) {
+                    bl = this.level().destroyBlock(blockPos, true, this) || bl;
+                    if (block instanceof DoorBlock) {
+                        this.playSound(SoundEvents.ZOMBIE_BREAK_WOODEN_DOOR, 1.0f, 1.0f);
+                    }
                 }
-                bl = (this.level().destroyBlock(blockPos, true, this) || bl);
-                if (!(block instanceof DoorBlock)) {
-                    continue;
-                }
-                this.playSound(SoundEvents.ZOMBIE_BREAK_WOODEN_DOOR, 1.0f, 1.0f);
             }
         }
         super.aiStep();

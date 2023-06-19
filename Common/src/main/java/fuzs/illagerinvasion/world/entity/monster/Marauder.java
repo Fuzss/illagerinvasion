@@ -3,6 +3,7 @@ package fuzs.illagerinvasion.world.entity.monster;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.world.entity.ai.goal.HatchetAttackGoal;
 import fuzs.illagerinvasion.world.entity.projectile.Hatchet;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -27,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
@@ -85,20 +87,19 @@ public class Marauder extends AbstractIllager implements RangedAttackMob {
         this.level().addFreshEntity(hatchet);
     }
 
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
-    }
-
     @Override
     public SoundEvent getCelebrateSound() {
         return SoundEvents.PILLAGER_CELEBRATE;
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
-        super.addAdditionalSaveData(nbt);
+    public float getWalkTargetValue(BlockPos pos, LevelReader level) {
+        return 0.0F;
+    }
+
+    @Override
+    public int getMaxSpawnClusterSize() {
+        return 1;
     }
 
     @Override

@@ -3,7 +3,6 @@ package fuzs.illagerinvasion.world.entity.monster;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.util.EnchantToolUtil;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -57,18 +56,8 @@ public class Archivist extends SpellcasterIllager {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
-    }
-
-    @Override
     public SoundEvent getCelebrateSound() {
         return ModRegistry.ARCHIVIST_AMBIENT_SOUND_EVENT.get();
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
-        super.addAdditionalSaveData(nbt);
     }
 
 
@@ -176,11 +165,6 @@ public class Archivist extends SpellcasterIllager {
             return Archivist.this.level().getEntitiesOfClass(LivingEntity.class, Archivist.this.getBoundingBox().inflate(6), entity -> {
                 return !(entity instanceof Monster) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity);
             });
-        }
-
-        @Override
-        public void stop() {
-            super.stop();
         }
 
         private void buff(LivingEntity entity) {

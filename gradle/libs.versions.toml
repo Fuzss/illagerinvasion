@@ -2,8 +2,8 @@
 minecraft = "1.20"
 parchment = "2023.03.12"
 parchmentMinecraft = "1.19.3"
-puzzles = "7.0.8"
-minPuzzles = "7.0.8"
+puzzles = "7.0.9"
+minPuzzles = "7.0.9"
 resources = "15"
 data = "15"
 

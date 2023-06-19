@@ -3,7 +3,6 @@ package fuzs.illagerinvasion;
 import fuzs.illagerinvasion.config.RaidWavesConfigHelper;
 import fuzs.illagerinvasion.config.ServerConfig;
 import fuzs.illagerinvasion.core.CommonAbstractions;
-import fuzs.illagerinvasion.handler.IllusionerFireworksHandler;
 import fuzs.illagerinvasion.handler.PlatinumTrimHandler;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.config.v3.ConfigHolder;
@@ -12,28 +11,36 @@ import fuzs.puzzleslib.api.core.v1.context.CreativeModeTabContext;
 import fuzs.puzzleslib.api.core.v1.context.EntityAttributesCreateContext;
 import fuzs.puzzleslib.api.core.v1.context.ModLifecycleContext;
 import fuzs.puzzleslib.api.core.v1.context.SpawnPlacementsContext;
-import fuzs.puzzleslib.api.event.v1.entity.ServerEntityLevelEvents;
+import fuzs.puzzleslib.api.event.v1.core.EventResultHolder;
 import fuzs.puzzleslib.api.event.v1.entity.living.LivingExperienceDropCallback;
 import fuzs.puzzleslib.api.event.v1.entity.player.PlayerEvents;
+import fuzs.puzzleslib.api.event.v1.entity.player.PlayerInteractEvents;
 import fuzs.puzzleslib.api.event.v1.entity.player.PlayerTickEvents;
 import fuzs.puzzleslib.api.event.v1.level.BlockEvents;
 import fuzs.puzzleslib.api.event.v1.server.LootTableLoadEvents;
 import fuzs.puzzleslib.api.init.v2.PotionBrewingRegistry;
 import fuzs.puzzleslib.api.item.v2.CreativeModeTabConfigurator;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.PatrollingMonster;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.GameMasterBlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.loot.LootDataManager;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +61,6 @@ public class IllagerInvasion implements ModConstructor {
     }
 
     private static void registerHandlers() {
-        ServerEntityLevelEvents.LOAD.register(IllusionerFireworksHandler::onEntityLoad);
         PlayerEvents.BREAK_SPEED.register(PlatinumTrimHandler::onBreakSpeed);
         PlayerTickEvents.START.register(PlatinumTrimHandler::onStartPlayerTick);
         PlayerTickEvents.END.register(PlatinumTrimHandler::onEndPlayerTick);
@@ -64,6 +70,17 @@ public class IllagerInvasion implements ModConstructor {
             injectLootPool(identifier, addPool, EntityType.ILLUSIONER.getDefaultLootTable(), ModRegistry.ILLUSIONER_INJECT_LOOT_TABLE);
             injectLootPool(identifier, addPool, EntityType.PILLAGER.getDefaultLootTable(), ModRegistry.PILLAGER_INJECT_LOOT_TABLE);
             injectLootPool(identifier, addPool, EntityType.RAVAGER.getDefaultLootTable(), ModRegistry.RAVAGER_INJECT_LOOT_TABLE);
+        });
+        PlayerInteractEvents.USE_ITEM.register((player, level, interactionHand) -> {
+            ItemStack itemInHand = player.getItemInHand(interactionHand);
+            if (itemInHand.getItem() instanceof GameMasterBlockItem item) {
+                HitResult hitResultOnViewVector = ProjectileUtil.getHitResultOnViewVector(player, entity -> true, player.isCreative() ? 5.0F : 4.5F);
+                if (hitResultOnViewVector.getType() == HitResult.Type.MISS) {
+                    item.place(new BlockPlaceContext(player, interactionHand, itemInHand, (BlockHitResult) hitResultOnViewVector));
+                    return EventResultHolder.interrupt(InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide));
+                }
+            }
+            return EventResultHolder.pass();
         });
     }
 
@@ -99,16 +116,16 @@ public class IllagerInvasion implements ModConstructor {
 
     @Override
     public void onEntityAttributeCreation(EntityAttributesCreateContext context) {
-        context.registerEntityAttributes(ModRegistry.ALCHEMIST_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 23.0).add(Attributes.MOVEMENT_SPEED, 0.38));
-        context.registerEntityAttributes(ModRegistry.ARCHIVIST_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 22.0D).add(Attributes.MOVEMENT_SPEED, 0.36D));
-        context.registerEntityAttributes(ModRegistry.BASHER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 28.0D).add(Attributes.MOVEMENT_SPEED, 0.31D).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ATTACK_KNOCKBACK, 0.2D));
+        context.registerEntityAttributes(ModRegistry.ALCHEMIST_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 24.0).add(Attributes.MOVEMENT_SPEED, 0.38));
+        context.registerEntityAttributes(ModRegistry.ARCHIVIST_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 24.0D).add(Attributes.MOVEMENT_SPEED, 0.36D));
+        context.registerEntityAttributes(ModRegistry.BASHER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 32.0D).add(Attributes.MOVEMENT_SPEED, 0.31D).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ATTACK_KNOCKBACK, 0.2D));
         context.registerEntityAttributes(ModRegistry.FIRECALLER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 32.0).add(Attributes.MOVEMENT_SPEED, 0.38));
         context.registerEntityAttributes(ModRegistry.INQUISITOR_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 80.0).add(Attributes.MOVEMENT_SPEED, 0.33).add(Attributes.ATTACK_DAMAGE, 10.0).add(Attributes.ATTACK_KNOCKBACK, 1.6).add(Attributes.KNOCKBACK_RESISTANCE, 0.8));
         context.registerEntityAttributes(ModRegistry.INVOKER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 250.0D).add(Attributes.MOVEMENT_SPEED, 0.36D).add(Attributes.KNOCKBACK_RESISTANCE, 0.3D).add(Attributes.ATTACK_DAMAGE, 8.0D));
-        context.registerEntityAttributes(ModRegistry.MARAUDER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 21.0D).add(Attributes.MOVEMENT_SPEED, 0.30D));
-        context.registerEntityAttributes(ModRegistry.PROVOKER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 23.0D).add(Attributes.MOVEMENT_SPEED, 0.38D));
-        context.registerEntityAttributes(ModRegistry.SORCERER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 26.0D).add(Attributes.MOVEMENT_SPEED, 0.38D));
-        context.registerEntityAttributes(ModRegistry.SURRENDERED_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 18.0D).add(Attributes.ATTACK_DAMAGE, 5.0D));
+        context.registerEntityAttributes(ModRegistry.MARAUDER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 24.0D).add(Attributes.MOVEMENT_SPEED, 0.30D));
+        context.registerEntityAttributes(ModRegistry.PROVOKER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 24.0D).add(Attributes.MOVEMENT_SPEED, 0.38D));
+        context.registerEntityAttributes(ModRegistry.SORCERER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 32.0D).add(Attributes.MOVEMENT_SPEED, 0.38D));
+        context.registerEntityAttributes(ModRegistry.SURRENDERED_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 14.0D).add(Attributes.ATTACK_DAMAGE, 5.0D));
         context.registerEntityAttributes(ModRegistry.NECROMANCER_ENTITY_TYPE.get(), Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 32.0).add(Attributes.MOVEMENT_SPEED, 0.38));
     }
 

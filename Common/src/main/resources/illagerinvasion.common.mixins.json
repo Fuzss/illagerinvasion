@@ -6,12 +6,15 @@
   "refmap": "illagerinvasion.refmap.json",
   "plugin": "fuzs.illagerinvasion.mixin.ModMixinConfigPlugin",
   "mixins": [
+    "IllusionerMixin",
     "PatrolSpawnerMixin",
-    "WoodlandMansionPieceMixin"
+    "WoodlandMansionPieceMixin",
+    "ServerboundSetStructureBlockPacketMixin",
+    "StructureBlockEntityMixin",
+    "StructureBlockRendererMixin"
   ],
   "client": [
-    "client.IllagerModelMixin",
-    "client.SkeletonModelMixin"
+    "client.IllagerModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -5,7 +5,6 @@ import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.world.entity.projectile.FlyingMagma;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -54,27 +53,11 @@ public class Firecaller extends SpellcasterIllager {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<AbstractVillager>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<IronGolem>(this, IronGolem.class, false));
-
-    }
-
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-    }
-
-    @Override
-    public void readAdditionalSaveData(final CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
     }
 
     @Override
     public SoundEvent getCelebrateSound() {
         return SoundEvents.ILLUSIONER_AMBIENT;
-    }
-
-    @Override
-    public void addAdditionalSaveData(final CompoundTag nbt) {
-        super.addAdditionalSaveData(nbt);
     }
 
     @Override
@@ -167,11 +150,6 @@ public class Firecaller extends SpellcasterIllager {
         }
 
         @Override
-        public void stop() {
-            super.stop();
-        }
-
-        @Override
         public void tick() {
             if (Firecaller.this.level() instanceof ServerLevel) {
                 ((ServerLevel) Firecaller.this.level()).sendParticles(ParticleTypes.FLAME, Firecaller.this.getX(), Firecaller.this.getY() + 2.5, Firecaller.this.getZ(), 2, 0.2D, 0.2D, 0.2D, 0.05D);
@@ -250,11 +228,6 @@ public class Firecaller extends SpellcasterIllager {
 
         private List<LivingEntity> getTargets() {
             return Firecaller.this.level().getEntitiesOfClass(LivingEntity.class, Firecaller.this.getBoundingBox().inflate(6), entity -> !(entity instanceof AbstractIllager) && !(entity instanceof Surrendered) && !(entity instanceof Ravager));
-        }
-
-        @Override
-        public void stop() {
-            super.stop();
         }
 
         private void buff(LivingEntity entity) {

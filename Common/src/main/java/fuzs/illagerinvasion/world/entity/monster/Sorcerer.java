@@ -4,7 +4,6 @@ import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.util.SetMagicFireUtil;
 import fuzs.illagerinvasion.util.TeleportUtil;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -53,23 +52,8 @@ public class Sorcerer extends SpellcasterIllager {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
-    }
-
-    @Override
     public SoundEvent getCelebrateSound() {
         return ModRegistry.SORCERER_CELEBRATE_SOUND_EVENT.get();
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
-        super.addAdditionalSaveData(nbt);
     }
 
     @Override
@@ -164,11 +148,6 @@ public class Sorcerer extends SpellcasterIllager {
             return !this.getTargets().isEmpty();
         }
 
-        @Override
-        public void stop() {
-            super.stop();
-        }
-
 
         @Override
         protected void performSpellCasting() {
@@ -222,11 +201,6 @@ public class Sorcerer extends SpellcasterIllager {
                 return true;
             }
             return false;
-        }
-
-        @Override
-        public void stop() {
-            super.stop();
         }
 
         @Override

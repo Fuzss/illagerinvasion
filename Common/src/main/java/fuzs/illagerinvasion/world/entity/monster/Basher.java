@@ -2,6 +2,7 @@ package fuzs.illagerinvasion.world.entity.monster;
 
 import com.google.common.collect.Maps;
 import fuzs.illagerinvasion.init.ModRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -40,6 +41,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
@@ -111,6 +113,16 @@ public class Basher extends AbstractIllager {
 
     public void setStunnedState(boolean isStunned) {
         this.entityData.set(DATA_STUNNED, isStunned);
+    }
+
+    @Override
+    public float getWalkTargetValue(BlockPos pos, LevelReader level) {
+        return 0.0F;
+    }
+
+    @Override
+    public int getMaxSpawnClusterSize() {
+        return 1;
     }
 
     @Override

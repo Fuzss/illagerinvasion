@@ -1,6 +1,7 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
 import fuzs.illagerinvasion.init.ModRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -30,6 +31,7 @@ import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,14 +51,14 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new Provoker.LookAtTargetOrWololoTarget());
         this.goalSelector.addGoal(3, new BuffAllyGoal());
-        this.goalSelector.addGoal(4, new RangedBowAttackGoal<Provoker>(this, 0.5, 20, 15.0f));
+        this.goalSelector.addGoal(4, new RangedBowAttackGoal<>(this, 0.5, 20, 15.0f));
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true).setUnseenMemoryTicks(300));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<AbstractVillager>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<IronGolem>(this, IronGolem.class, false));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, false));
     }
 
     @Override
@@ -79,23 +81,18 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
+    public float getWalkTargetValue(BlockPos pos, LevelReader level) {
+        return 0.0F;
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
+    public int getMaxSpawnClusterSize() {
+        return 1;
     }
 
     @Override
     public SoundEvent getCelebrateSound() {
         return ModRegistry.PROVOKER_CELEBRATE_SOUND_EVENT.get();
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
-        super.addAdditionalSaveData(nbt);
     }
 
     @Override
@@ -146,6 +143,7 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
 
     @Override
     public void applyRaidBuffs(int wave, boolean unused) {
+
     }
 
     @Override
