@@ -11,36 +11,27 @@ import fuzs.puzzleslib.api.core.v1.context.CreativeModeTabContext;
 import fuzs.puzzleslib.api.core.v1.context.EntityAttributesCreateContext;
 import fuzs.puzzleslib.api.core.v1.context.ModLifecycleContext;
 import fuzs.puzzleslib.api.core.v1.context.SpawnPlacementsContext;
-import fuzs.puzzleslib.api.event.v1.core.EventResultHolder;
 import fuzs.puzzleslib.api.event.v1.entity.living.LivingExperienceDropCallback;
 import fuzs.puzzleslib.api.event.v1.entity.player.PlayerEvents;
-import fuzs.puzzleslib.api.event.v1.entity.player.PlayerInteractEvents;
 import fuzs.puzzleslib.api.event.v1.entity.player.PlayerTickEvents;
 import fuzs.puzzleslib.api.event.v1.level.BlockEvents;
 import fuzs.puzzleslib.api.event.v1.server.LootTableLoadEvents;
 import fuzs.puzzleslib.api.init.v2.PotionBrewingRegistry;
 import fuzs.puzzleslib.api.item.v2.CreativeModeTabConfigurator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.PatrollingMonster;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.GameMasterBlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.loot.LootDataManager;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,17 +61,6 @@ public class IllagerInvasion implements ModConstructor {
             injectLootPool(identifier, addPool, EntityType.ILLUSIONER.getDefaultLootTable(), ModRegistry.ILLUSIONER_INJECT_LOOT_TABLE);
             injectLootPool(identifier, addPool, EntityType.PILLAGER.getDefaultLootTable(), ModRegistry.PILLAGER_INJECT_LOOT_TABLE);
             injectLootPool(identifier, addPool, EntityType.RAVAGER.getDefaultLootTable(), ModRegistry.RAVAGER_INJECT_LOOT_TABLE);
-        });
-        PlayerInteractEvents.USE_ITEM.register((player, level, interactionHand) -> {
-            ItemStack itemInHand = player.getItemInHand(interactionHand);
-            if (itemInHand.getItem() instanceof GameMasterBlockItem item) {
-                HitResult hitResultOnViewVector = ProjectileUtil.getHitResultOnViewVector(player, entity -> true, player.isCreative() ? 5.0F : 4.5F);
-                if (hitResultOnViewVector.getType() == HitResult.Type.MISS) {
-                    item.place(new BlockPlaceContext(player, interactionHand, itemInHand, (BlockHitResult) hitResultOnViewVector));
-                    return EventResultHolder.interrupt(InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide));
-                }
-            }
-            return EventResultHolder.pass();
         });
     }
 

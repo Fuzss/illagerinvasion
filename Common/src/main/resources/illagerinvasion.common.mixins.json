@@ -8,10 +8,7 @@
   "mixins": [
     "IllusionerMixin",
     "PatrolSpawnerMixin",
-    "WoodlandMansionPieceMixin",
-    "ServerboundSetStructureBlockPacketMixin",
-    "StructureBlockEntityMixin",
-    "StructureBlockRendererMixin"
+    "WoodlandMansionPieceMixin"
   ],
   "client": [
     "client.IllagerModelMixin"
