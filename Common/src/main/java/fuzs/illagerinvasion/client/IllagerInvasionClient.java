@@ -13,6 +13,7 @@ import fuzs.puzzleslib.api.client.event.v1.ItemTooltipCallback;
 import fuzs.puzzleslib.api.core.v1.context.ModLifecycleContext;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.LayerDefinitions;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.renderer.RenderType;
@@ -63,8 +64,8 @@ public class IllagerInvasionClient implements ClientModConstructor {
 
     @Override
     public void onRegisterLayerDefinitions(LayerDefinitionsContext context) {
-        context.registerLayerDefinition(ClientModRegistry.CAPED_ILLAGER, InvokerEntityModel::getTexturedModelData);
-        context.registerLayerDefinition(ClientModRegistry.INVOKER_SHIELD, InvokerEntityModel::getTexturedModelData);
+        context.registerLayerDefinition(ClientModRegistry.CAPED_ILLAGER, () -> InvokerEntityModel.getTexturedModelData(CubeDeformation.NONE));
+        context.registerLayerDefinition(ClientModRegistry.INVOKER_SHIELD, () -> InvokerEntityModel.getTexturedModelData(LayerDefinitions.INNER_ARMOR_DEFORMATION));
         context.registerLayerDefinition(ClientModRegistry.NECROMANCER_SHIELD, () -> ClientModRegistry.createIllagerBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION));
         context.registerLayerDefinition(ClientModRegistry.INVOKER_FANGS, InvokerFangsModel::getTexturedModelData);
         context.registerLayerDefinition(ClientModRegistry.ARMORED_ILLAGER, ArmoredIllagerEntityModel::getTexturedModelData);

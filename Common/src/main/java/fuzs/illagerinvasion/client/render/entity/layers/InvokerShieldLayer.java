@@ -16,12 +16,12 @@ public class InvokerShieldLayer extends EnergySwirlLayer<Invoker, InvokerEntityM
 
     public InvokerShieldLayer(RenderLayerParent<Invoker, InvokerEntityModel<Invoker>> context, EntityModelSet loader) {
         super(context);
-        this.model = new InvokerEntityModel<Invoker>(loader.bakeLayer(ClientModRegistry.INVOKER_SHIELD));
+        this.model = new InvokerEntityModel<>(loader.bakeLayer(ClientModRegistry.INVOKER_SHIELD));
     }
 
     @Override
     protected float xOffset(float partialAge) {
-        return Mth.cos(partialAge * 0.02f) * 3.0f;
+        return Mth.cos(partialAge * 0.02f) * 0.02F;
     }
 
     @Override

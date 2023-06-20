@@ -1,2 +1,3 @@
-// 1.20	2023-06-17T14:50:32.219953	Tags for minecraft:entity_type mod id illagerinvasion
+// 1.20	2023-06-20T10:49:08.544975	Tags for minecraft:entity_type mod id illagerinvasion
+c2102c9e48b1ca39d548c7c72faee6ad45389f7c data/minecraft/tags/entity_types/fall_damage_immune.json
 a50589471f49cbe4fe20cf2d3764136c8c8de54a data/minecraft/tags/entity_types/raiders.json
