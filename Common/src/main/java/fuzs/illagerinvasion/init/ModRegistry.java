@@ -36,6 +36,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
+import java.util.Locale;
+
 public class ModRegistry {
     static final RegistryManager REGISTRY = RegistryManager.instant(IllagerInvasion.MOD_ID);
     public static final RegistryReference<Block> IMBUING_TABLE_BLOCK = REGISTRY.registerBlock("imbuing_table", () -> new ImbuingTableBlock(BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK)));
@@ -153,12 +155,22 @@ public class ModRegistry {
     public static final ResourceLocation PILLAGER_INJECT_LOOT_TABLE = REGISTRY.makeKey("entities/inject/pillager");
     public static final ResourceLocation RAVAGER_INJECT_LOOT_TABLE = REGISTRY.makeKey("entities/inject/ravager");
 
-    public static final Object ENCHANT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("ENCHANT", 121.0 / 255.0, 161.0 / 255.0, 161.0 / 255.0);
-    public static final Object CONJURE_FLAMES_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_FLAMES", 194.0 / 255.0, 41.0 / 255.0, 36.0 / 255.0);
-    public static final Object CONJURE_TELEPORT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_TELEPORT", 64.0 / 255.0, 35.0 / 255.0, 81.0 / 255.0);
-    public static final Object NECRO_RAISE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("NECRO_RAISE", 78.0 / 255.0, 73.0 / 255.0, 52.0 / 255.0);
-    public static final Object CONJURE_SKULL_BOLT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("CONJURE_SKULL_BOLT", 44.0 / 255.0, 53.0 / 255.0, 26.0 / 255.0);
-    public static final Object PROVOKE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell("PROVOKE", 235.0 / 255.0, 123.0 / 255.0, 109.0 / 255.0);
+    public static final Object ENCHANT_ILLAGER_SPELL;
+    public static final Object CONJURE_FLAMES_ILLAGER_SPELL;
+    public static final Object CONJURE_TELEPORT_ILLAGER_SPELL;
+    public static final Object NECRO_RAISE_ILLAGER_SPELL;
+    public static final Object CONJURE_SKULL_BOLT_ILLAGER_SPELL;
+    public static final Object PROVOKE_ILLAGER_SPELL;
+
+    static {
+        String s = IllagerInvasion.MOD_ID.toUpperCase(Locale.ROOT) + "$";
+        ENCHANT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell(s + "ENCHANT", 121.0 / 255.0, 161.0 / 255.0, 161.0 / 255.0);
+        CONJURE_FLAMES_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell(s + "CONJURE_FLAMES", 194.0 / 255.0, 41.0 / 255.0, 36.0 / 255.0);
+        CONJURE_TELEPORT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell(s + "CONJURE_TELEPORT", 64.0 / 255.0, 35.0 / 255.0, 81.0 / 255.0);
+        NECRO_RAISE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell(s + "NECRO_RAISE", 78.0 / 255.0, 73.0 / 255.0, 52.0 / 255.0);
+        CONJURE_SKULL_BOLT_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell(s + "CONJURE_SKULL_BOLT", 44.0 / 255.0, 53.0 / 255.0, 26.0 / 255.0);
+        PROVOKE_ILLAGER_SPELL = CommonAbstractions.INSTANCE.registerIllagerSpell(s + "PROVOKE", 235.0 / 255.0, 123.0 / 255.0, 109.0 / 255.0);
+    }
 
     public static void touch() {
 

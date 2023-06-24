@@ -226,17 +226,15 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (!this.level().isClientSide) {
-            if (this.getShieldedState()) {
-                if (this.random.nextInt(3) == 0) {
-                    ((ServerLevel) this.level()).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY() + 1, this.getZ(), 30, 0.5D, 0.7D, 0.5D, 0.5D);
-                    this.playSound(ModRegistry.INVOKER_SHIELD_BREAK_SOUND_EVENT.get(), 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
-                    this.setShieldedState(false);
-                }
-            } else if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-                if (this.random.nextInt(2) == 0) {
+            if (source.is(DamageTypeTags.IS_PROJECTILE)) {
+                if (!this.getShieldedState() && this.random.nextInt(2) == 0) {
                     this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
                     this.setShieldedState(true);
                 }
+            } else if (this.getShieldedState() && this.random.nextInt(3) == 0) {
+                ((ServerLevel) this.level()).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY() + 1, this.getZ(), 30, 0.5D, 0.7D, 0.5D, 0.5D);
+                this.playSound(ModRegistry.INVOKER_SHIELD_BREAK_SOUND_EVENT.get(), 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
+                this.setShieldedState(false);
             }
         }
 

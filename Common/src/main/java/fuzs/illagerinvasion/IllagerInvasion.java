@@ -35,6 +35,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.IntPredicate;
 
@@ -77,15 +78,16 @@ public class IllagerInvasion implements ModConstructor {
     }
 
     private static void registerRaiderTypes() {
-        CommonAbstractions.INSTANCE.registerRaiderType("BASHER", ModRegistry.BASHER_ENTITY_TYPE.get(), RaidWavesConfigHelper.BASHER_RAID_WAVES);
-        CommonAbstractions.INSTANCE.registerRaiderType("PROVOKER", ModRegistry.PROVOKER_ENTITY_TYPE.get(), RaidWavesConfigHelper.PROVOKER_RAID_WAVES);
-        CommonAbstractions.INSTANCE.registerRaiderType("NECROMANCER", ModRegistry.NECROMANCER_ENTITY_TYPE.get(), RaidWavesConfigHelper.NECROMANCER_RAID_WAVES);
-        CommonAbstractions.INSTANCE.registerRaiderType("SORCERER", ModRegistry.SORCERER_ENTITY_TYPE.get(), RaidWavesConfigHelper.SORCERER_RAID_WAVES);
-        CommonAbstractions.INSTANCE.registerRaiderType("ILLUSIONER", EntityType.ILLUSIONER, RaidWavesConfigHelper.ILLUSIONER_RAID_WAVES);
-        CommonAbstractions.INSTANCE.registerRaiderType("ARCHIVIST", ModRegistry.ARCHIVIST_ENTITY_TYPE.get(), RaidWavesConfigHelper.ARCHIVIST_RAID_WAVES);
-        CommonAbstractions.INSTANCE.registerRaiderType("MARAUDER", ModRegistry.MARAUDER_ENTITY_TYPE.get(), RaidWavesConfigHelper.MARAUDER_RAID_WAVES);
-        CommonAbstractions.INSTANCE.registerRaiderType("INQUISITOR", ModRegistry.INQUISITOR_ENTITY_TYPE.get(), RaidWavesConfigHelper.INQUISITOR_RAID_WAVES);
-        CommonAbstractions.INSTANCE.registerRaiderType("ALCHEMIST", ModRegistry.ALCHEMIST_ENTITY_TYPE.get(), RaidWavesConfigHelper.ALCHEMIST_RAID_WAVES);
+        String s = MOD_ID.toUpperCase(Locale.ROOT) + "$";
+        CommonAbstractions.INSTANCE.registerRaiderType(s + "BASHER", ModRegistry.BASHER_ENTITY_TYPE.get(), RaidWavesConfigHelper.BASHER_RAID_WAVES);
+        CommonAbstractions.INSTANCE.registerRaiderType(s + "PROVOKER", ModRegistry.PROVOKER_ENTITY_TYPE.get(), RaidWavesConfigHelper.PROVOKER_RAID_WAVES);
+        CommonAbstractions.INSTANCE.registerRaiderType(s + "NECROMANCER", ModRegistry.NECROMANCER_ENTITY_TYPE.get(), RaidWavesConfigHelper.NECROMANCER_RAID_WAVES);
+        CommonAbstractions.INSTANCE.registerRaiderType(s + "SORCERER", ModRegistry.SORCERER_ENTITY_TYPE.get(), RaidWavesConfigHelper.SORCERER_RAID_WAVES);
+        CommonAbstractions.INSTANCE.registerRaiderType(s + "ILLUSIONER", EntityType.ILLUSIONER, RaidWavesConfigHelper.ILLUSIONER_RAID_WAVES);
+        CommonAbstractions.INSTANCE.registerRaiderType(s + "ARCHIVIST", ModRegistry.ARCHIVIST_ENTITY_TYPE.get(), RaidWavesConfigHelper.ARCHIVIST_RAID_WAVES);
+        CommonAbstractions.INSTANCE.registerRaiderType(s + "MARAUDER", ModRegistry.MARAUDER_ENTITY_TYPE.get(), RaidWavesConfigHelper.MARAUDER_RAID_WAVES);
+        CommonAbstractions.INSTANCE.registerRaiderType(s + "INQUISITOR", ModRegistry.INQUISITOR_ENTITY_TYPE.get(), RaidWavesConfigHelper.INQUISITOR_RAID_WAVES);
+        CommonAbstractions.INSTANCE.registerRaiderType(s + "ALCHEMIST", ModRegistry.ALCHEMIST_ENTITY_TYPE.get(), RaidWavesConfigHelper.ALCHEMIST_RAID_WAVES);
     }
 
     private static void registerPotionRecipes() {
