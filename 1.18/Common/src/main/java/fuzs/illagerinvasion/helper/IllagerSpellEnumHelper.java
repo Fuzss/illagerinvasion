@@ -12,14 +12,14 @@ import java.util.function.IntFunction;
 
 public abstract class IllagerSpellEnumHelper extends SpellcasterIllager {
 
-    private IllagerSpellEnumHelper(EntityType<? extends SpellcasterIllager> p_33724_, Level p_33725_) {
-        super(p_33724_, p_33725_);
+    private IllagerSpellEnumHelper(EntityType<? extends SpellcasterIllager> entityType, Level level) {
+        super(entityType, level);
     }
 
     public static IllagerSpell registerIllagerSpell(String internalName, double spellColorRed, double spellColorGreen, double spellColorBlue) {
         try {
             return addToEnumValues(IllagerSpell.class, ordinalId -> {
-                return SpellcasterIllagerImpl.IllagerSpellForgeAccessor.illagerinvasion$init(internalName, ordinalId, ordinalId, spellColorRed, spellColorGreen, spellColorBlue);
+                return SpellcasterIllagerImpl.IllagerSpellAccessor.illagerinvasion$init(internalName, ordinalId, ordinalId, spellColorRed, spellColorGreen, spellColorBlue);
             }, internalName);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);

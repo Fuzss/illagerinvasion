@@ -117,7 +117,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
                 this.invalidState.set(InvalidImbuingState.TOO_MANY_ENCHANTMENTS.ordinal());
             } else {
                 Enchantment enchantment = enchantments.keySet().iterator().next();
-                if (!Registry.ENCHANTMENT.createIntrusiveHolder(enchantment).is(ModRegistry.IMBUING_ENCHANTMENT_TAG)) {
+                if (Registry.ENCHANTMENT.getResourceKey(enchantment).flatMap(Registry.ENCHANTMENT::getHolder).filter(t -> t.is(ModRegistry.IMBUING_ENCHANTMENT_TAG)).isEmpty()) {
                     this.invalidState.set(InvalidImbuingState.INVALID_ENCHANTMENT.ordinal());
                 } else if (enchantments.getOrDefault(enchantment, 0) != enchantment.getMaxLevel()) {
                     this.invalidState.set(InvalidImbuingState.NOT_AT_MAX_LEVEL.ordinal());

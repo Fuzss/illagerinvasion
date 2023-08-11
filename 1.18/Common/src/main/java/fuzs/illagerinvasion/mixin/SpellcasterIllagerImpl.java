@@ -17,7 +17,7 @@ public abstract class SpellcasterIllagerImpl extends SpellcasterIllager {
     }
 
     @Mixin(IllagerSpell.class)
-    public static abstract class IllagerSpellForgeMixin {
+    public static abstract class IllagerSpellMixin {
 
         // remove the final modifier from the $VALUES field, so we can change it via reflection
         @SuppressWarnings("ShadowTarget")
@@ -27,7 +27,7 @@ public abstract class SpellcasterIllagerImpl extends SpellcasterIllager {
     }
 
     @Mixin(IllagerSpell.class)
-    public interface IllagerSpellForgeAccessor {
+    public interface IllagerSpellAccessor {
 
         // access to internal enum constructor
         @Invoker("<init>")

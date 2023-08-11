@@ -18,9 +18,4 @@ public class ModEnchantmentTagProvider extends AbstractTagProvider.Simple<Enchan
         // list taken from Quark's ancient tomes, thanks!
         this.tag(ModRegistry.IMBUING_ENCHANTMENT_TAG).add(Enchantments.FALL_PROTECTION, Enchantments.THORNS, Enchantments.SHARPNESS, Enchantments.SMITE, Enchantments.BANE_OF_ARTHROPODS, Enchantments.KNOCKBACK, Enchantments.FIRE_ASPECT, Enchantments.MOB_LOOTING, Enchantments.SWEEPING_EDGE, Enchantments.BLOCK_EFFICIENCY, Enchantments.UNBREAKING, Enchantments.BLOCK_FORTUNE, Enchantments.POWER_ARROWS, Enchantments.PUNCH_ARROWS, Enchantments.FISHING_LUCK, Enchantments.FISHING_SPEED, Enchantments.LOYALTY, Enchantments.RIPTIDE, Enchantments.IMPALING, Enchantments.PIERCING);
     }
-
-    @Override
-    public final String getName() {
-        return "Tags for " + ((Registry<Registry<Enchantment>>) Registry.REGISTRY).getKey(this.registry);
-    }
 }

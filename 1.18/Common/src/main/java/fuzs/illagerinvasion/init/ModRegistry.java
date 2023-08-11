@@ -13,6 +13,7 @@ import fuzs.illagerinvasion.world.item.LostCandleItem;
 import fuzs.illagerinvasion.world.item.MagicalFireChargeItem;
 import fuzs.illagerinvasion.world.level.block.ImbuingTableBlock;
 import fuzs.illagerinvasion.world.level.block.MagicFireBlock;
+import fuzs.illagerinvasion.world.level.levelgen.feature.LabyrinthFeature;
 import fuzs.puzzleslib.api.init.v2.RegistryManager;
 import fuzs.puzzleslib.api.init.v2.RegistryReference;
 import net.minecraft.core.Registry;
@@ -34,6 +35,9 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.levelgen.feature.JigsawFeature;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.material.MaterialColor;
 
 import java.util.Locale;
@@ -133,6 +137,7 @@ public class ModRegistry {
     public static final RegistryReference<SoundEvent> SORCERER_AMBIENT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.idle");
     public static final RegistryReference<SoundEvent> SORCERER_CELEBRATE_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.celebrate");
 //    public static final RegistryReference<Instrument> REVEAL_INSTRUMENT = REGISTRY.register(Registries.INSTRUMENT, "reveal", () -> new Instrument(ModRegistry.HORN_OF_SIGHT_SOUND_EVENT.holder(), 120, 48.0F));
+    public static final RegistryReference<StructureFeature<JigsawConfiguration>> LABYRINTH_STRUCTURE_FEATURE = REGISTRY.register(Registry.STRUCTURE_FEATURE_REGISTRY, "labyrinth", () -> new LabyrinthFeature(JigsawConfiguration.CODEC));
 
     public static final TagKey<Enchantment> IMBUING_ENCHANTMENT_TAG = REGISTRY.registerEnchantmentTag("imbuing");
 //    public static final TagKey<Instrument> HORN_OF_SIGHT_INSTRUMENT_TAG = REGISTRY.registerTag(Registries.INSTRUMENT, "horn_of_sight");

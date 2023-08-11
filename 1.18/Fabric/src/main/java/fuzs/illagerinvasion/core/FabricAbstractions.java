@@ -10,14 +10,4 @@ public class FabricAbstractions implements CommonAbstractions {
     public Object registerRaiderType(String internalName, EntityType<? extends Raider> entityType, int[] spawnsPerWaveBeforeBonus) {
         return EnumFactories.createRaiderType(internalName, entityType, spawnsPerWaveBeforeBonus);
     }
-
-    @Override
-    public Object registerIllagerSpell(String internalName, double spellColorRed, double spellColorGreen, double spellColorBlue) {
-        try {
-            return Class.forName("net.minecraft.world.entity.monster.SpellcasterIllager$IllagerSpell").getEnumConstants()[0];
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-//        return EnumFactories.createIllagerSpell(internalName, spellColorRed, spellColorGreen, spellColorBlue);
-    }
 }

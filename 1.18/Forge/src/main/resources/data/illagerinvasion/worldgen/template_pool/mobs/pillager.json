@@ -12,5 +12,6 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty"
+  "fallback": "minecraft:empty",
+  "name": "illagerinvasion:mobs/pillager"
 }

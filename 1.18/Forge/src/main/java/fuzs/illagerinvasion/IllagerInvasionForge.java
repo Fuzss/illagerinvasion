@@ -3,15 +3,10 @@ package fuzs.illagerinvasion;
 import fuzs.illagerinvasion.data.*;
 import fuzs.illagerinvasion.init.ForgeModRegistry;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
-import fuzs.puzzleslib.api.core.v1.ModContainerHelper;
-import fuzs.puzzleslib.impl.core.context.BuildCreativeModeTabContentsContextForgeImpl;
-import fuzs.puzzleslib.impl.core.context.CreativeModeTabContextForgeImpl;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 @Mod(IllagerInvasion.MOD_ID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -21,13 +16,6 @@ public class IllagerInvasionForge {
     public static void onConstructMod(final FMLConstructModEvent evt) {
         ForgeModRegistry.touch();
         ModConstructor.construct(IllagerInvasion.MOD_ID, IllagerInvasion::new);
-
-
-        ModContainerHelper.findModEventBus(IllagerInvasion.MOD_ID).orElseThrow().addGenericListener(Fluid.class, (final RegistryEvent<Fluid> $) -> {
-            IllagerInvasion constructor = new IllagerInvasion();
-            constructor.onRegisterCreativeModeTabs(new CreativeModeTabContextForgeImpl());
-            constructor.onBuildCreativeModeTabContents(new BuildCreativeModeTabContentsContextForgeImpl());
-        });
     }
 
     @SubscribeEvent

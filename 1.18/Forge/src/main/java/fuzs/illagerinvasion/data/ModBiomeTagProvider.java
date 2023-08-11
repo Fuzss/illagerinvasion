@@ -4,6 +4,7 @@ import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v1.AbstractTagProvider;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
@@ -24,8 +25,12 @@ public class ModBiomeTagProvider extends AbstractTagProvider.Simple<Biome> {
         this.tag(ModRegistry.HAS_LABYRINTH_BIOME_TAG).addTag(BiomeTags.IS_TAIGA).addTag(BiomeTags.IS_JUNGLE).addTag(BiomeTags.IS_FOREST).add(Biomes.SAVANNA).add(Biomes.SAVANNA_PLATEAU).add(Biomes.WINDSWEPT_SAVANNA);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final String getName() {
-        return "Tags for " + ((Registry<Registry<Biome>>) Registry.REGISTRY).getKey(this.registry);
+    public ResourceKey<? extends Registry<Biome>> registryKey() {
+        // TODO remove again, fixed in next version of Puzzles Lib
+        return ((Registry<Registry<Biome>>) Registry.REGISTRY).getResourceKey(this.registry())
+                .or(() -> ((Registry<Registry<Biome>>) BuiltinRegistries.REGISTRY).getResourceKey(this.registry()))
+                .orElseThrow();
     }
 }

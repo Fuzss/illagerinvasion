@@ -8,6 +8,8 @@
   "mixins": [
     "IllusionerMixin",
     "PatrolSpawnerMixin",
+    "SpellcasterIllagerImpl$IllagerSpellMixin",
+    "SpellcasterIllagerImpl$IllagerSpellAccessor",
     "WoodlandMansionPieceMixin"
   ],
   "client": [
