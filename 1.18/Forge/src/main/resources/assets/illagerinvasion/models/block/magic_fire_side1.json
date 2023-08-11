@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_fire_side",
+  "textures": {
+    "fire": "illagerinvasion:block/magic_fire_1"
+  }
+}

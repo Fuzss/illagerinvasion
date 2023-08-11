@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "illagerinvasion:block/imbuing_table_bottom",
+    "up": "illagerinvasion:block/imbuing_table_top",
+    "north": "illagerinvasion:block/imbuing_table_side1",
+    "south": "illagerinvasion:block/imbuing_table_side1",
+    "east": "illagerinvasion:block/imbuing_table_side",
+    "west": "illagerinvasion:block/imbuing_table_side1",
+    "particle": "illagerinvasion:block/imbuing_table_side"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "illagerinvasion:imbuing_table"
+    ]
+  },
+  "criteria": {
+    "has_primal_essence": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "illagerinvasion:primal_essence"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "illagerinvasion:imbuing_table"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_primal_essence",
+      "has_the_recipe"
+    ]
+  ]
+}
