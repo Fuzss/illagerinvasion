@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -109,25 +108,13 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
         super.addAdditionalSaveData(nbt);
     }
 
-    private List<AreaEffectCloud> getNearbyClouds() {
-        return this.level().getEntitiesOfClass(AreaEffectCloud.class, this.getBoundingBox().inflate(30.0), Entity::isAlive);
-    }
-
-    private void cancelEffect(final AreaEffectCloud areaEffectCloudEntity, final LivingEntity entity) {
-        final Potion potion = areaEffectCloudEntity.getPotion();
-        final MobEffectInstance statusEffectInstance = potion.getEffects().get(0);
-        final MobEffect statusEffect = statusEffectInstance.getEffect();
-        if (potion.getEffects().size() > 0) {
-            entity.removeEffect(statusEffect);
-        }
-    }
-
-    private void removeEffectsinCloud(final AreaEffectCloud cloudEntity) {
-        final List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class, cloudEntity.getBoundingBox().inflate(0.3), Entity::isAlive);
-        for (final LivingEntity entity : list) {
-            if (entity instanceof AbstractIllager) {
-                this.cancelEffect(cloudEntity, entity);
-            }
+    private void removeEffectsInCloud(final AreaEffectCloud cloudEntity) {
+        final List<? extends LivingEntity> nearbyIllagers = this.level().getEntitiesOfClass(AbstractIllager.class, cloudEntity.getBoundingBox().inflate(0.3), Entity::isAlive);
+        for (LivingEntity entity : nearbyIllagers) {
+            cloudEntity.getPotion().getEffects().stream()
+                    .findAny()
+                    .map(MobEffectInstance::getEffect)
+                    .ifPresent(entity::removeEffect);
         }
     }
 
@@ -168,8 +155,9 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
 
     @Override
     protected void customServerAiStep() {
-        if (!this.getNearbyClouds().isEmpty()) {
-            this.getNearbyClouds().forEach(this::removeEffectsinCloud);
+        List<AreaEffectCloud> nearbyClouds = this.level().getEntitiesOfClass(AreaEffectCloud.class, this.getBoundingBox().inflate(30.0), Entity::isAlive);
+        for (AreaEffectCloud areaEffectCloud : nearbyClouds) {
+            this.removeEffectsInCloud(areaEffectCloud);
         }
         --this.potionCooldown;
         if (this.potionCooldown <= 0) {
