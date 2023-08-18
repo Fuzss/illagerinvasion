@@ -4,8 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog].
 
 ## [v8.0.2-1.20.1] - 2023-08-18
+### Added
+- Added a config option for disabling the yellow invoker boss bar
 ### Fixed
-- Fixed occasional crash when alchemists are spawned in a structure during world generation 
+- Fixed occasional crash when alchemists are spawned in a structure during world generation
+- Fixed villagers not fleeing from new illager enemies
+- Fixed endurance trim doubling the rate at which food is drained instead of cutting it in half
 
 ## [v8.0.1-1.20.1] - 2023-08-11
 ### Changed

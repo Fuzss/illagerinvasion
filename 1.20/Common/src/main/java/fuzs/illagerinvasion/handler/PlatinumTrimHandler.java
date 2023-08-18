@@ -36,8 +36,6 @@ public class PlatinumTrimHandler {
         enumMap.put(ArmorItem.Type.HELMET, INSIGHT_TRANSLATION_KEY);
     }));
 
-    private static float foodExhaustion;
-
     public static EventResult onBreakSpeed(Player player, BlockState state, DefaultedFloat breakSpeed) {
         if (player.getInventory().getDestroySpeed(state) == 1.0F) {
             if (PlatinumTrimHandler.hasPlatinumTrim(player, EquipmentSlot.CHEST)) {
@@ -45,17 +43,6 @@ public class PlatinumTrimHandler {
             }
         }
         return EventResult.PASS;
-    }
-
-    public static void onStartPlayerTick(Player player) {
-        foodExhaustion = player.getFoodData().getExhaustionLevel();
-    }
-
-    public static void onEndPlayerTick(Player player) {
-        float newExhaustion = foodExhaustion - player.getFoodData().getExhaustionLevel();
-        if (newExhaustion > 0.0F && hasPlatinumTrim(player, EquipmentSlot.LEGS)) {
-            player.getFoodData().setExhaustion(foodExhaustion - newExhaustion / 2.0F);
-        }
     }
 
     public static EventResult onLivingExperienceDrop(LivingEntity entity, @Nullable Player attackingPlayer, DefaultedInt droppedExperience) {

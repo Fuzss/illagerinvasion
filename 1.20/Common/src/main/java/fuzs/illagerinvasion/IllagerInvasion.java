@@ -4,13 +4,14 @@ import fuzs.illagerinvasion.config.RaidWavesConfigHelper;
 import fuzs.illagerinvasion.config.ServerConfig;
 import fuzs.illagerinvasion.core.CommonAbstractions;
 import fuzs.illagerinvasion.handler.PlatinumTrimHandler;
+import fuzs.illagerinvasion.handler.VillagerGoalHandler;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.api.core.v1.context.CreativeModeTabContext;
 import fuzs.puzzleslib.api.core.v1.context.EntityAttributesCreateContext;
-import fuzs.puzzleslib.api.core.v1.context.ModLifecycleContext;
 import fuzs.puzzleslib.api.core.v1.context.SpawnPlacementsContext;
+import fuzs.puzzleslib.api.event.v1.entity.ServerEntityLevelEvents;
 import fuzs.puzzleslib.api.event.v1.entity.living.LivingExperienceDropCallback;
 import fuzs.puzzleslib.api.event.v1.entity.player.PlayerEvents;
 import fuzs.puzzleslib.api.event.v1.entity.player.PlayerTickEvents;
@@ -54,10 +55,9 @@ public class IllagerInvasion implements ModConstructor {
 
     private static void registerHandlers() {
         PlayerEvents.BREAK_SPEED.register(PlatinumTrimHandler::onBreakSpeed);
-        PlayerTickEvents.START.register(PlatinumTrimHandler::onStartPlayerTick);
-        PlayerTickEvents.END.register(PlatinumTrimHandler::onEndPlayerTick);
         LivingExperienceDropCallback.EVENT.register(PlatinumTrimHandler::onLivingExperienceDrop);
         BlockEvents.FARMLAND_TRAMPLE.register(PlatinumTrimHandler::onFarmlandTrample);
+        ServerEntityLevelEvents.LOAD.register(VillagerGoalHandler::onEntityJoinServerLevel);
         LootTableLoadEvents.MODIFY.register((LootDataManager lootManager, ResourceLocation identifier, Consumer<LootPool> addPool, IntPredicate removePool) -> {
             injectLootPool(identifier, addPool, EntityType.ILLUSIONER.getDefaultLootTable(), ModRegistry.ILLUSIONER_INJECT_LOOT_TABLE);
             injectLootPool(identifier, addPool, EntityType.PILLAGER.getDefaultLootTable(), ModRegistry.PILLAGER_INJECT_LOOT_TABLE);
@@ -72,9 +72,10 @@ public class IllagerInvasion implements ModConstructor {
     }
 
     @Override
-    public void onCommonSetup(ModLifecycleContext context) {
+    public void onCommonSetup() {
         registerRaiderTypes();
         registerPotionRecipes();
+        VillagerGoalHandler.init();
     }
 
     private static void registerRaiderTypes() {

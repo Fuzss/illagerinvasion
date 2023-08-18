@@ -10,7 +10,8 @@
     "PatrolSpawnerMixin",
     "SpellcasterIllagerImpl$IllagerSpellMixin",
     "SpellcasterIllagerImpl$IllagerSpellAccessor",
-    "WoodlandMansionPieceMixin"
+    "WoodlandMansionPieceMixin",
+    "accessor.VillagerHostilesSensorAccessor"
   ],
   "client": [
     "client.IllagerModelMixin"

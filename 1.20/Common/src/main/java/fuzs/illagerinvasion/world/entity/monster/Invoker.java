@@ -1,5 +1,7 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
+import fuzs.illagerinvasion.IllagerInvasion;
+import fuzs.illagerinvasion.config.ServerConfig;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.util.SpellParticleUtil;
 import fuzs.illagerinvasion.util.TeleportUtil;
@@ -21,7 +23,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -175,13 +176,17 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        this.bossBar.addPlayer(player);
+        if (IllagerInvasion.CONFIG.get(ServerConfig.class).invokerBossBar) {
+            this.bossBar.addPlayer(player);
+        }
     }
 
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
-        this.bossBar.removePlayer(player);
+        if (IllagerInvasion.CONFIG.get(ServerConfig.class).invokerBossBar) {
+            this.bossBar.removePlayer(player);
+        }
     }
 
     @Override
