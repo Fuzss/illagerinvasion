@@ -45,7 +45,6 @@ public class IllagerInvasion implements ModConstructor {
     public void onConstructMod() {
         ModRegistry.touch();
         registerHandlers();
-        VillagerGoalHandler.init();
     }
 
     private static void registerHandlers() {
@@ -72,6 +71,7 @@ public class IllagerInvasion implements ModConstructor {
     public void onCommonSetup() {
         registerRaiderTypes();
         registerPotionRecipes();
+        VillagerGoalHandler.init();
     }
 
     private static void registerRaiderTypes() {

@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v3.0.3-1.18.2] - 2023-09-01
+### Fixed
+- Fixed start-up crash on Forge
+
 ## [v3.0.2-1.18.2] - 2023-08-18
 ### Added
 - Added a config option for disabling the yellow invoker boss bar
