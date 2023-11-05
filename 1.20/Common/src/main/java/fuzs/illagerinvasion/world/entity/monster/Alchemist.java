@@ -76,7 +76,7 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
             final Potion potion = PotionUtils.getPotion(this.getItemBySlot(EquipmentSlot.MAINHAND));
             final Vec3 deltaMovement = target.getDeltaMovement();
             final double d = target.getX() + deltaMovement.x - this.getX();
-            final double e = target.getEyeY() - 1.100000023841858 - this.getY();
+            final double e = target.getEyeY() - 1.1 - this.getY();
             final double f = target.getZ() + deltaMovement.z - this.getZ();
             final double g = Math.sqrt(d * d + f * f);
             final ThrownPotion potionEntity = new ThrownPotion(this.level(), this);
@@ -93,10 +93,10 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
         final ItemStack itemStack = this.getProjectile(this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, Items.BOW)));
         final AbstractArrow persistentProjectileEntity = ProjectileUtil.getMobArrow(this, itemStack, pullProgress);
         final double d = target.getX() - this.getX();
-        final double e = target.getY(0.3333333333333333) - persistentProjectileEntity.getY();
+        final double e = target.getY(0.33) - persistentProjectileEntity.getY();
         final double f = target.getZ() - this.getZ();
         final double g = Math.sqrt(d * d + f * f);
-        persistentProjectileEntity.shoot(d, e + g * 0.20000000298023224, f, 1.6f, (float) (14 - this.level().getDifficulty().getId() * 4));
+        persistentProjectileEntity.shoot(d, e + g * 0.2, f, 1.6f, (float) (14 - this.level().getDifficulty().getId() * 4));
         this.playSound(SoundEvents.SKELETON_SHOOT, 1.0f, 1.0f / (this.getRandom().nextFloat() * 0.4f + 0.8f));
         this.level().addFreshEntity(persistentProjectileEntity);
     }

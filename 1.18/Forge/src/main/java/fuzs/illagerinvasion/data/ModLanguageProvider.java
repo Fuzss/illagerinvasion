@@ -46,7 +46,7 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         this.add(ModRegistry.PROVOKER_SPAWN_EGG_ITEM.get(), "Provoker Spawn Egg");
         this.add(ModRegistry.SURRENDERED_SPAWN_EGG_ITEM.get(), "Surrendered Spawn Egg");
         this.add(ModRegistry.ILLUSIONER_SPAWN_EGG_ITEM.get(), "Illusioner Spawn Egg");
-        this.add(ModRegistry.NECROMANCER_SPAWN_EGG_ITEM.get(), "Necromancer Egg");
+        this.add(ModRegistry.NECROMANCER_SPAWN_EGG_ITEM.get(), "Necromancer Spawn Egg");
         this.add(ModRegistry.BASHER_SPAWN_EGG_ITEM.get(), "Basher Spawn Egg");
         this.add(ModRegistry.SORCERER_SPAWN_EGG_ITEM.get(), "Sorcerer Spawn Egg");
         this.add(ModRegistry.ARCHIVIST_SPAWN_EGG_ITEM.get(), "Archivist Spawn Egg");

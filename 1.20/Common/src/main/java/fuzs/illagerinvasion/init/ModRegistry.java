@@ -10,6 +10,8 @@ import fuzs.illagerinvasion.world.inventory.ImbuingMenu;
 import fuzs.illagerinvasion.world.item.*;
 import fuzs.illagerinvasion.world.level.block.ImbuingTableBlock;
 import fuzs.illagerinvasion.world.level.block.MagicFireBlock;
+import fuzs.illagerinvasion.world.level.levelgen.structure.pools.DryLegacySinglePoolElement;
+import fuzs.illagerinvasion.world.level.levelgen.structure.pools.DrySinglePoolElement;
 import fuzs.puzzleslib.api.init.v2.RegistryManager;
 import fuzs.puzzleslib.api.init.v2.RegistryReference;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -34,6 +36,9 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.levelgen.structure.pools.LegacySinglePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementType;
 import net.minecraft.world.level.material.MapColor;
 
 import java.util.Locale;
@@ -133,6 +138,8 @@ public class ModRegistry {
     public static final RegistryReference<SoundEvent> SORCERER_AMBIENT_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.idle");
     public static final RegistryReference<SoundEvent> SORCERER_CELEBRATE_SOUND_EVENT = REGISTRY.registerSoundEvent("entity.sorcerer.celebrate");
     public static final RegistryReference<Instrument> REVEAL_INSTRUMENT = REGISTRY.register(Registries.INSTRUMENT, "reveal", () -> new Instrument(ModRegistry.HORN_OF_SIGHT_SOUND_EVENT.holder(), 120, 48.0F));
+    public static final RegistryReference<StructurePoolElementType<SinglePoolElement>> SINGLE_POOL_ELEMENT_TYPE = REGISTRY.register(Registries.STRUCTURE_POOL_ELEMENT, "single_pool_element", () -> () -> DrySinglePoolElement.CODEC);
+    public static final RegistryReference<StructurePoolElementType<LegacySinglePoolElement>> LEGACY_SINGLE_POOL_ELEMENT_TYPE = REGISTRY.register(Registries.STRUCTURE_POOL_ELEMENT, "legacy_single_pool_element", () -> () -> DryLegacySinglePoolElement.CODEC);
 
     public static final TagKey<Enchantment> IMBUING_ENCHANTMENT_TAG = REGISTRY.registerEnchantmentTag("imbuing");
     public static final TagKey<Instrument> HORN_OF_SIGHT_INSTRUMENT_TAG = REGISTRY.registerTag(Registries.INSTRUMENT, "horn_of_sight");

@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v8.0.3-1.20.1] - 2023-11-05
+### Changed
+- Protection enchantments can now be upgraded in the imbuing table
+### Fixed
+- Fixed labyrinth hallways occasionally being flooded
+
 ## [v8.0.2-1.20.1] - 2023-08-18
 ### Added
 - Added a config option for disabling the yellow invoker boss bar

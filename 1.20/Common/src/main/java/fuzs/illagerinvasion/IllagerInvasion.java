@@ -14,7 +14,6 @@ import fuzs.puzzleslib.api.core.v1.context.SpawnPlacementsContext;
 import fuzs.puzzleslib.api.event.v1.entity.ServerEntityLevelEvents;
 import fuzs.puzzleslib.api.event.v1.entity.living.LivingExperienceDropCallback;
 import fuzs.puzzleslib.api.event.v1.entity.player.PlayerEvents;
-import fuzs.puzzleslib.api.event.v1.entity.player.PlayerTickEvents;
 import fuzs.puzzleslib.api.event.v1.level.BlockEvents;
 import fuzs.puzzleslib.api.event.v1.server.LootTableLoadEvents;
 import fuzs.puzzleslib.api.init.v2.PotionBrewingRegistry;
