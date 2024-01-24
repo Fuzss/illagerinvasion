@@ -43,11 +43,11 @@ public class FlyingMagma extends AbstractHurtingProjectile {
         if (this.level.isClientSide) {
             return;
         }
-        Entity entity = entityHitResult.getEntity();
-        Entity entity2 = this.getOwner();
-        entity.hurt(DamageSource.indirectMagic(this, entity2), 12.0f);
-        if (entity2 instanceof LivingEntity) {
-            this.doEnchantDamageEffects((LivingEntity) entity2, entity);
+        Entity target = entityHitResult.getEntity();
+        Entity owner = this.getOwner();
+        target.hurt(DamageSource.indirectMagic(this, owner), 12.0f);
+        if (owner instanceof LivingEntity) {
+            this.doEnchantDamageEffects((LivingEntity) owner, target);
         }
         if (this.level instanceof ServerLevel) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 15, 0.4D, 0.4D, 0.4D, 0.15D);

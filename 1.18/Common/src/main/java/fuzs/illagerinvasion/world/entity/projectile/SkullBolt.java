@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -36,15 +35,13 @@ public class SkullBolt extends AbstractHurtingProjectile {
         if (this.level.isClientSide) {
             return;
         }
-        Entity entity = entityHitResult.getEntity();
-        Entity entity2 = this.getOwner();
-        if (entity2 instanceof LivingEntity) {
-            if (((LivingEntity) entity).getMobType() == MobType.UNDEAD) {
-                ((LivingEntity) entity).heal(5.0f);
-                ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 2));
+        if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
+            if (livingEntity.getMobType() == MobType.UNDEAD) {
+                livingEntity.heal(5.0f);
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 2));
             } else {
-                entity.hurt(DamageSource.MAGIC, 7.0f);
-                ((LivingEntity) entity).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
+                livingEntity.hurt(DamageSource.MAGIC, 7.0f);
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
             }
         }
     }

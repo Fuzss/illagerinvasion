@@ -11,6 +11,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -185,6 +186,11 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
             this.setBowState(false);
         }
         super.customServerAiStep();
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance effectInstance) {
+        return effectInstance.getEffect() != MobEffects.POISON && super.canBeAffected(effectInstance);
     }
 
     @Override

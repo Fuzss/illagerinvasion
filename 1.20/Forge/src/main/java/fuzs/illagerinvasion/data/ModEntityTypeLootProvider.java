@@ -5,6 +5,7 @@ import fuzs.puzzleslib.api.data.v1.AbstractLootProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -180,6 +181,20 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                                         .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))
                                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
                                 )
+                ).withPool(
+                        LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1.0F))
+                                .add(LootItem.lootTableItem(Blocks.SKELETON_SKULL)
+                                        .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                        .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.025F, 0.01F))
+                                )
+                ).withPool(
+                        LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1.0F))
+                                .add(LootItem.lootTableItem(Blocks.ZOMBIE_HEAD)
+                                        .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                        .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.025F, 0.01F))
+                                )
                 )
         );
         this.add(ModRegistry.PROVOKER_ENTITY_TYPE.get(), LootTable.lootTable()
@@ -219,9 +234,10 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                 ).withPool(
                         LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1.0F))
-                                .add(LootItem.lootTableItem(ModRegistry.UNUSUAL_DUST_ITEM.get()))
-                                .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.4F, 0.2F))
-                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .add(LootItem.lootTableItem(ModRegistry.UNUSUAL_DUST_ITEM.get())
+                                        .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.4F, 0.2F))
+                                        .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                )
                 )
         );
         this.add(ModRegistry.SURRENDERED_ENTITY_TYPE.get(), LootTable.lootTable());

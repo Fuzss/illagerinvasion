@@ -46,6 +46,7 @@ public class Firecaller extends SpellcasterIllager {
         this.goalSelector.addGoal(4, new ConjureSkullGoal());
         this.goalSelector.addGoal(3, new AreaDamageGoal());
         this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, Player.class, 8.0f, 0.6, 1.0));
+        this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, IronGolem.class, 12.0f, 0.6, 1.0));
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
@@ -65,12 +66,6 @@ public class Firecaller extends SpellcasterIllager {
         super.customServerAiStep();
         --this.conjureSkullCooldown;
         --this.areaDamageCooldown;
-    }
-
-    @Override
-    public boolean hurt(final DamageSource source, final float amount) {
-        final boolean bl2 = super.hurt(source, amount);
-        return bl2;
     }
 
     @Override

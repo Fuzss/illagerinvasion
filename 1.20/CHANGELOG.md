@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v8.0.4-1.20.1] - 2024-01-24
+### Changed
+- Necromancer now drops zombie and skeletons heads as a rare drop
+### Fixed
+- Fix crash on Skull Bolt impact
+- Fix firecaller setting themselves on fire and not fleeing from iron golems
+- Fix basher stun not updating
+- Fix alchemists poising themselves
+
 ## [v8.0.3-1.20.1] - 2023-11-05
 ### Changed
 - Protection enchantments can now be upgraded in the imbuing table

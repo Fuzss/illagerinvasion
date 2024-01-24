@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 public class ServerConfig implements ConfigCore {
     @Config(category = "general", description = {"Will platinum armor trims provide special effects to the player depending on the piece of armor they are applied to.", "Helmet: More experience from killing mobs.", "Chestplate: Faster block breaking speed when using an incorrect or no tool.", "Leggings: Slower hunger drain when performaing actions.", "Boots: Farmland can no longer be trampled."})
     public boolean platinumTrimEffects = true;
-    @Config(category = "general", description = "Show a yellow boss bar when fighting an invoker.")
+    @Config(category = "invoker", description = "Show a yellow boss bar when fighting an invoker.")
     public boolean invokerBossBar = true;
     @Config
     public final IllagerConfig basher = new IllagerConfig(RaidWavesConfigHelper.BASHER_RAID_WAVES, RaidWavesConfigHelper::getBasherRaidWaves);

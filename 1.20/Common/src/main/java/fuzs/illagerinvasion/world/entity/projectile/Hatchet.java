@@ -68,25 +68,25 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
 
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
-        Entity entity2;
-        Entity entity = entityHitResult.getEntity();
+        Entity owner = this.getOwner();
+        Entity target = entityHitResult.getEntity();
         float f = 8.0f;
-        if (entity instanceof LivingEntity livingEntity) {
+        if (target instanceof LivingEntity livingEntity) {
             f += EnchantmentHelper.getDamageBonus(this.hatchetStack, livingEntity.getMobType());
         }
-        DamageSource damageSource = this.damageSources().trident(this, (entity2 = this.getOwner()) == null ? this : entity2);
+        DamageSource damageSource = this.damageSources().trident(this, owner == null ? this : owner);
         this.dealtDamage = true;
         SoundEvent soundEvent = SoundEvents.TRIDENT_HIT;
-        if (entity.hurt(damageSource, f)) {
-            if (entity.getType() == EntityType.ENDERMAN) {
+        if (target.hurt(damageSource, f)) {
+            if (target.getType() == EntityType.ENDERMAN) {
                 return;
             }
-            if (entity instanceof LivingEntity livingEntity2) {
-                if (entity2 instanceof LivingEntity) {
-                    EnchantmentHelper.doPostHurtEffects(livingEntity2, entity2);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity) entity2, livingEntity2);
+            if (target instanceof LivingEntity livingEntity) {
+                if (owner instanceof LivingEntity) {
+                    EnchantmentHelper.doPostHurtEffects(livingEntity, owner);
+                    EnchantmentHelper.doPostDamageEffects((LivingEntity) owner, livingEntity);
                 }
-                this.doPostHurtEffects(livingEntity2);
+                this.doPostHurtEffects(livingEntity);
             }
         }
         this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01, -0.1, -0.01));

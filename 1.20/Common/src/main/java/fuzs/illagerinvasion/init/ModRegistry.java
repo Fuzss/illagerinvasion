@@ -67,8 +67,8 @@ public class ModRegistry {
     public static final RegistryReference<EntityType<Inquisitor>> INQUISITOR_ENTITY_TYPE = REGISTRY.registerEntityType("inquisitor", () -> EntityType.Builder.of(Inquisitor::new, MobCategory.MONSTER).sized(0.5f, 2.48f));
     public static final RegistryReference<EntityType<Marauder>> MARAUDER_ENTITY_TYPE = REGISTRY.registerEntityType("marauder", () -> EntityType.Builder.of(Marauder::new, MobCategory.MONSTER).sized(0.5f, 1.92f).canSpawnFarFromPlayer());
     public static final RegistryReference<EntityType<Alchemist>> ALCHEMIST_ENTITY_TYPE = REGISTRY.registerEntityType("alchemist", () -> EntityType.Builder.of(Alchemist::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
-    public static final RegistryReference<EntityType<Firecaller>> FIRECALLER_ENTITY_TYPE = REGISTRY.registerEntityType("firecaller", () -> EntityType.Builder.of(Firecaller::new, MobCategory.MONSTER).sized(0.5f, 1.92f));
-    public static final RegistryReference<EntityType<Surrendered>> SURRENDERED_ENTITY_TYPE = REGISTRY.registerEntityType("surrendered", () -> EntityType.Builder.of(Surrendered::new, MobCategory.MONSTER).fireImmune().sized(0.5f, 1.42f));
+    public static final RegistryReference<EntityType<Firecaller>> FIRECALLER_ENTITY_TYPE = REGISTRY.registerEntityType("firecaller", () -> EntityType.Builder.of(Firecaller::new, MobCategory.MONSTER).sized(0.5f, 1.92f).fireImmune());
+    public static final RegistryReference<EntityType<Surrendered>> SURRENDERED_ENTITY_TYPE = REGISTRY.registerEntityType("surrendered", () -> EntityType.Builder.of(Surrendered::new, MobCategory.MONSTER).sized(0.5f, 1.42f).fireImmune());
     public static final RegistryReference<EntityType<SkullBolt>> SKULL_BOLT_ENTITY_TYPE = REGISTRY.placeholder(Registries.ENTITY_TYPE, "skull_bolt");
     public static final RegistryReference<EntityType<Hatchet>> HATCHET_ENTITY_TYPE = REGISTRY.placeholder(Registries.ENTITY_TYPE, "hatchet");
     public static final RegistryReference<EntityType<InvokerFangs>> INVOKER_FANGS_ENTITY_TYPE = REGISTRY.registerEntityType("invoker_fangs", () -> EntityType.Builder.<InvokerFangs>of(InvokerFangs::new, MobCategory.MISC).sized(0.65f, 1.05f));

@@ -11,6 +11,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -164,12 +165,12 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
             this.setPotionState(true);
             this.potionCooldown = 160;
         }
-        final ItemStack mainhand = this.getItemInHand(InteractionHand.MAIN_HAND);
-        if (this.getBowState() && mainhand.is(Items.LINGERING_POTION)) {
+        final ItemStack mainHandItem = this.getItemInHand(InteractionHand.MAIN_HAND);
+        if (this.getBowState() && mainHandItem.is(Items.LINGERING_POTION)) {
             this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
             this.setPotionState(false);
         }
-        if (this.getPotionState() && mainhand.is(Items.BOW)) {
+        if (this.getPotionState() && mainHandItem.is(Items.BOW)) {
             Potion potion = null;
             final int randvalue = this.random.nextInt(3);
             if (randvalue == 0) {
@@ -185,6 +186,11 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
             this.setBowState(false);
         }
         super.customServerAiStep();
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance effectInstance) {
+        return effectInstance.getEffect() != MobEffects.POISON && super.canBeAffected(effectInstance);
     }
 
     @Override

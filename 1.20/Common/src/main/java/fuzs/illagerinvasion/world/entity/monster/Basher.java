@@ -2,6 +2,7 @@ package fuzs.illagerinvasion.world.entity.monster;
 
 import com.google.common.collect.Maps;
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.puzzleslib.api.item.v2.ToolTypeHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
@@ -48,10 +49,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 
 public class Basher extends AbstractIllager {
+    private static final String TAG_STUN_TICKS = "Stunned";
     private static final EntityDataAccessor<Boolean> DATA_STUNNED = SynchedEntityData.defineId(Basher.class, EntityDataSerializers.BOOLEAN);
 
-    public int stunTick = 60;
-    public int blockedCount;
+    private int stunTicks;
+    private int blockedCount;
 
     public Basher(EntityType<? extends Basher> entityType, Level world) {
         super(entityType, world);
@@ -91,14 +93,14 @@ public class Basher extends AbstractIllager {
 
     @Override
     public void addAdditionalSaveData(CompoundTag nbt) {
-        nbt.putBoolean("Stunned", this.getStunnedState());
+        nbt.putInt(TAG_STUN_TICKS, this.stunTicks);
         super.addAdditionalSaveData(nbt);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setStunnedState(nbt.getBoolean("Stunned"));
+        this.setStunTicks(nbt.getInt(TAG_STUN_TICKS));
     }
 
     @Override
@@ -111,8 +113,9 @@ public class Basher extends AbstractIllager {
         return this.entityData.get(DATA_STUNNED);
     }
 
-    public void setStunnedState(boolean isStunned) {
-        this.entityData.set(DATA_STUNNED, isStunned);
+    public void setStunTicks(int stunTicks) {
+        this.stunTicks = stunTicks;
+        this.entityData.set(DATA_STUNNED, stunTicks > 0);
     }
 
     @Override
@@ -131,11 +134,8 @@ public class Basher extends AbstractIllager {
         if (!this.isAlive()) {
             return;
         }
-        if (this.getStunnedState()) {
-            --this.stunTick;
-            if (this.stunTick == 0) {
-                this.setStunnedState(false);
-            }
+        if (this.stunTicks > 0) {
+            this.setStunTicks(this.stunTicks - 1);
         }
     }
 
@@ -166,14 +166,13 @@ public class Basher extends AbstractIllager {
         final boolean hasShield = this.getMainHandItem().is(Items.SHIELD);
         if (this.isAggressive()) {
             if (attacker instanceof LivingEntity) {
-                final ItemStack item = ((LivingEntity) attacker).getMainHandItem();
-                final ItemStack basherItem = this.getMainHandItem();
-                final boolean isShield = basherItem.is(Items.SHIELD);
-                if ((item.is(ItemTags.AXES) || attacker instanceof IronGolem || this.blockedCount >= 4) && isShield) {
+                final ItemStack attackerMainHand = ((LivingEntity) attacker).getMainHandItem();
+                final ItemStack basherMainHand = this.getMainHandItem();
+                if ((ToolTypeHelper.INSTANCE.isAxe(attackerMainHand) || attacker instanceof IronGolem || this.blockedCount >= 4) && basherMainHand.is(Items.SHIELD)) {
                     this.playSound(SoundEvents.SHIELD_BREAK, 1.0f, 1.0f);
-                    this.setStunnedState(true);
+                    this.setStunTicks(60);
                     if (this.level() instanceof ServerLevel) {
-                        ((ServerLevel) this.level()).sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM, basherItem), this.getX(), this.getY() + 1.5, this.getZ(), 30, 0.3, 0.2, 0.3, 0.003);
+                        ((ServerLevel) this.level()).sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM, basherMainHand), this.getX(), this.getY() + 1.5, this.getZ(), 30, 0.3, 0.2, 0.3, 0.003);
                         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_AXE));
                     }
                     return super.hurt(source, amount);
