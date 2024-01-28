@@ -1,0 +1,115 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/rooms/room_0",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/rooms/room_1",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/rooms/room_2",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/rooms/room_3",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/rooms/room_4",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/rooms/room_5",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/rooms/room_6",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/rooms/room_7",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/rooms/room_8",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/rooms/room_9",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

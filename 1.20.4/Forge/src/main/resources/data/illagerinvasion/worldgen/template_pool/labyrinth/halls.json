@@ -1,0 +1,126 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/straight_no_rooms",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/straight_left_room",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/straight_right_room",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/straight_two_rooms",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/left_no_rooms",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/right_no_rooms",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/straight_and_left_and_right",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/straight_and_left_no_rooms",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/straight_and_left_right_room",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/straight_and_right_left_room",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "illagerinvasion:single_pool_element",
+        "location": "illagerinvasion:labyrinth/halls/straight_and_right_no_rooms",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

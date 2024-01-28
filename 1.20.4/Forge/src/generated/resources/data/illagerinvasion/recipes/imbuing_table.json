@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:copper_block"
+    },
+    "E": {
+      "item": "minecraft:experience_bottle"
+    },
+    "O": {
+      "item": "minecraft:dark_oak_log"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "S": {
+      "item": "illagerinvasion:primal_essence"
+    }
+  },
+  "pattern": [
+    "#P#",
+    "OSO",
+    "#E#"
+  ],
+  "result": {
+    "item": "illagerinvasion:imbuing_table"
+  },
+  "show_notification": true
+}
