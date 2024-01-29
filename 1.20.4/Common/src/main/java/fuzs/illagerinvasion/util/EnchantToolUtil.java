@@ -41,7 +41,7 @@ public class EnchantToolUtil {
             } else {
                 enchantments.put(Enchantments.MULTISHOT, 1);
             }
-        } else if (ToolTypeHelper.INSTANCE.isTrident(stack)) {
+        } else if (ToolTypeHelper.INSTANCE.isTridentLike(stack)) {
             enchantments.put(Enchantments.IMPALING, 3);
         }
 

@@ -14,7 +14,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -30,7 +29,6 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
-import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -64,7 +62,7 @@ public class Basher extends AbstractIllager {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2, new AbstractIllager.RaiderOpenDoorGoal(this));
-        this.goalSelector.addGoal(4, new AttackGoal(this));
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0, false));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, true));
@@ -157,7 +155,7 @@ public class Basher extends AbstractIllager {
 
     @Override
     public SoundEvent getCelebrateSound() {
-        return ModRegistry.BASHER_CELEBRATE_SOUND_EVENT.get();
+        return ModRegistry.BASHER_CELEBRATE_SOUND_EVENT.value();
     }
 
     @Override
@@ -223,17 +221,17 @@ public class Basher extends AbstractIllager {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.BASHER_AMBIENT_SOUND_EVENT.get();
+        return ModRegistry.BASHER_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.BASHER_DEATH_SOUND_EVENT.get();
+        return ModRegistry.BASHER_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModRegistry.BASHER_HURT_SOUND_EVENT.get();
+        return ModRegistry.BASHER_HURT_SOUND_EVENT.value();
     }
 
     @Override
@@ -252,21 +250,5 @@ public class Basher extends AbstractIllager {
             EnchantmentHelper.setEnchantments(map, itemStack);
         }
         this.setItemSlot(EquipmentSlot.MAINHAND, itemStack);
-    }
-
-    static class AttackGoal extends MeleeAttackGoal {
-        public AttackGoal(Basher vindicator) {
-            super(vindicator, 1.0, false);
-
-        }
-
-        @Override
-        protected double getAttackReachSqr(LivingEntity entity) {
-            if (this.mob.getVehicle() instanceof Ravager) {
-                float f = this.mob.getVehicle().getBbWidth() - 0.1f;
-                return f * 2.0f * (f * 2.0f) + entity.getBbWidth();
-            }
-            return super.getAttackReachSqr(entity);
-        }
     }
 }

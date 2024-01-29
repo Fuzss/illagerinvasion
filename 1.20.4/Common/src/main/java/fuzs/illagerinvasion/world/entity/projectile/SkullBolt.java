@@ -22,7 +22,7 @@ public class SkullBolt extends AbstractHurtingProjectile {
     }
 
     public SkullBolt(Level world, LivingEntity owner, double directionX, double directionY, double directionZ) {
-        super(ModRegistry.SKULL_BOLT_ENTITY_TYPE.get(), owner, directionX, directionY, directionZ, world);
+        super(ModRegistry.SKULL_BOLT_ENTITY_TYPE.value(), owner, directionX, directionY, directionZ, world);
     }
 
     @Override

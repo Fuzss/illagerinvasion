@@ -62,6 +62,6 @@ public class PlatinumTrimHandler {
 
     public static Optional<ArmorTrim> getPlatinumTrim(Level level, ItemStack stack) {
         if (!IllagerInvasion.CONFIG.get(ServerConfig.class).platinumTrimEffects) return Optional.empty();
-        return ArmorTrim.getTrim(level.registryAccess(), stack).filter(armorTrim -> armorTrim.material().is(ModRegistry.PLATINUM_TRIM_MATERIAL));
+        return ArmorTrim.getTrim(level.registryAccess(), stack, true).filter(armorTrim -> armorTrim.material().is(ModRegistry.PLATINUM_TRIM_MATERIAL));
     }
 }

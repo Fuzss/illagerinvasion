@@ -34,7 +34,6 @@ import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -81,7 +80,7 @@ public class Inquisitor extends AbstractIllager {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(4, new AttackGoal(this));
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0, false));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, true));
@@ -280,17 +279,17 @@ public class Inquisitor extends AbstractIllager {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.ILLAGER_BRUTE_AMBIENT_SOUND_EVENT.get();
+        return ModRegistry.ILLAGER_BRUTE_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.ILLAGER_BRUTE_DEATH_SOUND_EVENT.get();
+        return ModRegistry.ILLAGER_BRUTE_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(final DamageSource source) {
-        return ModRegistry.ILLAGER_BRUTE_HURT_SOUND_EVENT.get();
+        return ModRegistry.ILLAGER_BRUTE_HURT_SOUND_EVENT.value();
     }
 
     @Override
@@ -321,23 +320,6 @@ public class Inquisitor extends AbstractIllager {
                 return BlockPathTypes.OPEN;
             }
             return super.evaluateBlockPathType(blockGetter, blockPos, blockPathTypes);
-        }
-    }
-
-    static class AttackGoal extends MeleeAttackGoal {
-
-        public AttackGoal(Inquisitor vindicator) {
-            super(vindicator, 1.0, false);
-
-        }
-
-        @Override
-        protected double getAttackReachSqr(LivingEntity entity) {
-            if (this.mob.getVehicle() instanceof Ravager) {
-                float f = this.mob.getVehicle().getBbWidth() - 0.1f;
-                return f * 2.0f * (f * 2.0f) + entity.getBbWidth();
-            }
-            return super.getAttackReachSqr(entity);
         }
     }
 

@@ -19,15 +19,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
 public class HornOfSightItem extends InstrumentItem {
+    public static final String KEY_INSTRUMENT = "instrument";
 
     public HornOfSightItem(Properties properties, TagKey<Instrument> tagKey) {
         super(properties, tagKey);
     }
 
     private static void tryAddInstrument(ItemStack stack) {
-        if (!stack.hasTag() || !stack.getTag().contains("instrument", Tag.TAG_STRING)) {
+        if (!stack.hasTag() || !stack.getTag().contains(KEY_INSTRUMENT, Tag.TAG_STRING)) {
             CompoundTag compoundTag = stack.getOrCreateTag();
-            compoundTag.putString("instrument", ModRegistry.REVEAL_INSTRUMENT.getResourceLocation().toString());
+            compoundTag.putString(KEY_INSTRUMENT, ModRegistry.REVEAL_INSTRUMENT.key().location().toString());
         }
     }
 

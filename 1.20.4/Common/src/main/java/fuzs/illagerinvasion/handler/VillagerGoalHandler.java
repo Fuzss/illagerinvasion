@@ -10,11 +10,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.npc.AbstractVillager;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -24,20 +22,20 @@ import java.util.function.Supplier;
 
 public class VillagerGoalHandler {
     private static final List<AvoidVillagerEnemy<?>> VILLAGER_ENEMIES = ImmutableList.<AvoidVillagerEnemy<?>>builder()
-            .add(new AvoidVillagerEnemy<>(Alchemist.class, ModRegistry.ALCHEMIST_ENTITY_TYPE::get, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Archivist.class, ModRegistry.ARCHIVIST_ENTITY_TYPE::get, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Basher.class, ModRegistry.BASHER_ENTITY_TYPE::get, 8.0F))
-            .add(new AvoidVillagerEnemy<>(Firecaller.class, ModRegistry.FIRECALLER_ENTITY_TYPE::get, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Inquisitor.class, ModRegistry.INQUISITOR_ENTITY_TYPE::get, 15.0F))
-            .add(new AvoidVillagerEnemy<>(Invoker.class, ModRegistry.INVOKER_ENTITY_TYPE::get, 15.0F))
-            .add(new AvoidVillagerEnemy<>(Marauder.class, ModRegistry.MARAUDER_ENTITY_TYPE::get, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Necromancer.class, ModRegistry.NECROMANCER_ENTITY_TYPE::get, 15.0F))
-            .add(new AvoidVillagerEnemy<>(Provoker.class, ModRegistry.PROVOKER_ENTITY_TYPE::get, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Sorcerer.class, ModRegistry.SORCERER_ENTITY_TYPE::get, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Surrendered.class, ModRegistry.SURRENDERED_ENTITY_TYPE::get, 8.0F))
+            .add(new AvoidVillagerEnemy<>(Alchemist.class, ModRegistry.ALCHEMIST_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Archivist.class, ModRegistry.ARCHIVIST_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Basher.class, ModRegistry.BASHER_ENTITY_TYPE::value, 8.0F))
+            .add(new AvoidVillagerEnemy<>(Firecaller.class, ModRegistry.FIRECALLER_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Inquisitor.class, ModRegistry.INQUISITOR_ENTITY_TYPE::value, 15.0F))
+            .add(new AvoidVillagerEnemy<>(Invoker.class, ModRegistry.INVOKER_ENTITY_TYPE::value, 15.0F))
+            .add(new AvoidVillagerEnemy<>(Marauder.class, ModRegistry.MARAUDER_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Necromancer.class, ModRegistry.NECROMANCER_ENTITY_TYPE::value, 15.0F))
+            .add(new AvoidVillagerEnemy<>(Provoker.class, ModRegistry.PROVOKER_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Sorcerer.class, ModRegistry.SORCERER_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Surrendered.class, ModRegistry.SURRENDERED_ENTITY_TYPE::value, 8.0F))
             .build();
 
-    public static EventResult onEntityJoinServerLevel(Entity entity, ServerLevel level, @Nullable MobSpawnType spawnType) {
+    public static EventResult onEntityLoad(Entity entity, ServerLevel level) {
 
         // do not do this for generic abstract villager, villagers that use the brain system instead of the goals seem to try to run both and flee much slower than they should
         if (entity.getType() == EntityType.WANDERING_TRADER) {

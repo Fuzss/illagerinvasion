@@ -87,17 +87,17 @@ public class Firecaller extends SpellcasterIllager {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.FIRECALLER_AMBIENT_SOUND_EVENT.get();
+        return ModRegistry.FIRECALLER_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.FIRECALLER_DEATH_SOUND_EVENT.get();
+        return ModRegistry.FIRECALLER_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(final DamageSource source) {
-        return ModRegistry.FIRECALLER_HURT_SOUND_EVENT.get();
+        return ModRegistry.FIRECALLER_HURT_SOUND_EVENT.value();
     }
 
     @Override
@@ -199,7 +199,7 @@ public class Firecaller extends SpellcasterIllager {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.FIRECALLER_CAST_SOUND_EVENT.get();
+            return ModRegistry.FIRECALLER_CAST_SOUND_EVENT.value();
         }
 
         @Override
@@ -260,7 +260,7 @@ public class Firecaller extends SpellcasterIllager {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.FIRECALLER_CAST_SOUND_EVENT.get();
+            return ModRegistry.FIRECALLER_CAST_SOUND_EVENT.value();
         }
 
         @Override

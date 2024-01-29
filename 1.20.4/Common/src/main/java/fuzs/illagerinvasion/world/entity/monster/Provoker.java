@@ -92,7 +92,7 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
 
     @Override
     public SoundEvent getCelebrateSound() {
-        return ModRegistry.PROVOKER_CELEBRATE_SOUND_EVENT.get();
+        return ModRegistry.PROVOKER_CELEBRATE_SOUND_EVENT.value();
     }
 
     @Override
@@ -123,17 +123,17 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.PROVOKER_AMBIENT_SOUND_EVENT.get();
+        return ModRegistry.PROVOKER_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.PROVOKER_DEATH_SOUND_EVENT.get();
+        return ModRegistry.PROVOKER_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModRegistry.PROVOKER_HURT_SOUND_EVENT.get();
+        return ModRegistry.PROVOKER_HURT_SOUND_EVENT.value();
     }
 
     @Override

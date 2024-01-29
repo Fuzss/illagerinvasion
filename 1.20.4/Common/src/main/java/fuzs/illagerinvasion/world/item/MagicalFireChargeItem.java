@@ -24,9 +24,9 @@ public class MagicalFireChargeItem extends FireChargeItem {
         BlockPos blockPos = context.getClickedPos();
         boolean bl = false;
         blockPos = blockPos.relative(context.getClickedFace());
-        if (ModRegistry.MAGIC_FIRE_BLOCK.get().defaultBlockState().canSurvive(level, blockPos) && BaseFireBlock.canBePlacedAt(level, blockPos, context.getHorizontalDirection())) {
+        if (ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState().canSurvive(level, blockPos) && BaseFireBlock.canBePlacedAt(level, blockPos, context.getHorizontalDirection())) {
             this.playSound(level, blockPos);
-            level.setBlockAndUpdate(blockPos, ModRegistry.MAGIC_FIRE_BLOCK.get().defaultBlockState());
+            level.setBlockAndUpdate(blockPos, ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState());
             level.gameEvent(context.getPlayer(), GameEvent.BLOCK_PLACE, blockPos);
             bl = true;
         }

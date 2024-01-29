@@ -18,8 +18,6 @@ public class ImbuingScreen extends AbstractContainerScreen<ImbuingMenu> {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        this.renderBackground(guiGraphics);
-        this.renderBg(guiGraphics, delta, mouseX, mouseY);
         super.render(guiGraphics, mouseX, mouseY, delta);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }

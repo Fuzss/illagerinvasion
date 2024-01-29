@@ -53,7 +53,7 @@ public class Sorcerer extends SpellcasterIllager {
 
     @Override
     public SoundEvent getCelebrateSound() {
-        return ModRegistry.SORCERER_CELEBRATE_SOUND_EVENT.get();
+        return ModRegistry.SORCERER_CELEBRATE_SOUND_EVENT.value();
     }
 
     @Override
@@ -85,22 +85,22 @@ public class Sorcerer extends SpellcasterIllager {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.SORCERER_AMBIENT_SOUND_EVENT.get();
+        return ModRegistry.SORCERER_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.SORCERER_DEATH_SOUND_EVENT.get();
+        return ModRegistry.SORCERER_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModRegistry.SORCERER_HURT_SOUND_EVENT.get();
+        return ModRegistry.SORCERER_HURT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getCastingSoundEvent() {
-        return ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT.get();
+        return ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT.value();
     }
 
     @Override
@@ -178,7 +178,7 @@ public class Sorcerer extends SpellcasterIllager {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.SORCERER_CAST_SOUND_EVENT.get();
+            return ModRegistry.SORCERER_CAST_SOUND_EVENT.value();
         }
 
         @Override
@@ -210,7 +210,7 @@ public class Sorcerer extends SpellcasterIllager {
             Sorcerer.this.conjureFlamesCooldown = 100;
             target.hurt(Sorcerer.this.damageSources().magic(), 3.0f);
             if (Sorcerer.this.level() instanceof ServerLevel) {
-                ((ServerLevel) Sorcerer.this.level()).sendParticles(ModRegistry.MAGIC_FLAME_PARTICLE_TYPE.get(), target.getX(), target.getY() + 1, target.getZ(), 30, 0.3D, 0.5D, 0.3D, 0.08D);
+                ((ServerLevel) Sorcerer.this.level()).sendParticles(ModRegistry.MAGIC_FLAME_PARTICLE_TYPE.value(), target.getX(), target.getY() + 1, target.getZ(), 30, 0.3D, 0.5D, 0.3D, 0.08D);
             }
         }
 
@@ -231,7 +231,7 @@ public class Sorcerer extends SpellcasterIllager {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.SORCERER_CAST_SOUND_EVENT.get();
+            return ModRegistry.SORCERER_CAST_SOUND_EVENT.value();
         }
 
         @Override

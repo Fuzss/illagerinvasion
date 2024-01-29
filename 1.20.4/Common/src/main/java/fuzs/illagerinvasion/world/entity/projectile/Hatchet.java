@@ -27,14 +27,14 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
     private ItemStack hatchetStack;
     private boolean dealtDamage;
 
-    public Hatchet(EntityType<? extends Hatchet> entityType, Level world) {
-        super(entityType, world);
-        this.hatchetStack = new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get());
+    public Hatchet(EntityType<? extends Hatchet> entityType, Level level) {
+        super(entityType, level, new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value()));
+        this.hatchetStack = new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value());
     }
 
-    public Hatchet(Level world, LivingEntity owner, ItemStack stack) {
-        super(ModRegistry.HATCHET_ENTITY_TYPE.get(), owner, world);
-        this.hatchetStack = new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get());
+    public Hatchet(Level level, LivingEntity owner, ItemStack stack) {
+        super(ModRegistry.HATCHET_ENTITY_TYPE.value(), owner, level, stack);
+        this.hatchetStack = new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value());
         this.hatchetStack = stack.copy();
         this.entityData.set(DATA_ENCHANTED, stack.hasFoil());
     }
@@ -43,11 +43,6 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_ENCHANTED, false);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
     }
 
 
@@ -141,7 +136,7 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
 
     @Override
     public ItemStack getItem() {
-        return new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.get());
+        return new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value());
     }
 
     public float getAgeException() {

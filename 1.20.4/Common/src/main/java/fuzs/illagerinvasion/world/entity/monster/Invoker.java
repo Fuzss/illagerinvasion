@@ -238,7 +238,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
                 }
             } else if (this.getShieldedState() && this.random.nextInt(3) == 0) {
                 ((ServerLevel) this.level()).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY() + 1, this.getZ(), 30, 0.5D, 0.7D, 0.5D, 0.5D);
-                this.playSound(ModRegistry.INVOKER_SHIELD_BREAK_SOUND_EVENT.get(), 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
+                this.playSound(ModRegistry.INVOKER_SHIELD_BREAK_SOUND_EVENT.value(), 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
                 this.setShieldedState(false);
             }
         }
@@ -253,17 +253,17 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.INVOKER_AMBIENT_SOUND_EVENT.get();
+        return ModRegistry.INVOKER_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.INVOKER_DEATH_SOUND_EVENT.get();
+        return ModRegistry.INVOKER_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModRegistry.INVOKER_HURT_SOUND_EVENT.get();
+        return ModRegistry.INVOKER_HURT_SOUND_EVENT.value();
     }
 
     @Nullable Sheep getWololoTarget() {
@@ -276,7 +276,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
     @Override
     protected SoundEvent getCastingSoundEvent() {
-        return ModRegistry.INVOKER_COMPLETE_CAST_SOUND_EVENT.get();
+        return ModRegistry.INVOKER_COMPLETE_CAST_SOUND_EVENT.value();
     }
 
     @Override
@@ -324,7 +324,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
             ServerLevel serverWorld = (ServerLevel) Invoker.this.level();
             for (int i = 0; i < 4; ++i) {
                 BlockPos blockPos = Invoker.this.blockPosition().offset(-2 + Invoker.this.random.nextInt(5), 1, -2 + Invoker.this.random.nextInt(5));
-                Surrendered surrendered = ModRegistry.SURRENDERED_ENTITY_TYPE.get().create(Invoker.this.level());
+                Surrendered surrendered = ModRegistry.SURRENDERED_ENTITY_TYPE.value().create(Invoker.this.level());
                 surrendered.moveTo(blockPos, 0.0f, 0.0f);
                 surrendered.finalizeSpawn(serverWorld, Invoker.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, null, null);
                 surrendered.setOwner(Invoker.this);
@@ -336,7 +336,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.INVOKER_SUMMON_CAST_SOUND_EVENT.get();
+            return ModRegistry.INVOKER_SUMMON_CAST_SOUND_EVENT.value();
         }
 
         @Override
@@ -419,7 +419,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.INVOKER_FANGS_CAST_SOUND_EVENT.get();
+            return ModRegistry.INVOKER_FANGS_CAST_SOUND_EVENT.value();
         }
 
         @Override
@@ -567,7 +567,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.INVOKER_BIG_CAST_SOUND_EVENT.get();
+            return ModRegistry.INVOKER_BIG_CAST_SOUND_EVENT.value();
         }
 
         @Override
@@ -637,7 +637,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.INVOKER_TELEPORT_CAST_SOUND_EVENT.get();
+            return ModRegistry.INVOKER_TELEPORT_CAST_SOUND_EVENT.value();
         }
 
         @Override
@@ -721,7 +721,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.INVOKER_FANGS_CAST_SOUND_EVENT.get();
+            return ModRegistry.INVOKER_FANGS_CAST_SOUND_EVENT.value();
         }
 
         @Override

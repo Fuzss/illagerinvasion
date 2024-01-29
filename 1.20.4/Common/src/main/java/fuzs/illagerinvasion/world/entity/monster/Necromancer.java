@@ -124,8 +124,8 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
             final double x = entity.getX();
             final double y = entity.getY();
             final double z = entity.getZ();
-            ((ServerLevel) this.level()).sendParticles(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.get(), x, y + 1.0, z, 1, 0.4, 0.5, 0.4, 0.015);
-            ((ServerLevel) this.level()).sendParticles(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.get(), this.getX(), this.getY() + 1.0, this.getZ(), 1, 0.4, 0.5, 0.4, 0.015);
+            ((ServerLevel) this.level()).sendParticles(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.value(), x, y + 1.0, z, 1, 0.4, 0.5, 0.4, 0.015);
+            ((ServerLevel) this.level()).sendParticles(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.value(), this.getX(), this.getY() + 1.0, this.getZ(), 1, 0.4, 0.5, 0.4, 0.015);
         }
     }
 
@@ -246,7 +246,7 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.NECROMANCER_SUMMON_SOUND_EVENT.get();
+            return ModRegistry.NECROMANCER_SUMMON_SOUND_EVENT.value();
         }
 
         @Override

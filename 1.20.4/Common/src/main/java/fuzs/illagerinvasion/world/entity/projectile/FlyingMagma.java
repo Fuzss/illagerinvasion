@@ -19,7 +19,7 @@ public class FlyingMagma extends AbstractHurtingProjectile {
     }
 
     public FlyingMagma(Level world, LivingEntity owner, double directionX, double directionY, double directionZ) {
-        super(ModRegistry.FLYING_MAGMA_ENTITY_TYPE.get(), owner, directionX, directionY, directionZ, world);
+        super(ModRegistry.FLYING_MAGMA_ENTITY_TYPE.value(), owner, directionX, directionY, directionZ, world);
     }
 
     @Override

@@ -19,7 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class ImbuingTableBlock extends Block {
-    private static final Component CONTAINER_TITLE = Component.translatable("container.imbue");
+    public static final Component CONTAINER_IMBUE = Component.translatable("container.imbue");
 
     public ImbuingTableBlock(Properties properties) {
         super(properties);
@@ -43,7 +43,7 @@ public class ImbuingTableBlock extends Block {
     @Override
     @Nullable
     public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-        return new SimpleMenuProvider((syncId, inventory, player) -> new ImbuingMenu(syncId, inventory, ContainerLevelAccess.create(world, pos)), CONTAINER_TITLE);
+        return new SimpleMenuProvider((syncId, inventory, player) -> new ImbuingMenu(syncId, inventory, ContainerLevelAccess.create(world, pos)), CONTAINER_IMBUE);
     }
 
     @Override

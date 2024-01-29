@@ -28,7 +28,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
     }
 
     public ImbuingMenu(int containerId, Inventory inventory, final ContainerLevelAccess access) {
-        super(ModRegistry.IMBUING_MENU_TYPE.get(), containerId);
+        super(ModRegistry.IMBUING_MENU_TYPE.value(), containerId);
         this.access = access;
         this.invalidState = this.addDataSlot(DataSlot.standalone());
         this.input = new SimpleContainer(3) {
@@ -57,7 +57,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
 
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(ModRegistry.HALLOWED_GEM_ITEM.get());
+                return stack.is(ModRegistry.HALLOWED_GEM_ITEM.value());
             }
         });
         this.addSlot(new Slot(this.output, 3, 80, 14) {
@@ -80,7 +80,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
                 stack.shrink(1);
                 ImbuingMenu.this.input.setItem(2, stack);
                 ImbuingMenu.this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
-                playerEntity.playSound(ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT.get(), 1.0f, 1.0f);
+                playerEntity.playSound(ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT.value(), 1.0f, 1.0f);
             }
         });
         for (int i = 0; i < 3; ++i) {
@@ -103,7 +103,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(this.access, player, ModRegistry.IMBUING_TABLE_BLOCK.get());
+        return stillValid(this.access, player, ModRegistry.IMBUING_TABLE_BLOCK.value());
     }
 
     public void updateResult() {

@@ -16,12 +16,12 @@ public class SetMagicFireUtil {
         }
         for (BlockPos otherPos : BlockPos.withinManhattan(pos, 1, 1, 1)) {
             if (magicFireCanReplace(level.getBlockState(otherPos).getBlock())) {
-                level.setBlockAndUpdate(otherPos, ModRegistry.MAGIC_FIRE_BLOCK.get().defaultBlockState());
+                level.setBlockAndUpdate(otherPos, ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState());
             }
         }
     }
 
     private static boolean magicFireCanReplace(Block block) {
-        return block == Blocks.AIR || block == Blocks.GRASS || block == Blocks.FERN || block == Blocks.TALL_GRASS;
+        return block == Blocks.AIR || block == Blocks.SHORT_GRASS || block == Blocks.FERN || block == Blocks.TALL_GRASS;
     }
 }

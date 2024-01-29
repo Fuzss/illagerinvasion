@@ -31,7 +31,7 @@ public class InvokerFangs extends Entity {
     }
 
     public InvokerFangs(Level world, double x, double y, double z, float yaw, int warmup, LivingEntity owner) {
-        this(ModRegistry.INVOKER_FANGS_ENTITY_TYPE.get(), world);
+        this(ModRegistry.INVOKER_FANGS_ENTITY_TYPE.value(), world);
         this.warmup = warmup;
         this.setOwner(owner);
         this.setYRot(yaw * 57.295776f);
@@ -40,7 +40,7 @@ public class InvokerFangs extends Entity {
 
     @Override
     protected void defineSynchedData() {
-
+        // NO-OP
     }
 
     @Nullable
@@ -132,7 +132,7 @@ public class InvokerFangs extends Entity {
         if (status == 4) {
             this.playingAnimation = true;
             if (!this.isSilent()) {
-                this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), ModRegistry.INVOKER_FANGS_SOUND_EVENT.get(), this.getSoundSource(), 1.0f, this.random.nextFloat() * 0.2f + 0.85f, false);
+                this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), ModRegistry.INVOKER_FANGS_SOUND_EVENT.value(), this.getSoundSource(), 1.0f, this.random.nextFloat() * 0.2f + 0.85f, false);
             }
         }
     }

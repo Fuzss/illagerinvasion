@@ -9,8 +9,7 @@ import fuzs.illagerinvasion.client.render.entity.*;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.*;
-import fuzs.puzzleslib.api.client.event.v1.ItemTooltipCallback;
-import fuzs.puzzleslib.api.core.v1.context.ModLifecycleContext;
+import fuzs.puzzleslib.api.client.event.v1.gui.ItemTooltipCallback;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -35,33 +34,33 @@ public class IllagerInvasionClient implements ClientModConstructor {
     }
 
     @Override
-    public void onClientSetup(ModLifecycleContext context) {
-        MenuScreens.register(ModRegistry.IMBUING_MENU_TYPE.get(), ImbuingScreen::new);
+    public void onClientSetup() {
+        MenuScreens.register(ModRegistry.IMBUING_MENU_TYPE.value(), ImbuingScreen::new);
     }
 
     @Override
     public void onRegisterEntityRenderers(EntityRenderersContext context) {
-        context.registerEntityRenderer(ModRegistry.PROVOKER_ENTITY_TYPE.get(), ProvokerRender::new);
-        context.registerEntityRenderer(ModRegistry.INVOKER_ENTITY_TYPE.get(), InvokerRender::new);
-        context.registerEntityRenderer(ModRegistry.SURRENDERED_ENTITY_TYPE.get(), SurrenderedRender::new);
-        context.registerEntityRenderer(ModRegistry.NECROMANCER_ENTITY_TYPE.get(), NecromancerRender::new);
-        context.registerEntityRenderer(ModRegistry.SKULL_BOLT_ENTITY_TYPE.get(), SkullBoltRender::new);
-        context.registerEntityRenderer(ModRegistry.BASHER_ENTITY_TYPE.get(), BasherRender::new);
-        context.registerEntityRenderer(ModRegistry.SORCERER_ENTITY_TYPE.get(), SorcererRender::new);
-        context.registerEntityRenderer(ModRegistry.ARCHIVIST_ENTITY_TYPE.get(), ArchivistRender::new);
-        context.registerEntityRenderer(ModRegistry.INQUISITOR_ENTITY_TYPE.get(), InquisitorRender::new);
-        context.registerEntityRenderer(ModRegistry.MARAUDER_ENTITY_TYPE.get(), MarauderRender::new);
-        context.registerEntityRenderer(ModRegistry.ALCHEMIST_ENTITY_TYPE.get(), AlchemistRender::new);
-        context.registerEntityRenderer(ModRegistry.FIRECALLER_ENTITY_TYPE.get(), FirecallerRender::new);
-        context.registerEntityRenderer(ModRegistry.INVOKER_FANGS_ENTITY_TYPE.get(), InvokerFangsRenderer::new);
-        context.registerEntityRenderer(ModRegistry.HATCHET_ENTITY_TYPE.get(), HatchetRender::new);
-        context.registerEntityRenderer(ModRegistry.FLYING_MAGMA_ENTITY_TYPE.get(), MagmaEntityRender::new);
+        context.registerEntityRenderer(ModRegistry.PROVOKER_ENTITY_TYPE.value(), ProvokerRender::new);
+        context.registerEntityRenderer(ModRegistry.INVOKER_ENTITY_TYPE.value(), InvokerRender::new);
+        context.registerEntityRenderer(ModRegistry.SURRENDERED_ENTITY_TYPE.value(), SurrenderedRender::new);
+        context.registerEntityRenderer(ModRegistry.NECROMANCER_ENTITY_TYPE.value(), NecromancerRender::new);
+        context.registerEntityRenderer(ModRegistry.SKULL_BOLT_ENTITY_TYPE.value(), SkullBoltRender::new);
+        context.registerEntityRenderer(ModRegistry.BASHER_ENTITY_TYPE.value(), BasherRender::new);
+        context.registerEntityRenderer(ModRegistry.SORCERER_ENTITY_TYPE.value(), SorcererRender::new);
+        context.registerEntityRenderer(ModRegistry.ARCHIVIST_ENTITY_TYPE.value(), ArchivistRender::new);
+        context.registerEntityRenderer(ModRegistry.INQUISITOR_ENTITY_TYPE.value(), InquisitorRender::new);
+        context.registerEntityRenderer(ModRegistry.MARAUDER_ENTITY_TYPE.value(), MarauderRender::new);
+        context.registerEntityRenderer(ModRegistry.ALCHEMIST_ENTITY_TYPE.value(), AlchemistRender::new);
+        context.registerEntityRenderer(ModRegistry.FIRECALLER_ENTITY_TYPE.value(), FirecallerRender::new);
+        context.registerEntityRenderer(ModRegistry.INVOKER_FANGS_ENTITY_TYPE.value(), InvokerFangsRenderer::new);
+        context.registerEntityRenderer(ModRegistry.HATCHET_ENTITY_TYPE.value(), HatchetRender::new);
+        context.registerEntityRenderer(ModRegistry.FLYING_MAGMA_ENTITY_TYPE.value(), MagmaEntityRender::new);
     }
 
     @Override
     public void onRegisterParticleProviders(ParticleProvidersContext context) {
-        context.registerParticleFactory(ModRegistry.MAGIC_FLAME_PARTICLE_TYPE.get(), FlameParticle.Provider::new);
-        context.registerParticleFactory(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.get(), HeartParticle.Provider::new);
+        context.registerParticleProvider(ModRegistry.MAGIC_FLAME_PARTICLE_TYPE.value(), FlameParticle.Provider::new);
+        context.registerParticleProvider(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.value(), HeartParticle.Provider::new);
     }
 
     @Override
@@ -78,13 +77,13 @@ public class IllagerInvasionClient implements ClientModConstructor {
 
     @Override
     public void onRegisterBlockRenderTypes(RenderTypesContext<Block> context) {
-        context.registerRenderType(RenderType.cutout(), ModRegistry.MAGIC_FIRE_BLOCK.get());
+        context.registerRenderType(RenderType.cutout(), ModRegistry.MAGIC_FIRE_BLOCK.value());
     }
 
     @Override
     public void onRegisterItemModelProperties(ItemModelPropertiesContext context) {
         context.registerItemProperty(IllagerInvasion.id("tooting"), (ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) -> {
             return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F;
-        }, ModRegistry.HORN_OF_SIGHT_ITEM.get());
+        }, ModRegistry.HORN_OF_SIGHT_ITEM.value());
     }
 }
