@@ -1,4 +1,4 @@
-package fuzs.illagerinvasion.neoforge.data;
+package fuzs.illagerinvasion.neoforge.data.client;
 
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.neoforge.api.data.v2.client.AbstractSoundDefinitionProvider;

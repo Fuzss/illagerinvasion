@@ -7,7 +7,6 @@ import fuzs.illagerinvasion.data.loot.ModChestLootProvider;
 import fuzs.illagerinvasion.data.loot.ModEntityInjectLootProvider;
 import fuzs.illagerinvasion.data.loot.ModEntityTypeLootProvider;
 import fuzs.illagerinvasion.data.tags.*;
-import fuzs.illagerinvasion.neoforge.data.ModSoundDefinitionProvider;
 import fuzs.illagerinvasion.neoforge.data.ModTrimMaterialDataProvider;
 import fuzs.illagerinvasion.neoforge.init.NeoForgeModRegistry;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
@@ -36,7 +35,6 @@ public class IllagerInvasionNeoForge {
                 ModEntityInjectLootProvider::new,
                 ModEntityTypeLootProvider::new,
                 ModRecipeProvider::new,
-                ModSoundDefinitionProvider::new,
                 ModTrimMaterialDataProvider::new
         );
     }
