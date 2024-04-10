@@ -15,6 +15,6 @@
   },
   "start_pool": "illagerinvasion:labyrinth/towers",
   "step": "surface_structures",
-  "terrain_adaptation": "beard_thin",
+  "terrain_adaptation": "bury",
   "use_expansion_hack": false
 }
