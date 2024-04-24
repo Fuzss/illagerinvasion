@@ -47,7 +47,7 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
 
 
     @Override
-    protected ItemStack getPickupItem() {
+    public ItemStack getPickupItem() {
         return this.hatchetStack.copy();
     }
 

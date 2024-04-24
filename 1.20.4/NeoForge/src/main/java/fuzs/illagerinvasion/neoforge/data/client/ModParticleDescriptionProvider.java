@@ -11,7 +11,7 @@ public class ModParticleDescriptionProvider extends AbstractParticleDescriptionP
     }
 
     @Override
-    protected void addParticleDescriptions() {
+    public void addParticleDescriptions() {
         this.add(ModRegistry.MAGIC_FLAME_PARTICLE_TYPE.value());
         this.add(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.value());
     }

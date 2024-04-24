@@ -2,7 +2,7 @@
   "elements": [
     {
       "element": {
-        "element_type": "minecraft:single_pool_element",
+        "element_type": "illagerinvasion:single_pool_element",
         "location": "illagerinvasion:labyrinth/tower",
         "processors": {
           "processors": []

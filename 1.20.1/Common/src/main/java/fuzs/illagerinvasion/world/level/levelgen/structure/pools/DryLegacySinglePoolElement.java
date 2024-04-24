@@ -3,6 +3,7 @@ package fuzs.illagerinvasion.world.level.levelgen.structure.pools;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import fuzs.illagerinvasion.init.ModRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
@@ -30,7 +31,7 @@ public class DryLegacySinglePoolElement extends LegacySinglePoolElement {
 
     @Override
     public StructurePoolElementType<?> getType() {
-        return StructurePoolElementType.SINGLE;
+        return ModRegistry.LEGACY_SINGLE_POOL_ELEMENT_TYPE.get();
     }
 
     @Override

@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v8.0.5-1.20.1] - 2024-04-24
+### Fixed
+- Fix parts of the underground labyrinth structure sometimes being exposed on the surface
+- Fix some labyrinth hallways rarely being flooded
+
 ## [v8.0.4-1.20.1] - 2024-01-24
 ### Changed
 - Necromancer now drops zombie and skeletons heads as a rare drop

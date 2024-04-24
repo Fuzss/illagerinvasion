@@ -3,23 +3,25 @@ package fuzs.illagerinvasion.world.level.levelgen.structure.pools;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import fuzs.illagerinvasion.init.ModRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.pools.LegacySinglePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementType;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
-public class DryLegacySinglePoolElement extends LegacySinglePoolElement {
-    public static final Codec<LegacySinglePoolElement> CODEC = RecordCodecBuilder.create((p_210429_) -> {
-        return p_210429_.group(templateCodec(), processorsCodec(), projectionCodec()).apply(p_210429_, DryLegacySinglePoolElement::new);
+public class SingleNoLiquidPoolElement extends SinglePoolElement {
+    public static final Codec<SinglePoolElement> CODEC = RecordCodecBuilder.create(instance -> {
+        return instance.group(templateCodec(), processorsCodec(), projectionCodec())
+                .apply(instance, SingleNoLiquidPoolElement::new);
     });
 
-    protected DryLegacySinglePoolElement(Either<ResourceLocation, StructureTemplate> either, Holder<StructureProcessorList> holder, StructureTemplatePool.Projection projection) {
+    public SingleNoLiquidPoolElement(Either<ResourceLocation, StructureTemplate> either, Holder<StructureProcessorList> holder, StructureTemplatePool.Projection projection) {
         super(either, holder, projection);
     }
 
@@ -30,11 +32,11 @@ public class DryLegacySinglePoolElement extends LegacySinglePoolElement {
 
     @Override
     public StructurePoolElementType<?> getType() {
-        return StructurePoolElementType.SINGLE;
+        return ModRegistry.SINGLE_POOL_ELEMENT_TYPE.value();
     }
 
     @Override
     public String toString() {
-        return "DryLegacySingle[" + this.template + "]";
+        return "SingleNoLiquid[" + this.template + "]";
     }
 }
