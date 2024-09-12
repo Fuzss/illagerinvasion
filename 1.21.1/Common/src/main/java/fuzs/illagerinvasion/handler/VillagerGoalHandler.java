@@ -2,7 +2,7 @@ package fuzs.illagerinvasion.handler;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModEntityTypes;
 import fuzs.illagerinvasion.mixin.accessor.VillagerHostilesSensorAccessor;
 import fuzs.illagerinvasion.world.entity.monster.*;
 import fuzs.puzzleslib.api.event.v1.core.EventResult;
@@ -22,17 +22,17 @@ import java.util.function.Supplier;
 
 public class VillagerGoalHandler {
     private static final List<AvoidVillagerEnemy<?>> VILLAGER_ENEMIES = ImmutableList.<AvoidVillagerEnemy<?>>builder()
-            .add(new AvoidVillagerEnemy<>(Alchemist.class, ModRegistry.ALCHEMIST_ENTITY_TYPE::value, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Archivist.class, ModRegistry.ARCHIVIST_ENTITY_TYPE::value, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Basher.class, ModRegistry.BASHER_ENTITY_TYPE::value, 8.0F))
-            .add(new AvoidVillagerEnemy<>(Firecaller.class, ModRegistry.FIRECALLER_ENTITY_TYPE::value, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Inquisitor.class, ModRegistry.INQUISITOR_ENTITY_TYPE::value, 15.0F))
-            .add(new AvoidVillagerEnemy<>(Invoker.class, ModRegistry.INVOKER_ENTITY_TYPE::value, 15.0F))
-            .add(new AvoidVillagerEnemy<>(Marauder.class, ModRegistry.MARAUDER_ENTITY_TYPE::value, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Necromancer.class, ModRegistry.NECROMANCER_ENTITY_TYPE::value, 15.0F))
-            .add(new AvoidVillagerEnemy<>(Provoker.class, ModRegistry.PROVOKER_ENTITY_TYPE::value, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Sorcerer.class, ModRegistry.SORCERER_ENTITY_TYPE::value, 12.0F))
-            .add(new AvoidVillagerEnemy<>(Surrendered.class, ModRegistry.SURRENDERED_ENTITY_TYPE::value, 8.0F))
+            .add(new AvoidVillagerEnemy<>(Alchemist.class, ModEntityTypes.ALCHEMIST_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Archivist.class, ModEntityTypes.ARCHIVIST_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Basher.class, ModEntityTypes.BASHER_ENTITY_TYPE::value, 8.0F))
+            .add(new AvoidVillagerEnemy<>(Firecaller.class, ModEntityTypes.FIRECALLER_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Inquisitor.class, ModEntityTypes.INQUISITOR_ENTITY_TYPE::value, 15.0F))
+            .add(new AvoidVillagerEnemy<>(Invoker.class, ModEntityTypes.INVOKER_ENTITY_TYPE::value, 15.0F))
+            .add(new AvoidVillagerEnemy<>(Marauder.class, ModEntityTypes.MARAUDER_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Necromancer.class, ModEntityTypes.NECROMANCER_ENTITY_TYPE::value, 15.0F))
+            .add(new AvoidVillagerEnemy<>(Provoker.class, ModEntityTypes.PROVOKER_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Sorcerer.class, ModEntityTypes.SORCERER_ENTITY_TYPE::value, 12.0F))
+            .add(new AvoidVillagerEnemy<>(Surrendered.class, ModEntityTypes.SURRENDERED_ENTITY_TYPE::value, 8.0F))
             .build();
 
     public static EventResult onEntityLoad(Entity entity, ServerLevel level) {

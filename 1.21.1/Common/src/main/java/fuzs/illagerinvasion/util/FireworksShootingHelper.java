@@ -39,7 +39,7 @@ public class FireworksShootingHelper {
 
     private static ItemStack createLoadedWeapon() {
         ItemStack fireworksItem = new ItemStack(Items.FIREWORK_ROCKET);
-        Fireworks fireworks = createFireworks(3, DyeColor.PURPLE, DyeColor.BLUE, DyeColor.GREEN);
+        Fireworks fireworks = createFireworks(1, DyeColor.PURPLE, DyeColor.BLUE, DyeColor.GREEN);
         fireworksItem.set(DataComponents.FIREWORKS, fireworks);
         ItemStack weaponItem = new ItemStack(Items.CROSSBOW);
         weaponItem.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.of(fireworksItem));

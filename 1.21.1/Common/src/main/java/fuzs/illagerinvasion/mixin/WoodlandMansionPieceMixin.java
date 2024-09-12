@@ -1,7 +1,7 @@
 package fuzs.illagerinvasion.mixin;
 
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
@@ -23,10 +23,10 @@ abstract class WoodlandMansionPieceMixin {
     @Inject(method = "handleDataMarker", at = @At("HEAD"), cancellable = true)
     public void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box, CallbackInfo callback) {
         EntityType<? extends Mob> entityType = switch (name) {
-            case "Provoker" -> ModRegistry.PROVOKER_ENTITY_TYPE.value();
-            case "Warrior" -> random.nextInt(2) == 0 ? ModRegistry.BASHER_ENTITY_TYPE.value() : null;
-            case "Archivist" -> ModRegistry.ARCHIVIST_ENTITY_TYPE.value();
-            case "invoker" -> ModRegistry.INVOKER_ENTITY_TYPE.value();
+            case "Provoker" -> ModEntityTypes.PROVOKER_ENTITY_TYPE.value();
+            case "Warrior" -> random.nextInt(2) == 0 ? ModEntityTypes.BASHER_ENTITY_TYPE.value() : null;
+            case "Archivist" -> ModEntityTypes.ARCHIVIST_ENTITY_TYPE.value();
+            case "invoker" -> ModEntityTypes.INVOKER_ENTITY_TYPE.value();
             default -> null;
         };
         if (entityType != null) {

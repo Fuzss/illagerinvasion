@@ -1,6 +1,6 @@
 package fuzs.illagerinvasion.world.entity.projectile;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModEntityTypes;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -21,7 +21,7 @@ public class FlyingMagma extends AbstractHurtingProjectile {
     }
 
     public FlyingMagma(Level world, LivingEntity owner, double directionX, double directionY, double directionZ) {
-        super(ModRegistry.FLYING_MAGMA_ENTITY_TYPE.value(), owner, new Vec3(directionX, directionY, directionZ), world);
+        super(ModEntityTypes.FLYING_MAGMA_ENTITY_TYPE.value(), owner, new Vec3(directionX, directionY, directionZ), world);
     }
 
     @Override
@@ -63,7 +63,6 @@ public class FlyingMagma extends AbstractHurtingProjectile {
             ((ServerLevel) this.level()).sendParticles(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 15, 0.4D, 0.4D, 0.4D, 0.15D);
         }
         this.discard();
-
     }
 
     @Override

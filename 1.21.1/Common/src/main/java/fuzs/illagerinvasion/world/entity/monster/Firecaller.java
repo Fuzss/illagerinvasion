@@ -2,6 +2,7 @@ package fuzs.illagerinvasion.world.entity.monster;
 
 
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.world.entity.projectile.FlyingMagma;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -91,17 +92,17 @@ public class Firecaller extends SpellcasterIllager {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.FIRECALLER_AMBIENT_SOUND_EVENT.value();
+        return ModSoundEvents.FIRECALLER_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.FIRECALLER_DEATH_SOUND_EVENT.value();
+        return ModSoundEvents.FIRECALLER_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(final DamageSource source) {
-        return ModRegistry.FIRECALLER_HURT_SOUND_EVENT.value();
+        return ModSoundEvents.FIRECALLER_HURT_SOUND_EVENT.value();
     }
 
     @Override
@@ -203,7 +204,7 @@ public class Firecaller extends SpellcasterIllager {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.FIRECALLER_CAST_SOUND_EVENT.value();
+            return ModSoundEvents.FIRECALLER_CAST_SOUND_EVENT.value();
         }
 
         @Override
@@ -264,12 +265,12 @@ public class Firecaller extends SpellcasterIllager {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.FIRECALLER_CAST_SOUND_EVENT.value();
+            return ModSoundEvents.FIRECALLER_CAST_SOUND_EVENT.value();
         }
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return (IllagerSpell) ModRegistry.PROVOKE_ILLAGER_SPELL;
+            return ModRegistry.PROVOKE_ILLAGER_SPELL;
         }
     }
 }

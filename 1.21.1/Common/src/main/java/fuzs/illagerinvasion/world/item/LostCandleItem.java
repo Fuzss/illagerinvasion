@@ -1,6 +1,6 @@
 package fuzs.illagerinvasion.world.item;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModSoundEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -55,11 +55,11 @@ public class LostCandleItem extends Item {
     }
 
     public enum CandleOreType {
-        DIAMOND(Blocks.DIAMOND_ORE, BlockTags.DIAMOND_ORES, ModRegistry.LOST_CANDLE_DIAMOND_SOUND_EVENT, ChatFormatting.AQUA),
-        IRON(Blocks.IRON_ORE, BlockTags.IRON_ORES, ModRegistry.LOST_CANDLE_IRON_SOUND_EVENT, ChatFormatting.GRAY),
-        GOLD(Blocks.GOLD_ORE, BlockTags.GOLD_ORES, ModRegistry.LOST_CANDLE_GOLD_SOUND_EVENT, ChatFormatting.GOLD),
-        COPPER(Blocks.COPPER_ORE, BlockTags.COPPER_ORES, ModRegistry.LOST_CANDLE_COPPER_SOUND_EVENT, ChatFormatting.GOLD),
-        COAL(Blocks.COAL_ORE, BlockTags.COAL_ORES, ModRegistry.LOST_CANDLE_COAL_SOUND_EVENT, ChatFormatting.GRAY);
+        DIAMOND(Blocks.DIAMOND_ORE, BlockTags.DIAMOND_ORES, ModSoundEvents.LOST_CANDLE_DIAMOND_SOUND_EVENT, ChatFormatting.AQUA),
+        IRON(Blocks.IRON_ORE, BlockTags.IRON_ORES, ModSoundEvents.LOST_CANDLE_IRON_SOUND_EVENT, ChatFormatting.GRAY),
+        GOLD(Blocks.GOLD_ORE, BlockTags.GOLD_ORES, ModSoundEvents.LOST_CANDLE_GOLD_SOUND_EVENT, ChatFormatting.GOLD),
+        COPPER(Blocks.COPPER_ORE, BlockTags.COPPER_ORES, ModSoundEvents.LOST_CANDLE_COPPER_SOUND_EVENT, ChatFormatting.GOLD),
+        COAL(Blocks.COAL_ORE, BlockTags.COAL_ORES, ModSoundEvents.LOST_CANDLE_COAL_SOUND_EVENT, ChatFormatting.GRAY);
 
         public final TagKey<Block> blocks;
         public final Holder<SoundEvent> soundEvent;

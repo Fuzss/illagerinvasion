@@ -1,6 +1,7 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -93,7 +94,7 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
 
     @Override
     public SoundEvent getCelebrateSound() {
-        return ModRegistry.PROVOKER_CELEBRATE_SOUND_EVENT.value();
+        return ModSoundEvents.PROVOKER_CELEBRATE_SOUND_EVENT.value();
     }
 
     @Override
@@ -124,17 +125,17 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.PROVOKER_AMBIENT_SOUND_EVENT.value();
+        return ModSoundEvents.PROVOKER_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.PROVOKER_DEATH_SOUND_EVENT.value();
+        return ModSoundEvents.PROVOKER_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModRegistry.PROVOKER_HURT_SOUND_EVENT.value();
+        return ModSoundEvents.PROVOKER_HURT_SOUND_EVENT.value();
     }
 
     @Override
@@ -226,7 +227,7 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return (IllagerSpell) ModRegistry.PROVOKE_ILLAGER_SPELL;
+            return ModRegistry.PROVOKE_ILLAGER_SPELL;
         }
     }
 }

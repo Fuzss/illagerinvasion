@@ -1,6 +1,8 @@
 package fuzs.illagerinvasion.world.inventory;
 
+import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModSoundEvents;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -56,7 +58,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
 
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(ModRegistry.HALLOWED_GEM_ITEM.value());
+                return stack.is(ModItems.HALLOWED_GEM_ITEM.value());
             }
         });
         this.addSlot(new Slot(this.output, 3, 80, 14) {
@@ -79,7 +81,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
                 stack.shrink(1);
                 ImbuingMenu.this.input.setItem(2, stack);
                 ImbuingMenu.this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
-                playerEntity.playSound(ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT.value(), 1.0f, 1.0f);
+                playerEntity.playSound(ModSoundEvents.SORCERER_COMPLETE_CAST_SOUND_EVENT.value(), 1.0f, 1.0f);
             }
         });
         for (int i = 0; i < 3; ++i) {

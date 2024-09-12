@@ -8,7 +8,6 @@ import fuzs.illagerinvasion.data.loot.ModChestLootProvider;
 import fuzs.illagerinvasion.data.loot.ModEntityInjectLootProvider;
 import fuzs.illagerinvasion.data.loot.ModEntityTypeLootProvider;
 import fuzs.illagerinvasion.data.tags.*;
-import fuzs.illagerinvasion.neoforge.init.NeoForgeModRegistry;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
 import net.neoforged.fml.common.Mod;
@@ -17,7 +16,6 @@ import net.neoforged.fml.common.Mod;
 public class IllagerInvasionNeoForge {
 
     public IllagerInvasionNeoForge() {
-        NeoForgeModRegistry.touch();
         ModConstructor.construct(IllagerInvasion.MOD_ID, IllagerInvasion::new);
         DataProviderHelper.registerDataProviders(IllagerInvasion.MOD_ID, ModBiomeTagProvider::new,
                 ModBlockTagProvider::new, ModEnchantmentTagProvider::new, ModEntityTypeTagProvider::new,

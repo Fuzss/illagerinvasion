@@ -1,6 +1,6 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.puzzleslib.api.init.v3.registry.LookupHelper;
 import fuzs.puzzleslib.api.item.v2.ToolTypeHelper;
 import net.minecraft.core.BlockPos;
@@ -154,7 +154,7 @@ public class Basher extends AbstractIllager {
 
     @Override
     public SoundEvent getCelebrateSound() {
-        return ModRegistry.BASHER_CELEBRATE_SOUND_EVENT.value();
+        return ModSoundEvents.BASHER_CELEBRATE_SOUND_EVENT.value();
     }
 
     @Override
@@ -220,17 +220,17 @@ public class Basher extends AbstractIllager {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.BASHER_AMBIENT_SOUND_EVENT.value();
+        return ModSoundEvents.BASHER_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.BASHER_DEATH_SOUND_EVENT.value();
+        return ModSoundEvents.BASHER_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModRegistry.BASHER_HURT_SOUND_EVENT.value();
+        return ModSoundEvents.BASHER_HURT_SOUND_EVENT.value();
     }
 
     @Override

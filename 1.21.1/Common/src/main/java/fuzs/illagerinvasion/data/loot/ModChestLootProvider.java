@@ -1,5 +1,6 @@
 package fuzs.illagerinvasion.data.loot;
 
+import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v2.AbstractLootProvider;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
@@ -190,7 +191,7 @@ public class ModChestLootProvider extends AbstractLootProvider.Simple {
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 3.0F)))))
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(ModRegistry.ILLUSIONARY_DUST_ITEM.value())
+                        .add(LootItem.lootTableItem(ModItems.ILLUSIONARY_DUST_ITEM.value())
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.GOLDEN_APPLE)
@@ -301,7 +302,7 @@ public class ModChestLootProvider extends AbstractLootProvider.Simple {
         this.add(ModRegistry.LABYRINTH_MAP_LOOT_TABLE, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(
                 ConstantValue.exactly(3.0F)).add(LootItem.lootTableItem(Items.COMPASS)).add(
                 LootItem.lootTableItem(Items.MAP)).add(LootItem.lootTableItem(Items.CLOCK)).add(
-                LootItem.lootTableItem(ModRegistry.LOST_CANDLE_ITEM.value())).add(LootItem.lootTableItem(Items.PAPER)
+                LootItem.lootTableItem(ModItems.LOST_CANDLE_ITEM.value())).add(LootItem.lootTableItem(Items.PAPER)
                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 10.0F)))
                 .setWeight(20)).add(LootItem.lootTableItem(Items.FEATHER)
                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F)))
@@ -329,7 +330,7 @@ public class ModChestLootProvider extends AbstractLootProvider.Simple {
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))))
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(ModRegistry.UNUSUAL_DUST_ITEM.value())
+                        .add(LootItem.lootTableItem(ModItems.UNUSUAL_DUST_ITEM.value())
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))))
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))

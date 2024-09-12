@@ -1,6 +1,7 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.world.entity.projectile.SkullBolt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -102,7 +103,7 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
 
     @Override
     public boolean canAttack(LivingEntity target) {
-        return target.getType().is(EntityTypeTags.UNDEAD) && super.canAttack(target);
+        return !target.getType().is(EntityTypeTags.UNDEAD) && super.canAttack(target);
     }
 
     public void doUndeadLinkLogic(final LivingEntity entity) {
@@ -181,8 +182,9 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
     public IllagerArmPose getArmPose() {
         if (this.isCastingSpell()) {
             return IllagerArmPose.SPELLCASTING;
+        } else {
+            return IllagerArmPose.CROSSED;
         }
-        return IllagerArmPose.CROSSED;
     }
 
     @Override
@@ -247,7 +249,7 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.NECROMANCER_SUMMON_SOUND_EVENT.value();
+            return ModSoundEvents.NECROMANCER_SUMMON_SOUND_EVENT.value();
         }
 
         @Override

@@ -1,6 +1,6 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -184,17 +184,17 @@ public class Surrendered extends Skeleton {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.SURRENDERED_AMBIENT_SOUND_EVENT.value();
+        return ModSoundEvents.SURRENDERED_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.SURRENDERED_DEATH_SOUND_EVENT.value();
+        return ModSoundEvents.SURRENDERED_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModRegistry.SURRENDERED_HURT_SOUND_EVENT.value();
+        return ModSoundEvents.SURRENDERED_HURT_SOUND_EVENT.value();
     }
 
     @Override
@@ -275,7 +275,7 @@ public class Surrendered extends Skeleton {
                 Surrendered.this.moveControl.setWantedPosition(vec3d.x, vec3d.y, vec3d.z, 1.0);
             }
             Surrendered.this.setCharging(true);
-            Surrendered.this.playSound(ModRegistry.SURRENDERED_CHARGE_SOUND_EVENT.value(), 1.0f, 1.0f);
+            Surrendered.this.playSound(ModSoundEvents.SURRENDERED_CHARGE_SOUND_EVENT.value(), 1.0f, 1.0f);
         }
 
         @Override

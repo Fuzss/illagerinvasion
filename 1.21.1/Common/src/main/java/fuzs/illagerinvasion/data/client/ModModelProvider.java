@@ -1,5 +1,6 @@
 package fuzs.illagerinvasion.data.client;
 
+import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.data.v2.AbstractModelProvider;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
@@ -28,28 +29,28 @@ public class ModModelProvider extends AbstractModelProvider {
 
     @Override
     public void addItemModels(ItemModelGenerators builder) {
-        builder.generateFlatItem(ModRegistry.HALLOWED_GEM_ITEM.value(), ModelTemplates.FLAT_ITEM);
-        builder.generateFlatItem(ModRegistry.ILLUSIONARY_DUST_ITEM.value(), ModelTemplates.FLAT_ITEM);
-        builder.generateFlatItem(ModRegistry.PLATINUM_CHUNK_ITEM.value(), ModelTemplates.FLAT_ITEM);
-        builder.generateFlatItem(ModRegistry.PLATINUM_SHEET_ITEM.value(), ModelTemplates.FLAT_ITEM);
-        builder.generateFlatItem(ModRegistry.PRIMAL_ESSENCE_ITEM.value(), ModelTemplates.FLAT_ITEM);
-        builder.generateFlatItem(ModRegistry.UNUSUAL_DUST_ITEM.value(), ModelTemplates.FLAT_ITEM);
-        builder.generateFlatItem(ModRegistry.LOST_CANDLE_ITEM.value(), ModelTemplates.FLAT_ITEM);
-        builder.generateFlatItem(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(ModRegistry.MAGICAL_FIRE_CHARGE_ITEM.value()), TextureMapping.layer0(
+        builder.generateFlatItem(ModItems.HALLOWED_GEM_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModItems.ILLUSIONARY_DUST_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModItems.PLATINUM_CHUNK_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModItems.PLATINUM_SHEET_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModItems.PRIMAL_ESSENCE_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModItems.UNUSUAL_DUST_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModItems.LOST_CANDLE_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        builder.generateFlatItem(ModItems.PLATINUM_INFUSED_HATCHET_ITEM.value(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(ModItems.MAGICAL_FIRE_CHARGE_ITEM.value()), TextureMapping.layer0(
                 ResourceLocationHelper.withDefaultNamespace("entity/enderdragon/dragon_fireball")), builder.output);
-        builder.generateFlatItem(ModRegistry.ALCHEMIST_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.ARCHIVIST_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.BASHER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.FIRECALLER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.INQUISITOR_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.MARAUDER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.INVOKER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.NECROMANCER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.PROVOKER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.SORCERER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.SURRENDERED_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        builder.generateFlatItem(ModRegistry.ILLUSIONER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
-        this.skipItem(ModRegistry.HORN_OF_SIGHT_ITEM.value());
+        builder.generateFlatItem(ModItems.ALCHEMIST_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.ARCHIVIST_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.BASHER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.FIRECALLER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.INQUISITOR_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.MARAUDER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.INVOKER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.NECROMANCER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.PROVOKER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.SORCERER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.SURRENDERED_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        builder.generateFlatItem(ModItems.ILLUSIONER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
+        this.skipItem(ModItems.HORN_OF_SIGHT_ITEM.value());
     }
 }

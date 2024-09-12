@@ -1,6 +1,7 @@
 package fuzs.illagerinvasion.world.entity.projectile;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModEntityTypes;
+import fuzs.illagerinvasion.init.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -32,12 +33,12 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
     }
 
     public Hatchet(Level level, LivingEntity shooter, ItemStack pickupItemStack) {
-        super(ModRegistry.HATCHET_ENTITY_TYPE.value(), shooter, level, pickupItemStack, null);
+        super(ModEntityTypes.HATCHET_ENTITY_TYPE.value(), shooter, level, pickupItemStack, null);
         this.entityData.set(DATA_ENCHANTED, pickupItemStack.hasFoil());
     }
 
     public Hatchet(Level level, double x, double y, double z, ItemStack pickupItemStack) {
-        super(ModRegistry.HATCHET_ENTITY_TYPE.value(), x, y, z, level, pickupItemStack, pickupItemStack);
+        super(ModEntityTypes.HATCHET_ENTITY_TYPE.value(), x, y, z, level, pickupItemStack, pickupItemStack);
         this.entityData.set(DATA_ENCHANTED, pickupItemStack.hasFoil());
     }
 
@@ -49,7 +50,7 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
 
     @Override
     protected ItemStack getDefaultPickupItem() {
-        return new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value());
+        return new ItemStack(ModItems.PLATINUM_INFUSED_HATCHET_ITEM.value());
     }
 
     @Override

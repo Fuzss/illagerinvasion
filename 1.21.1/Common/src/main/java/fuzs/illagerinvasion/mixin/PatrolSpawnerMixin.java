@@ -1,6 +1,6 @@
 package fuzs.illagerinvasion.mixin;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -15,6 +15,6 @@ abstract class PatrolSpawnerMixin {
 
     @ModifyVariable(method = "spawnPatrolMember", at = @At("STORE"), ordinal = 0)
     private PatrollingMonster spawnPatrolMember(PatrollingMonster patrollingMonster, ServerLevel level, BlockPos pos, RandomSource random, boolean leader) {
-        return random.nextInt(2) == 0 ? ModRegistry.MARAUDER_ENTITY_TYPE.value().create(level) : patrollingMonster;
+        return random.nextInt(2) == 0 ? ModEntityTypes.MARAUDER_ENTITY_TYPE.value().create(level) : patrollingMonster;
     }
 }

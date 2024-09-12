@@ -1,6 +1,6 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.puzzleslib.api.init.v3.registry.LookupHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -31,7 +31,6 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
@@ -52,15 +51,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.WebBlock;
-import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.PathType;
-import net.minecraft.world.level.pathfinder.PathfindingContext;
-import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Set;
 
 public class Inquisitor extends AbstractIllager {
     private static final EntityDataAccessor<Boolean> STUNNED = SynchedEntityData.defineId(Inquisitor.class, EntityDataSerializers.BOOLEAN);
@@ -182,11 +177,6 @@ public class Inquisitor extends AbstractIllager {
     }
 
     @Override
-    protected PathNavigation createNavigation(Level world) {
-        return new Navigation(this, world);
-    }
-
-    @Override
     public void tick() {
         super.tick();
         if (!this.isAlive()) {
@@ -281,17 +271,17 @@ public class Inquisitor extends AbstractIllager {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.ILLAGER_BRUTE_AMBIENT_SOUND_EVENT.value();
+        return ModSoundEvents.ILLAGER_BRUTE_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.ILLAGER_BRUTE_DEATH_SOUND_EVENT.value();
+        return ModSoundEvents.ILLAGER_BRUTE_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(final DamageSource source) {
-        return ModRegistry.ILLAGER_BRUTE_HURT_SOUND_EVENT.value();
+        return ModSoundEvents.ILLAGER_BRUTE_HURT_SOUND_EVENT.value();
     }
 
     @Override
@@ -306,29 +296,5 @@ public class Inquisitor extends AbstractIllager {
         }
         this.setItemSlot(EquipmentSlot.MAINHAND, mainHandItem);
         this.setItemSlot(EquipmentSlot.OFFHAND, offHandItem);
-    }
-
-    static class NodeEvaluator extends WalkNodeEvaluator {
-        @Override
-        public Set<PathType> getPathTypeWithinMobBB(PathfindingContext context, int x, int y, int z) {
-            Set<PathType> set = super.getPathTypeWithinMobBB(context, x, y, z);
-            if (set.remove(PathType.LEAVES)) {
-                set.add(PathType.OPEN);
-            }
-            return set;
-        }
-    }
-
-    static class Navigation extends GroundPathNavigation {
-
-        public Navigation(final Mob mobEntity, final Level world) {
-            super(mobEntity, world);
-        }
-
-        @Override
-        protected PathFinder createPathFinder(final int range) {
-            this.nodeEvaluator = new NodeEvaluator();
-            return new PathFinder(this.nodeEvaluator, range);
-        }
     }
 }

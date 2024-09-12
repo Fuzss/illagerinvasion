@@ -1,6 +1,7 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.util.EnchantToolUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -58,7 +59,7 @@ public class Archivist extends SpellcasterIllager {
 
     @Override
     public SoundEvent getCelebrateSound() {
-        return ModRegistry.ARCHIVIST_AMBIENT_SOUND_EVENT.value();
+        return ModSoundEvents.ARCHIVIST_AMBIENT_SOUND_EVENT.value();
     }
 
 
@@ -91,17 +92,17 @@ public class Archivist extends SpellcasterIllager {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.ARCHIVIST_AMBIENT_SOUND_EVENT.value();
+        return ModSoundEvents.ARCHIVIST_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.ARCHIVIST_DEATH_SOUND_EVENT.value();
+        return ModSoundEvents.ARCHIVIST_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModRegistry.ARCHIVIST_HURT_SOUND_EVENT.value();
+        return ModSoundEvents.ARCHIVIST_HURT_SOUND_EVENT.value();
     }
 
     @Nullable AbstractIllager getEnchantTarget() {
@@ -114,7 +115,7 @@ public class Archivist extends SpellcasterIllager {
 
     @Override
     protected SoundEvent getCastingSoundEvent() {
-        return ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT.value();
+        return ModSoundEvents.SORCERER_COMPLETE_CAST_SOUND_EVENT.value();
     }
 
     @Override
@@ -281,7 +282,7 @@ public class Archivist extends SpellcasterIllager {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.SORCERER_CAST_SOUND_EVENT.value();
+            return ModSoundEvents.SORCERER_CAST_SOUND_EVENT.value();
         }
 
         @Override

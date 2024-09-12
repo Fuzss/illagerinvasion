@@ -6,3 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v21.1.0-1.21.1] - 2024-09-12
 - Port to Minecraft 1.21.1
+### Changed
+- Update primal essence texture thanks to Rosie from the Lunapixel Studios Discord
+### Fixed
+- Fix magic fire unable to burn up after some time
+- Fix `Illusioner::onSyncedDataUpdated` not calling super method

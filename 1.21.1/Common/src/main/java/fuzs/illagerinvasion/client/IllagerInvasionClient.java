@@ -6,6 +6,8 @@ import fuzs.illagerinvasion.client.handler.EnchantmentTooltipHandler;
 import fuzs.illagerinvasion.client.init.ClientModRegistry;
 import fuzs.illagerinvasion.client.model.*;
 import fuzs.illagerinvasion.client.render.entity.*;
+import fuzs.illagerinvasion.init.ModEntityTypes;
+import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.*;
@@ -38,21 +40,21 @@ public class IllagerInvasionClient implements ClientModConstructor {
 
     @Override
     public void onRegisterEntityRenderers(EntityRenderersContext context) {
-        context.registerEntityRenderer(ModRegistry.PROVOKER_ENTITY_TYPE.value(), ProvokerRender::new);
-        context.registerEntityRenderer(ModRegistry.INVOKER_ENTITY_TYPE.value(), InvokerRender::new);
-        context.registerEntityRenderer(ModRegistry.SURRENDERED_ENTITY_TYPE.value(), SurrenderedRender::new);
-        context.registerEntityRenderer(ModRegistry.NECROMANCER_ENTITY_TYPE.value(), NecromancerRender::new);
-        context.registerEntityRenderer(ModRegistry.SKULL_BOLT_ENTITY_TYPE.value(), SkullBoltRender::new);
-        context.registerEntityRenderer(ModRegistry.BASHER_ENTITY_TYPE.value(), BasherRender::new);
-        context.registerEntityRenderer(ModRegistry.SORCERER_ENTITY_TYPE.value(), SorcererRender::new);
-        context.registerEntityRenderer(ModRegistry.ARCHIVIST_ENTITY_TYPE.value(), ArchivistRender::new);
-        context.registerEntityRenderer(ModRegistry.INQUISITOR_ENTITY_TYPE.value(), InquisitorRender::new);
-        context.registerEntityRenderer(ModRegistry.MARAUDER_ENTITY_TYPE.value(), MarauderRender::new);
-        context.registerEntityRenderer(ModRegistry.ALCHEMIST_ENTITY_TYPE.value(), AlchemistRender::new);
-        context.registerEntityRenderer(ModRegistry.FIRECALLER_ENTITY_TYPE.value(), FirecallerRender::new);
-        context.registerEntityRenderer(ModRegistry.INVOKER_FANGS_ENTITY_TYPE.value(), InvokerFangsRenderer::new);
-        context.registerEntityRenderer(ModRegistry.HATCHET_ENTITY_TYPE.value(), HatchetRender::new);
-        context.registerEntityRenderer(ModRegistry.FLYING_MAGMA_ENTITY_TYPE.value(), MagmaEntityRender::new);
+        context.registerEntityRenderer(ModEntityTypes.PROVOKER_ENTITY_TYPE.value(), ProvokerRender::new);
+        context.registerEntityRenderer(ModEntityTypes.INVOKER_ENTITY_TYPE.value(), InvokerRender::new);
+        context.registerEntityRenderer(ModEntityTypes.SURRENDERED_ENTITY_TYPE.value(), SurrenderedRender::new);
+        context.registerEntityRenderer(ModEntityTypes.NECROMANCER_ENTITY_TYPE.value(), NecromancerRender::new);
+        context.registerEntityRenderer(ModEntityTypes.SKULL_BOLT_ENTITY_TYPE.value(), SkullBoltRender::new);
+        context.registerEntityRenderer(ModEntityTypes.BASHER_ENTITY_TYPE.value(), BasherRender::new);
+        context.registerEntityRenderer(ModEntityTypes.SORCERER_ENTITY_TYPE.value(), SorcererRender::new);
+        context.registerEntityRenderer(ModEntityTypes.ARCHIVIST_ENTITY_TYPE.value(), ArchivistRender::new);
+        context.registerEntityRenderer(ModEntityTypes.INQUISITOR_ENTITY_TYPE.value(), InquisitorRender::new);
+        context.registerEntityRenderer(ModEntityTypes.MARAUDER_ENTITY_TYPE.value(), MarauderRender::new);
+        context.registerEntityRenderer(ModEntityTypes.ALCHEMIST_ENTITY_TYPE.value(), AlchemistRender::new);
+        context.registerEntityRenderer(ModEntityTypes.FIRECALLER_ENTITY_TYPE.value(), FirecallerRender::new);
+        context.registerEntityRenderer(ModEntityTypes.INVOKER_FANGS_ENTITY_TYPE.value(), InvokerFangsRenderer::new);
+        context.registerEntityRenderer(ModEntityTypes.HATCHET_ENTITY_TYPE.value(), HatchetRender::new);
+        context.registerEntityRenderer(ModEntityTypes.FLYING_MAGMA_ENTITY_TYPE.value(), MagmaEntityRender::new);
     }
 
     @Override
@@ -82,6 +84,6 @@ public class IllagerInvasionClient implements ClientModConstructor {
     public void onRegisterItemModelProperties(ItemModelPropertiesContext context) {
         context.registerItemProperty(IllagerInvasion.id("tooting"), (ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) -> {
             return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F;
-        }, ModRegistry.HORN_OF_SIGHT_ITEM.value());
+        }, ModItems.HORN_OF_SIGHT_ITEM.value());
     }
 }

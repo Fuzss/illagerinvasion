@@ -1,6 +1,6 @@
 package fuzs.illagerinvasion.world.item;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.world.entity.projectile.Hatchet;
 import fuzs.puzzleslib.api.item.v2.ItemHelper;
 import net.minecraft.core.BlockPos;
@@ -99,7 +99,7 @@ public class HatchetItem extends Item implements ProjectileItem {
 
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
-        return ingredient.is(ModRegistry.PLATINUM_SHEET_ITEM.value()) || super.isValidRepairItem(stack, ingredient);
+        return ingredient.is(ModItems.PLATINUM_SHEET_ITEM.value()) || super.isValidRepairItem(stack, ingredient);
     }
 
     @Override

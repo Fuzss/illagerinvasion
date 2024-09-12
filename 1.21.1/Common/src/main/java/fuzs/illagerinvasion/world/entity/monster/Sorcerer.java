@@ -1,6 +1,7 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.util.SetMagicFireUtil;
 import fuzs.illagerinvasion.util.TeleportUtil;
 import net.minecraft.core.particles.ParticleTypes;
@@ -57,7 +58,7 @@ public class Sorcerer extends SpellcasterIllager {
 
     @Override
     public SoundEvent getCelebrateSound() {
-        return ModRegistry.SORCERER_CELEBRATE_SOUND_EVENT.value();
+        return ModSoundEvents.SORCERER_CELEBRATE_SOUND_EVENT.value();
     }
 
     @Override
@@ -89,22 +90,22 @@ public class Sorcerer extends SpellcasterIllager {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModRegistry.SORCERER_AMBIENT_SOUND_EVENT.value();
+        return ModSoundEvents.SORCERER_AMBIENT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return ModRegistry.SORCERER_DEATH_SOUND_EVENT.value();
+        return ModSoundEvents.SORCERER_DEATH_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModRegistry.SORCERER_HURT_SOUND_EVENT.value();
+        return ModSoundEvents.SORCERER_HURT_SOUND_EVENT.value();
     }
 
     @Override
     protected SoundEvent getCastingSoundEvent() {
-        return ModRegistry.SORCERER_COMPLETE_CAST_SOUND_EVENT.value();
+        return ModSoundEvents.SORCERER_COMPLETE_CAST_SOUND_EVENT.value();
     }
 
     @Override
@@ -182,12 +183,12 @@ public class Sorcerer extends SpellcasterIllager {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.SORCERER_CAST_SOUND_EVENT.value();
+            return ModSoundEvents.SORCERER_CAST_SOUND_EVENT.value();
         }
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return (IllagerSpell) ModRegistry.CONJURE_TELEPORT_ILLAGER_SPELL;
+            return ModRegistry.CONJURE_TELEPORT_ILLAGER_SPELL;
         }
     }
 
@@ -201,10 +202,7 @@ public class Sorcerer extends SpellcasterIllager {
             if (Sorcerer.this.isCastingSpell()) {
                 return false;
             }
-            if (Sorcerer.this.conjureFlamesCooldown < 0) {
-                return true;
-            }
-            return false;
+            return Sorcerer.this.conjureFlamesCooldown < 0;
         }
 
         @Override
@@ -235,12 +233,12 @@ public class Sorcerer extends SpellcasterIllager {
 
         @Override
         protected SoundEvent getSpellPrepareSound() {
-            return ModRegistry.SORCERER_CAST_SOUND_EVENT.value();
+            return ModSoundEvents.SORCERER_CAST_SOUND_EVENT.value();
         }
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return (IllagerSpell) ModRegistry.CONJURE_FLAMES_ILLAGER_SPELL;
+            return ModRegistry.CONJURE_FLAMES_ILLAGER_SPELL;
         }
     }
 }

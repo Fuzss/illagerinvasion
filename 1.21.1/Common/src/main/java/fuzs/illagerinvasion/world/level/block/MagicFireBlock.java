@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.AbstractIllager;
@@ -25,9 +26,9 @@ public class MagicFireBlock extends BaseFireBlock {
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (!(entity instanceof AbstractIllager || entity instanceof Ravager)) {
+        if (!entity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
             entity.hurt(level.damageSources().inFire(), 3.0F);
-            entity.igniteForSeconds(0);
+            entity.igniteForTicks(0);
         }
     }
 
@@ -53,9 +54,20 @@ public class MagicFireBlock extends BaseFireBlock {
 
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        level.scheduleTick(pos, this, getFireTickDelay(level.random));
         if (level.getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
             level.removeBlock(pos, false);
         }
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        super.onPlace(state, level, pos, oldState, movedByPiston);
+        level.scheduleTick(pos, this, getFireTickDelay(level.random));
+    }
+
+    private static int getFireTickDelay(RandomSource random) {
+        return 300 + random.nextInt(100);
     }
 }
 

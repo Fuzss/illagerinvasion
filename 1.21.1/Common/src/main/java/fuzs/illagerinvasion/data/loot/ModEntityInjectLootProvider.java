@@ -1,5 +1,6 @@
 package fuzs.illagerinvasion.data.loot;
 
+import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v2.AbstractLootProvider;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
@@ -42,7 +43,7 @@ public class ModEntityInjectLootProvider extends AbstractLootProvider.Simple {
                 ).withPool(
                         LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1.0F))
-                                .add(LootItem.lootTableItem(ModRegistry.ILLUSIONARY_DUST_ITEM.value()))
+                                .add(LootItem.lootTableItem(ModItems.ILLUSIONARY_DUST_ITEM.value()))
                                 .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries(), 0.4F, 0.2F))
                                 .when(LootItemKilledByPlayerCondition.killedByPlayer())
                 )
@@ -51,7 +52,7 @@ public class ModEntityInjectLootProvider extends AbstractLootProvider.Simple {
                 .withPool(
                         LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1.0F))
-                                .add(LootItem.lootTableItem(ModRegistry.PLATINUM_CHUNK_ITEM.value())
+                                .add(LootItem.lootTableItem(ModItems.PLATINUM_CHUNK_ITEM.value())
                                         .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries(), 0.5F, 0.0625F))
                                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
                                 )
@@ -69,7 +70,7 @@ public class ModEntityInjectLootProvider extends AbstractLootProvider.Simple {
                 .withPool(
                         LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1.0F))
-                                .add(LootItem.lootTableItem(ModRegistry.PLATINUM_CHUNK_ITEM.value())
+                                .add(LootItem.lootTableItem(ModItems.PLATINUM_CHUNK_ITEM.value())
                                         .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries(), 0.5F, 0.0625F))
                                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
                                 )

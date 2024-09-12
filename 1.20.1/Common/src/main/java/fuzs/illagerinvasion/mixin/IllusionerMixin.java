@@ -55,6 +55,7 @@ abstract class IllusionerMixin extends SpellcasterIllager implements CrossbowAtt
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        super.onSyncedDataUpdated(key);
         if (this.level().isClientSide && DATA_SHARED_FLAGS_ID.equals(key) && this.isInvisible()) {
             this.clientSideIllusionTicks = 3;
 
@@ -87,7 +88,7 @@ abstract class IllusionerMixin extends SpellcasterIllager implements CrossbowAtt
 
     @Override
     public void setChargingCrossbow(boolean chargingCrossbow) {
-
+        // NO-OP
     }
 
     @Override
@@ -97,7 +98,7 @@ abstract class IllusionerMixin extends SpellcasterIllager implements CrossbowAtt
 
     @Override
     public void onCrossbowAttackPerformed() {
-
+        // NO-OP
     }
 
     @Inject(method = "performRangedAttack", at = @At("HEAD"), cancellable = true)

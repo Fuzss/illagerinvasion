@@ -1,6 +1,6 @@
 package fuzs.illagerinvasion.world.entity.ai.goal;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.world.entity.monster.Marauder;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -28,7 +28,7 @@ public class HatchetAttackGoal extends RangedAttackGoal {
 
     @Override
     public boolean canUse() {
-        return super.canUse() && this.hostile.getMainHandItem().is(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value());
+        return super.canUse() && this.hostile.getMainHandItem().is(ModItems.PLATINUM_INFUSED_HATCHET_ITEM.value());
     }
 
     @Override

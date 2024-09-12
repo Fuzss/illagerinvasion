@@ -1,6 +1,6 @@
 package fuzs.illagerinvasion.world.entity.projectile;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModEntityTypes;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
@@ -22,7 +22,7 @@ public class SkullBolt extends AbstractHurtingProjectile {
     }
 
     public SkullBolt(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
-        super(ModRegistry.SKULL_BOLT_ENTITY_TYPE.value(), owner, new Vec3(directionX, directionY, directionZ), level);
+        super(ModEntityTypes.SKULL_BOLT_ENTITY_TYPE.value(), owner, new Vec3(directionX, directionY, directionZ), level);
     }
 
     @Override

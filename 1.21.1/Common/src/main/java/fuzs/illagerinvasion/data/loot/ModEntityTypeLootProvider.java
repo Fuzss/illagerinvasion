@@ -1,6 +1,7 @@
 package fuzs.illagerinvasion.data.loot;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModEntityTypes;
+import fuzs.illagerinvasion.init.ModItems;
 import fuzs.puzzleslib.api.data.v2.AbstractLootProvider;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
 import net.minecraft.world.item.Items;
@@ -23,7 +24,7 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
 
     @Override
     public void addLootTables() {
-        this.add(ModRegistry.ALCHEMIST_ENTITY_TYPE.value(), LootTable.lootTable()
+        this.add(ModEntityTypes.ALCHEMIST_ENTITY_TYPE.value(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.EMERALD)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -43,7 +44,7 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries(),
                                 UniformGenerator.between(0.0F, 1.0F)
                         )))));
-        this.add(ModRegistry.ARCHIVIST_ENTITY_TYPE.value(), LootTable.lootTable()
+        this.add(ModEntityTypes.ARCHIVIST_ENTITY_TYPE.value(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.EMERALD)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -63,7 +64,7 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries(),
                                 UniformGenerator.between(0.0F, 1.0F)
                         )))));
-        this.add(ModRegistry.BASHER_ENTITY_TYPE.value(), LootTable.lootTable()
+        this.add(ModEntityTypes.BASHER_ENTITY_TYPE.value(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.EMERALD)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -77,7 +78,7 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries(),
                                 UniformGenerator.between(0.0F, 2.0F)
                         )))));
-        this.add(ModRegistry.FIRECALLER_ENTITY_TYPE.value(), LootTable.lootTable()
+        this.add(ModEntityTypes.FIRECALLER_ENTITY_TYPE.value(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.EMERALD)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -91,7 +92,7 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries(),
                                 UniformGenerator.between(0.0F, 1.0F)
                         )))));
-        this.add(ModRegistry.INQUISITOR_ENTITY_TYPE.value(), LootTable.lootTable()
+        this.add(ModEntityTypes.INQUISITOR_ENTITY_TYPE.value(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.EMERALD)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -112,11 +113,11 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                                 UniformGenerator.between(0.0F, 2.0F)
                         ))))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
-                                ModRegistry.PLATINUM_CHUNK_ITEM.value())
+                                ModItems.PLATINUM_CHUNK_ITEM.value())
                         .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(
                                 this.registries(), 0.5F, 0.0625F))
                         .when(LootItemKilledByPlayerCondition.killedByPlayer()))));
-        this.add(ModRegistry.INVOKER_ENTITY_TYPE.value(), LootTable.lootTable()
+        this.add(ModEntityTypes.INVOKER_ENTITY_TYPE.value(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.EMERALD)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 5.0F)))
@@ -125,10 +126,10 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                         ))
                         .when(LootItemKilledByPlayerCondition.killedByPlayer())))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
-                                ModRegistry.PRIMAL_ESSENCE_ITEM.value())
+                                ModItems.PRIMAL_ESSENCE_ITEM.value())
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
                         .when(LootItemKilledByPlayerCondition.killedByPlayer()))));
-        this.add(ModRegistry.MARAUDER_ENTITY_TYPE.value(), LootTable.lootTable()
+        this.add(ModEntityTypes.MARAUDER_ENTITY_TYPE.value(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.EMERALD)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -136,7 +137,7 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                                 UniformGenerator.between(0.0F, 1.0F)
                         ))
                         .when(LootItemKilledByPlayerCondition.killedByPlayer()))));
-        this.add(ModRegistry.NECROMANCER_ENTITY_TYPE.value(), LootTable.lootTable()
+        this.add(ModEntityTypes.NECROMANCER_ENTITY_TYPE.value(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.EMERALD)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -154,7 +155,7 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
                         .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(
                                 this.registries(), 0.025F, 0.01F)))));
-        this.add(ModRegistry.PROVOKER_ENTITY_TYPE.value(), LootTable.lootTable()
+        this.add(ModEntityTypes.PROVOKER_ENTITY_TYPE.value(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.EMERALD)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -168,7 +169,7 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                         .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries(),
                                 UniformGenerator.between(0.0F, 1.0F)
                         )))));
-        this.add(ModRegistry.SORCERER_ENTITY_TYPE.value(), LootTable.lootTable()
+        this.add(ModEntityTypes.SORCERER_ENTITY_TYPE.value(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
                                 Items.EMERALD)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
@@ -183,10 +184,10 @@ public class ModEntityTypeLootProvider extends AbstractLootProvider.EntityTypes 
                                 UniformGenerator.between(0.0F, 1.0F)
                         ))))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(
-                                ModRegistry.UNUSUAL_DUST_ITEM.value())
+                                ModItems.UNUSUAL_DUST_ITEM.value())
                         .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(
                                 this.registries(), 0.4F, 0.2F))
                         .when(LootItemKilledByPlayerCondition.killedByPlayer()))));
-        this.add(ModRegistry.SURRENDERED_ENTITY_TYPE.value(), LootTable.lootTable());
+        this.add(ModEntityTypes.SURRENDERED_ENTITY_TYPE.value(), LootTable.lootTable());
     }
 }
