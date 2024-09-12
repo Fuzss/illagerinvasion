@@ -1,0 +1,317 @@
+{
+  "entity.archivist.ambient": {
+    "sounds": [
+      "illagerinvasion:mob/archivist/idle1",
+      "illagerinvasion:mob/archivist/idle2",
+      "illagerinvasion:mob/archivist/idle3"
+    ],
+    "subtitle": "subtitles.entity.archivist.ambient"
+  },
+  "entity.archivist.death": {
+    "sounds": [
+      "illagerinvasion:mob/archivist/death1",
+      "illagerinvasion:mob/archivist/death2",
+      "illagerinvasion:mob/archivist/death3"
+    ],
+    "subtitle": "subtitles.entity.archivist.death"
+  },
+  "entity.archivist.hurt": {
+    "sounds": [
+      "illagerinvasion:mob/archivist/hurt1",
+      "illagerinvasion:mob/archivist/hurt2",
+      "illagerinvasion:mob/archivist/hurt3"
+    ],
+    "subtitle": "subtitles.entity.archivist.hurt"
+  },
+  "entity.basher.celebrate": {
+    "sounds": [
+      "illagerinvasion:mob/basher/celebrate"
+    ],
+    "subtitle": "subtitles.entity.basher.celebrate"
+  },
+  "entity.basher.death": {
+    "sounds": [
+      "illagerinvasion:mob/basher/death"
+    ],
+    "subtitle": "subtitles.entity.basher.death"
+  },
+  "entity.basher.hurt": {
+    "sounds": [
+      "illagerinvasion:mob/basher/hurt1",
+      "illagerinvasion:mob/basher/hurt2",
+      "illagerinvasion:mob/basher/hurt3"
+    ],
+    "subtitle": "subtitles.entity.basher.hurt"
+  },
+  "entity.basher.idle": {
+    "sounds": [
+      "illagerinvasion:mob/basher/idle1",
+      "illagerinvasion:mob/basher/idle2",
+      "illagerinvasion:mob/basher/idle3"
+    ],
+    "subtitle": "subtitles.entity.basher.idle"
+  },
+  "entity.firecaller.cast": {
+    "sounds": [
+      "illagerinvasion:mob/firecaller/cast"
+    ],
+    "subtitle": "subtitles.entity.firecaller.cast"
+  },
+  "entity.firecaller.death": {
+    "sounds": [
+      "illagerinvasion:mob/firecaller/death1",
+      "illagerinvasion:mob/firecaller/death2"
+    ],
+    "subtitle": "subtitles.entity.firecaller.death"
+  },
+  "entity.firecaller.hurt": {
+    "sounds": [
+      "illagerinvasion:mob/firecaller/hurt1",
+      "illagerinvasion:mob/firecaller/hurt2",
+      "illagerinvasion:mob/firecaller/hurt3"
+    ],
+    "subtitle": "subtitles.entity.firecaller.hurt"
+  },
+  "entity.firecaller.idle": {
+    "sounds": [
+      "illagerinvasion:mob/firecaller/idle1",
+      "illagerinvasion:mob/firecaller/idle2",
+      "illagerinvasion:mob/firecaller/idle3",
+      "illagerinvasion:mob/firecaller/idle4"
+    ],
+    "subtitle": "subtitles.entity.firecaller.idle"
+  },
+  "entity.illager_brute.ambient": {
+    "sounds": [
+      "illagerinvasion:mob/illager_brute/idle1",
+      "illagerinvasion:mob/illager_brute/idle2",
+      "illagerinvasion:mob/illager_brute/idle3",
+      "illagerinvasion:mob/illager_brute/idle4",
+      "illagerinvasion:mob/illager_brute/idle5"
+    ],
+    "subtitle": "subtitles.entity.illager_brute.ambient"
+  },
+  "entity.illager_brute.death": {
+    "sounds": [
+      "illagerinvasion:mob/illager_brute/death1"
+    ],
+    "subtitle": "subtitles.entity.illager_brute.death"
+  },
+  "entity.illager_brute.hurt": {
+    "sounds": [
+      "illagerinvasion:mob/illager_brute/hurt1",
+      "illagerinvasion:mob/illager_brute/hurt2",
+      "illagerinvasion:mob/illager_brute/hurt3"
+    ],
+    "subtitle": "subtitles.entity.illager_brute.hurt"
+  },
+  "entity.invoker.ambient": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/idle1",
+      "illagerinvasion:mob/invoker/idle2",
+      "illagerinvasion:mob/invoker/idle3",
+      "illagerinvasion:mob/invoker/idle4"
+    ],
+    "subtitle": "subtitles.entity.invoker.ambient"
+  },
+  "entity.invoker.big_cast": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/big_cast"
+    ],
+    "subtitle": "subtitles.entity.invoker.big_cast"
+  },
+  "entity.invoker.completecast": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/completecast"
+    ],
+    "subtitle": "subtitles.entity.invoker.completecast"
+  },
+  "entity.invoker.death": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/death"
+    ],
+    "subtitle": "subtitles.entity.invoker.death"
+  },
+  "entity.invoker.fangs": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/fangs"
+    ],
+    "subtitle": "subtitles.entity.invoker.fangs"
+  },
+  "entity.invoker.fangs_cast": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/fangs_cast"
+    ],
+    "subtitle": "subtitles.entity.invoker.fangs_cast"
+  },
+  "entity.invoker.hurt": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/hurt1",
+      "illagerinvasion:mob/invoker/hurt2"
+    ],
+    "subtitle": "subtitles.entity.invoker.hurt"
+  },
+  "entity.invoker.shield_break": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/shield_break"
+    ],
+    "subtitle": "subtitles.entity.invoker.shield_break"
+  },
+  "entity.invoker.shield_create": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/shield_create"
+    ],
+    "subtitle": "subtitles.entity.invoker.shield_create"
+  },
+  "entity.invoker.summon_cast": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/summon_cast"
+    ],
+    "subtitle": "subtitles.entity.invoker.summon_cast"
+  },
+  "entity.invoker.teleport_cast": {
+    "sounds": [
+      "illagerinvasion:mob/invoker/teleport_cast"
+    ],
+    "subtitle": "subtitles.entity.invoker.teleport_cast"
+  },
+  "entity.necromancer.summon": {
+    "sounds": [
+      "illagerinvasion:mob/necromancer/necroraise"
+    ],
+    "subtitle": "subtitles.entity.necromancer.summon"
+  },
+  "entity.provoker.celebrate": {
+    "sounds": [
+      "illagerinvasion:mob/provoker/celebrate"
+    ],
+    "subtitle": "subtitles.entity.provoker.celebrate"
+  },
+  "entity.provoker.death": {
+    "sounds": [
+      "illagerinvasion:mob/provoker/death"
+    ],
+    "subtitle": "subtitles.entity.provoker.death"
+  },
+  "entity.provoker.hurt": {
+    "sounds": [
+      "illagerinvasion:mob/provoker/hurt1",
+      "illagerinvasion:mob/provoker/hurt2",
+      "illagerinvasion:mob/provoker/hurt3"
+    ],
+    "subtitle": "subtitles.entity.provoker.hurt"
+  },
+  "entity.provoker.idle": {
+    "sounds": [
+      "illagerinvasion:mob/provoker/idle1",
+      "illagerinvasion:mob/provoker/idle2",
+      "illagerinvasion:mob/provoker/idle3"
+    ],
+    "subtitle": "subtitles.entity.provoker.idle"
+  },
+  "entity.sorcerer.cast": {
+    "sounds": [
+      "illagerinvasion:mob/sorcerer/cast"
+    ],
+    "subtitle": "subtitles.entity.sorcerer.cast"
+  },
+  "entity.sorcerer.celebrate": {
+    "sounds": [
+      "illagerinvasion:mob/sorcerer/celebrate"
+    ],
+    "subtitle": "subtitles.entity.sorcerer.celebrate"
+  },
+  "entity.sorcerer.complete_cast": {
+    "sounds": [
+      "illagerinvasion:mob/sorcerer/completecast"
+    ],
+    "subtitle": "subtitles.entity.sorcerer.complete_cast"
+  },
+  "entity.sorcerer.death": {
+    "sounds": [
+      "illagerinvasion:mob/sorcerer/death1"
+    ],
+    "subtitle": "subtitles.entity.sorcerer.death"
+  },
+  "entity.sorcerer.hurt": {
+    "sounds": [
+      "illagerinvasion:mob/sorcerer/hurt1",
+      "illagerinvasion:mob/sorcerer/hurt2",
+      "illagerinvasion:mob/sorcerer/hurt3"
+    ],
+    "subtitle": "subtitles.entity.sorcerer.hurt"
+  },
+  "entity.sorcerer.idle": {
+    "sounds": [
+      "illagerinvasion:mob/sorcerer/idle1",
+      "illagerinvasion:mob/sorcerer/idle2",
+      "illagerinvasion:mob/sorcerer/idle3",
+      "illagerinvasion:mob/sorcerer/idle4"
+    ],
+    "subtitle": "subtitles.entity.sorcerer.idle"
+  },
+  "entity.surrendered.ambient": {
+    "sounds": [
+      "illagerinvasion:mob/surrendered/ambient1",
+      "illagerinvasion:mob/surrendered/ambient2",
+      "illagerinvasion:mob/surrendered/ambient3"
+    ],
+    "subtitle": "subtitles.entity.surrendered.ambient"
+  },
+  "entity.surrendered.charge": {
+    "sounds": [
+      "illagerinvasion:mob/surrendered/charge"
+    ],
+    "subtitle": "subtitles.entity.surrendered.charge"
+  },
+  "entity.surrendered.death": {
+    "sounds": [
+      "illagerinvasion:mob/surrendered/death"
+    ],
+    "subtitle": "subtitles.entity.surrendered.death"
+  },
+  "entity.surrendered.hurt": {
+    "sounds": [
+      "illagerinvasion:mob/surrendered/hurt1",
+      "illagerinvasion:mob/surrendered/hurt2",
+      "illagerinvasion:mob/surrendered/hurt3"
+    ],
+    "subtitle": "subtitles.entity.surrendered.hurt"
+  },
+  "item.horn_of_sight.blow": {
+    "sounds": [
+      "illagerinvasion:item/horn_of_sight/blow"
+    ],
+    "subtitle": "subtitles.item.horn_of_sight.blow"
+  },
+  "item.lost_candle.coal": {
+    "sounds": [
+      "illagerinvasion:item/lost_candle/coal"
+    ],
+    "subtitle": "subtitles.item.lost_candle.coal"
+  },
+  "item.lost_candle.copper": {
+    "sounds": [
+      "illagerinvasion:item/lost_candle/copper"
+    ],
+    "subtitle": "subtitles.item.lost_candle.copper"
+  },
+  "item.lost_candle.diamond": {
+    "sounds": [
+      "illagerinvasion:item/lost_candle/diamond"
+    ],
+    "subtitle": "subtitles.item.lost_candle.diamond"
+  },
+  "item.lost_candle.gold": {
+    "sounds": [
+      "illagerinvasion:item/lost_candle/gold"
+    ],
+    "subtitle": "subtitles.item.lost_candle.gold"
+  },
+  "item.lost_candle.iron": {
+    "sounds": [
+      "illagerinvasion:item/lost_candle/iron"
+    ],
+    "subtitle": "subtitles.item.lost_candle.iron"
+  }
+}
