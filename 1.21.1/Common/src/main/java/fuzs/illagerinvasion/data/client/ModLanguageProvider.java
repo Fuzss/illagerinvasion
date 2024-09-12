@@ -40,7 +40,7 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         builder.add(ModRegistry.PLATINUM_CHUNK_ITEM.value(), "Platinum Chunk");
         builder.add(ModRegistry.PLATINUM_SHEET_ITEM.value(), "Platinum Sheet");
         builder.add(ModRegistry.PRIMAL_ESSENCE_ITEM.value(), "Primal Essence");
-        builder.add(ModRegistry.BERSERKING_POTION.value(), "Berserking");
+        builder.addPotion(ModRegistry.BERSERKING_POTION, "Berserking");
         builder.add(ModRegistry.PROVOKER_SPAWN_EGG_ITEM.value(), "Provoker Spawn Egg");
         builder.add(ModRegistry.SURRENDERED_SPAWN_EGG_ITEM.value(), "Surrendered Spawn Egg");
         builder.add(ModRegistry.ILLUSIONER_SPAWN_EGG_ITEM.value(), "Illusioner Spawn Egg");

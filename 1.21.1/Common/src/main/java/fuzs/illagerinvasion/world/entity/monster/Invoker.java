@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
@@ -106,9 +107,9 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(DATA_IS_SHIELDED, false);
-        super.defineSynchedData();
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_IS_SHIELDED, false);
     }
 
     @Override
@@ -208,7 +209,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
         if (other instanceof Surrendered) {
             return this.isAlliedTo(((Surrendered) other).getOwner());
         }
-        if (other instanceof LivingEntity && ((LivingEntity) other).getMobType() == MobType.ILLAGER) {
+        if (other instanceof LivingEntity livingEntity && livingEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
             return this.getTeam() == null && other.getTeam() == null;
         }
         return false;
@@ -280,10 +281,9 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
     }
 
     @Override
-    public void applyRaidBuffs(int wave, boolean unused) {
-
+    public void applyRaidBuffs(ServerLevel level, int wave, boolean unused) {
+        // NO-OP
     }
-
 
     class LookAtTargetOrWololoTarget extends SpellcasterIllager.SpellcasterCastingSpellGoal {
 
@@ -326,7 +326,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
                 BlockPos blockPos = Invoker.this.blockPosition().offset(-2 + Invoker.this.random.nextInt(5), 1, -2 + Invoker.this.random.nextInt(5));
                 Surrendered surrendered = ModRegistry.SURRENDERED_ENTITY_TYPE.value().create(Invoker.this.level());
                 surrendered.moveTo(blockPos, 0.0f, 0.0f);
-                surrendered.finalizeSpawn(serverWorld, Invoker.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, null, null);
+                surrendered.finalizeSpawn(serverWorld, Invoker.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, null);
                 surrendered.setOwner(Invoker.this);
                 surrendered.setBounds(blockPos);
                 surrendered.setLifeTicks(20 * (30 + Invoker.this.random.nextInt(90)));

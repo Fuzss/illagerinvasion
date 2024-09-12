@@ -1,8 +1,7 @@
 package fuzs.illagerinvasion.mixin;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import fuzs.illagerinvasion.util.FireworksShootingHelper;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.TagParser;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -10,28 +9,19 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.CrossbowAttackMob;
 import net.minecraft.world.entity.monster.Illusioner;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
-import net.minecraft.world.entity.projectile.FireworkRocketEntity;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Illusioner.class)
-abstract class IllusionerMixin extends SpellcasterIllager implements CrossbowAttackMob {
-    @Unique
-    private static final String ILLAGER_INVASION$TAG_FIREWORKS = "{Flight:3,Explosions:[{Type:1,Flicker:0,Trail:0,Colors:[I;2437522],FadeColors:[I;2437522]},{Type:1,Flicker:0,Trail:0,Colors:[I;8073150],FadeColors:[I;8073150]},{Type:1,Flicker:0,Trail:0,Colors:[I;3887386],FadeColors:[I;3887386]}]}";
-
+abstract class IllusionerMixin extends SpellcasterIllager {
     @Shadow
     private int clientSideIllusionTicks;
     @Shadow
@@ -55,6 +45,7 @@ abstract class IllusionerMixin extends SpellcasterIllager implements CrossbowAtt
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        super.onSyncedDataUpdated(key);
         if (this.level().isClientSide && DATA_SHARED_FLAGS_ID.equals(key) && this.isInvisible()) {
             this.clientSideIllusionTicks = 3;
 
@@ -85,35 +76,10 @@ abstract class IllusionerMixin extends SpellcasterIllager implements CrossbowAtt
         return super.isInvulnerableTo(source) || source.is(DamageTypes.FIREWORKS);
     }
 
-    @Override
-    public void setChargingCrossbow(boolean chargingCrossbow) {
-
-    }
-
-    @Override
-    public void shootCrossbowProjectile(LivingEntity target, ItemStack crossbowStack, Projectile projectile, float projectileAngle) {
-        this.shootCrossbowProjectile(this, target, projectile, projectileAngle, 1.6F);
-    }
-
-    @Override
-    public void onCrossbowAttackPerformed() {
-
-    }
-
     @Inject(method = "performRangedAttack", at = @At("HEAD"), cancellable = true)
     public void performRangedAttack(LivingEntity target, float velocity, CallbackInfo callback) {
         if (this.getRandom().nextInt(3) == 0 && this.level().getNearestPlayer(this.getX(), this.getY(), this.getZ(), 4.0, true) == null) {
-            ItemStack ammoStack = new ItemStack(Items.FIREWORK_ROCKET);
-            try {
-                ammoStack.addTagElement("Fireworks", TagParser.parseTag(ILLAGER_INVASION$TAG_FIREWORKS));
-            } catch (CommandSyntaxException ignored) {
-                return;
-            }
-            Projectile projectile = new FireworkRocketEntity(this.level(), ammoStack, this, this.getX(), this.getEyeY() - 0.15F, this.getZ(), true);
-            this.shootCrossbowProjectile(this.getTarget(), ItemStack.EMPTY, projectile, 0.0F);
-            this.playSound(SoundEvents.CROSSBOW_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-            this.level().addFreshEntity(projectile);
-            callback.cancel();
+            if (FireworksShootingHelper.performShooting(this, target)) callback.cancel();
         }
     }
 }

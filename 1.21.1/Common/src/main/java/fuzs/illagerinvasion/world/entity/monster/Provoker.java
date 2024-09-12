@@ -3,10 +3,10 @@ package fuzs.illagerinvasion.world.entity.monster;
 import fuzs.illagerinvasion.init.ModRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -62,15 +62,16 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData, @Nullable CompoundTag entityNbt) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData) {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
-        return super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.finalizeSpawn(world, difficulty, spawnReason, entityData);
     }
 
     @Override
     public void performRangedAttack(LivingEntity target, float pullProgress) {
-        ItemStack itemStack = this.getProjectile(this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, Items.BOW)));
-        AbstractArrow persistentProjectileEntity = ProjectileUtil.getMobArrow(this, itemStack, pullProgress);
+        ItemStack itemInHand = this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, Items.BOW));
+        ItemStack itemStack = this.getProjectile(itemInHand);
+        AbstractArrow persistentProjectileEntity = ProjectileUtil.getMobArrow(this, itemStack, pullProgress, itemInHand);
         double d = target.getX() - this.getX();
         double e = target.getY(0.3333333333333333) - persistentProjectileEntity.getY();
         double f = target.getZ() - this.getZ();
@@ -115,7 +116,7 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
         if (other instanceof Vex) {
             return this.isAlliedTo(((Vex) other).getOwner());
         }
-        if (other instanceof LivingEntity && ((LivingEntity) other).getMobType() == MobType.ILLAGER) {
+        if (other instanceof LivingEntity livingEntity && livingEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
             return this.getTeam() == null && other.getTeam() == null;
         }
         return false;
@@ -142,8 +143,8 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
     }
 
     @Override
-    public void applyRaidBuffs(int wave, boolean unused) {
-
+    public void applyRaidBuffs(ServerLevel level, int wave, boolean unused) {
+        // NO-OP
     }
 
     @Override

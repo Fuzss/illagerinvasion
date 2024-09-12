@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -61,9 +62,9 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_IS_SHIELDED, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_IS_SHIELDED, false);
     }
 
     public boolean getShieldedState() {
@@ -83,7 +84,7 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
     protected void customServerAiStep() {
         super.customServerAiStep();
         --this.conjureSkullCooldown;
-        List<Mob> mobs = this.level().getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(10.0), mob -> mob.getMobType() == MobType.UNDEAD);
+        List<Mob> mobs = this.level().getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(10.0), mob -> mob.getType().is(EntityTypeTags.UNDEAD));
         if (!mobs.isEmpty()) {
             mobs.forEach(this::doUndeadLinkLogic);
             if (this.tickCount % 10 == 0) {
@@ -94,14 +95,14 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
             this.setShieldedState(!mobs.isEmpty());
         }
         if (this.getTarget() != null) {
-            mobs = this.level().getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(30.0), mob -> mob.getMobType() == MobType.UNDEAD);
+            mobs = this.level().getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(30.0), mob -> mob.getType().is(EntityTypeTags.UNDEAD));
             mobs.forEach(this::setUndeadTarget);
         }
     }
 
     @Override
     public boolean canAttack(LivingEntity target) {
-        return target.getMobType() != MobType.UNDEAD && super.canAttack(target);
+        return target.getType().is(EntityTypeTags.UNDEAD) && super.canAttack(target);
     }
 
     public void doUndeadLinkLogic(final LivingEntity entity) {
@@ -148,7 +149,7 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
         if (other instanceof Vex) {
             return this.isAlliedTo(((Vex) other).getOwner());
         }
-        return other instanceof LivingEntity && ((LivingEntity) other).getMobType() == MobType.ILLAGER && this.getTeam() == null && other.getTeam() == null;
+        return other instanceof LivingEntity livingEntity && livingEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS) && this.getTeam() == null && other.getTeam() == null;
     }
 
     @Override
@@ -172,8 +173,8 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
     }
 
     @Override
-    public void applyRaidBuffs(final int wave, final boolean unused) {
-
+    public void applyRaidBuffs(ServerLevel level, int wave, boolean unused) {
+        // NO-OP
     }
 
     @Override
@@ -233,13 +234,13 @@ public class Necromancer extends SpellcasterIllager implements PowerableMob {
                 BlockPos blockPos = Necromancer.this.blockPosition().offset(-2 + Necromancer.this.random.nextInt(5), 1, -2 + Necromancer.this.random.nextInt(5));
                 Zombie zombieEntity = EntityType.ZOMBIE.create(Necromancer.this.level());
                 zombieEntity.moveTo(blockPos, 0.0f, 0.0f);
-                zombieEntity.finalizeSpawn(serverWorld, Necromancer.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, null, null);
+                zombieEntity.finalizeSpawn(serverWorld, Necromancer.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, null);
                 serverWorld.addFreshEntityWithPassengers(zombieEntity);
             }
             BlockPos blockPos = Necromancer.this.blockPosition().offset(-2 + Necromancer.this.random.nextInt(5), 1, -2 + Necromancer.this.random.nextInt(5));
             Skeleton skeletonEntity = EntityType.SKELETON.create(Necromancer.this.level());
             skeletonEntity.moveTo(blockPos, 0.0f, 0.0f);
-            skeletonEntity.finalizeSpawn(serverWorld, Necromancer.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, null, null);
+            skeletonEntity.finalizeSpawn(serverWorld, Necromancer.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, null);
             serverWorld.addFreshEntityWithPassengers(skeletonEntity);
             ++this.spellcount;
         }

@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -82,7 +83,7 @@ public class Archivist extends SpellcasterIllager {
         if (other instanceof Vex) {
             return this.isAlliedTo(((Vex) other).getOwner());
         }
-        if (other instanceof LivingEntity && ((LivingEntity) other).getMobType() == MobType.ILLAGER) {
+        if (other instanceof LivingEntity livingEntity && livingEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
             return this.getTeam() == null && other.getTeam() == null;
         }
         return false;
@@ -117,7 +118,8 @@ public class Archivist extends SpellcasterIllager {
     }
 
     @Override
-    public void applyRaidBuffs(int wave, boolean unused) {
+    public void applyRaidBuffs(ServerLevel level, int wave, boolean unused) {
+        // NO-OP
     }
 
     @Override

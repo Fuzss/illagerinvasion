@@ -27,7 +27,7 @@ public class MagicFireBlock extends BaseFireBlock {
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (!(entity instanceof AbstractIllager || entity instanceof Ravager)) {
             entity.hurt(level.damageSources().inFire(), 3.0F);
-            entity.setSecondsOnFire(0);
+            entity.igniteForSeconds(0);
         }
     }
 

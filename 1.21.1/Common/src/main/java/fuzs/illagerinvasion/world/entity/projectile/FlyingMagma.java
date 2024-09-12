@@ -8,9 +8,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class FlyingMagma extends AbstractHurtingProjectile {
 
@@ -19,7 +21,7 @@ public class FlyingMagma extends AbstractHurtingProjectile {
     }
 
     public FlyingMagma(Level world, LivingEntity owner, double directionX, double directionY, double directionZ) {
-        super(ModRegistry.FLYING_MAGMA_ENTITY_TYPE.value(), owner, directionX, directionY, directionZ, world);
+        super(ModRegistry.FLYING_MAGMA_ENTITY_TYPE.value(), owner, new Vec3(directionX, directionY, directionZ), world);
     }
 
     @Override
@@ -38,17 +40,15 @@ public class FlyingMagma extends AbstractHurtingProjectile {
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
-        if (this.level().isClientSide) {
-            return;
-        }
-        Entity target = entityHitResult.getEntity();
-        Entity owner = this.getOwner();
-        target.hurt(this.damageSources().indirectMagic(this, owner), 12.0f);
-        if (owner instanceof LivingEntity) {
-            this.doEnchantDamageEffects((LivingEntity) owner, target);
-        }
-        if (this.level() instanceof ServerLevel) {
-            ((ServerLevel) this.level()).sendParticles(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 15, 0.4D, 0.4D, 0.4D, 0.15D);
+        if (this.level() instanceof ServerLevel serverLevel) {
+            Entity target = entityHitResult.getEntity();
+            Entity owner = this.getOwner();
+            DamageSource damageSource = this.damageSources().indirectMagic(this, owner);
+            boolean hurt = target.hurt(damageSource, 12.0F);
+            if (hurt && owner instanceof LivingEntity) {
+                EnchantmentHelper.doPostAttackEffects(serverLevel, target, damageSource);
+            }
+            serverLevel.sendParticles(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 15, 0.4D, 0.4D, 0.4D, 0.15D);
         }
     }
 

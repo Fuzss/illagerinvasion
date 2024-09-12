@@ -1,6 +1,8 @@
 package fuzs.illagerinvasion.util;
 
 import fuzs.puzzleslib.api.item.v2.ToolTypeHelper;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,8 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-
-import java.util.Map;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 public class EnchantToolUtil {
 
@@ -24,27 +25,29 @@ public class EnchantToolUtil {
 
     private static void tryEnchantHeldGear(LivingEntity entity, EquipmentSlot equipmentSlot, ItemStack mainHandItem) {
         if (ToolTypeHelper.INSTANCE.isWeapon(mainHandItem)) {
-            enchantWeaponItem(mainHandItem, entity.getRandom());
+            HolderLookup.RegistryLookup<Enchantment> registryLookup = entity.registryAccess().lookupOrThrow(
+                    Registries.ENCHANTMENT);
+            enchantWeaponItem(mainHandItem, entity.getRandom(), registryLookup);
             entity.setItemSlot(equipmentSlot, mainHandItem);
         }
     }
 
-    private static void enchantWeaponItem(ItemStack stack, RandomSource randomSource) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
-        if (ToolTypeHelper.INSTANCE.isBow(stack)) {
-            enchantments.put(Enchantments.POWER_ARROWS, 3);
-        } else if (ToolTypeHelper.INSTANCE.isSword(stack) || ToolTypeHelper.INSTANCE.isAxe(stack)) {
-            enchantments.put(Enchantments.SHARPNESS, 3);
-        } else if (ToolTypeHelper.INSTANCE.isCrossbow(stack)) {
+    private static void enchantWeaponItem(ItemStack itemStack, RandomSource randomSource, HolderLookup.RegistryLookup<Enchantment> registryLookup) {
+        ItemEnchantments.Mutable enchantments = new ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(itemStack));
+        if (ToolTypeHelper.INSTANCE.isBow(itemStack)) {
+            enchantments.upgrade(registryLookup.getOrThrow(Enchantments.POWER), 3);
+        } else if (ToolTypeHelper.INSTANCE.isSword(itemStack) || ToolTypeHelper.INSTANCE.isAxe(itemStack)) {
+            enchantments.upgrade(registryLookup.getOrThrow(Enchantments.SHARPNESS), 3);
+        } else if (ToolTypeHelper.INSTANCE.isCrossbow(itemStack)) {
             if (randomSource.nextInt(2) == 0) {
-                enchantments.put(Enchantments.PIERCING, 4);
+                enchantments.upgrade(registryLookup.getOrThrow(Enchantments.PIERCING), 4);
             } else {
-                enchantments.put(Enchantments.MULTISHOT, 1);
+                enchantments.upgrade(registryLookup.getOrThrow(Enchantments.MULTISHOT), 1);
             }
-        } else if (ToolTypeHelper.INSTANCE.isTridentLike(stack)) {
-            enchantments.put(Enchantments.IMPALING, 3);
+        } else if (ToolTypeHelper.INSTANCE.isTridentLike(itemStack)) {
+            enchantments.upgrade(registryLookup.getOrThrow(Enchantments.IMPALING), 3);
         }
 
-        EnchantmentHelper.setEnchantments(enchantments, stack);
+        EnchantmentHelper.setEnchantments(itemStack, enchantments.toImmutable());
     }
 }

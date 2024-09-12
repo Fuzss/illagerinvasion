@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.world.entity.monster.Archivist;
+import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -21,7 +22,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 
 public class ArchivistRender extends IllagerRenderer<Archivist> {
     private static final ResourceLocation ARCHIVIST_LOCATION = IllagerInvasion.id("textures/entity/archivist.png");
-    private static final Material BOOK_LOCATION = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("entity/enchanting_table_book"));
+    private static final Material BOOK_LOCATION = new Material(InventoryMenu.BLOCK_ATLAS, ResourceLocationHelper.withDefaultNamespace("entity/enchanting_table_book"));
 
     private final BookModel book;
 
@@ -45,7 +46,7 @@ public class ArchivistRender extends IllagerRenderer<Archivist> {
                     ArchivistRender.this.book.setupAnim(0.0F, 0.0F, 0.0F, 0.0f);
                 }
                 VertexConsumer vertexConsumer = BOOK_LOCATION.buffer(vertexConsumerProvider, RenderType::entitySolid);
-                ArchivistRender.this.book.renderToBuffer(matrixStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+                ArchivistRender.this.book.renderToBuffer(matrixStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY);
                 matrixStack.popPose();
             }
         });

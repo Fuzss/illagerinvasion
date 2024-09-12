@@ -4,12 +4,13 @@ import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.world.entity.ai.goal.HatchetAttackGoal;
 import fuzs.illagerinvasion.world.entity.projectile.Hatchet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -63,15 +64,15 @@ public class Marauder extends AbstractIllager implements RangedAttackMob {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData, @Nullable CompoundTag entityNbt) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData) {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value()));
-        return super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.finalizeSpawn(world, difficulty, spawnReason, entityData);
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_CHARGING, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_CHARGING, false);
     }
 
 
@@ -83,7 +84,7 @@ public class Marauder extends AbstractIllager implements RangedAttackMob {
         double f = target.getZ() - this.getZ();
         double g = Math.sqrt(d * d + f * f);
         hatchet.shoot(d, e + g * (double) 0.2f, f, 1.2f, 14 - this.level().getDifficulty().getId() * 4);
-        this.playSound(SoundEvents.TRIDENT_THROW, 1.0f, 1.0f / (this.getRandom().nextFloat() * 0.4f + 0.8f));
+        this.playSound(SoundEvents.TRIDENT_THROW.value(), 1.0f, 1.0f / (this.getRandom().nextFloat() * 0.4f + 0.8f));
         this.level().addFreshEntity(hatchet);
     }
 
@@ -122,7 +123,7 @@ public class Marauder extends AbstractIllager implements RangedAttackMob {
         if (other instanceof Vex) {
             return this.isAlliedTo(((Vex) other).getOwner());
         }
-        if (other instanceof LivingEntity && ((LivingEntity) other).getMobType() == MobType.ILLAGER) {
+        if (other instanceof LivingEntity livingEntity && livingEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
             return this.getTeam() == null && other.getTeam() == null;
         }
         return false;
@@ -144,7 +145,8 @@ public class Marauder extends AbstractIllager implements RangedAttackMob {
     }
 
     @Override
-    public void applyRaidBuffs(int wave, boolean unused) {
+    public void applyRaidBuffs(ServerLevel level, int wave, boolean unused) {
+        // NO-OP
     }
 
     @Override

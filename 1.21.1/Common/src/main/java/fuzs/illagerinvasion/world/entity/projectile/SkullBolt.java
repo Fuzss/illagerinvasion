@@ -3,26 +3,26 @@ package fuzs.illagerinvasion.world.entity.projectile;
 import fuzs.illagerinvasion.init.ModRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class SkullBolt extends AbstractHurtingProjectile {
 
-    public SkullBolt(EntityType<? extends SkullBolt> entityType, Level world) {
-        super(entityType, world);
+    public SkullBolt(EntityType<? extends SkullBolt> entityType, Level level) {
+        super(entityType, level);
     }
 
-    public SkullBolt(Level world, LivingEntity owner, double directionX, double directionY, double directionZ) {
-        super(ModRegistry.SKULL_BOLT_ENTITY_TYPE.value(), owner, directionX, directionY, directionZ, world);
+    public SkullBolt(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
+        super(ModRegistry.SKULL_BOLT_ENTITY_TYPE.value(), owner, new Vec3(directionX, directionY, directionZ), level);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class SkullBolt extends AbstractHurtingProjectile {
             return;
         }
         if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
-            if (livingEntity.getMobType() == MobType.UNDEAD) {
+            if (livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
                 livingEntity.heal(5.0f);
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 2));
             } else {

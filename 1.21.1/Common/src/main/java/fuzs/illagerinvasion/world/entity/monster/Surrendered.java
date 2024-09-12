@@ -81,19 +81,14 @@ public class Surrendered extends Skeleton {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_VEX_FLAGS, (byte) 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_VEX_FLAGS, (byte) 0);
     }
 
     @Override
     public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.8F;
     }
 
     @Override
@@ -209,10 +204,10 @@ public class Surrendered extends Skeleton {
 
     @Override
     @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData, @Nullable CompoundTag entityNbt) {
-        this.populateDefaultEquipmentSlots(world.getRandom(), difficulty);
-        this.populateDefaultEquipmentEnchantments(world.getRandom(), difficulty);
-        return super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData) {
+        this.populateDefaultEquipmentSlots(level.getRandom(), difficulty);
+        this.populateDefaultEquipmentEnchantments(level, level.getRandom(), difficulty);
+        return super.finalizeSpawn(level, difficulty, spawnReason, entityData);
     }
 
     @Override

@@ -18,19 +18,18 @@ public class HatchetRender extends ThrownItemRenderer<Hatchet> {
     public HatchetRender(EntityRendererProvider.Context context) {
         super(context);
         this.itemRenderer = context.getItemRenderer();
-
     }
 
     @Override
-    public void render(Hatchet hatchet, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int light) {
-        matrixStack.scale(1.45f, 1.45f, 1.45f);
+    public void render(Hatchet hatchet, float f, float g, PoseStack poseStack, MultiBufferSource vertexConsumerProvider, int light) {
+        poseStack.scale(1.45f, 1.45f, 1.45f);
         float age = hatchet.getAgeException();
-        matrixStack.pushPose();
-        matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(g, hatchet.yRotO, hatchet.getYRot()) - 270.0f));
-        matrixStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(g, hatchet.xRotO, hatchet.getXRot()) + 90.0f * age));
-        matrixStack.translate(0.1f, -0.2f, 0.0f);
+        poseStack.pushPose();
+        poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(g, hatchet.yRotO, hatchet.getYRot()) - 270.0f));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(g, hatchet.xRotO, hatchet.getXRot()) + 90.0f * age));
+        poseStack.translate(0.1f, -0.2f, 0.0f);
         BakedModel bakedModel = this.itemRenderer.getItemModelShaper().getItemModel(hatchet.getItem());
-        this.itemRenderer.render(hatchet.getItem(), ItemDisplayContext.GROUND, false, matrixStack, vertexConsumerProvider, light, OverlayTexture.NO_OVERLAY, bakedModel);
-        matrixStack.popPose();
+        this.itemRenderer.render(hatchet.getItem(), ItemDisplayContext.GROUND, false, poseStack, vertexConsumerProvider, light, OverlayTexture.NO_OVERLAY, bakedModel);
+        poseStack.popPose();
     }
 }

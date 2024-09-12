@@ -3,6 +3,7 @@ package fuzs.illagerinvasion.client.render.entity.layers;
 import fuzs.illagerinvasion.client.init.ClientModRegistry;
 import fuzs.illagerinvasion.client.model.InvokerEntityModel;
 import fuzs.illagerinvasion.world.entity.monster.Invoker;
+import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
@@ -10,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class InvokerShieldLayer extends EnergySwirlLayer<Invoker, InvokerEntityModel<Invoker>> {
-    private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation("textures/entity/wither/wither_armor.png");
+    private static final ResourceLocation TEXTURE_LOCATION = ResourceLocationHelper.withDefaultNamespace("textures/entity/wither/wither_armor.png");
 
     private final InvokerEntityModel<Invoker> model;
 

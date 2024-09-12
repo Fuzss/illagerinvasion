@@ -8,6 +8,7 @@ import fuzs.puzzleslib.api.event.v1.data.DefaultedFloat;
 import fuzs.puzzleslib.api.event.v1.data.DefaultedInt;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -60,8 +61,9 @@ public class PlatinumTrimHandler {
         return getPlatinumTrim(player.level(), player.getItemBySlot(equipmentSlot)).isPresent();
     }
 
-    public static Optional<ArmorTrim> getPlatinumTrim(Level level, ItemStack stack) {
+    public static Optional<ArmorTrim> getPlatinumTrim(Level level, ItemStack itemStack) {
         if (!IllagerInvasion.CONFIG.get(ServerConfig.class).platinumTrimEffects) return Optional.empty();
-        return ArmorTrim.getTrim(level.registryAccess(), stack, true).filter(armorTrim -> armorTrim.material().is(ModRegistry.PLATINUM_TRIM_MATERIAL));
+        ArmorTrim armorTrim = itemStack.get(DataComponents.TRIM);
+        return armorTrim != null && armorTrim.material().is(ModRegistry.PLATINUM_TRIM_MATERIAL) ? Optional.of(armorTrim) : Optional.empty();
     }
 }

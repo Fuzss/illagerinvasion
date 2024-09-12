@@ -42,7 +42,7 @@ public class InvokerFangsRenderer extends EntityRenderer<InvokerFangs> {
         matrixStack.scale(0.5f, 0.5f, 0.5f);
         this.model.setupAnim(invokerFangs, animationProgress, 0.0f, 0.0f, invokerFangs.getYRot(), invokerFangs.getXRot());
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(this.model.renderType(this.getTextureLocation(invokerFangs)));
-        this.model.renderToBuffer(matrixStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+        this.model.renderToBuffer(matrixStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY);
         matrixStack.popPose();
         super.render(invokerFangs, f, g, matrixStack, vertexConsumerProvider, i);
     }

@@ -1,13 +1,13 @@
 package fuzs.illagerinvasion.data.tags;
 
 import fuzs.illagerinvasion.init.ModRegistry;
-import fuzs.puzzleslib.api.data.v2.AbstractTagProvider;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
+import fuzs.puzzleslib.api.data.v2.tags.AbstractTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Instrument;
 
-public class ModInstrumentTagProvider extends AbstractTagProvider.Intrinsic<Instrument> {
+public class ModInstrumentTagProvider extends AbstractTagProvider<Instrument> {
 
     public ModInstrumentTagProvider(DataProviderContext context) {
         super(Registries.INSTRUMENT, context);
@@ -15,6 +15,6 @@ public class ModInstrumentTagProvider extends AbstractTagProvider.Intrinsic<Inst
 
     @Override
     public void addTags(HolderLookup.Provider provider) {
-        this.tag(ModRegistry.HORN_OF_SIGHT_INSTRUMENT_TAG).add(ModRegistry.REVEAL_INSTRUMENT.value());
+        this.add(ModRegistry.HORN_OF_SIGHT_INSTRUMENT_TAG).add(ModRegistry.REVEAL_INSTRUMENT.value());
     }
 }

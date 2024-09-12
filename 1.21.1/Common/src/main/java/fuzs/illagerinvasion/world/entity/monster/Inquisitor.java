@@ -1,8 +1,9 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-import com.google.common.collect.Maps;
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.puzzleslib.api.init.v3.registry.LookupHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,6 +14,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -42,9 +44,7 @@ import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -52,14 +52,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.WebBlock;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class Inquisitor extends AbstractIllager {
     private static final EntityDataAccessor<Boolean> STUNNED = SynchedEntityData.defineId(Inquisitor.class, EntityDataSerializers.BOOLEAN);
@@ -73,7 +74,7 @@ public class Inquisitor extends AbstractIllager {
     public Inquisitor(final EntityType<? extends Inquisitor> entityType, final Level world) {
         super(entityType, world);
         this.xpReward = 25;
-        this.setPathfindingMalus(BlockPathTypes.LEAVES, 0.0F);
+        this.setPathfindingMalus(PathType.LEAVES, 0.0F);
     }
 
     @Override
@@ -142,10 +143,10 @@ public class Inquisitor extends AbstractIllager {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(STUNNED, false);
-        this.entityData.define(FINAL_ROAR, false);
-        super.defineSynchedData();
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(STUNNED, false);
+        builder.define(FINAL_ROAR, false);
     }
 
     public boolean getStunnedState() {
@@ -220,11 +221,11 @@ public class Inquisitor extends AbstractIllager {
 
     @Override
     @Nullable
-    public SpawnGroupData finalizeSpawn(final ServerLevelAccessor world, final DifficultyInstance difficulty, final MobSpawnType spawnReason, @Nullable final SpawnGroupData entityData, @Nullable final CompoundTag entityNbt) {
-        final SpawnGroupData entityData2 = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
+    public SpawnGroupData finalizeSpawn(final ServerLevelAccessor level, final DifficultyInstance difficulty, final MobSpawnType spawnReason, @Nullable final SpawnGroupData entityData) {
+        final SpawnGroupData entityData2 = super.finalizeSpawn(level, difficulty, spawnReason, entityData);
         ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
-        this.populateDefaultEquipmentSlots(world.getRandom(), difficulty);
-        this.populateDefaultEquipmentEnchantments(world.getRandom(), difficulty);
+        this.populateDefaultEquipmentSlots(level.getRandom(), difficulty);
+        this.populateDefaultEquipmentEnchantments(level, level.getRandom(), difficulty);
         return entityData2;
     }
 
@@ -238,7 +239,8 @@ public class Inquisitor extends AbstractIllager {
 
     @Override
     public boolean isAlliedTo(final Entity other) {
-        return super.isAlliedTo(other) || (other instanceof LivingEntity && ((LivingEntity) other).getMobType() == MobType.ILLAGER && this.getTeam() == null && other.getTeam() == null);
+        return super.isAlliedTo(other) || (other instanceof LivingEntity livingEntity && livingEntity.getType().is(
+                EntityTypeTags.ILLAGER_FRIENDS) && this.getTeam() == null && other.getTeam() == null);
     }
 
     @Override
@@ -293,33 +295,27 @@ public class Inquisitor extends AbstractIllager {
     }
 
     @Override
-    public void applyRaidBuffs(final int wave, final boolean unused) {
-        final ItemStack itemStack = new ItemStack(Items.STONE_SWORD);
-        final ItemStack itemstack1 = new ItemStack(Items.SHIELD);
+    public void applyRaidBuffs(ServerLevel level, int wave, boolean unused) {
+        final ItemStack mainHandItem = new ItemStack(Items.STONE_SWORD);
+        final ItemStack offHandItem = new ItemStack(Items.SHIELD);
         final Raid raid = this.getCurrentRaid();
-        int i = 1;
-        if (wave > raid.getNumGroups(Difficulty.NORMAL)) {
-            i = 2;
+        if (this.random.nextFloat() <= raid.getEnchantOdds()) {
+            int enchantmentLevel = wave > raid.getNumGroups(Difficulty.NORMAL) ? 2 : 1;
+            Holder<Enchantment> enchantment = LookupHelper.lookupEnchantment(level, Enchantments.SHARPNESS);
+            mainHandItem.enchant(enchantment, enchantmentLevel);
         }
-        final boolean bl2;
-        final boolean bl = bl2 = (this.random.nextFloat() <= raid.getEnchantOdds());
-        if (bl) {
-            HashMap<Enchantment, Integer> map = Maps.newHashMap();
-            map.put(Enchantments.SHARPNESS, i);
-            EnchantmentHelper.setEnchantments(map, itemStack);
-        }
-        this.setItemSlot(EquipmentSlot.MAINHAND, itemStack);
-        this.setItemSlot(EquipmentSlot.OFFHAND, itemstack1);
+        this.setItemSlot(EquipmentSlot.MAINHAND, mainHandItem);
+        this.setItemSlot(EquipmentSlot.OFFHAND, offHandItem);
     }
 
     static class NodeEvaluator extends WalkNodeEvaluator {
-
         @Override
-        protected BlockPathTypes evaluateBlockPathType(BlockGetter blockGetter, BlockPos blockPos, BlockPathTypes blockPathTypes) {
-            if (blockPathTypes == BlockPathTypes.LEAVES) {
-                return BlockPathTypes.OPEN;
+        public Set<PathType> getPathTypeWithinMobBB(PathfindingContext context, int x, int y, int z) {
+            Set<PathType> set = super.getPathTypeWithinMobBB(context, x, y, z);
+            if (set.remove(PathType.LEAVES)) {
+                set.add(PathType.OPEN);
             }
-            return super.evaluateBlockPathType(blockGetter, blockPos, blockPathTypes);
+            return set;
         }
     }
 

@@ -1,9 +1,10 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-import com.google.common.collect.Maps;
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.puzzleslib.api.init.v3.registry.LookupHelper;
 import fuzs.puzzleslib.api.item.v2.ToolTypeHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,6 +15,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -37,14 +39,11 @@ import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
 
 public class Basher extends AbstractIllager {
     private static final String TAG_STUN_TICKS = "Stunned";
@@ -102,9 +101,9 @@ public class Basher extends AbstractIllager {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(DATA_STUNNED, false);
-        super.defineSynchedData();
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_STUNNED, false);
     }
 
     public boolean getStunnedState() {
@@ -192,11 +191,11 @@ public class Basher extends AbstractIllager {
 
     @Override
     @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData, @Nullable CompoundTag entityNbt) {
-        SpawnGroupData entityData2 = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityNbt);
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData) {
+        SpawnGroupData entityData2 = super.finalizeSpawn(level, difficulty, spawnReason, entityData);
         ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
-        this.populateDefaultEquipmentSlots(world.getRandom(), difficulty);
-        this.populateDefaultEquipmentEnchantments(world.getRandom(), difficulty);
+        this.populateDefaultEquipmentSlots(level.getRandom(), difficulty);
+        this.populateDefaultEquipmentEnchantments(level, level.getRandom(), difficulty);
         return entityData2;
     }
 
@@ -212,7 +211,7 @@ public class Basher extends AbstractIllager {
         if (super.isAlliedTo(other)) {
             return true;
         }
-        if (other instanceof LivingEntity && ((LivingEntity) other).getMobType() == MobType.ILLAGER) {
+        if (other instanceof LivingEntity livingEntity && livingEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
             return this.getTeam() == null && other.getTeam() == null;
         }
         return false;
@@ -235,19 +234,13 @@ public class Basher extends AbstractIllager {
     }
 
     @Override
-    public void applyRaidBuffs(int wave, boolean unused) {
-        boolean bl;
+    public void applyRaidBuffs(ServerLevel level, int wave, boolean unused) {
         ItemStack itemStack = new ItemStack(Items.SHIELD);
         Raid raid = this.getCurrentRaid();
-        int i = 1;
-        if (wave > raid.getNumGroups(Difficulty.NORMAL)) {
-            i = 2;
-        }
-        boolean bl2 = bl = this.random.nextFloat() <= raid.getEnchantOdds();
-        if (bl) {
-            HashMap<Enchantment, Integer> map = Maps.newHashMap();
-            map.put(Enchantments.UNBREAKING, i);
-            EnchantmentHelper.setEnchantments(map, itemStack);
+        int enchantmentLevel = wave > raid.getNumGroups(Difficulty.NORMAL) ? 2 : 1;
+        if (this.random.nextFloat() <= raid.getEnchantOdds()) {
+            Holder<Enchantment> enchantment = LookupHelper.lookupEnchantment(level, Enchantments.UNBREAKING);
+            itemStack.enchant(enchantment, enchantmentLevel);
         }
         this.setItemSlot(EquipmentSlot.MAINHAND, itemStack);
     }

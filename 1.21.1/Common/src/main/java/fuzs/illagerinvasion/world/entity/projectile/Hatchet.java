@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,31 +25,36 @@ import org.jetbrains.annotations.Nullable;
 public class Hatchet extends AbstractArrow implements ItemSupplier {
     private static final EntityDataAccessor<Boolean> DATA_ENCHANTED = SynchedEntityData.defineId(Hatchet.class, EntityDataSerializers.BOOLEAN);
 
-    private ItemStack hatchetStack;
     private boolean dealtDamage;
 
     public Hatchet(EntityType<? extends Hatchet> entityType, Level level) {
-        super(entityType, level, new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value()));
-        this.hatchetStack = new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value());
+        super(entityType, level);
     }
 
-    public Hatchet(Level level, LivingEntity owner, ItemStack stack) {
-        super(ModRegistry.HATCHET_ENTITY_TYPE.value(), owner, level, stack);
-        this.hatchetStack = new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value());
-        this.hatchetStack = stack.copy();
-        this.entityData.set(DATA_ENCHANTED, stack.hasFoil());
+    public Hatchet(Level level, LivingEntity shooter, ItemStack pickupItemStack) {
+        super(ModRegistry.HATCHET_ENTITY_TYPE.value(), shooter, level, pickupItemStack, null);
+        this.entityData.set(DATA_ENCHANTED, pickupItemStack.hasFoil());
+    }
+
+    public Hatchet(Level level, double x, double y, double z, ItemStack pickupItemStack) {
+        super(ModRegistry.HATCHET_ENTITY_TYPE.value(), x, y, z, level, pickupItemStack, pickupItemStack);
+        this.entityData.set(DATA_ENCHANTED, pickupItemStack.hasFoil());
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_ENCHANTED, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_ENCHANTED, false);
     }
 
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value());
+    }
 
     @Override
-    public ItemStack getPickupItem() {
-        return this.hatchetStack.copy();
+    public ItemStack getWeaponItem() {
+        return this.getPickupItemStackOrigin();
     }
 
     public boolean isEnchanted() {
@@ -62,31 +68,33 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
-        Entity owner = this.getOwner();
-        Entity target = entityHitResult.getEntity();
-        float f = 8.0f;
-        if (target instanceof LivingEntity livingEntity) {
-            f += EnchantmentHelper.getDamageBonus(this.hatchetStack, livingEntity.getMobType());
+    protected void onHitEntity(EntityHitResult result) {
+        Entity entity = result.getEntity();
+        float f = 8.0F;
+        Entity entity2 = this.getOwner();
+        DamageSource damageSource = this.damageSources().trident(this, (Entity)(entity2 == null ? this : entity2));
+        if (this.level() instanceof ServerLevel serverLevel) {
+            f = EnchantmentHelper.modifyDamage(serverLevel, this.getWeaponItem(), entity, damageSource, f);
         }
-        DamageSource damageSource = this.damageSources().trident(this, owner == null ? this : owner);
+
         this.dealtDamage = true;
-        SoundEvent soundEvent = SoundEvents.TRIDENT_HIT;
-        if (target.hurt(damageSource, f)) {
-            if (target.getType() == EntityType.ENDERMAN) {
+        if (entity.hurt(damageSource, f)) {
+            if (entity.getType() == EntityType.ENDERMAN) {
                 return;
             }
-            if (target instanceof LivingEntity livingEntity) {
-                if (owner instanceof LivingEntity) {
-                    EnchantmentHelper.doPostHurtEffects(livingEntity, owner);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity) owner, livingEntity);
-                }
+
+            if (this.level() instanceof ServerLevel serverLevel) {
+                EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, damageSource, this.getWeaponItem());
+            }
+
+            if (entity instanceof LivingEntity livingEntity) {
+                this.doKnockback(livingEntity, damageSource);
                 this.doPostHurtEffects(livingEntity);
             }
         }
+
         this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01, -0.1, -0.01));
-        float g = 1.0f;
-        this.playSound(soundEvent, g, 1.0f);
+        this.playSound(SoundEvents.TRIDENT_HIT, 1.0F, 1.0F);
     }
 
 
@@ -110,23 +118,18 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        if (nbt.contains("Hatchet", 10)) {
-            this.hatchetStack = ItemStack.of(nbt.getCompound("Hatchet"));
-        }
         this.dealtDamage = nbt.getBoolean("DealtDamage");
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
-        nbt.put("Hatchet", this.hatchetStack.save(new CompoundTag()));
         nbt.putBoolean("DealtDamage", this.dealtDamage);
     }
 
-
     @Override
     protected float getWaterInertia() {
-        return 0.99f;
+        return 0.99F;
     }
 
     @Override
@@ -134,15 +137,16 @@ public class Hatchet extends AbstractArrow implements ItemSupplier {
         return true;
     }
 
-    @Override
-    public ItemStack getItem() {
-        return new ItemStack(ModRegistry.PLATINUM_INFUSED_HATCHET_ITEM.value());
-    }
-
     public float getAgeException() {
         if (!this.inGround) {
             return this.tickCount;
+        } else {
+            return 1.0f;
         }
-        return 1.0f;
+    }
+
+    @Override
+    public ItemStack getItem() {
+        return this.getPickupItemStackOrigin();
     }
 }

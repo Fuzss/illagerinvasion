@@ -33,7 +33,7 @@ abstract class WoodlandMansionPieceMixin {
             Mob mob = entityType.create(level.getLevel());
             mob.setPersistenceRequired();
             mob.moveTo(pos, 0.0f, 0.0f);
-            mob.finalizeSpawn(level, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.STRUCTURE, null, null);
+            mob.finalizeSpawn(level, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.STRUCTURE, null);
             level.addFreshEntityWithPassengers(mob);
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
             callback.cancel();

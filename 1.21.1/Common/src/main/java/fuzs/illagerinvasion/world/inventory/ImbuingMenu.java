@@ -1,7 +1,7 @@
 package fuzs.illagerinvasion.world.inventory;
 
 import fuzs.illagerinvasion.init.ModRegistry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
@@ -14,8 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-
-import java.util.Map;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 public class ImbuingMenu extends AbstractContainerMenu {
     private final Container input;
@@ -108,29 +107,28 @@ public class ImbuingMenu extends AbstractContainerMenu {
 
     public void updateResult() {
         ItemStack imbuingItem = this.input.getItem(1);
-        ItemStack bookStack = this.input.getItem(0);
-        ItemStack gem = this.input.getItem(2);
+        ItemStack bookItem = this.input.getItem(0);
+        ItemStack gemItem = this.input.getItem(2);
         ItemStack imbuingResult = imbuingItem.copy();
-        if (!bookStack.isEmpty() && !gem.isEmpty() && !imbuingItem.isEmpty()) {
-            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(bookStack);
-            if (enchantments.size() != 1) {
+        if (!bookItem.isEmpty() && !gemItem.isEmpty() && !imbuingItem.isEmpty()) {
+            ItemEnchantments bookEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(bookItem);
+            if (bookEnchantments.size() != 1) {
                 this.invalidState.set(InvalidImbuingState.TOO_MANY_ENCHANTMENTS.ordinal());
             } else {
-                Enchantment enchantment = enchantments.keySet().iterator().next();
-                if (!BuiltInRegistries.ENCHANTMENT.wrapAsHolder(enchantment).is(ModRegistry.IMBUING_ENCHANTMENT_TAG)) {
+                Holder<Enchantment> enchantment = bookEnchantments.keySet().iterator().next();
+                if (!enchantment.is(ModRegistry.IMBUING_ENCHANTMENT_TAG)) {
                     this.invalidState.set(InvalidImbuingState.INVALID_ENCHANTMENT.ordinal());
-                } else if (enchantments.getOrDefault(enchantment, 0) != enchantment.getMaxLevel()) {
+                } else if (bookEnchantments.getLevel(enchantment) != enchantment.value().getMaxLevel()) {
                     this.invalidState.set(InvalidImbuingState.NOT_AT_MAX_LEVEL.ordinal());
-                } else if (!enchantment.canEnchant(imbuingItem)) {
+                } else if (!enchantment.value().canEnchant(imbuingItem)) {
                     this.invalidState.set(InvalidImbuingState.INVALID_ITEM.ordinal());
                 } else {
-                    Map<Enchantment, Integer> imbueMap = EnchantmentHelper.getEnchantments(imbuingItem);
-                    if (imbueMap.getOrDefault(enchantment, 0) != enchantment.getMaxLevel()) {
+                    ItemEnchantments imbueMap = EnchantmentHelper.getEnchantmentsForCrafting(imbuingItem);
+                    if (imbueMap.getLevel(enchantment) != enchantment.value().getMaxLevel()) {
                         this.invalidState.set(InvalidImbuingState.AT_WRONG_LEVEL.ordinal());
                     } else {
-                        int imbueLevel = enchantments.get(enchantment) + 1;
-                        imbueMap.put(enchantment, imbueLevel);
-                        EnchantmentHelper.setEnchantments(imbueMap, imbuingResult);
+                        int imbueLevel = bookEnchantments.getLevel(enchantment) + 1;
+                        imbuingResult.enchant(enchantment, imbueLevel);
                         this.output.setItem(0, imbuingResult);
                         this.invalidState.set(InvalidImbuingState.ALL_GOOD.ordinal());
                         return;
@@ -147,7 +145,7 @@ public class ImbuingMenu extends AbstractContainerMenu {
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack itemStack2 = slot.getItem();
             itemStack = itemStack2.copy();
             if (index == 3) {

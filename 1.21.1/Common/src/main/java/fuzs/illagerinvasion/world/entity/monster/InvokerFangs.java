@@ -3,9 +3,7 @@ package fuzs.illagerinvasion.world.entity.monster;
 import fuzs.illagerinvasion.init.ModRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -39,7 +37,7 @@ public class InvokerFangs extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
         // NO-OP
     }
 
@@ -150,11 +148,6 @@ public class InvokerFangs extends Entity {
             return 1.0f;
         }
         return 1.0f - ((float) i - tickDelta) / 20.0f;
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(this);
     }
 }
 

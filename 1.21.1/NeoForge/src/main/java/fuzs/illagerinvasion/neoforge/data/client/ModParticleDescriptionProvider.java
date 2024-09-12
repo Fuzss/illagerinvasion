@@ -2,11 +2,11 @@ package fuzs.illagerinvasion.neoforge.data.client;
 
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.neoforge.api.data.v2.client.AbstractParticleDescriptionProvider;
-import fuzs.puzzleslib.neoforge.api.data.v2.core.ForgeDataProviderContext;
+import fuzs.puzzleslib.neoforge.api.data.v2.core.NeoForgeDataProviderContext;
 
 public class ModParticleDescriptionProvider extends AbstractParticleDescriptionProvider {
 
-    public ModParticleDescriptionProvider(ForgeDataProviderContext context) {
+    public ModParticleDescriptionProvider(NeoForgeDataProviderContext context) {
         super(context);
     }
 

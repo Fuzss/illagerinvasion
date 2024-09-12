@@ -10,7 +10,6 @@ import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.*;
 import fuzs.puzzleslib.api.client.event.v1.gui.ItemTooltipCallback;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -25,17 +24,16 @@ public class IllagerInvasionClient implements ClientModConstructor {
 
     @Override
     public void onConstructMod() {
-        registerHandlers();
+        registerEventHandlers();
     }
 
-    private static void registerHandlers() {
-        ItemTooltipCallback.EVENT.register(EnchantmentTooltipHandler::onItemTooltip$1);
-        ItemTooltipCallback.EVENT.register(EnchantmentTooltipHandler::onItemTooltip$2);
+    private static void registerEventHandlers() {
+        ItemTooltipCallback.EVENT.register(EnchantmentTooltipHandler::onItemTooltip);
     }
 
     @Override
-    public void onClientSetup() {
-        MenuScreens.register(ModRegistry.IMBUING_MENU_TYPE.value(), ImbuingScreen::new);
+    public void onRegisterMenuScreens(MenuScreensContext context) {
+        context.registerMenuScreen(ModRegistry.IMBUING_MENU_TYPE.value(), ImbuingScreen::new);
     }
 
     @Override
