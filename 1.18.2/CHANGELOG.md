@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v3.0.6-1.18.2] - 2024-09-12
+### Fixed
+- Fix `Illusioner::onSyncedDataUpdated` not calling super method
+
 ## [v3.0.5-1.18.2] - 2024-01-24
 ### Changed
 - Necromancer now drops zombie and skeletons heads as a rare drop
