@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "illagerinvasion:platinum_chunk"
+    },
+    {
+      "item": "illagerinvasion:platinum_chunk"
+    },
+    {
+      "item": "illagerinvasion:platinum_chunk"
+    },
+    {
+      "item": "illagerinvasion:platinum_chunk"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "illagerinvasion:platinum_sheet"
+  }
+}
