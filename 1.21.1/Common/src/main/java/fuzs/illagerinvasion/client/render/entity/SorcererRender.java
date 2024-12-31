@@ -5,16 +5,15 @@ import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.client.init.ClientModRegistry;
 import fuzs.illagerinvasion.client.model.HatIllagerEntityModel;
 import fuzs.illagerinvasion.world.entity.monster.Sorcerer;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class SorcererRender extends MobRenderer<Sorcerer, IllagerModel<Sorcerer>> {
+public class SorcererRender extends MobRenderer<Sorcerer, HatIllagerEntityModel<Sorcerer>> {
     private static final ResourceLocation SORCERER_LOCATION = IllagerInvasion.id("textures/entity/sorcerer.png");
 
     public SorcererRender(EntityRendererProvider.Context context) {
-        super(context, new IllagerModel<>(context.bakeLayer(ClientModRegistry.HAT_ILLAGER)), 0.5f);
+        super(context, new HatIllagerEntityModel<>(context.bakeLayer(ClientModRegistry.HAT_ILLAGER)), 0.5f);
         this.model.getHat().visible = true;
     }
 

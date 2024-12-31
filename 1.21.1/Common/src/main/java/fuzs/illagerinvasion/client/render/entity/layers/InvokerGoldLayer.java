@@ -2,7 +2,6 @@ package fuzs.illagerinvasion.client.render.entity.layers;
 
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.client.model.InvokerEntityModel;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
