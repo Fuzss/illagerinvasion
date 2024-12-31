@@ -1,6 +1,7 @@
 package fuzs.illagerinvasion.world.item;
 
 import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.puzzleslib.api.util.v1.InteractionResultHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -21,19 +22,13 @@ public class MagicalFireChargeItem extends FireChargeItem {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        BlockPos blockPos = context.getClickedPos();
-        boolean bl = false;
-        blockPos = blockPos.relative(context.getClickedFace());
+        BlockPos blockPos = context.getClickedPos().relative(context.getClickedFace());
         if (ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState().canSurvive(level, blockPos) && BaseFireBlock.canBePlacedAt(level, blockPos, context.getHorizontalDirection())) {
             this.playSound(level, blockPos);
             level.setBlockAndUpdate(blockPos, ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState());
             level.gameEvent(context.getPlayer(), GameEvent.BLOCK_PLACE, blockPos);
-            bl = true;
-        }
-
-        if (bl) {
-            context.getItemInHand().shrink(1);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            context.getItemInHand().consume(1, context.getPlayer());
+            return InteractionResultHelper.sidedSuccess(level.isClientSide);
         } else {
             return InteractionResult.FAIL;
         }

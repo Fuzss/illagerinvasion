@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "B": {
-      "item": "illagerinvasion:unusual_dust"
-    },
-    "D": {
-      "item": "minecraft:diamond"
-    },
-    "R": {
-      "item": "illagerinvasion:illusionary_dust"
-    }
+    "#": "minecraft:amethyst_shard",
+    "B": "illagerinvasion:unusual_dust",
+    "D": "minecraft:diamond",
+    "R": "illagerinvasion:illusionary_dust"
   },
   "pattern": [
     "#B#",

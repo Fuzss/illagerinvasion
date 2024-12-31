@@ -22,8 +22,10 @@ public class ModModelProvider extends AbstractModelProvider {
     @Override
     public void addBlockModels(BlockModelGenerators builder) {
         Block imbuingTableBlock = ModRegistry.IMBUING_TABLE_BLOCK.value();
-        TextureMapping textureMapping = TextureMapping.craftingTable(imbuingTableBlock, imbuingTableBlock).put(TextureSlot.DOWN, TextureMapping.getBlockTexture(imbuingTableBlock, "_bottom"));
-        builder.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(imbuingTableBlock, ModelTemplates.CUBE.create(imbuingTableBlock, textureMapping, builder.modelOutput)));
+        TextureMapping textureMapping = TextureMapping.craftingTable(imbuingTableBlock, imbuingTableBlock)
+                .put(TextureSlot.DOWN, TextureMapping.getBlockTexture(imbuingTableBlock, "_bottom"));
+        builder.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(imbuingTableBlock,
+                ModelTemplates.CUBE.create(imbuingTableBlock, textureMapping, builder.modelOutput)));
         this.skipBlock(ModRegistry.MAGIC_FIRE_BLOCK.value());
     }
 
@@ -37,8 +39,9 @@ public class ModModelProvider extends AbstractModelProvider {
         builder.generateFlatItem(ModItems.UNUSUAL_DUST_ITEM.value(), ModelTemplates.FLAT_ITEM);
         builder.generateFlatItem(ModItems.LOST_CANDLE_ITEM.value(), ModelTemplates.FLAT_ITEM);
         builder.generateFlatItem(ModItems.PLATINUM_INFUSED_HATCHET_ITEM.value(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(ModItems.MAGICAL_FIRE_CHARGE_ITEM.value()), TextureMapping.layer0(
-                ResourceLocationHelper.withDefaultNamespace("entity/enderdragon/dragon_fireball")), builder.output);
+        ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(ModItems.MAGICAL_FIRE_CHARGE_ITEM.value()),
+                TextureMapping.layer0(ResourceLocationHelper.withDefaultNamespace("entity/enderdragon/dragon_fireball")),
+                builder.output);
         builder.generateFlatItem(ModItems.ALCHEMIST_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
         builder.generateFlatItem(ModItems.ARCHIVIST_SPAWN_EGG_ITEM.value(), SPAWN_EGG);
         builder.generateFlatItem(ModItems.BASHER_SPAWN_EGG_ITEM.value(), SPAWN_EGG);

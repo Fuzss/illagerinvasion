@@ -10,6 +10,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -22,7 +23,10 @@ public class SkullBolt extends AbstractHurtingProjectile {
     }
 
     public SkullBolt(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
-        super(ModEntityTypes.SKULL_BOLT_ENTITY_TYPE.value(), owner, new Vec3(directionX, directionY, directionZ), level);
+        super(ModEntityTypes.SKULL_BOLT_ENTITY_TYPE.value(),
+                owner,
+                new Vec3(directionX, directionY, directionZ),
+                level);
     }
 
     @Override
@@ -33,16 +37,18 @@ public class SkullBolt extends AbstractHurtingProjectile {
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
-        if (this.level().isClientSide) {
-            return;
-        }
-        if (entityHitResult.getEntity() instanceof LivingEntity livingEntity) {
-            if (livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
-                livingEntity.heal(5.0f);
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 2));
-            } else {
-                livingEntity.hurt(this.damageSources().magic(), 7.0f);
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
+        if (this.level() instanceof ServerLevel serverLevel) {
+            if (this.getOwner() instanceof LivingEntity owner &&
+                    entityHitResult.getEntity() instanceof LivingEntity target) {
+                if (target.getType().is(EntityTypeTags.UNDEAD)) {
+                    target.heal(5.0F);
+                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 2));
+                } else {
+                    DamageSource damageSource = this.damageSources().indirectMagic(this, owner);
+                    target.hurtServer(serverLevel, damageSource, 7.0F);
+                    EnchantmentHelper.doPostAttackEffects(serverLevel, target, damageSource);
+                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
+                }
             }
         }
     }
@@ -50,24 +56,13 @@ public class SkullBolt extends AbstractHurtingProjectile {
     @Override
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
-        if (this.level() instanceof ServerLevel) {
+        if (this.level() instanceof ServerLevel serverLevel) {
             double x = this.getX();
             double y = this.getY() + 0.2;
             double z = this.getZ();
-            ((ServerLevel) this.level()).sendParticles(ParticleTypes.SMOKE, x, y, z, 25, 0.25D, 0.25D, 0.25D, 0.05D);
+            serverLevel.sendParticles(ParticleTypes.SMOKE, x, y, z, 25, 0.25D, 0.25D, 0.25D, 0.05D);
+            this.discard();
         }
-        this.discard();
-
-    }
-
-    @Override
-    public boolean isPickable() {
-        return false;
-    }
-
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
-        return false;
     }
 
     @Override

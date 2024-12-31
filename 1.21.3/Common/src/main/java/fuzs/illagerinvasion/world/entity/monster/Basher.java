@@ -15,7 +15,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -52,8 +51,8 @@ public class Basher extends AbstractIllager {
     private int stunTicks;
     private int blockedCount;
 
-    public Basher(EntityType<? extends Basher> entityType, Level world) {
-        super(entityType, world);
+    public Basher(EntityType<? extends Basher> entityType, Level level) {
+        super(entityType, level);
     }
 
     @Override
@@ -72,20 +71,17 @@ public class Basher extends AbstractIllager {
     }
 
     @Override
-    protected void customServerAiStep() {
+    protected void customServerAiStep(ServerLevel serverLevel) {
         if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this)) {
-            boolean bl = ((ServerLevel) this.level()).isRaided(this.blockPosition());
-            ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(bl);
-            super.customServerAiStep();
+            boolean isRaided = serverLevel.isRaided(this.blockPosition());
+            ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(isRaided);
+            super.customServerAiStep(serverLevel);
         }
     }
 
     @Override
     public boolean hasLineOfSight(Entity entity) {
-        if (this.getStunnedState()) {
-            return false;
-        }
-        return super.hasLineOfSight(entity);
+        return !this.getStunnedState() && super.hasLineOfSight(entity);
     }
 
     @Override
@@ -128,10 +124,7 @@ public class Basher extends AbstractIllager {
     @Override
     public void tick() {
         super.tick();
-        if (!this.isAlive()) {
-            return;
-        }
-        if (this.stunTicks > 0) {
+        if (this.isAlive() && this.stunTicks > 0) {
             this.setStunTicks(this.stunTicks - 1);
         }
     }
@@ -145,11 +138,11 @@ public class Basher extends AbstractIllager {
     public AbstractIllager.IllagerArmPose getArmPose() {
         if (this.isCelebrating()) {
             return AbstractIllager.IllagerArmPose.CELEBRATING;
-        }
-        if (this.isAggressive()) {
+        } else if (this.isAggressive()) {
             return IllagerArmPose.ATTACKING;
+        } else {
+            return IllagerArmPose.CROSSED;
         }
-        return AbstractIllager.IllagerArmPose.CROSSED;
     }
 
     @Override
@@ -158,45 +151,43 @@ public class Basher extends AbstractIllager {
     }
 
     @Override
-    public boolean hurt(final DamageSource source, final float amount) {
-        final Entity attacker = source.getEntity();
-        final boolean hasShield = this.getMainHandItem().is(Items.SHIELD);
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource damageSource, float damageAmount) {
+        Entity attacker = damageSource.getEntity();
+        boolean hasShield = this.getMainHandItem().is(Items.SHIELD);
         if (this.isAggressive()) {
             if (attacker instanceof LivingEntity) {
-                final ItemStack attackerMainHand = ((LivingEntity) attacker).getMainHandItem();
-                final ItemStack basherMainHand = this.getMainHandItem();
+                ItemStack attackerMainHand = ((LivingEntity) attacker).getMainHandItem();
+                ItemStack basherMainHand = this.getMainHandItem();
                 if ((ToolTypeHelper.INSTANCE.isAxe(attackerMainHand) || attacker instanceof IronGolem || this.blockedCount >= 4) && basherMainHand.is(Items.SHIELD)) {
                     this.playSound(SoundEvents.SHIELD_BREAK, 1.0f, 1.0f);
                     this.setStunTicks(60);
-                    if (this.level() instanceof ServerLevel) {
-                        ((ServerLevel) this.level()).sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM, basherMainHand), this.getX(), this.getY() + 1.5, this.getZ(), 30, 0.3, 0.2, 0.3, 0.003);
-                        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_AXE));
-                    }
-                    return super.hurt(source, amount);
+                    serverLevel.sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM, basherMainHand), this.getX(), this.getY() + 1.5, this.getZ(), 30, 0.3, 0.2, 0.3, 0.003);
+                    this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_AXE));
+                    return super.hurtServer(serverLevel, damageSource, damageAmount);
                 }
             }
-            if (source.getDirectEntity() instanceof AbstractArrow && hasShield) {
+            if (damageSource.getDirectEntity() instanceof AbstractArrow && hasShield) {
                 this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 1.0f);
                 ++this.blockedCount;
                 return false;
             }
-            if (source.getDirectEntity() instanceof LivingEntity && hasShield) {
+            if (damageSource.getDirectEntity() instanceof LivingEntity && hasShield) {
                 this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 1.0f);
                 ++this.blockedCount;
                 return false;
             }
         }
-        return super.hurt(source, amount);
+        return super.hurtServer(serverLevel, damageSource, damageAmount);
     }
 
     @Override
     @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData) {
-        SpawnGroupData entityData2 = super.finalizeSpawn(level, difficulty, spawnReason, entityData);
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason entitySpawnReason, @Nullable SpawnGroupData spawnGroupData) {
+        spawnGroupData = super.finalizeSpawn(level, difficulty, entitySpawnReason, spawnGroupData);
         ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
         this.populateDefaultEquipmentSlots(level.getRandom(), difficulty);
         this.populateDefaultEquipmentEnchantments(level, level.getRandom(), difficulty);
-        return entityData2;
+        return spawnGroupData;
     }
 
     @Override
@@ -205,18 +196,6 @@ public class Basher extends AbstractIllager {
             this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.SHIELD));
         }
     }
-
-    @Override
-    public boolean isAlliedTo(Entity other) {
-        if (super.isAlliedTo(other)) {
-            return true;
-        }
-        if (other instanceof LivingEntity livingEntity && livingEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
-            return this.getTeam() == null && other.getTeam() == null;
-        }
-        return false;
-    }
-
 
     @Override
     protected SoundEvent getAmbientSound() {

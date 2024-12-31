@@ -28,6 +28,8 @@ public class ServerConfig implements ConfigCore {
     public final IllagerConfig inquisitor = new IllagerConfig(RaidWavesConfigHelper.INQUISITOR_RAID_WAVES, RaidWavesConfigHelper::getInquisitorRaidWaves);
     @Config
     public final IllagerConfig alchemist = new IllagerConfig(RaidWavesConfigHelper.ALCHEMIST_RAID_WAVES, RaidWavesConfigHelper::getAlchemistRaidWaves);
+    @Config
+    public final IllagerConfig invoker = new IllagerConfig(RaidWavesConfigHelper.INVOKER_RAID_WAVES, RaidWavesConfigHelper::getInvokerRaidWaves);
 
     public static class IllagerConfig implements ConfigCore {
         private final int[] raidWaves;

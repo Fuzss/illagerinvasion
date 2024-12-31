@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.joml.Quaternionf;
 
 public class InvokerRender extends MobRenderer<Invoker, InvokerEntityModel<Invoker>> {
     private static final ResourceLocation INVOKER_LOCATION = IllagerInvasion.id("textures/entity/invoker.png");
@@ -24,12 +25,25 @@ public class InvokerRender extends MobRenderer<Invoker, InvokerEntityModel<Invok
     }
 
     @Override
+    protected void setupRotations(Invoker entity, PoseStack poseStack, float bob, float yBodyRot, float partialTick, float scale) {
+        super.setupRotations(entity, poseStack, bob, yBodyRot, partialTick, scale);
+        float rotation = Mth.sin((entity.tickCount + partialTick) * 0.1F) * Mth.DEG_TO_RAD;
+        poseStack.mulPose((new Quaternionf()).rotationZYX(rotation, 0.0F, -rotation));
+        poseStack.translate(0.0F, 0.3F + rotation, 0.0F);
+    }
+
+    @Override
     public void render(Invoker invoker, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
-        float z = 0.02f * 3.8f % 10;
-        float q = Mth.sin((float) (invoker).tickCount * z) * 1.5f * ((float) Math.PI / 180);
-        matrixStack.translate(0.0f, 0.3 + q, 0.0f);
-        matrixStack.scale(0.95f, 0.95f, 0.95f);
+//        float z = 0.02f * 3.8f % 10;
+//        float q = Mth.sin((float) (invoker).tickCount * 0.1f) * ((float) Math.PI / 180);
+//        matrixStack.translate(0.0f, 0.3 + q, 0.0f);
         super.render(invoker, f, g, matrixStack, vertexConsumerProvider, i);
+    }
+
+    @Override
+    protected void scale(Invoker livingEntity, PoseStack poseStack, float partialTickTime) {
+        super.scale(livingEntity, poseStack, partialTickTime);
+        poseStack.scale(0.95f, 0.95f, 0.95f);
     }
 
     @Override

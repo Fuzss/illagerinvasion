@@ -20,7 +20,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
@@ -37,15 +36,10 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Sheep;
-import net.minecraft.world.entity.monster.AbstractIllager;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Ravager;
-import net.minecraft.world.entity.monster.SpellcasterIllager;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -54,7 +48,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class Invoker extends SpellcasterIllager implements PowerableMob {
+public class Invoker extends SpellcasterIllager {
     private static final EntityDataAccessor<Boolean> DATA_IS_SHIELDED = SynchedEntityData.defineId(Invoker.class, EntityDataSerializers.BOOLEAN);
 
     private final ServerBossEvent bossBar = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.YELLOW, BossEvent.BossBarOverlay.PROGRESS);
@@ -67,21 +61,20 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
     public Invoker(EntityType<? extends Invoker> entityType, Level world) {
         super(entityType, world);
-        this.xpReward = 80;
+        this.xpReward = Enemy.XP_REWARD_BOSS;
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new LookAtTargetOrWololoTarget());
+        this.goalSelector.addGoal(1, new SpellcasterIllager.SpellcasterCastingSpellGoal());
         this.goalSelector.addGoal(3, new AvoidEntityGoal<Player>(this, Player.class, 8.0f, 0.6, 1.0));
         this.goalSelector.addGoal(5, new AreaDamageGoal());
         this.goalSelector.addGoal(4, new CastTeleportGoal());
         this.goalSelector.addGoal(5, new SummonVexGoal());
         this.goalSelector.addGoal(5, new ConjureAoeFangsGoal());
         this.goalSelector.addGoal(6, new ConjureFangsGoal());
-        this.goalSelector.addGoal(6, new WololoGoal());
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
@@ -91,14 +84,13 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<IronGolem>(this, IronGolem.class, false));
     }
 
-    @Override
     public boolean isPowered() {
         return this.getShieldedState();
     }
 
     @Override
-    public boolean doHurtTarget(Entity target) {
-        if (!super.doHurtTarget(target)) {
+    public boolean doHurtTarget(ServerLevel serverLevel, Entity target) {
+        if (!super.doHurtTarget(serverLevel, target)) {
             return false;
         }
         if (target instanceof LivingEntity) {
@@ -148,11 +140,11 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
     }
 
     @Override
-    protected void customServerAiStep() {
+    protected void customServerAiStep(ServerLevel serverLevel) {
         --this.teleportCooldown;
         --this.areaDamageCooldown;
         --this.fangaoecooldown;
-        super.customServerAiStep();
+        super.customServerAiStep(serverLevel);
         this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
         if (this.isAoeCasting && this.isCastingSpell()) {
             SpellParticleUtil.sendSpellParticles(this, (ServerLevel) this.level(), ParticleTypes.SMOKE, 2, 0.06D);
@@ -193,64 +185,56 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-
+        // NO-OP
     }
 
     @Override
-    public boolean isAlliedTo(Entity other) {
-        if (other == null) {
+    protected boolean considersEntityAsAlly(Entity entity) {
+        if (entity == this) {
+            return true;
+        } else if (super.considersEntityAsAlly(entity)) {
+            return true;
+        } else {
+            if (entity instanceof Surrendered surrendered && surrendered.getOwner() != null) {
+                return this.considersEntityAsAlly(surrendered.getOwner());
+            }
+
             return false;
         }
-        if (other == this) {
-            return true;
-        }
-        if (super.isAlliedTo(other)) {
-            return true;
-        }
-        if (other instanceof Surrendered) {
-            return this.isAlliedTo(((Surrendered) other).getOwner());
-        }
-        if (other instanceof LivingEntity livingEntity && livingEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
-            return this.getTeam() == null && other.getTeam() == null;
-        }
-        return false;
     }
 
     @Override
     public AbstractIllager.IllagerArmPose getArmPose() {
         if (this.isAggressive()) {
             return AbstractIllager.IllagerArmPose.ATTACKING;
-        }
-        if (this.isCastingSpell()) {
+        } else if (this.isCastingSpell()) {
             return IllagerArmPose.SPELLCASTING;
-        }
-        if (this.isCelebrating()) {
+        } else if (this.isCelebrating()) {
             return IllagerArmPose.CELEBRATING;
+        } else {
+            return IllagerArmPose.CROSSED;
         }
-        return AbstractIllager.IllagerArmPose.CROSSED;
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if (!this.level().isClientSide) {
-            if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-                if (!this.getShieldedState() && this.random.nextInt(2) == 0) {
-                    this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
-                    this.setShieldedState(true);
-                }
-            } else if (this.getShieldedState() && this.random.nextInt(3) == 0) {
-                ((ServerLevel) this.level()).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY() + 1, this.getZ(), 30, 0.5D, 0.7D, 0.5D, 0.5D);
-                this.playSound(ModSoundEvents.INVOKER_SHIELD_BREAK_SOUND_EVENT.value(), 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
-                this.setShieldedState(false);
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource damageSource, float damageAmount) {
+        if (damageSource.is(DamageTypeTags.IS_PROJECTILE)) {
+            if (!this.getShieldedState() && this.random.nextInt(2) == 0) {
+                this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
+                this.setShieldedState(true);
             }
+        } else if (this.getShieldedState() && this.random.nextInt(3) == 0) {
+            serverLevel.sendParticles(ParticleTypes.CRIT, this.getX(), this.getY() + 1, this.getZ(), 30, 0.5D, 0.7D, 0.5D, 0.5D);
+            this.playSound(ModSoundEvents.INVOKER_SHIELD_BREAK_SOUND_EVENT.value(), 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
+            this.setShieldedState(false);
         }
 
-        return super.hurt(source, amount);
+        return super.hurtServer(serverLevel, damageSource, damageAmount);
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource source) {
-        return super.isInvulnerableTo(source) || source.is(DamageTypeTags.WITCH_RESISTANT_TO) || this.getShieldedState() && source.is(DamageTypeTags.IS_PROJECTILE);
+    public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
+        return super.isInvulnerableTo(serverLevel, damageSource) || damageSource.is(DamageTypeTags.WITCH_RESISTANT_TO) || this.getShieldedState() && damageSource.is(DamageTypeTags.IS_PROJECTILE);
     }
 
     @Override
@@ -286,18 +270,6 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
         // NO-OP
     }
 
-    class LookAtTargetOrWololoTarget extends SpellcasterIllager.SpellcasterCastingSpellGoal {
-
-        @Override
-        public void tick() {
-            if (Invoker.this.getTarget() != null) {
-                Invoker.this.getLookControl().setLookAt(Invoker.this.getTarget(), Invoker.this.getMaxHeadYRot(), Invoker.this.getMaxHeadXRot());
-            } else if (Invoker.this.getWololoTarget() != null) {
-                Invoker.this.getLookControl().setLookAt(Invoker.this.getWololoTarget(), Invoker.this.getMaxHeadYRot(), Invoker.this.getMaxHeadXRot());
-            }
-        }
-    }
-
     class SummonVexGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
         private static final TargetingConditions CLOSE_VEX_PREDICATE = TargetingConditions.forNonCombat().range(16.0).ignoreLineOfSight().ignoreInvisibilityTesting();
 
@@ -305,9 +277,10 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
         public boolean canUse() {
             if (!super.canUse()) {
                 return false;
+            } else {
+                return ((ServerLevel) Invoker.this.level()).getNearbyEntities(Surrendered.class, CLOSE_VEX_PREDICATE, Invoker.this, Invoker.this.getBoundingBox().inflate(20.0))
+                        .size() < 3;
             }
-            List<Surrendered> entities = Invoker.this.level().getNearbyEntities(Surrendered.class, CLOSE_VEX_PREDICATE, Invoker.this, Invoker.this.getBoundingBox().inflate(20.0));
-            return entities.size() < 3;
         }
 
         @Override
@@ -322,16 +295,18 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
         @Override
         protected void performSpellCasting() {
-            ServerLevel serverWorld = (ServerLevel) Invoker.this.level();
+            ServerLevel serverLevel = (ServerLevel) Invoker.this.level();
             for (int i = 0; i < 4; ++i) {
                 BlockPos blockPos = Invoker.this.blockPosition().offset(-2 + Invoker.this.random.nextInt(5), 1, -2 + Invoker.this.random.nextInt(5));
-                Surrendered surrendered = ModEntityTypes.SURRENDERED_ENTITY_TYPE.value().create(Invoker.this.level());
-                surrendered.moveTo(blockPos, 0.0f, 0.0f);
-                surrendered.finalizeSpawn(serverWorld, Invoker.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, null);
-                surrendered.setOwner(Invoker.this);
-                surrendered.setBounds(blockPos);
-                surrendered.setLifeTicks(20 * (30 + Invoker.this.random.nextInt(90)));
-                serverWorld.addFreshEntityWithPassengers(surrendered);
+                Surrendered surrendered = ModEntityTypes.SURRENDERED_ENTITY_TYPE.value().create(Invoker.this.level(), EntitySpawnReason.MOB_SUMMONED);
+                if (surrendered != null) {
+                    surrendered.moveTo(blockPos, 0.0f, 0.0f);
+                    surrendered.finalizeSpawn(serverLevel, Invoker.this.level().getCurrentDifficultyAt(blockPos), EntitySpawnReason.MOB_SUMMONED, null);
+                    surrendered.setOwner(Invoker.this);
+                    surrendered.setBoundOrigin(blockPos);
+                    surrendered.setLimitedLife(20 * (30 + Invoker.this.random.nextInt(90)));
+                    serverLevel.addFreshEntityWithPassengers(surrendered);
+                }
             }
         }
 
@@ -429,76 +404,6 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
         }
     }
 
-    public class WololoGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
-        private final TargetingConditions convertibleSheepPredicate = TargetingConditions.forNonCombat().range(16.0).selector(livingEntity -> ((Sheep) livingEntity).getColor() == DyeColor.BLUE);
-
-        @Override
-        public boolean canUse() {
-            if (Invoker.this.getTarget() != null) {
-                return false;
-            }
-            if (Invoker.this.isCastingSpell()) {
-                return false;
-            }
-            if (Invoker.this.tickCount < this.nextAttackTickCount) {
-                return false;
-            }
-            if (!Invoker.this.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
-                return false;
-            }
-            List<Sheep> list = Invoker.this.level().getNearbyEntities(Sheep.class, this.convertibleSheepPredicate, Invoker.this, Invoker.this.getBoundingBox().inflate(16.0, 4.0, 16.0));
-            if (list.isEmpty()) {
-                return false;
-            }
-            Invoker.this.setWololoTarget(list.get(Invoker.this.random.nextInt(list.size())));
-            return true;
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return Invoker.this.getWololoTarget() != null && this.attackWarmupDelay > 0;
-        }
-
-        @Override
-        public void stop() {
-            super.stop();
-            Invoker.this.setWololoTarget(null);
-        }
-
-        @Override
-        protected void performSpellCasting() {
-            Sheep sheepEntity = Invoker.this.getWololoTarget();
-            if (sheepEntity != null && sheepEntity.isAlive()) {
-                sheepEntity.setColor(DyeColor.RED);
-            }
-        }
-
-        @Override
-        protected int getCastWarmupTime() {
-            return 40;
-        }
-
-        @Override
-        protected int getCastingTime() {
-            return 140;
-        }
-
-        @Override
-        protected int getCastingInterval() {
-            return 600;
-        }
-
-        @Override
-        protected SoundEvent getSpellPrepareSound() {
-            return SoundEvents.EVOKER_PREPARE_WOLOLO;
-        }
-
-        @Override
-        protected SpellcasterIllager.IllagerSpell getSpell() {
-            return SpellcasterIllager.IllagerSpell.WOLOLO;
-        }
-    }
-
     public class AreaDamageGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
 
         @Override
@@ -533,7 +438,7 @@ public class Invoker extends SpellcasterIllager implements PowerableMob {
 
         private void buff(LivingEntity entity) {
             this.knockback(entity);
-            entity.hurt(Invoker.this.damageSources().magic(), 11.0f);
+            entity.hurtServer((ServerLevel) Invoker.this.level(), Invoker.this.damageSources().indirectMagic(Invoker.this, Invoker.this), 11.0F);
             double x = entity.getX();
             double y = entity.getY() + 1;
             double z = entity.getZ();

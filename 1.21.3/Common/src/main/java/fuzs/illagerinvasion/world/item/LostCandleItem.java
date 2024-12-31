@@ -1,6 +1,7 @@
 package fuzs.illagerinvasion.world.item;
 
 import fuzs.illagerinvasion.init.ModSoundEvents;
+import fuzs.puzzleslib.api.util.v1.InteractionResultHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -29,29 +30,36 @@ public class LostCandleItem extends Item {
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         Player player = context.getPlayer();
-        $1: if (level.isClientSide) {
-            for (BlockPos pos : BlockPos.withinManhattan(player.blockPosition(), 8, 8, 8)) {
-                BlockState state = level.getBlockState(pos);
-                for (CandleOreType type : CandleOreType.values()) {
-                    if (this.tryPlayOreSound(level, player, state, type)) {
-                        break $1;
-                    }
-                }
+        if (level.isClientSide) {
+            if (!this.iterateNearbyBlocks(player, level)) {
+                level.playSound(player, player.blockPosition(), SoundEvents.FIRE_EXTINGUISH, SoundSource.AMBIENT, 0.6F, 1.0F);
             }
-            level.playSound(player, player.blockPosition(), SoundEvents.FIRE_EXTINGUISH, SoundSource.AMBIENT, 0.6F, 1.0F);
         } else {
-            player.getCooldowns().addCooldown(this, 60);
+            player.getCooldowns().addCooldown(context.getItemInHand(), 60);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResultHelper.sidedSuccess(level.isClientSide);
     }
 
-    private boolean tryPlayOreSound(Level level, Player player, BlockState state, CandleOreType type) {
-        if (state.is(type.blocks)) {
-            level.playSound(player, player.blockPosition(), type.soundEvent.value(), SoundSource.AMBIENT, 1.0F, 1.0F);
-            player.displayClientMessage(Component.translatable(this.getDescriptionId() + ".foundNearby", type.component), true);
-            return true;
+    private boolean iterateNearbyBlocks(Player player, Level level) {
+        for (BlockPos blockPos : BlockPos.withinManhattan(player.blockPosition(), 8, 8, 8)) {
+            BlockState blockState = level.getBlockState(blockPos);
+            for (CandleOreType type : CandleOreType.values()) {
+                if (this.tryPlayOreSound(level, player, blockState, type)) {
+                    return true;
+                }
+            }
         }
         return false;
+    }
+
+    private boolean tryPlayOreSound(Level level, Player player, BlockState blockState, CandleOreType candleOreType) {
+        if (blockState.is(candleOreType.blocks)) {
+            level.playSound(player, player.blockPosition(), candleOreType.soundEvent.value(), SoundSource.AMBIENT, 1.0F, 1.0F);
+            player.displayClientMessage(Component.translatable(this.getDescriptionId() + ".foundNearby", candleOreType.component), true);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public enum CandleOreType {

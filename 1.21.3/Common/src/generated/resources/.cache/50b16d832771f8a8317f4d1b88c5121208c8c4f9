@@ -1,3 +1,4 @@
-// 1.21.1	2024-09-12T17:34:10.353742	Tags for minecraft:block mod id vanilla
+// 1.21.3	2024-12-31T19:19:06.483708	Tags for minecraft:block mod id vanilla
+62af67f76ab32246cab51efba92aabe994dc70cd data/illagerinvasion/tags/block/magic_fire_replaceable.json
 cf7012f8b0b6b356d855352f42b4c8fb8ca2c821 data/minecraft/tags/block/fire.json
 056d84d4ebf04369136bc80c9694620d50ce3b58 data/minecraft/tags/block/mineable/axe.json

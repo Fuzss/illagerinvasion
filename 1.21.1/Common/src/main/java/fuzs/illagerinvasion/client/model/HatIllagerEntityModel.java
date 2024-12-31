@@ -48,22 +48,24 @@ public class HatIllagerEntityModel<T extends AbstractIllager> extends Hierarchic
     }
 
     public static LayerDefinition getTexturedModelData() {
-        final MeshDefinition modelData = new MeshDefinition();
-        final PartDefinition modelPartData = modelData.getRoot();
-        final PartDefinition modelPartData2 = modelPartData.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0f, -10.0f, -4.0f, 8.0f, 10.0f, 8.0f), PartPose.offset(0.0f, 0.0f, 0.0f));
-        modelPartData2.addOrReplaceChild("lower_hat", CubeListBuilder.create().texOffs(0, 64).addBox(-7.0f, -10.0f, -7.0f, 14.0f, 1.0f, 14.0f), PartPose.offset(0.0f, -1.0f, 0.0f));
-        modelPartData2.addOrReplaceChild("middle_hat", CubeListBuilder.create().texOffs(0, 80).addBox(-4.0f, -19.76f, -4.0f, 8.0f, 10.0f, 8.0f, new CubeDeformation(-0.05f)), PartPose.offsetAndRotation(0.0f, -1.0f, 0.0f, -0.05f, 0.0f, 0.0f));
-        modelPartData2.addOrReplaceChild("upper_hat", CubeListBuilder.create().texOffs(0, 98).addBox(-4.0f, -19.76f, 3.9f, 8.0f, 5.0f, 5.0f, new CubeDeformation(-0.05f)), PartPose.offsetAndRotation(0.0f, -1.0f, 0.0f, -0.05f, 0.0f, 0.0f));
-        modelPartData2.addOrReplaceChild("hat", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0f, -10.0f, -4.0f, 8.0f, 12.0f, 8.0f, new CubeDeformation(0.45f)), PartPose.ZERO);
-        modelPartData2.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(24, 0).addBox(-1.0f, -1.0f, -6.0f, 2.0f, 4.0f, 2.0f), PartPose.offset(0.0f, -2.0f, 0.0f));
-        modelPartData.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 20).addBox(-4.0f, 0.0f, -3.0f, 8.0f, 12.0f, 6.0f).texOffs(0, 38).addBox(-4.0f, 0.0f, -3.0f, 8.0f, 18.0f, 6.0f, new CubeDeformation(0.5f)), PartPose.offset(0.0f, 0.0f, 0.0f));
-        final PartDefinition modelPartData3 = modelPartData.addOrReplaceChild("arms", CubeListBuilder.create().texOffs(44, 22).addBox(-8.0f, -2.0f, -2.0f, 4.0f, 8.0f, 4.0f).texOffs(40, 38).addBox(-4.0f, 2.0f, -2.0f, 8.0f, 4.0f, 4.0f), PartPose.offsetAndRotation(0.0f, 3.0f, -1.0f, -0.75f, 0.0f, 0.0f));
-        modelPartData3.addOrReplaceChild("left_shoulder", CubeListBuilder.create().texOffs(44, 22).mirror().addBox(4.0f, -2.0f, -2.0f, 4.0f, 8.0f, 4.0f), PartPose.ZERO);
-        modelPartData.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(0, 22).addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f), PartPose.offset(-2.0f, 12.0f, 0.0f));
-        modelPartData.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(0, 22).mirror().addBox(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f), PartPose.offset(2.0f, 12.0f, 0.0f));
-        modelPartData.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(40, 46).addBox(-3.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f), PartPose.offset(-5.0f, 2.0f, 0.0f));
-        modelPartData.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(40, 46).mirror().addBox(-1.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f), PartPose.offset(5.0f, 2.0f, 0.0f));
-        return LayerDefinition.create(modelData, 64, 128);
+        final MeshDefinition meshDefinition = new MeshDefinition();
+        final PartDefinition partDefinition = meshDefinition.getRoot();
+        final PartDefinition partDefinition1 = partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -10.0F, -4.0F, 8.0F, 10.0F, 8.0F), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition partDefinition3 = partDefinition1.addOrReplaceChild("hat",
+                CubeListBuilder.create()
+                        .texOffs(32, 0)
+                        .addBox(-4.0F, -10.0F, -4.0F, 8.0F, 12.0F, 8.0F, new CubeDeformation(0.45F)),
+                PartPose.ZERO);
+        partDefinition3.addOrReplaceChild("lower_hat", CubeListBuilder.create().texOffs(0, 64).addBox(-7.0F, -10.0F, -7.0F, 14.0F, 1.0F, 14.0F), PartPose.offset(0.0F, -1.0F, 0.0F)).addOrReplaceChild("middle_hat", CubeListBuilder.create().texOffs(0, 80).addBox(-4.0F, -19.76f, -4.0F, 8.0F, 10.0F, 8.0F, new CubeDeformation(-0.05f)), PartPose.rotation(-0.05F, 0.0F, 0.0F)).addOrReplaceChild("upper_hat", CubeListBuilder.create().texOffs(0, 98).addBox(-4.0F, -19.76f, 3.9f, 8.0F, 5.0F, 5.0F, new CubeDeformation(-0.05f)), PartPose.ZERO);
+        partDefinition1.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(24, 0).addBox(-1.0F, -1.0F, -6.0F, 2.0F, 4.0F, 2.0F), PartPose.offset(0.0F, -2.0F, 0.0F));
+        partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(16, 20).addBox(-4.0F, 0.0F, -3.0F, 8.0F, 12.0F, 6.0F).texOffs(0, 38).addBox(-4.0F, 0.0F, -3.0F, 8.0F, 18.0F, 6.0F, new CubeDeformation(0.5f)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition partDefinition2 = partDefinition.addOrReplaceChild("arms", CubeListBuilder.create().texOffs(44, 22).addBox(-8.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F).texOffs(40, 38).addBox(-4.0F, 2.0F, -2.0F, 8.0F, 4.0F, 4.0F), PartPose.offsetAndRotation(0.0F, 3.0F, -1.0F, -0.75f, 0.0F, 0.0F));
+        partDefinition2.addOrReplaceChild("left_shoulder", CubeListBuilder.create().texOffs(44, 22).mirror().addBox(4.0F, -2.0F, -2.0F, 4.0F, 8.0F, 4.0F), PartPose.ZERO);
+        partDefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(0, 22).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F), PartPose.offset(-2.0F, 12.0F, 0.0F));
+        partDefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(0, 22).mirror().addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F), PartPose.offset(2.0F, 12.0F, 0.0F));
+        partDefinition.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(40, 46).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F), PartPose.offset(-5.0F, 2.0F, 0.0F));
+        partDefinition.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(40, 46).mirror().addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F), PartPose.offset(5.0F, 2.0F, 0.0F));
+        return LayerDefinition.create(meshDefinition, 64, 128);
     }
 
     @Override
@@ -77,11 +79,11 @@ public class HatIllagerEntityModel<T extends AbstractIllager> extends Hierarchic
         this.head.xRot = headPitch * 0.017453292f;
         if (this.riding) {
             this.rightArm.xRot = -0.62831855f;
-            this.rightArm.yRot = 0.0f;
-            this.rightArm.zRot = 0.0f;
+            this.rightArm.yRot = 0.0F;
+            this.rightArm.zRot = 0.0F;
             this.leftArm.xRot = -0.62831855f;
-            this.leftArm.yRot = 0.0f;
-            this.leftArm.zRot = 0.0f;
+            this.leftArm.yRot = 0.0F;
+            this.leftArm.zRot = 0.0F;
             this.rightLeg.xRot = -1.4137167f;
             this.rightLeg.yRot = 0.31415927f;
             this.rightLeg.zRot = 0.07853982f;
@@ -89,18 +91,18 @@ public class HatIllagerEntityModel<T extends AbstractIllager> extends Hierarchic
             this.leftLeg.yRot = -0.31415927f;
             this.leftLeg.zRot = -0.07853982f;
         } else {
-            this.rightArm.xRot = Mth.cos(limbSwing * 0.6662f + 3.1415927f) * 2.0f * limbSwingAmount * 0.5f;
-            this.rightArm.yRot = 0.0f;
-            this.rightArm.zRot = 0.0f;
-            this.leftArm.xRot = Mth.cos(limbSwing * 0.6662f) * 2.0f * limbSwingAmount * 0.5f;
-            this.leftArm.yRot = 0.0f;
-            this.leftArm.zRot = 0.0f;
+            this.rightArm.xRot = Mth.cos(limbSwing * 0.6662f + 3.1415927f) * 2.0F * limbSwingAmount * 0.5f;
+            this.rightArm.yRot = 0.0F;
+            this.rightArm.zRot = 0.0F;
+            this.leftArm.xRot = Mth.cos(limbSwing * 0.6662f) * 2.0F * limbSwingAmount * 0.5f;
+            this.leftArm.yRot = 0.0F;
+            this.leftArm.zRot = 0.0F;
             this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount * 0.5f;
-            this.rightLeg.yRot = 0.0f;
-            this.rightLeg.zRot = 0.0f;
+            this.rightLeg.yRot = 0.0F;
+            this.rightLeg.zRot = 0.0F;
             this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount * 0.5f;
-            this.leftLeg.yRot = 0.0f;
-            this.leftLeg.zRot = 0.0f;
+            this.leftLeg.yRot = 0.0F;
+            this.leftLeg.zRot = 0.0F;
         }
         final AbstractIllager.IllagerArmPose state = entity.getArmPose();
         if (state == AbstractIllager.IllagerArmPose.ATTACKING) {
@@ -110,16 +112,16 @@ public class HatIllagerEntityModel<T extends AbstractIllager> extends Hierarchic
                 AnimationUtils.swingWeaponDown(this.rightArm, this.leftArm, (Mob) entity, this.attackTime, ageInTicks);
             }
         } else if (state == AbstractIllager.IllagerArmPose.SPELLCASTING) {
-            this.rightArm.z = 0.0f;
-            this.rightArm.x = -5.0f;
-            this.leftArm.z = 0.0f;
-            this.leftArm.x = 5.0f;
+            this.rightArm.z = 0.0F;
+            this.rightArm.x = -5.0F;
+            this.leftArm.z = 0.0F;
+            this.leftArm.x = 5.0F;
             this.rightArm.xRot = Mth.cos(ageInTicks * 0.6662f) * 0.25f;
             this.leftArm.xRot = Mth.cos(ageInTicks * 0.6662f) * 0.25f;
             this.rightArm.zRot = 2.3561945f;
             this.leftArm.zRot = -2.3561945f;
-            this.rightArm.yRot = 0.0f;
-            this.leftArm.yRot = 0.0f;
+            this.rightArm.yRot = 0.0F;
+            this.leftArm.yRot = 0.0F;
         } else if (state == AbstractIllager.IllagerArmPose.BOW_AND_ARROW) {
             this.rightArm.yRot = -0.1f + this.head.yRot;
             this.rightArm.xRot = -1.5707964f + this.head.xRot;
@@ -131,16 +133,16 @@ public class HatIllagerEntityModel<T extends AbstractIllager> extends Hierarchic
         } else if (state == AbstractIllager.IllagerArmPose.CROSSBOW_CHARGE) {
             AnimationUtils.animateCrossbowCharge(this.rightArm, this.leftArm, (LivingEntity) entity, true);
         } else if (state == AbstractIllager.IllagerArmPose.CELEBRATING) {
-            this.rightArm.z = 0.0f;
-            this.rightArm.x = -5.0f;
+            this.rightArm.z = 0.0F;
+            this.rightArm.x = -5.0F;
             this.rightArm.xRot = Mth.cos(ageInTicks * 0.6662f) * 0.05f;
             this.rightArm.zRot = 2.670354f;
-            this.rightArm.yRot = 0.0f;
-            this.leftArm.z = 0.0f;
-            this.leftArm.x = 5.0f;
+            this.rightArm.yRot = 0.0F;
+            this.leftArm.z = 0.0F;
+            this.leftArm.x = 5.0F;
             this.leftArm.xRot = Mth.cos(ageInTicks * 0.6662f) * 0.05f;
             this.leftArm.zRot = -2.3561945f;
-            this.leftArm.yRot = 0.0f;
+            this.leftArm.yRot = 0.0F;
         }
         final boolean bl = this.arms.visible = (state == AbstractIllager.IllagerArmPose.CROSSED);
         this.leftArm.visible = !bl;

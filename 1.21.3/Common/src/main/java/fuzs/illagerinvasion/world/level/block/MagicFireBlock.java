@@ -7,12 +7,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.monster.AbstractIllager;
-import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,8 +25,10 @@ public class MagicFireBlock extends BaseFireBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (!entity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
-            entity.hurt(level.damageSources().inFire(), 3.0F);
-            entity.igniteForTicks(0);
+            // just a cheap trick, so no flame overlay shows which would have the wrong fire color
+            int remainingFireTicks = entity.getRemainingFireTicks();
+            super.entityInside(state, level, pos, entity);
+            entity.setRemainingFireTicks(remainingFireTicks);
         }
     }
 
@@ -48,8 +48,15 @@ public class MagicFireBlock extends BaseFireBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
-        return this.canSurvive(state, level, currentPos) ? super.updateShape(state, direction, neighborState, level, currentPos, neighborPos) : Blocks.AIR.defaultBlockState();
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        return this.canSurvive(state, level, pos) ? super.updateShape(state,
+                level,
+                scheduledTickAccess,
+                pos,
+                direction,
+                neighborPos,
+                neighborState,
+                random) : Blocks.AIR.defaultBlockState();
     }
 
     @Override

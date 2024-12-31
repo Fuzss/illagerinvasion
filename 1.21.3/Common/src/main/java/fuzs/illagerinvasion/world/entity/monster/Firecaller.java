@@ -1,6 +1,5 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.world.entity.projectile.FlyingMagma;
@@ -9,9 +8,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -23,9 +20,9 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
-import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
@@ -38,16 +35,16 @@ public class Firecaller extends SpellcasterIllager {
     private int conjureSkullCooldown = 160;
     private int areaDamageCooldown = 300;
 
-    public Firecaller(final EntityType<? extends Firecaller> entityType, final Level world) {
-        super(entityType, world);
-        this.xpReward = 15;
+    public Firecaller(EntityType<? extends Firecaller> entityType, Level level) {
+        super(entityType, level);
+        this.xpReward = Enemy.XP_REWARD_LARGE;
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new LookAtTargetOrWololoTarget());
+        this.goalSelector.addGoal(1, new SpellcasterIllager.SpellcasterCastingSpellGoal());
         this.goalSelector.addGoal(4, new ConjureSkullGoal());
         this.goalSelector.addGoal(3, new AreaDamageGoal());
         this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, Player.class, 8.0f, 0.6, 1.0));
@@ -56,8 +53,10 @@ public class Firecaller extends SpellcasterIllager {
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
+        this.targetSelector.addGoal(2,
+                new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
+        this.targetSelector.addGoal(3,
+                new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, false));
     }
 
@@ -67,27 +66,10 @@ public class Firecaller extends SpellcasterIllager {
     }
 
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
+    protected void customServerAiStep(ServerLevel serverLevel) {
+        super.customServerAiStep(serverLevel);
         --this.conjureSkullCooldown;
         --this.areaDamageCooldown;
-    }
-
-    @Override
-    public boolean isAlliedTo(final Entity other) {
-        if (other == null) {
-            return false;
-        }
-        if (other == this) {
-            return true;
-        }
-        if (super.isAlliedTo(other)) {
-            return true;
-        }
-        if (other instanceof Vex) {
-            return this.isAlliedTo(((Vex) other).getOwner());
-        }
-        return other instanceof LivingEntity livingEntity && livingEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS) && this.getTeam() == null && other.getTeam() == null;
     }
 
     @Override
@@ -101,7 +83,7 @@ public class Firecaller extends SpellcasterIllager {
     }
 
     @Override
-    protected SoundEvent getHurtSound(final DamageSource source) {
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return ModSoundEvents.FIRECALLER_HURT_SOUND_EVENT.value();
     }
 
@@ -117,43 +99,51 @@ public class Firecaller extends SpellcasterIllager {
 
     @Override
     public AbstractIllager.IllagerArmPose getArmPose() {
-        if (this.isCastingSpell()) {
-            return AbstractIllager.IllagerArmPose.SPELLCASTING;
-        }
-        return AbstractIllager.IllagerArmPose.CROSSED;
-    }
-
-    class LookAtTargetOrWololoTarget extends SpellcasterIllager.SpellcasterCastingSpellGoal {
-
-        @Override
-        public void tick() {
-            if (Firecaller.this.getTarget() != null) {
-                Firecaller.this.getLookControl().setLookAt(Firecaller.this.getTarget(), Firecaller.this.getMaxHeadYRot(), Firecaller.this.getMaxHeadXRot());
-            }
-        }
+        return this.isCastingSpell() ? IllagerArmPose.SPELLCASTING : IllagerArmPose.NEUTRAL;
     }
 
     public class ConjureSkullGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
-        private List<LivingEntity> getTargets() {
-            return Firecaller.this.level().getEntitiesOfClass(LivingEntity.class, Firecaller.this.getBoundingBox().inflate(5), entity -> (entity instanceof Player) || (entity instanceof IronGolem));
-        }
 
         @Override
         public boolean canUse() {
             if (Firecaller.this.getTarget() == null) {
                 return false;
-            }
-            if (Firecaller.this.conjureSkullCooldown > 0) {
+            } else if (Firecaller.this.conjureSkullCooldown > 0) {
                 return false;
+            } else {
+                return Firecaller.this.conjureSkullCooldown < 0 && !Firecaller.this.isCastingSpell() &&
+                        this.getTargets().isEmpty();
             }
-            return Firecaller.this.conjureSkullCooldown < 0 && !Firecaller.this.isCastingSpell() && this.getTargets().isEmpty();
+        }
+
+        private List<LivingEntity> getTargets() {
+            return Firecaller.this.level()
+                    .getEntitiesOfClass(LivingEntity.class,
+                            Firecaller.this.getBoundingBox().inflate(5),
+                            entity -> (entity instanceof Player) || (entity instanceof IronGolem));
         }
 
         @Override
         public void tick() {
-            if (Firecaller.this.level() instanceof ServerLevel) {
-                ((ServerLevel) Firecaller.this.level()).sendParticles(ParticleTypes.FLAME, Firecaller.this.getX(), Firecaller.this.getY() + 2.5, Firecaller.this.getZ(), 2, 0.2D, 0.2D, 0.2D, 0.05D);
-                ((ServerLevel) Firecaller.this.level()).sendParticles(ParticleTypes.LARGE_SMOKE, Firecaller.this.getX(), Firecaller.this.getY() + 2.5, Firecaller.this.getZ(), 2, 0.2D, 0.2D, 0.2D, 0.05D);
+            if (Firecaller.this.level() instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ParticleTypes.FLAME,
+                        Firecaller.this.getX(),
+                        Firecaller.this.getY() + 2.5,
+                        Firecaller.this.getZ(),
+                        2,
+                        0.2D,
+                        0.2D,
+                        0.2D,
+                        0.05D);
+                serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE,
+                        Firecaller.this.getX(),
+                        Firecaller.this.getY() + 2.5,
+                        Firecaller.this.getZ(),
+                        2,
+                        0.2D,
+                        0.2D,
+                        0.2D,
+                        0.05D);
             }
             super.tick();
         }
@@ -182,7 +172,15 @@ public class Firecaller extends SpellcasterIllager {
                 double x = Firecaller.this.getX();
                 double y = Firecaller.this.getY() + 2.5;
                 double z = Firecaller.this.getZ();
-                ((ServerLevel) Firecaller.this.level()).sendParticles(ParticleTypes.SMOKE, x, y, z, 40, 0.4D, 0.4D, 0.4D, 0.15D);
+                ((ServerLevel) Firecaller.this.level()).sendParticles(ParticleTypes.SMOKE,
+                        x,
+                        y,
+                        z,
+                        40,
+                        0.4D,
+                        0.4D,
+                        0.4D,
+                        0.15D);
             }
             Firecaller.this.conjureSkullCooldown = 160;
         }
@@ -219,33 +217,47 @@ public class Firecaller extends SpellcasterIllager {
         public boolean canUse() {
             if (Firecaller.this.getTarget() == null) {
                 return false;
-            }
-            if (Firecaller.this.isCastingSpell()) {
+            } else if (Firecaller.this.isCastingSpell()) {
                 return false;
+            } else {
+                return Firecaller.this.areaDamageCooldown <= 0;
             }
-            return Firecaller.this.areaDamageCooldown <= 0;
         }
 
         private List<LivingEntity> getTargets() {
-            return Firecaller.this.level().getEntitiesOfClass(LivingEntity.class, Firecaller.this.getBoundingBox().inflate(6), entity -> !(entity instanceof AbstractIllager) && !(entity instanceof Surrendered) && !(entity instanceof Ravager));
-        }
-
-        private void buff(LivingEntity entity) {
-            entity.push(0.0f, 1.2f, 0.0f);
-            entity.hurt(Firecaller.this.damageSources().magic(), 6.0f);
-            entity.setRemainingFireTicks(120);
-            double x = entity.getX();
-            double y = entity.getY() + 1;
-            double z = entity.getZ();
-            ((ServerLevel) Firecaller.this.level()).sendParticles(ParticleTypes.SMOKE, x, y + 1, z, 10, 0.2D, 0.2D, 0.2D, 0.015D);
-            BlockPos blockPos = entity.blockPosition();
-            Firecaller.this.level().setBlockAndUpdate(blockPos, Blocks.FIRE.defaultBlockState());
+            return Firecaller.this.level()
+                    .getEntitiesOfClass(LivingEntity.class,
+                            Firecaller.this.getBoundingBox().inflate(6),
+                            entity -> !(entity instanceof AbstractIllager) && !(entity instanceof Surrendered) &&
+                                    !(entity instanceof Ravager));
         }
 
         @Override
         protected void performSpellCasting() {
             this.getTargets().forEach(this::buff);
             Firecaller.this.areaDamageCooldown = 300;
+        }
+
+        private void buff(LivingEntity livingEntity) {
+            livingEntity.push(0.0F, 1.2F, 0.0F);
+            livingEntity.hurtServer((ServerLevel) Firecaller.this.level(),
+                    Firecaller.this.damageSources().indirectMagic(Firecaller.this, Firecaller.this),
+                    6.0F);
+            livingEntity.setRemainingFireTicks(120);
+            double x = livingEntity.getX();
+            double y = livingEntity.getY() + 1;
+            double z = livingEntity.getZ();
+            ((ServerLevel) Firecaller.this.level()).sendParticles(ParticleTypes.SMOKE,
+                    x,
+                    y + 1,
+                    z,
+                    10,
+                    0.2D,
+                    0.2D,
+                    0.2D,
+                    0.015D);
+            BlockPos blockPos = livingEntity.blockPosition();
+            Firecaller.this.level().setBlockAndUpdate(blockPos, Blocks.FIRE.defaultBlockState());
         }
 
         @Override

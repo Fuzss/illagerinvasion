@@ -8,6 +8,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
@@ -42,7 +43,9 @@ public class ImbuingTableBlock extends Block {
     @Override
     @Nullable
     public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-        return new SimpleMenuProvider((syncId, inventory, player) -> new ImbuingMenu(syncId, inventory, ContainerLevelAccess.create(world, pos)), CONTAINER_IMBUE);
+        return new SimpleMenuProvider((int containerId, Inventory inventory, Player player) -> {
+            return new ImbuingMenu(containerId, inventory, ContainerLevelAccess.create(world, pos));
+        }, CONTAINER_IMBUE);
     }
 
     @Override
@@ -54,7 +57,13 @@ public class ImbuingTableBlock extends Block {
             double z = random.nextGaussian();
             speedX = Math.abs(speedX) * -Math.signum(x);
             speedZ = Math.abs(speedZ) * -Math.signum(z);
-            level.addParticle(ParticleTypes.ENCHANT, pos.getX() + 0.5 + x, pos.getY() + 1.0 + Math.abs(random.nextGaussian()), pos.getZ() + 0.5 + z, speedX, Math.abs(random.nextGaussian()) * 0.05, speedZ);
+            level.addParticle(ParticleTypes.ENCHANT,
+                    pos.getX() + 0.5 + x,
+                    pos.getY() + 1.0 + Math.abs(random.nextGaussian()),
+                    pos.getZ() + 0.5 + z,
+                    speedX,
+                    Math.abs(random.nextGaussian()) * 0.05,
+                    speedZ);
         }
     }
 }

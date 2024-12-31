@@ -1,24 +1,16 @@
 package fuzs.illagerinvasion.client.model;
 
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.EvokerFangsRenderState;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 
-public class InvokerFangsModel<T extends Entity> extends HierarchicalModel<T> {
-    private static final String BASE = "base";
-    private static final String UPPER_JAW = "upper_jaw";
-    private static final String LOWER_JAW = "lower_jaw";
-    private static final String SPIKE1 = "spike1";
-    private static final String SPIKE2 = "spike2";
-    private static final String SPIKE3 = "spike3";
-    private static final String SPIKE4 = "spike4";
-    private final ModelPart root;
+public class InvokerFangsModel extends EntityModel<EvokerFangsRenderState> {
     private final ModelPart base;
     private final ModelPart upperJaw;
     private final ModelPart lowerJaw;
@@ -27,58 +19,59 @@ public class InvokerFangsModel<T extends Entity> extends HierarchicalModel<T> {
     private final ModelPart spike3;
     private final ModelPart spike4;
 
-
     public InvokerFangsModel(ModelPart root) {
-        this.root = root;
-        this.base = root.getChild(BASE);
-        this.upperJaw = root.getChild(UPPER_JAW);
-        this.lowerJaw = root.getChild(LOWER_JAW);
-        this.spike1 = root.getChild(SPIKE1);
-        this.spike2 = root.getChild(SPIKE2);
-        this.spike3 = root.getChild(SPIKE3);
-        this.spike4 = root.getChild(SPIKE4);
+        super(root);
+        this.base = root.getChild("base");
+        this.upperJaw = root.getChild("upper_jaw");
+        this.lowerJaw = root.getChild("lower_jaw");
+        this.spike1 = root.getChild("spike1");
+        this.spike2 = root.getChild("spike2");
+        this.spike3 = root.getChild("spike3");
+        this.spike4 = root.getChild("spike4");
     }
 
-    public static LayerDefinition getTexturedModelData() {
+    public static LayerDefinition createBodyLayer() {
         MeshDefinition modelData = new MeshDefinition();
         PartDefinition modelPartData = modelData.getRoot();
-        CubeListBuilder modelPartBuilder2 = CubeListBuilder.create().texOffs(100, 0).addBox(-0.2F, 0.0F, -0.1F, 6.0f, 25.0f, 0.0f);
-        modelPartData.addOrReplaceChild(BASE, CubeListBuilder.create().texOffs(0, 0).addBox(0.0f, 0.0f, 0.0f, 10.0f, 12.0f, 10.0f), PartPose.offset(-5.0f, 24.0f, -5.0f));
-        modelPartData.addOrReplaceChild(SPIKE1, modelPartBuilder2, PartPose.offset(-0.2f, 0.0f, -0.1f));
-        modelPartData.addOrReplaceChild(SPIKE2, modelPartBuilder2, PartPose.offset(-0.2f, 0.0f, -0.1f));
-        modelPartData.addOrReplaceChild(SPIKE3, modelPartBuilder2, PartPose.offset(-0.2f, 0.0f, -0.1f));
-        modelPartData.addOrReplaceChild(SPIKE4, modelPartBuilder2, PartPose.offset(-0.2f, 0.0f, -0.1f));
-        CubeListBuilder modelPartBuilder = CubeListBuilder.create().texOffs(40, 0).addBox(0.0f, 0.0f, 0.0f, 4.0f, 14.0f, 8.0f);
-        modelPartData.addOrReplaceChild(UPPER_JAW, modelPartBuilder, PartPose.offset(1.5f, 24.0f, -4.0f));
-        modelPartData.addOrReplaceChild(LOWER_JAW, modelPartBuilder, PartPose.offsetAndRotation(-1.5f, 24.0f, 4.0f, 0.0f, (float) Math.PI, 0.0f));
+        CubeListBuilder modelPartBuilder2 = CubeListBuilder.create()
+                .texOffs(100, 0)
+                .addBox(-0.2F, 0.0F, -0.1F, 6.0F, 25.0F, 0.0F);
+        modelPartData.addOrReplaceChild("base",
+                CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, 0.0F, 10.0F, 12.0F, 10.0F),
+                PartPose.offset(-5.0F, 24.0F, -5.0F));
+        modelPartData.addOrReplaceChild("spike1", modelPartBuilder2, PartPose.offset(-0.2F, 0.0F, -0.1F));
+        modelPartData.addOrReplaceChild("spike2", modelPartBuilder2, PartPose.offset(-0.2F, 0.0F, -0.1F));
+        modelPartData.addOrReplaceChild("spike3", modelPartBuilder2, PartPose.offset(-0.2F, 0.0F, -0.1F));
+        modelPartData.addOrReplaceChild("spike4", modelPartBuilder2, PartPose.offset(-0.2F, 0.0F, -0.1F));
+        CubeListBuilder modelPartBuilder = CubeListBuilder.create()
+                .texOffs(40, 0)
+                .addBox(0.0F, 0.0F, 0.0F, 4.0F, 14.0F, 8.0F);
+        modelPartData.addOrReplaceChild("upper_jaw", modelPartBuilder, PartPose.offset(1.5F, 24.0F, -4.0F));
+        modelPartData.addOrReplaceChild("lower_jaw",
+                modelPartBuilder,
+                PartPose.offsetAndRotation(-1.5F, 24.0F, 4.0F, 0.0F, Mth.PI, 0.0F));
         return LayerDefinition.create(modelData, 128, 64);
     }
 
     @Override
-    public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        float f = limbAngle * 2.0f;
-        if (f > 1.0f) {
-            f = 1.0f;
-        }
-        f = 1.0f - f * f * f;
-        this.upperJaw.zRot = -Mth.cos(f * 1.8f) - 8.95f * 1.0688f;
-        this.lowerJaw.zRot = Mth.cos(f * 1.8f) + 8.95f * 1.0688f;
-        float g = (limbAngle + Mth.sin(limbAngle * 2.7f)) * 0.6f * 12.0f;
-        this.spike1.yRot = 1f;
-        this.spike2.yRot = -1f;
-        this.spike3.yRot = -2f;
-        this.spike4.yRot = 2f;
-        this.lowerJaw.y = this.upperJaw.y = 24.0f - g;
+    public void setupAnim(EvokerFangsRenderState renderState) {
+        super.setupAnim(renderState);
+        float biteProgress = renderState.biteProgress;
+        float jawRotationProgress = Math.min(biteProgress * 2.0F, 1.0F);
+        jawRotationProgress = 1.0F - jawRotationProgress * jawRotationProgress * jawRotationProgress;
+        this.upperJaw.zRot = -Mth.cos(jawRotationProgress * 1.8F) - 8.95F * 1.0688F;
+        this.lowerJaw.zRot = Mth.cos(jawRotationProgress * 1.8F) + 8.95F * 1.0688F;
+        float h = (biteProgress + Mth.sin(biteProgress * 2.7F)) * 0.6F * 12.0F;
+        this.spike1.yRot = 1.0F;
+        this.spike2.yRot = -1.0F;
+        this.spike3.yRot = -2.0F;
+        this.spike4.yRot = 2.0F;
+        this.lowerJaw.y = this.upperJaw.y = 24.0F - h;
         this.base.y = this.upperJaw.y;
-        this.spike1.y = this.upperJaw.y * Mth.cos(g / 4.0f) + 1.6f;
-        this.spike2.y = this.upperJaw.y * Mth.cos(g / 4.0f) + 1.6f;
-        this.spike3.y = this.upperJaw.y * Mth.cos(g / 4.0f) + 1.6f;
-        this.spike4.y = this.upperJaw.y * Mth.cos(g / 4.0f) + 1.6f;
-    }
-
-    @Override
-    public ModelPart root() {
-        return this.root;
+        this.spike1.y = this.upperJaw.y * Mth.cos(h / 4.0F) + 1.6F;
+        this.spike2.y = this.upperJaw.y * Mth.cos(h / 4.0F) + 1.6F;
+        this.spike3.y = this.upperJaw.y * Mth.cos(h / 4.0F) + 1.6F;
+        this.spike4.y = this.upperJaw.y * Mth.cos(h / 4.0F) + 1.6F;
     }
 }
 

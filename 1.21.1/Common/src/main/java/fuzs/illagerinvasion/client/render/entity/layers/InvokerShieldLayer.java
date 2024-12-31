@@ -4,6 +4,7 @@ import fuzs.illagerinvasion.client.init.ClientModRegistry;
 import fuzs.illagerinvasion.client.model.InvokerEntityModel;
 import fuzs.illagerinvasion.world.entity.monster.Invoker;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
+import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;

@@ -7,7 +7,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -19,9 +18,9 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
-import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
@@ -37,14 +36,14 @@ public class Archivist extends SpellcasterIllager {
 
     public Archivist(EntityType<? extends Archivist> entityType, Level world) {
         super(entityType, world);
-        this.xpReward = 10;
+        this.xpReward = Enemy.XP_REWARD_LARGE;
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new Archivist.LookAtTargetOrWololoTarget());
+        this.goalSelector.addGoal(1, new SpellcasterIllager.SpellcasterCastingSpellGoal());
         this.goalSelector.addGoal(4, new LevitateTargetsGoal());
         this.goalSelector.addGoal(3, new EnchantAllyGoal());
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
@@ -64,30 +63,10 @@ public class Archivist extends SpellcasterIllager {
 
 
     @Override
-    protected void customServerAiStep() {
+    protected void customServerAiStep(ServerLevel serverLevel) {
         --this.levitateTargetsCooldown;
         --this.enchantAlliesCooldown;
-        super.customServerAiStep();
-    }
-
-    @Override
-    public boolean isAlliedTo(Entity other) {
-        if (other == null) {
-            return false;
-        }
-        if (other == this) {
-            return true;
-        }
-        if (super.isAlliedTo(other)) {
-            return true;
-        }
-        if (other instanceof Vex) {
-            return this.isAlliedTo(((Vex) other).getOwner());
-        }
-        if (other instanceof LivingEntity livingEntity && livingEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
-            return this.getTeam() == null && other.getTeam() == null;
-        }
-        return false;
+        super.customServerAiStep(serverLevel);
     }
 
     @Override
@@ -125,21 +104,7 @@ public class Archivist extends SpellcasterIllager {
 
     @Override
     public AbstractIllager.IllagerArmPose getArmPose() {
-        if (this.isCastingSpell()) {
-            return AbstractIllager.IllagerArmPose.SPELLCASTING;
-        }
-        return AbstractIllager.IllagerArmPose.CROSSED;
-    }
-
-
-    class LookAtTargetOrWololoTarget extends SpellcasterIllager.SpellcasterCastingSpellGoal {
-
-        @Override
-        public void tick() {
-            if (Archivist.this.getTarget() != null) {
-                Archivist.this.getLookControl().setLookAt(Archivist.this.getTarget(), Archivist.this.getMaxHeadYRot(), Archivist.this.getMaxHeadXRot());
-            }
-        }
+        return this.isCastingSpell() ? IllagerArmPose.SPELLCASTING : IllagerArmPose.CROSSED;
     }
 
     public class LevitateTargetsGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
@@ -170,11 +135,6 @@ public class Archivist extends SpellcasterIllager {
             });
         }
 
-        private void buff(LivingEntity entity) {
-            this.knockback(entity);
-            entity.hurt(Archivist.this.damageSources().magic(), 4.0f);
-        }
-
         @Override
         protected void performSpellCasting() {
             Archivist.this.levitateTargetsCooldown = 220;
@@ -183,6 +143,11 @@ public class Archivist extends SpellcasterIllager {
             double y = Archivist.this.getY() + 1;
             double z = Archivist.this.getZ();
             ((ServerLevel) Archivist.this.level()).sendParticles(ParticleTypes.ENCHANT, x, y, z, 150, 3.0D, 3.0D, 3.0D, 0.1D);
+        }
+
+        private void buff(LivingEntity entity) {
+            this.knockback(entity);
+            entity.hurtServer((ServerLevel) Archivist.this.level(), Archivist.this.damageSources().indirectMagic(Archivist.this, Archivist.this), 4.0f);
         }
 
         @Override
@@ -212,7 +177,7 @@ public class Archivist extends SpellcasterIllager {
     }
 
     public class EnchantAllyGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
-        private final TargetingConditions closeEnchantableMobPredicate = TargetingConditions.forNonCombat().range(16.0).selector(livingEntity -> !(livingEntity instanceof Archivist));
+        private final TargetingConditions closeEnchantableMobPredicate = TargetingConditions.forNonCombat().range(16.0).selector((LivingEntity livingEntity, ServerLevel serverLevel) -> !(livingEntity instanceof Archivist));
         private int targetId;
 
         public boolean canEnchant() {
@@ -231,7 +196,7 @@ public class Archivist extends SpellcasterIllager {
             if (Archivist.this.isCastingSpell()) {
                 return false;
             }
-            List<AbstractIllager> list = Archivist.this.level().getNearbyEntities(AbstractIllager.class, this.closeEnchantableMobPredicate, Archivist.this, Archivist.this.getBoundingBox().inflate(16.0, 4.0, 16.0));
+            List<AbstractIllager> list = ((ServerLevel) Archivist.this.level()).getNearbyEntities(AbstractIllager.class, this.closeEnchantableMobPredicate, Archivist.this, Archivist.this.getBoundingBox().inflate(16.0, 4.0, 16.0));
             if (list.isEmpty()) {
                 return false;
             }
@@ -287,7 +252,7 @@ public class Archivist extends SpellcasterIllager {
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return (IllagerSpell) ModRegistry.ENCHANT_ILLAGER_SPELL;
+            return ModRegistry.ENCHANT_ILLAGER_SPELL;
         }
     }
 }

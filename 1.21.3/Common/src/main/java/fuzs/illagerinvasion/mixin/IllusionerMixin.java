@@ -3,6 +3,7 @@ package fuzs.illagerinvasion.mixin;
 import fuzs.illagerinvasion.util.FireworksShootingHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -64,16 +65,16 @@ abstract class IllusionerMixin extends SpellcasterIllager {
     }
 
     @Override
-    protected void actuallyHurt(DamageSource damageSource, float damageAmount) {
-        super.actuallyHurt(damageSource, damageAmount);
+    protected void actuallyHurt(ServerLevel serverLevel, DamageSource damageSource, float damageAmount) {
+        super.actuallyHurt(serverLevel, damageSource, damageAmount);
         if (damageSource.getDirectEntity() != null) {
             this.removeEffect(MobEffects.INVISIBILITY);
         }
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource source) {
-        return super.isInvulnerableTo(source) || source.is(DamageTypes.FIREWORKS);
+    public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
+        return damageSource.is(DamageTypes.FIREWORKS) || super.isInvulnerableTo(serverLevel, damageSource);
     }
 
     @Inject(method = "performRangedAttack", at = @At("HEAD"), cancellable = true)

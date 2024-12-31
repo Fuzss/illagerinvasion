@@ -65,8 +65,8 @@ public class IllagerInvasionClient implements ClientModConstructor {
 
     @Override
     public void onRegisterLayerDefinitions(LayerDefinitionsContext context) {
-        context.registerLayerDefinition(ClientModRegistry.CAPED_ILLAGER, () -> InvokerEntityModel.getTexturedModelData(CubeDeformation.NONE));
-        context.registerLayerDefinition(ClientModRegistry.INVOKER_SHIELD, () -> InvokerEntityModel.getTexturedModelData(LayerDefinitions.INNER_ARMOR_DEFORMATION));
+        context.registerLayerDefinition(ClientModRegistry.CAPED_ILLAGER, () -> ClientModRegistry.createCapedIllagerBodyLayer(CubeDeformation.NONE));
+        context.registerLayerDefinition(ClientModRegistry.INVOKER_SHIELD, () -> ClientModRegistry.createCapedIllagerBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION));
         context.registerLayerDefinition(ClientModRegistry.NECROMANCER_SHIELD, () -> ClientModRegistry.createIllagerBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION));
         context.registerLayerDefinition(ClientModRegistry.INVOKER_FANGS, InvokerFangsModel::getTexturedModelData);
         context.registerLayerDefinition(ClientModRegistry.ARMORED_ILLAGER, ArmoredIllagerEntityModel::getTexturedModelData);

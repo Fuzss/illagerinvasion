@@ -14,7 +14,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -34,6 +33,7 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
@@ -55,20 +55,20 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 public class Inquisitor extends AbstractIllager {
-    private static final EntityDataAccessor<Boolean> STUNNED = SynchedEntityData.defineId(Inquisitor.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> FINAL_ROAR = SynchedEntityData.defineId(Inquisitor.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> STUNNED = SynchedEntityData.defineId(Inquisitor.class,
+            EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> FINAL_ROAR = SynchedEntityData.defineId(Inquisitor.class,
+            EntityDataSerializers.BOOLEAN);
 
     public boolean finalRoar;
     public int stunTick = 40;
     public boolean isStunned;
     public int blockedCount;
 
-    public Inquisitor(final EntityType<? extends Inquisitor> entityType, final Level world) {
+    public Inquisitor(EntityType<? extends Inquisitor> entityType, Level world) {
         super(entityType, world);
-        this.xpReward = 25;
+        this.xpReward = Enemy.XP_REWARD_HUGE;
         this.setPathfindingMalus(PathType.LEAVES, 0.0F);
     }
 
@@ -87,24 +87,28 @@ public class Inquisitor extends AbstractIllager {
     }
 
     @Override
-    protected void customServerAiStep() {
+    protected void customServerAiStep(ServerLevel serverLevel) {
         if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this)) {
-            boolean bl = ((ServerLevel) this.level()).isRaided(this.blockPosition());
-            ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(bl);
+            boolean isRaided = serverLevel.isRaided(this.blockPosition());
+            ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(isRaided);
         }
-        super.customServerAiStep();
+        super.customServerAiStep(serverLevel);
     }
 
     @Override
     public void aiStep() {
-        if (this.horizontalCollision && this.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
-            boolean bl = false;
-            final AABB box = this.getBoundingBox().inflate(1.0);
-            for (final BlockPos blockPos : BlockPos.betweenClosed(Mth.floor(box.minX), Mth.floor(box.minY), Mth.floor(box.minZ), Mth.floor(box.maxX), Mth.floor(box.maxY), Mth.floor(box.maxZ))) {
-                final Block block = this.level().getBlockState(blockPos).getBlock();
+        if (this.horizontalCollision && this.level() instanceof ServerLevel serverLevel &&
+                serverLevel.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+            AABB box = this.getBoundingBox().inflate(1.0);
+            for (BlockPos blockPos : BlockPos.betweenClosed(Mth.floor(box.minX),
+                    Mth.floor(box.minY),
+                    Mth.floor(box.minZ),
+                    Mth.floor(box.maxX),
+                    Mth.floor(box.maxY),
+                    Mth.floor(box.maxZ))) {
+                Block block = serverLevel.getBlockState(blockPos).getBlock();
                 if (block instanceof LeavesBlock || block instanceof DoorBlock || block instanceof WebBlock) {
-                    bl = this.level().destroyBlock(blockPos, true, this) || bl;
-                    if (block instanceof DoorBlock) {
+                    if (serverLevel.destroyBlock(blockPos, true, this) && block instanceof DoorBlock) {
                         this.playSound(SoundEvents.ZOMBIE_BREAK_WOODEN_DOOR, 1.0f, 1.0f);
                     }
                 }
@@ -114,7 +118,7 @@ public class Inquisitor extends AbstractIllager {
     }
 
     @Override
-    public boolean hasLineOfSight(final Entity entity) {
+    public boolean hasLineOfSight(Entity entity) {
         return !this.getStunnedState() && super.hasLineOfSight(entity);
     }
 
@@ -124,14 +128,14 @@ public class Inquisitor extends AbstractIllager {
     }
 
     @Override
-    public void addAdditionalSaveData(final CompoundTag nbt) {
+    public void addAdditionalSaveData(CompoundTag nbt) {
         nbt.putBoolean("Stunned", this.isStunned);
         nbt.putBoolean("FinalRoar", this.finalRoar);
         super.addAdditionalSaveData(nbt);
     }
 
     @Override
-    public void readAdditionalSaveData(final CompoundTag nbt) {
+    public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
         this.setStunnedState(nbt.getBoolean("Stunned"));
         this.setFinalRoarState(nbt.getBoolean("FinalRoar"));
@@ -148,7 +152,7 @@ public class Inquisitor extends AbstractIllager {
         return this.entityData.get(STUNNED);
     }
 
-    public void setStunnedState(final boolean isStunned) {
+    public void setStunnedState(boolean isStunned) {
         this.entityData.set(STUNNED, isStunned);
     }
 
@@ -156,7 +160,7 @@ public class Inquisitor extends AbstractIllager {
         return this.entityData.get(FINAL_ROAR);
     }
 
-    public void setFinalRoarState(final boolean hasdoneRoar) {
+    public void setFinalRoarState(boolean hasdoneRoar) {
         this.entityData.set(FINAL_ROAR, hasdoneRoar);
     }
 
@@ -164,11 +168,11 @@ public class Inquisitor extends AbstractIllager {
     public AbstractIllager.IllagerArmPose getArmPose() {
         if (this.isCelebrating()) {
             return AbstractIllager.IllagerArmPose.CELEBRATING;
-        }
-        if (this.isAggressive()) {
+        } else if (this.isAggressive()) {
             return AbstractIllager.IllagerArmPose.ATTACKING;
+        } else {
+            return IllagerArmPose.NEUTRAL;
         }
-        return AbstractIllager.IllagerArmPose.NEUTRAL;
     }
 
     @Override
@@ -179,10 +183,7 @@ public class Inquisitor extends AbstractIllager {
     @Override
     public void tick() {
         super.tick();
-        if (!this.isAlive()) {
-            return;
-        }
-        if (this.getStunnedState()) {
+        if (this.isAlive() && this.getStunnedState()) {
             --this.stunTick;
             if (this.stunTick <= 0) {
                 this.setStunnedState(false);
@@ -191,36 +192,32 @@ public class Inquisitor extends AbstractIllager {
         }
     }
 
-    private List<LivingEntity> getTargets() {
-        return (this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(8.0), entity -> !(entity instanceof Monster)));
-    }
-
-    private void knockBack(final Entity entity) {
-        final double d = entity.getX() - this.getX();
-        final double e = entity.getZ() - this.getZ();
-        final double f = Math.max(d * d + e * e, 0.001);
-        entity.push(d / f * 0.6, 0.4, e / f * 0.6);
-    }
-
     @Override
-    protected void blockedByShield(final LivingEntity target) {
+    protected void blockedByShield(LivingEntity target) {
         this.knockBack(target);
         target.hurtMarked = true;
         target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0));
     }
 
-    @Override
-    @Nullable
-    public SpawnGroupData finalizeSpawn(final ServerLevelAccessor level, final DifficultyInstance difficulty, final MobSpawnType spawnReason, @Nullable final SpawnGroupData entityData) {
-        final SpawnGroupData entityData2 = super.finalizeSpawn(level, difficulty, spawnReason, entityData);
-        ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
-        this.populateDefaultEquipmentSlots(level.getRandom(), difficulty);
-        this.populateDefaultEquipmentEnchantments(level, level.getRandom(), difficulty);
-        return entityData2;
+    private void knockBack(Entity entity) {
+        double d = entity.getX() - this.getX();
+        double e = entity.getZ() - this.getZ();
+        double f = Math.max(d * d + e * e, 0.001);
+        entity.push(d / f * 0.6, 0.4, e / f * 0.6);
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(RandomSource randomSource, final DifficultyInstance difficulty) {
+    @Nullable
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason entitySpawnReason, @Nullable SpawnGroupData spawnGroupData) {
+        spawnGroupData = super.finalizeSpawn(level, difficulty, entitySpawnReason, spawnGroupData);
+        ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
+        this.populateDefaultEquipmentSlots(level.getRandom(), difficulty);
+        this.populateDefaultEquipmentEnchantments(level, level.getRandom(), difficulty);
+        return spawnGroupData;
+    }
+
+    @Override
+    protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
         if (this.getCurrentRaid() == null) {
             this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD));
             this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.SHIELD));
@@ -228,45 +225,52 @@ public class Inquisitor extends AbstractIllager {
     }
 
     @Override
-    public boolean isAlliedTo(final Entity other) {
-        return super.isAlliedTo(other) || (other instanceof LivingEntity livingEntity && livingEntity.getType().is(
-                EntityTypeTags.ILLAGER_FRIENDS) && this.getTeam() == null && other.getTeam() == null);
-    }
-
-    @Override
-    public boolean hurt(final DamageSource source, final float amount) {
-        final Entity attacker = source.getEntity();
-        final boolean hasShield = this.getOffhandItem().is(Items.SHIELD);
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource damageSource, float damageAmount) {
+        Entity attacker = damageSource.getEntity();
+        boolean hasShield = this.getOffhandItem().is(Items.SHIELD);
         if (this.isAggressive()) {
-            if (attacker instanceof LivingEntity) {
-                final ItemStack item = ((LivingEntity) attacker).getMainHandItem();
-                final ItemStack basherItem = this.getOffhandItem();
-                final boolean isShield = basherItem.is(Items.SHIELD);
-                if ((item.is(ItemTags.AXES) || attacker instanceof IronGolem || this.blockedCount >= 4) && isShield) {
+            if (attacker instanceof LivingEntity livingEntity) {
+                ItemStack itemInHand = livingEntity.getMainHandItem();
+                ItemStack shieldItem = this.getOffhandItem();
+                if ((itemInHand.is(ItemTags.AXES) || attacker instanceof IronGolem || this.blockedCount >= 4) &&
+                        shieldItem.is(Items.SHIELD)) {
                     this.playSound(SoundEvents.SHIELD_BREAK, 1.0f, 1.0f);
                     this.setStunnedState(true);
                     if (this.level() instanceof ServerLevel) {
-                        ((ServerLevel) this.level()).sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM, basherItem), this.getX(), this.getY() + 1.5, this.getZ(), 30, 0.3, 0.2, 0.3, 0.003);
-                        ((ServerLevel) this.level()).sendParticles((ParticleOptions) ParticleTypes.CLOUD, this.getX(), this.getY() + 1.0, this.getZ(), 30, 0.3, 0.3, 0.3, 0.1);
+                        serverLevel.sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM,
+                                shieldItem), this.getX(), this.getY() + 1.5, this.getZ(), 30, 0.3, 0.2, 0.3, 0.003);
+                        serverLevel.sendParticles((ParticleOptions) ParticleTypes.CLOUD,
+                                this.getX(),
+                                this.getY() + 1.0,
+                                this.getZ(),
+                                30,
+                                0.3,
+                                0.3,
+                                0.3,
+                                0.1);
                         this.playSound(SoundEvents.RAVAGER_ROAR, 1.0f, 1.0f);
                         this.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                     }
-                    this.getTargets().forEach(this::blockedByShield);
-                    return super.hurt(source, amount);
+                    this.level()
+                            .getEntitiesOfClass(LivingEntity.class,
+                                    this.getBoundingBox().inflate(8.0),
+                                    entity -> !(entity instanceof Monster))
+                            .forEach(this::blockedByShield);
+                    return super.hurtServer(serverLevel, damageSource, damageAmount);
                 }
             }
-            if (source.getDirectEntity() instanceof AbstractArrow && hasShield) {
+            if (damageSource.getDirectEntity() instanceof AbstractArrow && hasShield) {
                 this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 1.0f);
                 ++this.blockedCount;
                 return false;
             }
-            if (source.getDirectEntity() instanceof LivingEntity && hasShield) {
+            if (damageSource.getDirectEntity() instanceof LivingEntity && hasShield) {
                 ++this.blockedCount;
                 this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 1.0f);
                 return false;
             }
         }
-        return super.hurt(source, amount);
+        return super.hurtServer(serverLevel, damageSource, damageAmount);
     }
 
     @Override
@@ -280,18 +284,18 @@ public class Inquisitor extends AbstractIllager {
     }
 
     @Override
-    protected SoundEvent getHurtSound(final DamageSource source) {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return ModSoundEvents.ILLAGER_BRUTE_HURT_SOUND_EVENT.value();
     }
 
     @Override
-    public void applyRaidBuffs(ServerLevel level, int wave, boolean unused) {
-        final ItemStack mainHandItem = new ItemStack(Items.STONE_SWORD);
-        final ItemStack offHandItem = new ItemStack(Items.SHIELD);
-        final Raid raid = this.getCurrentRaid();
+    public void applyRaidBuffs(ServerLevel serverLevel, int wave, boolean unused) {
+        ItemStack mainHandItem = new ItemStack(Items.STONE_SWORD);
+        ItemStack offHandItem = new ItemStack(Items.SHIELD);
+        Raid raid = this.getCurrentRaid();
         if (this.random.nextFloat() <= raid.getEnchantOdds()) {
             int enchantmentLevel = wave > raid.getNumGroups(Difficulty.NORMAL) ? 2 : 1;
-            Holder<Enchantment> enchantment = LookupHelper.lookupEnchantment(level, Enchantments.SHARPNESS);
+            Holder<Enchantment> enchantment = LookupHelper.lookupEnchantment(serverLevel, Enchantments.SHARPNESS);
             mainHandItem.enchant(enchantment, enchantmentLevel);
         }
         this.setItemSlot(EquipmentSlot.MAINHAND, mainHandItem);

@@ -16,18 +16,29 @@ import net.minecraft.world.phys.Vec3;
 
 public class FlyingMagma extends AbstractHurtingProjectile {
 
-    public FlyingMagma(EntityType<? extends FlyingMagma> entityType, Level world) {
-        super(entityType, world);
+    public FlyingMagma(EntityType<? extends FlyingMagma> entityType, Level level) {
+        super(entityType, level);
     }
 
-    public FlyingMagma(Level world, LivingEntity owner, double directionX, double directionY, double directionZ) {
-        super(ModEntityTypes.FLYING_MAGMA_ENTITY_TYPE.value(), owner, new Vec3(directionX, directionY, directionZ), world);
+    public FlyingMagma(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
+        super(ModEntityTypes.FLYING_MAGMA_ENTITY_TYPE.value(),
+                owner,
+                new Vec3(directionX, directionY, directionZ),
+                level);
     }
 
     @Override
     public void tick() {
-        if (this.level() instanceof ServerLevel) {
-            ((ServerLevel) this.level()).sendParticles(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(), this.getZ(), 3, 0.3D, 0.3D, 0.3D, 0.05D);
+        if (this.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE,
+                    this.getX(),
+                    this.getY(),
+                    this.getZ(),
+                    3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.05);
         }
         super.tick();
     }
@@ -44,35 +55,43 @@ public class FlyingMagma extends AbstractHurtingProjectile {
             Entity target = entityHitResult.getEntity();
             Entity owner = this.getOwner();
             DamageSource damageSource = this.damageSources().indirectMagic(this, owner);
-            boolean hurt = target.hurt(damageSource, 12.0F);
-            if (hurt && owner instanceof LivingEntity) {
+            if (target.hurtServer(serverLevel, damageSource, 12.0F) && owner instanceof LivingEntity) {
                 EnchantmentHelper.doPostAttackEffects(serverLevel, target, damageSource);
             }
-            serverLevel.sendParticles(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 15, 0.4D, 0.4D, 0.4D, 0.15D);
+            serverLevel.sendParticles(ParticleTypes.LAVA,
+                    this.getX(),
+                    this.getY(),
+                    this.getZ(),
+                    15,
+                    0.4,
+                    0.4,
+                    0.4,
+                    0.15D);
         }
     }
 
     @Override
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
-        if (!this.level().isClientSide) {
-            this.level().explode(null, this.getX(), this.getY(), this.getZ(), 1, true, Level.ExplosionInteraction.MOB);
+        if (this.level() instanceof ServerLevel serverLevel) {
+            serverLevel.explode(this.getOwner(),
+                    this.getX(),
+                    this.getY(),
+                    this.getZ(),
+                    1,
+                    true,
+                    Level.ExplosionInteraction.MOB);
+            serverLevel.sendParticles(ParticleTypes.LAVA,
+                    this.getX(),
+                    this.getY(),
+                    this.getZ(),
+                    15,
+                    0.4,
+                    0.4,
+                    0.4,
+                    0.15);
             this.discard();
         }
-        if (this.level() instanceof ServerLevel) {
-            ((ServerLevel) this.level()).sendParticles(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 15, 0.4D, 0.4D, 0.4D, 0.15D);
-        }
-        this.discard();
-    }
-
-    @Override
-    public boolean isPickable() {
-        return false;
-    }
-
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
-        return false;
     }
 
     @Override

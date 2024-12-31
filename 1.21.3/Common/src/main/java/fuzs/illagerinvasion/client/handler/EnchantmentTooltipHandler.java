@@ -1,10 +1,10 @@
 package fuzs.illagerinvasion.client.handler;
 
 import fuzs.illagerinvasion.handler.PlatinumTrimHandler;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class EnchantmentTooltipHandler {
 
     public static void onItemTooltip(ItemStack itemStack, List<Component> lines, Item.TooltipContext tooltipContext, @Nullable Player player, TooltipFlag tooltipFlag) {
-        if (player != null && itemStack.getItem() instanceof ArmorItem item) {
+        if (player != null && itemStack.has(DataComponents.EQUIPPABLE)) {
             Optional<Component> optional = PlatinumTrimHandler.getPlatinumTrim(player.level(), itemStack).map(holder -> holder.material().value().description());
             if (optional.isPresent()) {
                 int index = -1;
@@ -31,7 +31,9 @@ public class EnchantmentTooltipHandler {
                         }
                     }
                 }
-                Component newComponent = CommonComponents.space().append(Component.translatable(PlatinumTrimHandler.PLATINUM_TRIM_TRANSLATION_KEYS.get(item.getType()))).withStyle(optional.get().getStyle());
+                String translationKey = PlatinumTrimHandler.PLATINUM_TRIM_TRANSLATION_KEYS.get(itemStack.get(DataComponents.EQUIPPABLE)
+                        .slot());
+                Component newComponent = CommonComponents.space().append(Component.translatable(translationKey).withStyle(optional.get().getStyle()));
                 if (++index > lines.size()) {
                     lines.add(newComponent);
                 } else {

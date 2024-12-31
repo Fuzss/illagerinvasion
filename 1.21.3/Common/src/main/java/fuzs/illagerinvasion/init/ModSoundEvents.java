@@ -55,7 +55,7 @@ public class ModSoundEvents {
         return ModRegistry.REGISTRIES.registerSoundEvent(path);
     }
 
-    public static void touch() {
+    public static void bootstrap() {
         // NO-OP
     }
 }

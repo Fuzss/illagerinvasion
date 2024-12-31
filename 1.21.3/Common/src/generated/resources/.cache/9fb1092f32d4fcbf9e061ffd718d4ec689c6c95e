@@ -1,9 +1,9 @@
-// 1.21.1	2024-09-12T17:34:10.354992	Recipes
+// 1.21.3	2024-12-31T12:48:41.348508	Recipes
 2434388272ebe99d40d0c335f4e6ff2e178336f4 data/illagerinvasion/advancement/recipes/decorations/imbuing_table.json
-cca5cbfb3843fe1c955a1d57b1f33944b2eaf48e data/illagerinvasion/advancement/recipes/misc/hallowed_gem.json
+1902f77039f91a8519a7800ee7bafb6b81aa22cb data/illagerinvasion/advancement/recipes/misc/hallowed_gem.json
 1de95c8b73d61004b40cc1665c69353eb5289936 data/illagerinvasion/advancement/recipes/misc/platinum_sheet.json
 c0227d694780036ec4bbbb3c7262516abddde5d6 data/illagerinvasion/advancement/recipes/tools/horn_of_sight.json
-65e4a559ea2d757de940deac7429678708f27d5d data/illagerinvasion/recipe/hallowed_gem.json
-e6ae0ef2beed227b1e48612b151cf1b88249255c data/illagerinvasion/recipe/horn_of_sight.json
-c638eb2f72a74f9cc9022e764d9e5f6164c3972b data/illagerinvasion/recipe/imbuing_table.json
-3f605861ea661ddfc4b30478a7a9aa7f1552e953 data/illagerinvasion/recipe/platinum_sheet.json
+3ce9d99ffbd6a3d18e4b08241be3b410ab52f029 data/illagerinvasion/recipe/hallowed_gem.json
+a1fba2c939026c70b52a211f1b4799ea1b99dda0 data/illagerinvasion/recipe/horn_of_sight.json
+131253b0671cdffe871943b39fd1c63e44073135 data/illagerinvasion/recipe/imbuing_table.json
+28c2f30a1361b75f0e605c31b0e1c452caf49458 data/illagerinvasion/recipe/platinum_sheet.json
