@@ -3,11 +3,14 @@ package fuzs.illagerinvasion.init;
 import fuzs.extensibleenums.api.v2.BuiltInEnumFactories;
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.world.inventory.ImbuingMenu;
+import fuzs.illagerinvasion.world.item.enchantment.ImbuingEnchantmentLevel;
 import fuzs.illagerinvasion.world.level.block.ImbuingTableBlock;
 import fuzs.illagerinvasion.world.level.block.MagicFireBlock;
 import fuzs.illagerinvasion.world.level.levelgen.structure.pools.LegacySingleNoLiquidPoolElement;
 import fuzs.illagerinvasion.world.level.levelgen.structure.pools.SingleNoLiquidPoolElement;
 import fuzs.illagerinvasion.world.level.levelgen.structure.structures.LabyrinthStructure;
+import fuzs.neoforgedatapackextensions.api.v1.DataMapRegistry;
+import fuzs.neoforgedatapackextensions.api.v1.DataMapToken;
 import fuzs.puzzleslib.api.init.v3.registry.RegistryManager;
 import fuzs.puzzleslib.api.init.v3.tags.TagFactory;
 import net.minecraft.core.Holder;
@@ -84,7 +87,6 @@ public class ModRegistry {
             "reveal");
 
     static final TagFactory TAGS = TagFactory.make(IllagerInvasion.MOD_ID);
-    public static final TagKey<Enchantment> IMBUING_ENCHANTMENT_TAG = TAGS.registerEnchantmentTag("imbuing");
     public static final TagKey<Instrument> HORN_OF_SIGHT_INSTRUMENT_TAG = TAGS.registerTagKey(Registries.INSTRUMENT,
             "horn_of_sight");
     public static final TagKey<Biome> HAS_FIRECALLER_HUT_BIOME_TAG = TAGS.registerBiomeTag(
@@ -118,6 +120,13 @@ public class ModRegistry {
             "entities/inject/pillager");
     public static final ResourceKey<LootTable> RAVAGER_INJECT_LOOT_TABLE = REGISTRIES.makeResourceKey(Registries.LOOT_TABLE,
             "entities/inject/ravager");
+
+    public static final DataMapToken<Enchantment, ImbuingEnchantmentLevel> IMBUING_LEVELS_DATA_MAP_TYPE = DataMapRegistry.INSTANCE.register(
+            IllagerInvasion.id("imbuing_levels"),
+            Registries.ENCHANTMENT,
+            ImbuingEnchantmentLevel.CODEC,
+            ImbuingEnchantmentLevel.INLINE_CODEC,
+            true);
 
     public static final SpellcasterIllager.IllagerSpell ENCHANT_ILLAGER_SPELL = registerIllagerSpell("enchant",
             121,

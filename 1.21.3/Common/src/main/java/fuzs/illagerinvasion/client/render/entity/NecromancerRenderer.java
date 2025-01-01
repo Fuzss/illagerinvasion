@@ -3,6 +3,7 @@ package fuzs.illagerinvasion.client.render.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.client.init.ModelLayerLocations;
+import fuzs.illagerinvasion.client.model.CustomIllagerModel;
 import fuzs.illagerinvasion.client.render.entity.layers.IllagerArmorLayer;
 import fuzs.illagerinvasion.client.render.entity.state.NecromancerRenderState;
 import fuzs.illagerinvasion.world.entity.monster.Necromancer;
@@ -21,9 +22,9 @@ public class NecromancerRenderer extends IllagerRenderer<Necromancer, Necromance
             "textures/entity/necromancer_armor.png");
 
     public NecromancerRenderer(EntityRendererProvider.Context context) {
-        super(context, new IllagerModel<>(context.bakeLayer(ModelLayerLocations.NECROMANCER)), 0.5F);
+        super(context, new CustomIllagerModel<>(context.bakeLayer(ModelLayerLocations.NECROMANCER)), 0.5F);
         this.addLayer(new IllagerArmorLayer<>(this,
-                new IllagerModel<>(context.bakeLayer(ModelLayerLocations.NECROMANCER_ARMOR))) {
+                new CustomIllagerModel<>(context.bakeLayer(ModelLayerLocations.NECROMANCER_ARMOR))) {
             @Override
             protected ResourceLocation getTextureLocation() {
                 return ARMOR_TEXTURE_LOCATION;

@@ -40,6 +40,7 @@
     "fabric-api": ">=${minFabricApiVersion}",
     "puzzleslib": ">=${minPuzzlesVersion}",
     "extensibleenums": "*",
+    "neoforgedatapackextensions": "*",
     "minecraft": "${minecraftVersion}",
     "java": ">=17"
   }

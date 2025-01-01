@@ -35,7 +35,7 @@ public class BasherRenderer extends IllagerRenderer<Basher, StunnableIllagerRend
     @Override
     public void extractRenderState(Basher entity, StunnableIllagerRenderState reusedState, float partialTick) {
         super.extractRenderState(entity, reusedState, partialTick);
-        reusedState.isStunned = entity.getStunnedState();
+        reusedState.isStunned = entity.isStunned();
     }
 
     @Override

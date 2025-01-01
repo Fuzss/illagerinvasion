@@ -4,10 +4,10 @@ import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.config.ServerConfig;
 import fuzs.illagerinvasion.init.ModEntityTypes;
 import fuzs.illagerinvasion.init.ModSoundEvents;
-import fuzs.illagerinvasion.util.SpellParticleUtil;
 import fuzs.illagerinvasion.util.TeleportUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -20,6 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
@@ -35,7 +36,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
@@ -56,8 +56,6 @@ public class Invoker extends SpellcasterIllager {
     public int teleportCooldown;
     public boolean isAoeCasting = false;
     public int fangaoecooldown;
-    @Nullable
-    private Sheep wololoTarget;
 
     public Invoker(EntityType<? extends Invoker> entityType, Level world) {
         super(entityType, world);
@@ -69,15 +67,15 @@ public class Invoker extends SpellcasterIllager {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new SpellcasterIllager.SpellcasterCastingSpellGoal());
-        this.goalSelector.addGoal(3, new AvoidEntityGoal<Player>(this, Player.class, 8.0f, 0.6, 1.0));
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Player.class, 8.0F, 0.6, 1.0));
         this.goalSelector.addGoal(5, new AreaDamageGoal());
         this.goalSelector.addGoal(4, new CastTeleportGoal());
         this.goalSelector.addGoal(5, new SummonVexGoal());
         this.goalSelector.addGoal(5, new ConjureAoeFangsGoal());
         this.goalSelector.addGoal(6, new ConjureFangsGoal());
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
-        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
+        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
+        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<AbstractVillager>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
@@ -85,7 +83,7 @@ public class Invoker extends SpellcasterIllager {
     }
 
     public boolean isPowered() {
-        return this.getShieldedState();
+        return this.isShielded();
     }
 
     @Override
@@ -108,7 +106,7 @@ public class Invoker extends SpellcasterIllager {
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setShieldedState(nbt.getBoolean("Invul"));
+        this.setShielded(nbt.getBoolean("Invul"));
         if (this.hasCustomName()) {
             this.bossBar.setName(this.getDisplayName());
         }
@@ -127,15 +125,15 @@ public class Invoker extends SpellcasterIllager {
 
     @Override
     public void addAdditionalSaveData(CompoundTag nbt) {
-        nbt.putBoolean("Invul", this.getShieldedState());
+        nbt.putBoolean("Invul", this.isShielded());
         super.addAdditionalSaveData(nbt);
     }
 
-    public boolean getShieldedState() {
+    public boolean isShielded() {
         return this.entityData.get(DATA_IS_SHIELDED);
     }
 
-    public void setShieldedState(boolean isShielded) {
+    public void setShielded(boolean isShielded) {
         this.entityData.set(DATA_IS_SHIELDED, isShielded);
     }
 
@@ -147,15 +145,21 @@ public class Invoker extends SpellcasterIllager {
         super.customServerAiStep(serverLevel);
         this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
         if (this.isAoeCasting && this.isCastingSpell()) {
-            SpellParticleUtil.sendSpellParticles(this, (ServerLevel) this.level(), ParticleTypes.SMOKE, 2, 0.06D);
+            this.sendSpellParticles(serverLevel, ParticleTypes.SMOKE, 2, 0.06D);
         }
-        Vec3 vec3d = this.getDeltaMovement();
-        if (!this.onGround() && vec3d.y < 0.0) {
-            this.setDeltaMovement(vec3d.multiply(1.0, 0.6, 1.0));
+        Vec3 deltaMovement = this.getDeltaMovement();
+        if (!this.onGround() && deltaMovement.y < 0.0) {
+            this.setDeltaMovement(deltaMovement.multiply(1.0, 0.6, 1.0));
         }
-        if (this.level() instanceof ServerLevel) {
-            ((ServerLevel) this.level()).sendParticles(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.3, this.getZ(), 1, 0.2D, 0.2D, 0.2D, 0.005D);
-        }
+        serverLevel.sendParticles(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.3, this.getZ(), 1, 0.2D, 0.2D, 0.2D, 0.005D);
+    }
+
+    private void sendSpellParticles(ServerLevel serverLevel, ParticleOptions particleTypes, int count, double speed) {
+        float g = this.yBodyRot * ((float) Math.PI / 180) + Mth.cos((float) this.tickCount * 0.6662F) * 0.25F;
+        float h = Mth.cos(g);
+        float i = Mth.sin(g);
+        serverLevel.sendParticles(particleTypes, this.getX() + (double) h * 0.6, this.getY() + 1.8, this.getZ() + (double) i, count, 0.0D, 0.0D, 0.0D, speed);
+        serverLevel.sendParticles(particleTypes, this.getX() - (double) h * 0.6, this.getY() + 1.8, this.getZ() - (double) i, count, 0.0D, 0.0D, 0.0D, speed);
     }
 
     @Override
@@ -195,8 +199,8 @@ public class Invoker extends SpellcasterIllager {
         } else if (super.considersEntityAsAlly(entity)) {
             return true;
         } else {
-            if (entity instanceof Surrendered surrendered && surrendered.getOwner() != null) {
-                return this.considersEntityAsAlly(surrendered.getOwner());
+            if (entity instanceof Vex vex && vex.getOwner() != null) {
+                return this.considersEntityAsAlly(vex.getOwner());
             }
 
             return false;
@@ -209,8 +213,6 @@ public class Invoker extends SpellcasterIllager {
             return AbstractIllager.IllagerArmPose.ATTACKING;
         } else if (this.isCastingSpell()) {
             return IllagerArmPose.SPELLCASTING;
-        } else if (this.isCelebrating()) {
-            return IllagerArmPose.CELEBRATING;
         } else {
             return IllagerArmPose.CROSSED;
         }
@@ -219,14 +221,17 @@ public class Invoker extends SpellcasterIllager {
     @Override
     public boolean hurtServer(ServerLevel serverLevel, DamageSource damageSource, float damageAmount) {
         if (damageSource.is(DamageTypeTags.IS_PROJECTILE)) {
-            if (!this.getShieldedState() && this.random.nextInt(2) == 0) {
-                this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
-                this.setShieldedState(true);
+            Entity entity = damageSource.getDirectEntity();
+            if (entity != null && entity.getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
+                if (!this.isShielded() && this.random.nextInt(2) == 0) {
+                    this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 0.8F + serverLevel.random.nextFloat() * 0.4F);
+                    this.setShielded(true);
+                }
             }
-        } else if (this.getShieldedState() && this.random.nextInt(3) == 0) {
+        } else if (this.isShielded() && this.random.nextInt(3) == 0) {
             serverLevel.sendParticles(ParticleTypes.CRIT, this.getX(), this.getY() + 1, this.getZ(), 30, 0.5D, 0.7D, 0.5D, 0.5D);
-            this.playSound(ModSoundEvents.INVOKER_SHIELD_BREAK_SOUND_EVENT.value(), 1.0f, 0.8F + this.level().random.nextFloat() * 0.4F);
-            this.setShieldedState(false);
+            this.playSound(ModSoundEvents.INVOKER_SHIELD_BREAK_SOUND_EVENT.value(), 1.0f, 0.8F + serverLevel.random.nextFloat() * 0.4F);
+            this.setShielded(false);
         }
 
         return super.hurtServer(serverLevel, damageSource, damageAmount);
@@ -234,7 +239,7 @@ public class Invoker extends SpellcasterIllager {
 
     @Override
     public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
-        return super.isInvulnerableTo(serverLevel, damageSource) || damageSource.is(DamageTypeTags.WITCH_RESISTANT_TO) || this.getShieldedState() && damageSource.is(DamageTypeTags.IS_PROJECTILE);
+        return super.isInvulnerableTo(serverLevel, damageSource) || damageSource.is(DamageTypeTags.WITCH_RESISTANT_TO) || this.isShielded() && damageSource.is(DamageTypeTags.IS_PROJECTILE);
     }
 
     @Override
@@ -250,14 +255,6 @@ public class Invoker extends SpellcasterIllager {
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return ModSoundEvents.INVOKER_HURT_SOUND_EVENT.value();
-    }
-
-    @Nullable Sheep getWololoTarget() {
-        return this.wololoTarget;
-    }
-
-    void setWololoTarget(@Nullable Sheep sheep) {
-        this.wololoTarget = sheep;
     }
 
     @Override
@@ -577,13 +574,13 @@ public class Invoker extends SpellcasterIllager {
             boolean bl = false;
             double d = 0.0;
             do {
-                BlockState blockState2;
                 VoxelShape voxelShape;
                 BlockPos blockPos2;
-                BlockState blockState;
-                if (!(blockState = Invoker.this.level().getBlockState(blockPos2 = blockPos.below())).isFaceSturdy(Invoker.this.level(), blockPos2, Direction.UP))
+                if (!Invoker.this.level().getBlockState(blockPos2 = blockPos.below())
+                        .isFaceSturdy(Invoker.this.level(), blockPos2, Direction.UP))
                     continue;
-                if (!Invoker.this.level().isEmptyBlock(blockPos) && !(voxelShape = (blockState2 = Invoker.this.level().getBlockState(blockPos)).getCollisionShape(Invoker.this.level(), blockPos)).isEmpty()) {
+                if (!Invoker.this.level().isEmptyBlock(blockPos) && !(voxelShape = Invoker.this.level().getBlockState(blockPos)
+                        .getCollisionShape(Invoker.this.level(), blockPos)).isEmpty()) {
                     d = voxelShape.max(Direction.Axis.Y);
                 }
                 bl = true;

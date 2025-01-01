@@ -13,10 +13,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.RangedBowAttackGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
@@ -24,6 +21,7 @@ import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
+import net.minecraft.world.entity.monster.creaking.Creaking;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -51,12 +49,13 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new SpellcasterIllager.SpellcasterCastingSpellGoal());
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Creaking.class, 8.0F, 1.0, 1.2));
+        this.goalSelector.addGoal(2, new SpellcasterIllager.SpellcasterCastingSpellGoal());
         this.goalSelector.addGoal(3, new BuffAllyGoal());
-        this.goalSelector.addGoal(4, new RangedBowAttackGoal<>(this, 0.5, 20, 15.0f));
+        this.goalSelector.addGoal(4, new RangedBowAttackGoal<>(this, 0.85, 20, 15.0F));
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
-        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
+        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
+        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
         this.targetSelector.addGoal(2,
                 new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
@@ -153,6 +152,8 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
             return AbstractIllager.IllagerArmPose.SPELLCASTING;
         } else if (this.isAggressive()) {
             return AbstractIllager.IllagerArmPose.BOW_AND_ARROW;
+        } else if (this.isCelebrating()) {
+            return IllagerArmPose.CELEBRATING;
         } else {
             return IllagerArmPose.CROSSED;
         }

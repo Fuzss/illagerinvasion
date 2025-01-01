@@ -30,6 +30,7 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.creaking.Creaking;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
@@ -51,7 +52,8 @@ public class Necromancer extends SpellcasterIllager {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new SpellcasterIllager.SpellcasterCastingSpellGoal());
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Creaking.class, 8.0F, 1.0, 1.2));
+        this.goalSelector.addGoal(2, new SpellcasterIllager.SpellcasterCastingSpellGoal());
         this.goalSelector.addGoal(4, new ConjureSkullGoal());
         this.goalSelector.addGoal(3, new SummonUndeadGoal());
         this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, Player.class, 8.0f, 0.6, 1.0));
@@ -161,11 +163,6 @@ public class Necromancer extends SpellcasterIllager {
     @Override
     public void applyRaidBuffs(ServerLevel level, int wave, boolean unused) {
         // NO-OP
-    }
-
-    @Override
-    public IllagerArmPose getArmPose() {
-        return this.isCastingSpell() ? IllagerArmPose.SPELLCASTING : IllagerArmPose.CROSSED;
     }
 
     public boolean isPowered() {

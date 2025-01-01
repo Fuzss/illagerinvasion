@@ -1,6 +1,5 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-import fuzs.illagerinvasion.world.entity.ai.goal.PotionBowAttackGoal;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -17,15 +16,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.monster.creaking.Creaking;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -35,6 +33,7 @@ import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
@@ -63,10 +62,13 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(4, new PotionBowAttackGoal<>(this, 0.5, 20, 15.0f));
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Creaking.class, 8.0F, 1.0, 1.2));
+        this.goalSelector.addGoal(2, new Raider.HoldGroundAttackGoal(this, 10.0F));
+        this.goalSelector.addGoal(4, new AlchemistRangedAttackGoal(this, 0.85, 20, 15.0F));
+        this.goalSelector.addGoal(4, new RangedBowAttackGoal<>(this, 0.85, 20, 15.0F));
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
-        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
+        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
+        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
         this.targetSelector.addGoal(2,
                 new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
@@ -221,7 +223,7 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
 
     @Override
     public boolean canBeAffected(MobEffectInstance mobEffectInstance) {
-        return mobEffectInstance.getEffect() != MobEffects.POISON && super.canBeAffected(mobEffectInstance);
+        return mobEffectInstance.getEffect().is(MobEffects.POISON) && super.canBeAffected(mobEffectInstance);
     }
 
     @Override
@@ -256,5 +258,34 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
         }
 
         return AbstractIllager.IllagerArmPose.CROSSED;
+    }
+
+    @Override
+    public boolean canFireProjectileWeapon(ProjectileWeaponItem projectileWeapon) {
+        return projectileWeapon == Items.BOW;
+    }
+
+    class AlchemistRangedAttackGoal extends RangedAttackGoal {
+
+        public AlchemistRangedAttackGoal(RangedAttackMob rangedAttackMob, double speedModifier, int attackInterval, float attackRadius) {
+            super(rangedAttackMob, speedModifier, attackInterval, attackRadius);
+        }
+
+        @Override
+        public boolean canUse() {
+            return super.canUse() && Alchemist.this.getMainHandItem().is(Items.LINGERING_POTION);
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            Alchemist.this.setAggressive(true);
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            Alchemist.this.setAggressive(false);
+        }
     }
 }

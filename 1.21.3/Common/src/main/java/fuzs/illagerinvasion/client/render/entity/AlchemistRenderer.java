@@ -3,6 +3,7 @@ package fuzs.illagerinvasion.client.render.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.client.init.ModelLayerLocations;
+import fuzs.illagerinvasion.client.model.CustomIllagerModel;
 import fuzs.illagerinvasion.world.entity.monster.Alchemist;
 import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.PartPose;
@@ -22,7 +23,7 @@ public class AlchemistRenderer extends IllagerRenderer<Alchemist, IllagerRenderS
     private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/alchemist.png");
 
     public AlchemistRenderer(final EntityRendererProvider.Context context) {
-        super(context, new IllagerModel<>(context.bakeLayer(ModelLayerLocations.ALCHEMIST)), 0.5F);
+        super(context, new CustomIllagerModel(context.bakeLayer(ModelLayerLocations.ALCHEMIST)), 0.5F);
         this.addLayer(new ItemInHandLayer<>(this, context.getItemRenderer()) {
             @Override
             public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, IllagerRenderState renderState, float yRot, float xRot) {

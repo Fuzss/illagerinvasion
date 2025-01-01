@@ -5,11 +5,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.client.init.ModelLayerLocations;
+import fuzs.illagerinvasion.client.model.CustomIllagerModel;
 import fuzs.illagerinvasion.client.render.entity.state.SpellcasterIllagerRenderState;
 import fuzs.illagerinvasion.world.entity.monster.Archivist;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import net.minecraft.client.model.BookModel;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -27,7 +27,7 @@ public class ArchivistRenderer extends IllagerRenderer<Archivist, SpellcasterIll
             ResourceLocationHelper.withDefaultNamespace("entity/enchanting_table_book"));
 
     public ArchivistRenderer(EntityRendererProvider.Context context) {
-        super(context, new IllagerModel<>(context.bakeLayer(ModelLayerLocations.ARCHIVIST)), 0.5F);
+        super(context, new CustomIllagerModel<>(context.bakeLayer(ModelLayerLocations.ARCHIVIST)), 0.5F);
         this.addLayer(new ItemInHandLayer<>(this, context.getItemRenderer()) {
             private final BookModel book = new BookModel(context.bakeLayer(ModelLayerLocations.ARCHIVIST_BOOK));
 

@@ -131,14 +131,14 @@ public class IllagerInvasion implements ModConstructor {
                         .add(Attributes.MOVEMENT_SPEED, 0.38));
         context.registerEntityAttributes(ModEntityTypes.ARCHIVIST_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
-                        .add(Attributes.MAX_HEALTH, 24.0D)
-                        .add(Attributes.MOVEMENT_SPEED, 0.36D));
+                        .add(Attributes.MAX_HEALTH, 24.0)
+                        .add(Attributes.MOVEMENT_SPEED, 0.36));
         context.registerEntityAttributes(ModEntityTypes.BASHER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
-                        .add(Attributes.MAX_HEALTH, 32.0D)
-                        .add(Attributes.MOVEMENT_SPEED, 0.31D)
-                        .add(Attributes.ATTACK_DAMAGE, 3.0D)
-                        .add(Attributes.ATTACK_KNOCKBACK, 0.2D));
+                        .add(Attributes.MAX_HEALTH, 32.0)
+                        .add(Attributes.MOVEMENT_SPEED, 0.31)
+                        .add(Attributes.ATTACK_DAMAGE, 3.0)
+                        .add(Attributes.ATTACK_KNOCKBACK, 0.2));
         context.registerEntityAttributes(ModEntityTypes.FIRECALLER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 32.0)
@@ -152,22 +152,22 @@ public class IllagerInvasion implements ModConstructor {
                         .add(Attributes.KNOCKBACK_RESISTANCE, 0.8));
         context.registerEntityAttributes(ModEntityTypes.INVOKER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
-                        .add(Attributes.MAX_HEALTH, 250.0D)
-                        .add(Attributes.MOVEMENT_SPEED, 0.36D)
-                        .add(Attributes.KNOCKBACK_RESISTANCE, 0.3D)
-                        .add(Attributes.ATTACK_DAMAGE, 8.0D));
+                        .add(Attributes.MAX_HEALTH, 250.0)
+                        .add(Attributes.MOVEMENT_SPEED, 0.36)
+                        .add(Attributes.KNOCKBACK_RESISTANCE, 0.3)
+                        .add(Attributes.ATTACK_DAMAGE, 8.0));
         context.registerEntityAttributes(ModEntityTypes.MARAUDER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
-                        .add(Attributes.MAX_HEALTH, 24.0D)
-                        .add(Attributes.MOVEMENT_SPEED, 0.30D));
+                        .add(Attributes.MAX_HEALTH, 24.0)
+                        .add(Attributes.MOVEMENT_SPEED, 0.30));
         context.registerEntityAttributes(ModEntityTypes.PROVOKER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
-                        .add(Attributes.MAX_HEALTH, 24.0D)
-                        .add(Attributes.MOVEMENT_SPEED, 0.38D));
+                        .add(Attributes.MAX_HEALTH, 24.0)
+                        .add(Attributes.MOVEMENT_SPEED, 0.38));
         context.registerEntityAttributes(ModEntityTypes.SORCERER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
-                        .add(Attributes.MAX_HEALTH, 32.0D)
-                        .add(Attributes.MOVEMENT_SPEED, 0.38D));
+                        .add(Attributes.MAX_HEALTH, 32.0)
+                        .add(Attributes.MOVEMENT_SPEED, 0.38));
         context.registerEntityAttributes(ModEntityTypes.SURRENDERED_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 14.0).add(Attributes.ATTACK_DAMAGE, 5.0));
         context.registerEntityAttributes(ModEntityTypes.NECROMANCER_ENTITY_TYPE.value(),

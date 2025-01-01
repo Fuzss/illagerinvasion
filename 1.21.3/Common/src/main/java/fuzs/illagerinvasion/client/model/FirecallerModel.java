@@ -1,6 +1,7 @@
 package fuzs.illagerinvasion.client.model;
 
 
+import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,7 +13,7 @@ import net.minecraft.client.renderer.entity.state.IllagerRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.monster.AbstractIllager;
 
-public class FirecallerModel extends IllagerModel<IllagerRenderState> {
+public class FirecallerModel extends CustomIllagerModel<IllagerRenderState> {
     private final ModelPart body;
     private final ModelPart leftArm;
     private final ModelPart staff;
@@ -41,6 +42,7 @@ public class FirecallerModel extends IllagerModel<IllagerRenderState> {
             this.leftArm.xRot =
                     Mth.cos(renderState.walkAnimationPos * 0.6662F) * 0.5F * renderState.walkAnimationSpeed * 0.5F -
                             1.2F;
+            AnimationUtils.bobModelPart(this.leftArm, renderState.ageInTicks, -1.0F);
             this.staff.visible = true;
         } else {
             this.staff.visible = false;

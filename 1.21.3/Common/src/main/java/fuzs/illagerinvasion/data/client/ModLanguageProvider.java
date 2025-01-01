@@ -21,11 +21,12 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
     public void addTranslations(TranslationBuilder builder) {
         builder.addCreativeModeTab(IllagerInvasion.MOD_ID, IllagerInvasion.MOD_NAME);
         builder.add(ImbuingTableBlock.CONTAINER_IMBUE, "Imbue");
-        builder.add(ImbuingMenu.InvalidImbuingState.TOO_MANY_ENCHANTMENTS.getTranslationKey(), "Book has too many enchantment!");
-        builder.add(ImbuingMenu.InvalidImbuingState.NOT_AT_MAX_LEVEL.getTranslationKey(), "Book enchantment level is too low!");
-        builder.add(ImbuingMenu.InvalidImbuingState.AT_WRONG_LEVEL.getTranslationKey(), "Item enchantment level is wrong!");
-        builder.add(ImbuingMenu.InvalidImbuingState.INVALID_ENCHANTMENT.getTranslationKey(), "Book enchantment cannot be imbued!");
-        builder.add(ImbuingMenu.InvalidImbuingState.INVALID_ITEM.getTranslationKey(), "Item is not compatible with this enchantment!");
+        builder.add(ImbuingMenu.ImbuingState.ENCHANTED_BOOK_MISSING.getComponent(), "%s is missing!");
+        builder.add(ImbuingMenu.ImbuingState.HALLOWED_GEM_MISSING.getComponent(), "%s is missing!");
+        builder.add(ImbuingMenu.ImbuingState.TOO_MANY_ENCHANTMENTS.getComponent(), "Book has too many enchantments!");
+        builder.add(ImbuingMenu.ImbuingState.INVALID_ENCHANTMENT.getComponent(), "Book enchantment cannot be imbued!");
+        builder.add(ImbuingMenu.ImbuingState.ENCHANTMENTS_NOT_MATCHING.getComponent(), "Enchantments do not match!");
+        builder.add(ImbuingMenu.ImbuingState.LEVELS_NOT_EQUAL.getComponent(), "Enchantment levels are not equal!");
         builder.add(ModItems.LOST_CANDLE_ITEM.value().getDescriptionId() + ".foundNearby", "%s found nearby");
         builder.add("instrument", ModRegistry.REVEAL_INSTRUMENT, "Reveal");
         builder.add("trim_material", ModRegistry.PLATINUM_TRIM_MATERIAL, "Platinum Material");

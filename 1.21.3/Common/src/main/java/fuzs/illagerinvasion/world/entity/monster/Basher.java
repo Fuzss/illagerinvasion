@@ -20,16 +20,14 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.creaking.Creaking;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -46,6 +44,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class Basher extends AbstractIllager {
     private static final String TAG_STUN_TICKS = "Stunned";
+    private static final String TAG_BLOCKED_COUNT = "BlockedCount";
     private static final EntityDataAccessor<Boolean> DATA_STUNNED = SynchedEntityData.defineId(Basher.class, EntityDataSerializers.BOOLEAN);
 
     private int stunTicks;
@@ -59,15 +58,17 @@ public class Basher extends AbstractIllager {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Creaking.class, 8.0F, 1.0, 1.2));
         this.goalSelector.addGoal(2, new AbstractIllager.RaiderOpenDoorGoal(this));
+        this.goalSelector.addGoal(3, new Raider.HoldGroundAttackGoal(this, 10.0F));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0, false));
+        this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
+        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
+        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
-        this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
-        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
     }
 
     @Override
@@ -80,20 +81,17 @@ public class Basher extends AbstractIllager {
     }
 
     @Override
-    public boolean hasLineOfSight(Entity entity) {
-        return !this.getStunnedState() && super.hasLineOfSight(entity);
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+        compoundTag.putInt(TAG_STUN_TICKS, this.stunTicks);
+        compoundTag.putInt(TAG_BLOCKED_COUNT, this.blockedCount);
+        super.addAdditionalSaveData(compoundTag);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
-        nbt.putInt(TAG_STUN_TICKS, this.stunTicks);
-        super.addAdditionalSaveData(nbt);
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
-        this.setStunTicks(nbt.getInt(TAG_STUN_TICKS));
+    public void readAdditionalSaveData(CompoundTag compoundTag) {
+        super.readAdditionalSaveData(compoundTag);
+        this.setStunTicks(compoundTag.getInt(TAG_STUN_TICKS));
+        this.blockedCount = compoundTag.getInt(TAG_BLOCKED_COUNT);
     }
 
     @Override
@@ -102,13 +100,13 @@ public class Basher extends AbstractIllager {
         builder.define(DATA_STUNNED, false);
     }
 
-    public boolean getStunnedState() {
+    public boolean isStunned() {
         return this.entityData.get(DATA_STUNNED);
     }
 
     public void setStunTicks(int stunTicks) {
-        this.stunTicks = stunTicks;
-        this.entityData.set(DATA_STUNNED, stunTicks > 0);
+        this.stunTicks = Math.max(0, stunTicks);
+        this.entityData.set(DATA_STUNNED, this.stunTicks > 0);
     }
 
     @Override
@@ -125,13 +123,13 @@ public class Basher extends AbstractIllager {
     public void tick() {
         super.tick();
         if (this.isAlive() && this.stunTicks > 0) {
-            this.setStunTicks(this.stunTicks - 1);
+            this.setStunTicks(--this.stunTicks);
         }
     }
 
     @Override
     protected boolean isImmobile() {
-        return super.isImmobile() || this.getStunnedState();
+        return super.isImmobile() || this.isStunned();
     }
 
     @Override
@@ -159,7 +157,7 @@ public class Basher extends AbstractIllager {
                 ItemStack attackerMainHand = ((LivingEntity) attacker).getMainHandItem();
                 ItemStack basherMainHand = this.getMainHandItem();
                 if ((ToolTypeHelper.INSTANCE.isAxe(attackerMainHand) || attacker instanceof IronGolem || this.blockedCount >= 4) && basherMainHand.is(Items.SHIELD)) {
-                    this.playSound(SoundEvents.SHIELD_BREAK, 1.0f, 1.0f);
+                    this.playSound(SoundEvents.SHIELD_BREAK, 1.0F, 1.0F);
                     this.setStunTicks(60);
                     serverLevel.sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM, basherMainHand), this.getX(), this.getY() + 1.5, this.getZ(), 30, 0.3, 0.2, 0.3, 0.003);
                     this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_AXE));
@@ -167,12 +165,12 @@ public class Basher extends AbstractIllager {
                 }
             }
             if (damageSource.getDirectEntity() instanceof AbstractArrow && hasShield) {
-                this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 1.0f);
+                this.playSound(SoundEvents.SHIELD_BLOCK, 1.0F, 1.0F);
                 ++this.blockedCount;
                 return false;
             }
             if (damageSource.getDirectEntity() instanceof LivingEntity && hasShield) {
-                this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 1.0f);
+                this.playSound(SoundEvents.SHIELD_BLOCK, 1.0F, 1.0F);
                 ++this.blockedCount;
                 return false;
             }

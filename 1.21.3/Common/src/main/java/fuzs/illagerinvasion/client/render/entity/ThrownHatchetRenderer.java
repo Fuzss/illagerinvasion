@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.state.ThrownItemRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemDisplayContext;
 
 public class ThrownHatchetRenderer extends ThrownItemRenderer<ThrownHatchet> {
@@ -51,7 +52,7 @@ public class ThrownHatchetRenderer extends ThrownItemRenderer<ThrownHatchet> {
         super.extractRenderState(entity, reusedState, partialTick);
         ((ThrownHatchetRenderState) reusedState).yRot = entity.getYRot(partialTick);
         ((ThrownHatchetRenderState) reusedState).xRot = entity.getXRot(partialTick);
-        ((ThrownHatchetRenderState) reusedState).isFoil = entity.isFoil();
+        if (entity.isFoil()) reusedState.item.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
         ((ThrownHatchetRenderState) reusedState).isInGround = entity.isInGround();
     }
 }

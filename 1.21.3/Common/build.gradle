@@ -6,6 +6,9 @@ dependencies {
 
     // Extensible Enums
     modApi libs.extensibleenums.common
+
+    // NeoForge Data Pack Extensions
+    modApi libs.neoforgedatapackextensions.common
 }
 
 tasks.withType(net.fabricmc.loom.task.AbstractRemapJarTask).configureEach {

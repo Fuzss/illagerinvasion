@@ -2,6 +2,7 @@ package fuzs.illagerinvasion.init;
 
 import fuzs.illagerinvasion.world.item.*;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
@@ -39,6 +40,7 @@ public class ModItems {
             () -> new Item.Properties().rarity(Rarity.EPIC)
                     .durability(327)
                     .attributes(HatchetItem.createAttributes())
+                    .component(DataComponents.TOOL, HatchetItem.createToolProperties())
                     .enchantable(1)
                     .repairable(ModItems.PLATINUM_SHEET_ITEM.value()));
     public static final Holder.Reference<Item> PROVOKER_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(

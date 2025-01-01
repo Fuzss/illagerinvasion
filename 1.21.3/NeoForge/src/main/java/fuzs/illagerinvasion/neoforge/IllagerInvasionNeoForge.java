@@ -9,6 +9,7 @@ import fuzs.illagerinvasion.data.loot.ModEntityTypeLootProvider;
 import fuzs.illagerinvasion.data.registries.ModInstrumentDataProvider;
 import fuzs.illagerinvasion.data.registries.ModTrimMaterialDataProvider;
 import fuzs.illagerinvasion.data.tags.*;
+import fuzs.illagerinvasion.neoforge.data.ModDataMapProvider;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
 import net.neoforged.fml.common.Mod;
@@ -23,7 +24,6 @@ public class IllagerInvasionNeoForge {
                 ModInstrumentDataProvider::new,
                 ModBiomeTagProvider::new,
                 ModBlockTagProvider::new,
-                ModEnchantmentTagProvider::new,
                 ModEntityTypeTagProvider::new,
                 ModInstrumentTagProvider::new,
                 ModItemTagProvider::new,
@@ -31,6 +31,7 @@ public class IllagerInvasionNeoForge {
                 ModChestLootProvider::new,
                 ModEntityInjectLootProvider::new,
                 ModEntityTypeLootProvider::new,
-                ModRecipeProvider::new);
+                ModRecipeProvider::new,
+                ModDataMapProvider::new);
     }
 }

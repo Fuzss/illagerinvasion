@@ -26,7 +26,7 @@ public class MarauderRenderer extends IllagerRenderer<Marauder, MarauderRenderSt
     @Override
     public void extractRenderState(Marauder entity, MarauderRenderState reusedState, float partialTick) {
         super.extractRenderState(entity, reusedState, partialTick);
-        reusedState.isCharging = entity.isCharging();
+        reusedState.chargingProgress = entity.getChargingProgress(partialTick);
     }
 
     @Override
