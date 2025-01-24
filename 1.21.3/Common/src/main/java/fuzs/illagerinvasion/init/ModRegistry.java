@@ -8,7 +8,6 @@ import fuzs.illagerinvasion.world.level.block.ImbuingTableBlock;
 import fuzs.illagerinvasion.world.level.block.MagicFireBlock;
 import fuzs.illagerinvasion.world.level.levelgen.structure.pools.LegacySingleNoLiquidPoolElement;
 import fuzs.illagerinvasion.world.level.levelgen.structure.pools.SingleNoLiquidPoolElement;
-import fuzs.illagerinvasion.world.level.levelgen.structure.structures.LabyrinthStructure;
 import fuzs.neoforgedatapackextensions.api.v1.DataMapRegistry;
 import fuzs.neoforgedatapackextensions.api.v1.DataMapToken;
 import fuzs.puzzleslib.api.init.v3.registry.RegistryManager;
@@ -30,7 +29,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pools.LegacySinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementType;
@@ -76,10 +74,6 @@ public class ModRegistry {
             Registries.STRUCTURE_POOL_ELEMENT,
             "legacy_single_pool_element",
             () -> () -> LegacySingleNoLiquidPoolElement.CODEC);
-    public static final Holder.Reference<StructureType<LabyrinthStructure>> LABYRINTH_STRUCTURE_TYPE = REGISTRIES.register(
-            Registries.STRUCTURE_TYPE,
-            "labyrinth",
-            () -> () -> LabyrinthStructure.CODEC);
 
     public static final ResourceKey<TrimMaterial> PLATINUM_TRIM_MATERIAL = REGISTRIES.makeResourceKey(Registries.TRIM_MATERIAL,
             "platinum");
@@ -167,5 +161,6 @@ public class ModRegistry {
         ModItems.bootstrap();
         ModEntityTypes.bootstrap();
         ModSoundEvents.bootstrap();
+        ModStructures.bootstrap();
     }
 }

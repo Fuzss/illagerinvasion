@@ -3,7 +3,7 @@ package fuzs.illagerinvasion.world.level.levelgen.structure.structures;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModStructures;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -62,6 +62,6 @@ public class LabyrinthStructure extends JigsawStructure {
 
     @Override
     public StructureType<?> type() {
-        return ModRegistry.LABYRINTH_STRUCTURE_TYPE.value();
+        return ModStructures.LABYRINTH_STRUCTURE_TYPE.value();
     }
 }

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 169476080,
+    "separation": 14,
+    "spacing": 18
+  },
+  "structures": [
+    {
+      "structure": "illagerinvasion:sorcerer_hut",
+      "weight": 1
+    }
+  ]
+}
