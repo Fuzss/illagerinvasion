@@ -23,8 +23,8 @@ public class AlchemistRenderer extends IllagerRenderer<Alchemist, IllagerRenderS
     private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/alchemist.png");
 
     public AlchemistRenderer(final EntityRendererProvider.Context context) {
-        super(context, new CustomIllagerModel(context.bakeLayer(ModelLayerLocations.ALCHEMIST)), 0.5F);
-        this.addLayer(new ItemInHandLayer<>(this, context.getItemRenderer()) {
+        super(context, new CustomIllagerModel<>(context.bakeLayer(ModelLayerLocations.ALCHEMIST)), 0.5F);
+        this.addLayer(new ItemInHandLayer<>(this) {
             @Override
             public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, IllagerRenderState renderState, float yRot, float xRot) {
                 if (renderState.isAggressive) {

@@ -16,8 +16,8 @@ import net.minecraft.world.level.Level;
 
 public class IllusionaryDustItem extends Item {
 
-    public IllusionaryDustItem(Properties settings) {
-        super(settings);
+    public IllusionaryDustItem(Properties properties) {
+        super(properties);
     }
 
     @Override

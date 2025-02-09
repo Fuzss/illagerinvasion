@@ -18,11 +18,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
+import java.util.Objects;
 
 public class HornOfSightItem extends InstrumentItem {
 
     public HornOfSightItem(TagKey<Instrument> tagKey, Properties properties) {
         super(tagKey, properties);
+        Objects.requireNonNull(tagKey, "tag key is null");
     }
 
     @Override
@@ -35,8 +37,10 @@ public class HornOfSightItem extends InstrumentItem {
         InteractionResult interactionResult = super.use(level, player, usedHand);
         if (interactionResult.consumesAction() && !level.isClientSide) {
             BlockPos pos = player.blockPosition();
-            for (LivingEntity livingentity : level.getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(48.0))) {
-                if (livingentity instanceof Enemy && livingentity.isAlive() && !livingentity.isRemoved() && pos.closerToCenterThan(livingentity.position(), 48.0)) {
+            for (LivingEntity livingentity : level.getEntitiesOfClass(LivingEntity.class,
+                    new AABB(pos).inflate(48.0))) {
+                if (livingentity instanceof Enemy && livingentity.isAlive() && !livingentity.isRemoved() &&
+                        pos.closerToCenterThan(livingentity.position(), 48.0)) {
                     livingentity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 60));
                 }
             }

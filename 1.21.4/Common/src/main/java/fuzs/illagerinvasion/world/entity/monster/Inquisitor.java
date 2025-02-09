@@ -53,7 +53,7 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
-public class Inquisitor extends AbstractIllager {
+public class Inquisitor extends AbstractIllager implements Stunnable {
     private static final EntityDataAccessor<Boolean> STUNNED = SynchedEntityData.defineId(Inquisitor.class,
             EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FINAL_ROAR = SynchedEntityData.defineId(Inquisitor.class,
@@ -119,12 +119,12 @@ public class Inquisitor extends AbstractIllager {
 
     @Override
     public boolean hasLineOfSight(Entity entity) {
-        return !this.getStunnedState() && super.hasLineOfSight(entity);
+        return !this.isStunned() && super.hasLineOfSight(entity);
     }
 
     @Override
     protected boolean isImmobile() {
-        return super.isImmobile() || this.getStunnedState();
+        return super.isImmobile() || this.isStunned();
     }
 
     @Override
@@ -148,7 +148,8 @@ public class Inquisitor extends AbstractIllager {
         builder.define(FINAL_ROAR, false);
     }
 
-    public boolean getStunnedState() {
+    @Override
+    public boolean isStunned() {
         return this.entityData.get(STUNNED);
     }
 
@@ -183,7 +184,7 @@ public class Inquisitor extends AbstractIllager {
     @Override
     public void tick() {
         super.tick();
-        if (this.isAlive() && this.getStunnedState()) {
+        if (this.isAlive() && this.isStunned()) {
             --this.stunTick;
             if (this.stunTick <= 0) {
                 this.setStunnedState(false);

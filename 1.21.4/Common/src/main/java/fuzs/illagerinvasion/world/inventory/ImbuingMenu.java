@@ -4,6 +4,7 @@ import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.world.item.enchantment.ImbuingEnchantmentLevel;
+import fuzs.puzzleslib.api.container.v1.QuickMoveRuleSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
@@ -170,10 +171,10 @@ public class ImbuingMenu extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        return QuickMoveRuleSet.of(this, this::moveItemStackTo, true)
-                .addContainerRule(0, 2, 1)
-                .addInventoryRule()
-                .addHotbarRule()
+        return QuickMoveRuleSet.of(this, this::moveItemStackTo)
+                .addContainerSlotRule(0, 2, 1)
+                .addInventoryRules()
+                .addInventoryCompartmentRules()
                 .quickMoveStack(player, index);
     }
 

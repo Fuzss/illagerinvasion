@@ -16,7 +16,7 @@ public class ModEntityTypeTagProvider extends AbstractTagProvider<EntityType<?>>
 
     @Override
     public void addTags(HolderLookup.Provider provider) {
-        this.add(EntityTypeTags.RAIDERS)
+        this.tag(EntityTypeTags.RAIDERS)
                 .add(ModEntityTypes.BASHER_ENTITY_TYPE.value(),
                         ModEntityTypes.PROVOKER_ENTITY_TYPE.value(),
                         ModEntityTypes.NECROMANCER_ENTITY_TYPE.value(),
@@ -26,7 +26,7 @@ public class ModEntityTypeTagProvider extends AbstractTagProvider<EntityType<?>>
                         ModEntityTypes.INQUISITOR_ENTITY_TYPE.value(),
                         ModEntityTypes.ALCHEMIST_ENTITY_TYPE.value(),
                         ModEntityTypes.INVOKER_ENTITY_TYPE.value());
-        this.add(EntityTypeTags.ILLAGER)
+        this.tag(EntityTypeTags.ILLAGER)
                 .add(ModEntityTypes.BASHER_ENTITY_TYPE.value(),
                         ModEntityTypes.PROVOKER_ENTITY_TYPE.value(),
                         ModEntityTypes.NECROMANCER_ENTITY_TYPE.value(),
@@ -37,8 +37,8 @@ public class ModEntityTypeTagProvider extends AbstractTagProvider<EntityType<?>>
                         ModEntityTypes.ALCHEMIST_ENTITY_TYPE.value(),
                         ModEntityTypes.INVOKER_ENTITY_TYPE.value(),
                         ModEntityTypes.FIRECALLER_ENTITY_TYPE.value());
-        this.add(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(ModEntityTypes.INVOKER_ENTITY_TYPE.value());
-        this.add("numismatic-overhaul:the_bourgeoisie")
+        this.tag(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(ModEntityTypes.INVOKER_ENTITY_TYPE.value());
+        this.tag("numismatic-overhaul:the_bourgeoisie")
                 .add(ModEntityTypes.BASHER_ENTITY_TYPE.value(),
                         ModEntityTypes.PROVOKER_ENTITY_TYPE.value(),
                         ModEntityTypes.NECROMANCER_ENTITY_TYPE.value(),

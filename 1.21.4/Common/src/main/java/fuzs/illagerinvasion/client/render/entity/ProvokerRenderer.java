@@ -17,7 +17,7 @@ public class ProvokerRenderer extends IllagerRenderer<Provoker, SpellcasterIllag
 
     public ProvokerRenderer(EntityRendererProvider.Context context) {
         super(context, new CustomIllagerModel<>(context.bakeLayer(ModelLayerLocations.PROVOKER)), 0.5F);
-        this.addLayer(new ItemInHandLayer<>(this, context.getItemRenderer()) {
+        this.addLayer(new ItemInHandLayer<>(this) {
             @Override
             public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, SpellcasterIllagerRenderState renderState, float yRot, float xRot) {
                 if (renderState.isAggressive || renderState.isCastingSpell) {

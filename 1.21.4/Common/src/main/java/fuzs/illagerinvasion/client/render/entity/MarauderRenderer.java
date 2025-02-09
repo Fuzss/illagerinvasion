@@ -15,7 +15,7 @@ public class MarauderRenderer extends IllagerRenderer<Marauder, MarauderRenderSt
 
     public MarauderRenderer(EntityRendererProvider.Context context) {
         super(context, new MarauderModel(context.bakeLayer(ModelLayerLocations.MARAUDER)), 0.5F);
-        this.addLayer(new ItemInHandLayer<>(this, context.getItemRenderer()));
+        this.addLayer(new ItemInHandLayer<>(this));
     }
 
     @Override

@@ -16,23 +16,23 @@ public class ImbuingScreen extends AbstractContainerScreen<ImbuingMenu> {
     private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id(
             "textures/gui/container/imbuing_table.png");
     private static final ResourceLocation EMPTY_SLOT_HELMET = ResourceLocation.withDefaultNamespace(
-            "item/empty_armor_slot_helmet");
+            "container/slot/helmet");
     private static final ResourceLocation EMPTY_SLOT_CHESTPLATE = ResourceLocation.withDefaultNamespace(
-            "item/empty_armor_slot_chestplate");
+            "container/slot/chestplate");
     private static final ResourceLocation EMPTY_SLOT_LEGGINGS = ResourceLocation.withDefaultNamespace(
-            "item/empty_armor_slot_leggings");
+            "container/slot/leggings");
     private static final ResourceLocation EMPTY_SLOT_BOOTS = ResourceLocation.withDefaultNamespace(
-            "item/empty_armor_slot_boots");
-    private static final ResourceLocation EMPTY_SLOT_HOE = ResourceLocation.withDefaultNamespace("item/empty_slot_hoe");
-    private static final ResourceLocation EMPTY_SLOT_AXE = ResourceLocation.withDefaultNamespace("item/empty_slot_axe");
+            "container/slot/boots");
+    private static final ResourceLocation EMPTY_SLOT_HOE = ResourceLocation.withDefaultNamespace("container/slot/hoe");
+    private static final ResourceLocation EMPTY_SLOT_AXE = ResourceLocation.withDefaultNamespace("container/slot/axe");
     private static final ResourceLocation EMPTY_SLOT_SWORD = ResourceLocation.withDefaultNamespace(
-            "item/empty_slot_sword");
+            "container/slot/sword");
     private static final ResourceLocation EMPTY_SLOT_SHOVEL = ResourceLocation.withDefaultNamespace(
-            "item/empty_slot_shovel");
+            "container/slot/shovel");
     private static final ResourceLocation EMPTY_SLOT_PICKAXE = ResourceLocation.withDefaultNamespace(
-            "item/empty_slot_pickaxe");
-    private static final ResourceLocation EMPTY_SLOT_BOOK = IllagerInvasion.id("item/empty_slot_book");
-    private static final ResourceLocation EMPTY_SLOT_GEM = IllagerInvasion.id("item/empty_slot_ruby");
+            "container/slot/pickaxe");
+    private static final ResourceLocation EMPTY_SLOT_BOOK = IllagerInvasion.id("container/slot/book");
+    private static final ResourceLocation EMPTY_SLOT_GEM = IllagerInvasion.id("container/slot/ruby");
     private static final List<ResourceLocation> EMPTY_SLOT_BOOK_ICONS = List.of(EMPTY_SLOT_BOOK);
     private static final List<ResourceLocation> EMPTY_SLOT_TOOL_ICONS = List.of(EMPTY_SLOT_HELMET,
             EMPTY_SLOT_CHESTPLATE,

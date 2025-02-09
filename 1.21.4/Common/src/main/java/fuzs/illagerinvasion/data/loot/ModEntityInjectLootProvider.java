@@ -1,7 +1,7 @@
 package fuzs.illagerinvasion.data.loot;
 
 import fuzs.illagerinvasion.init.ModItems;
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModLootTables;
 import fuzs.puzzleslib.api.data.v2.AbstractLootProvider;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
 import net.minecraft.world.item.Items;
@@ -24,7 +24,7 @@ public class ModEntityInjectLootProvider extends AbstractLootProvider.Simple {
 
     @Override
     public void addLootTables() {
-        this.add(ModRegistry.ILLUSIONER_INJECT_LOOT_TABLE, LootTable.lootTable()
+        this.add(ModLootTables.ILLUSIONER_INJECT_LOOT_TABLE, LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1.0F))
@@ -48,7 +48,7 @@ public class ModEntityInjectLootProvider extends AbstractLootProvider.Simple {
                                 .when(LootItemKilledByPlayerCondition.killedByPlayer())
                 )
         );
-        this.add(ModRegistry.PILLAGER_INJECT_LOOT_TABLE, LootTable.lootTable()
+        this.add(ModLootTables.PILLAGER_INJECT_LOOT_TABLE, LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1.0F))
@@ -66,7 +66,7 @@ public class ModEntityInjectLootProvider extends AbstractLootProvider.Simple {
                                 )
                 )
         );
-        this.add(ModRegistry.RAVAGER_INJECT_LOOT_TABLE, LootTable.lootTable()
+        this.add(ModLootTables.RAVAGER_INJECT_LOOT_TABLE, LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1.0F))

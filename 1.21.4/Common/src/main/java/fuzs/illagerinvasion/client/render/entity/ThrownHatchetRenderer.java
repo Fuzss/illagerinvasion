@@ -6,19 +6,20 @@ import fuzs.illagerinvasion.client.render.entity.state.ThrownHatchetRenderState;
 import fuzs.illagerinvasion.world.entity.projectile.ThrownHatchet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.state.ThrownItemRenderState;
+import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 
 public class ThrownHatchetRenderer extends ThrownItemRenderer<ThrownHatchet> {
-    private final ItemRenderer itemRenderer;
+    private final ItemModelResolver itemModelResolver;
 
     public ThrownHatchetRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.itemRenderer = context.getItemRenderer();
+        this.itemModelResolver = context.getItemModelResolver();
     }
 
     @Override
@@ -29,16 +30,7 @@ public class ThrownHatchetRenderer extends ThrownItemRenderer<ThrownHatchet> {
         float rotation = ((ThrownHatchetRenderState) renderState).isInGround ? 1.0F : renderState.ageInTicks;
         poseStack.mulPose(Axis.ZP.rotationDegrees(((ThrownHatchetRenderState) renderState).xRot + 90.0F * rotation));
         poseStack.translate(0.1F, -0.2F, 0.0F);
-        if (renderState.itemModel != null) {
-            this.itemRenderer.render(renderState.item,
-                    ItemDisplayContext.GROUND,
-                    false,
-                    poseStack,
-                    bufferSource,
-                    packedLight,
-                    OverlayTexture.NO_OVERLAY,
-                    renderState.itemModel);
-        }
+        renderState.item.render(poseStack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
     }
 
@@ -52,7 +44,11 @@ public class ThrownHatchetRenderer extends ThrownItemRenderer<ThrownHatchet> {
         super.extractRenderState(entity, reusedState, partialTick);
         ((ThrownHatchetRenderState) reusedState).yRot = entity.getYRot(partialTick);
         ((ThrownHatchetRenderState) reusedState).xRot = entity.getXRot(partialTick);
-        if (entity.isFoil()) reusedState.item.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+        if (entity.isFoil()) {
+            ItemStack itemStack = entity.getItem().copy();
+            itemStack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+            this.itemModelResolver.updateForNonLiving(reusedState.item, itemStack, ItemDisplayContext.GROUND, entity);
+        }
         ((ThrownHatchetRenderState) reusedState).isInGround = entity.isInGround();
     }
 }

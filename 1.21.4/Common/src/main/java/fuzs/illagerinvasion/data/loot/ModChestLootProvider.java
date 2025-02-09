@@ -1,7 +1,7 @@
 package fuzs.illagerinvasion.data.loot;
 
 import fuzs.illagerinvasion.init.ModItems;
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModLootTables;
 import fuzs.puzzleslib.api.data.v2.AbstractLootProvider;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
 import net.minecraft.world.item.Items;
@@ -24,7 +24,7 @@ public class ModChestLootProvider extends AbstractLootProvider.Simple {
 
     @Override
     public void addLootTables() {
-        this.add(ModRegistry.ILLAGER_FORT_TOWER_LOOT_TABLE, LootTable.lootTable()
+        this.add(ModLootTables.ILLAGER_FORT_TOWER_LOOT_TABLE, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(Items.SWEET_BERRIES)
@@ -101,7 +101,7 @@ public class ModChestLootProvider extends AbstractLootProvider.Simple {
                                 Items.IRON_INGOT)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
                         .when(LootItemRandomChanceCondition.randomChance(0.6F)))));
-        this.add(ModRegistry.ILLAGER_FORT_GROUND_LOOT_TABLE, LootTable.lootTable()
+        this.add(ModLootTables.ILLAGER_FORT_GROUND_LOOT_TABLE, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(Items.SWEET_BERRIES)
@@ -148,7 +148,7 @@ public class ModChestLootProvider extends AbstractLootProvider.Simple {
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(Items.STICK)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))));
-        this.add(ModRegistry.ILLUSIONER_TOWER_STAIRS_LOOT_TABLE, LootTable.lootTable()
+        this.add(ModLootTables.ILLUSIONER_TOWER_STAIRS_LOOT_TABLE, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(Items.WHEAT)
@@ -206,7 +206,7 @@ public class ModChestLootProvider extends AbstractLootProvider.Simple {
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(Items.LAPIS_LAZULI)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0F))))));
-        this.add(ModRegistry.ILLUSIONER_TOWER_ENTRANCE_LOOT_TABLE, LootTable.lootTable()
+        this.add(ModLootTables.ILLUSIONER_TOWER_ENTRANCE_LOOT_TABLE, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(Items.WHEAT)
@@ -247,7 +247,7 @@ public class ModChestLootProvider extends AbstractLootProvider.Simple {
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(Items.GUNPOWDER)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 3.0F))))));
-        this.add(ModRegistry.LABYRINTH_LOOT_TABLE, LootTable.lootTable()
+        this.add(ModLootTables.LABYRINTH_LOOT_TABLE, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(Items.NAME_TAG)
@@ -299,7 +299,7 @@ public class ModChestLootProvider extends AbstractLootProvider.Simple {
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(Items.STRING)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 5.0F))))));
-        this.add(ModRegistry.LABYRINTH_MAP_LOOT_TABLE, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(
+        this.add(ModLootTables.LABYRINTH_MAP_LOOT_TABLE, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(
                 ConstantValue.exactly(3.0F)).add(LootItem.lootTableItem(Items.COMPASS)).add(
                 LootItem.lootTableItem(Items.MAP)).add(LootItem.lootTableItem(Items.CLOCK)).add(
                 LootItem.lootTableItem(ModItems.LOST_CANDLE_ITEM.value())).add(LootItem.lootTableItem(Items.PAPER)
@@ -309,7 +309,7 @@ public class ModChestLootProvider extends AbstractLootProvider.Simple {
                 .setWeight(10)).add(LootItem.lootTableItem(Items.BOOK)
                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F)))
                 .setWeight(5))));
-        this.add(ModRegistry.SORCERER_HUT_LOOT_TABLE, LootTable.lootTable()
+        this.add(ModLootTables.SORCERER_HUT_LOOT_TABLE, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(Items.PAPER)

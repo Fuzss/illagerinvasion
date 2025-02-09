@@ -6,11 +6,10 @@ import fuzs.illagerinvasion.config.ServerConfig;
 import fuzs.illagerinvasion.handler.PlatinumTrimHandler;
 import fuzs.illagerinvasion.handler.VillagerGoalHandler;
 import fuzs.illagerinvasion.init.ModEntityTypes;
-import fuzs.illagerinvasion.init.ModItems;
+import fuzs.illagerinvasion.init.ModLootTables;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
-import fuzs.puzzleslib.api.core.v1.context.CreativeModeTabContext;
 import fuzs.puzzleslib.api.core.v1.context.EntityAttributesCreateContext;
 import fuzs.puzzleslib.api.core.v1.context.SpawnPlacementsContext;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
@@ -18,10 +17,10 @@ import fuzs.puzzleslib.api.event.v1.entity.ServerEntityLevelEvents;
 import fuzs.puzzleslib.api.event.v1.entity.living.LivingExperienceDropCallback;
 import fuzs.puzzleslib.api.event.v1.entity.player.BreakSpeedCallback;
 import fuzs.puzzleslib.api.event.v1.level.BlockEvents;
-import fuzs.puzzleslib.api.event.v1.server.LootTableLoadEvents;
+import fuzs.puzzleslib.api.event.v1.server.LootTableLoadCallback;
 import fuzs.puzzleslib.api.event.v1.server.RegisterPotionBrewingMixesCallback;
-import fuzs.puzzleslib.api.item.v2.CreativeModeTabConfigurator;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -41,8 +40,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.IntPredicate;
 
 public class IllagerInvasion implements ModConstructor {
     public static final String MOD_ID = "illagerinvasion";
@@ -62,29 +59,28 @@ public class IllagerInvasion implements ModConstructor {
         LivingExperienceDropCallback.EVENT.register(PlatinumTrimHandler::onLivingExperienceDrop);
         BlockEvents.FARMLAND_TRAMPLE.register(PlatinumTrimHandler::onFarmlandTrample);
         ServerEntityLevelEvents.LOAD.register(VillagerGoalHandler::onEntityLoad);
-        LootTableLoadEvents.MODIFY.register((ResourceLocation resourceLocation, Consumer<LootPool> addLootPool, IntPredicate removeLootPool) -> {
+        LootTableLoadCallback.EVENT.register((ResourceLocation resourceLocation, LootTable.Builder builder, HolderLookup.Provider provider) -> {
             injectLootPool(resourceLocation,
-                    addLootPool,
+                    builder,
                     EntityType.ILLUSIONER.getDefaultLootTable(),
-                    ModRegistry.ILLUSIONER_INJECT_LOOT_TABLE);
+                    ModLootTables.ILLUSIONER_INJECT_LOOT_TABLE);
             injectLootPool(resourceLocation,
-                    addLootPool,
+                    builder,
                     EntityType.PILLAGER.getDefaultLootTable(),
-                    ModRegistry.PILLAGER_INJECT_LOOT_TABLE);
+                    ModLootTables.PILLAGER_INJECT_LOOT_TABLE);
             injectLootPool(resourceLocation,
-                    addLootPool,
+                    builder,
                     EntityType.RAVAGER.getDefaultLootTable(),
-                    ModRegistry.RAVAGER_INJECT_LOOT_TABLE);
+                    ModLootTables.RAVAGER_INJECT_LOOT_TABLE);
         });
         RegisterPotionBrewingMixesCallback.EVENT.register(IllagerInvasion::registerPotionRecipes);
     }
 
-    private static void injectLootPool(ResourceLocation resourceLocation, Consumer<LootPool> addPool, Optional<ResourceKey<LootTable>> builtInLootTable, ResourceKey<LootTable> injectedLootTable) {
+    private static void injectLootPool(ResourceLocation resourceLocation, LootTable.Builder builder, Optional<ResourceKey<LootTable>> builtInLootTable, ResourceKey<LootTable> injectedLootTable) {
         if (builtInLootTable.map(ResourceKey::location).filter(resourceLocation::equals).isPresent()) {
-            addPool.accept(LootPool.lootPool()
+            builder.withPool(LootPool.lootPool()
                     .setRolls(ConstantValue.exactly(1.0F))
-                    .add(NestedLootTable.lootTableReference(injectedLootTable))
-                    .build());
+                    .add(NestedLootTable.lootTableReference(injectedLootTable)));
         }
     }
 
@@ -222,36 +218,6 @@ public class IllagerInvasion implements ModConstructor {
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 PatrollingMonster::checkPatrollingMonsterSpawnRules);
-    }
-
-    @Override
-    public void onRegisterCreativeModeTabs(CreativeModeTabContext context) {
-        context.registerCreativeModeTab(CreativeModeTabConfigurator.from(MOD_ID, ModItems.HORN_OF_SIGHT_ITEM)
-                .displayItems((itemDisplayParameters, output) -> {
-                    output.accept(ModItems.IMBUING_TABLE_ITEM.value());
-                    output.accept(ModItems.UNUSUAL_DUST_ITEM.value());
-                    output.accept(ModItems.ILLUSIONARY_DUST_ITEM.value());
-                    output.accept(ModItems.HALLOWED_GEM_ITEM.value());
-                    output.accept(ModItems.PRIMAL_ESSENCE_ITEM.value());
-                    output.accept(ModItems.PLATINUM_CHUNK_ITEM.value());
-                    output.accept(ModItems.PLATINUM_SHEET_ITEM.value());
-                    output.accept(ModItems.PLATINUM_INFUSED_HATCHET_ITEM.value());
-                    output.accept(ModItems.HORN_OF_SIGHT_ITEM.value());
-                    output.accept(ModItems.LOST_CANDLE_ITEM.value());
-                    output.accept(ModItems.MAGICAL_FIRE_CHARGE_ITEM.value());
-                    output.accept(ModItems.PROVOKER_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.BASHER_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.SORCERER_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.ARCHIVIST_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.INQUISITOR_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.MARAUDER_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.INVOKER_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.ALCHEMIST_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.FIRECALLER_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.NECROMANCER_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.SURRENDERED_SPAWN_EGG_ITEM.value());
-                    output.accept(ModItems.ILLUSIONER_SPAWN_EGG_ITEM.value());
-                }));
     }
 
     public static ResourceLocation id(String path) {

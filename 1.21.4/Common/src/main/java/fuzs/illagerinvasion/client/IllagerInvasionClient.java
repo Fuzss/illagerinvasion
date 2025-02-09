@@ -1,13 +1,14 @@
 package fuzs.illagerinvasion.client;
 
-import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.client.gui.screens.inventory.ImbuingScreen;
 import fuzs.illagerinvasion.client.handler.EnchantmentTooltipHandler;
 import fuzs.illagerinvasion.client.init.ModelLayerLocations;
-import fuzs.illagerinvasion.client.model.*;
+import fuzs.illagerinvasion.client.model.FirecallerModel;
+import fuzs.illagerinvasion.client.model.InquisitorModel;
+import fuzs.illagerinvasion.client.model.InvokerFangsModel;
+import fuzs.illagerinvasion.client.model.InvokerModel;
 import fuzs.illagerinvasion.client.render.entity.*;
 import fuzs.illagerinvasion.init.ModEntityTypes;
-import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.*;
@@ -20,13 +21,10 @@ import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.particle.HeartParticle;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.WitherSkullRenderer;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
@@ -97,16 +95,20 @@ public class IllagerInvasionClient implements ClientModConstructor {
         context.registerLayerDefinition(ModelLayerLocations.INVOKER,
                 () -> InvokerModel.createBodyLayer(CubeDeformation.NONE).apply(illagerMeshTransformer));
         context.registerLayerDefinition(ModelLayerLocations.INVOKER_ARMOR,
-                () -> InvokerModel.createBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION).apply(illagerMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.NECROMANCER, () -> NecromancerRenderer.createBodyLayer(CubeDeformation.NONE).apply(illagerMeshTransformer));
+                () -> InvokerModel.createBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION)
+                        .apply(illagerMeshTransformer));
+        context.registerLayerDefinition(ModelLayerLocations.NECROMANCER,
+                () -> NecromancerRenderer.createBodyLayer(CubeDeformation.NONE).apply(illagerMeshTransformer));
         context.registerLayerDefinition(ModelLayerLocations.NECROMANCER_ARMOR,
-                () -> NecromancerRenderer.createBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION).apply(illagerMeshTransformer));
+                () -> NecromancerRenderer.createBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION)
+                        .apply(illagerMeshTransformer));
         context.registerLayerDefinition(ModelLayerLocations.INVOKER_FANGS, InvokerFangsModel::createBodyLayer);
         context.registerLayerDefinition(ModelLayerLocations.INQUISITOR,
                 () -> InquisitorModel.createBodyLayer().apply(MeshTransformer.scaling(1.1F)));
         context.registerLayerDefinition(ModelLayerLocations.SORCERER,
                 () -> SorcererRenderer.createBodyLayer().apply(illagerMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.FIRECALLER, () -> FirecallerModel.createBodyLayer().apply(illagerMeshTransformer));
+        context.registerLayerDefinition(ModelLayerLocations.FIRECALLER,
+                () -> FirecallerModel.createBodyLayer().apply(illagerMeshTransformer));
         context.registerLayerDefinition(ModelLayerLocations.ALCHEMIST,
                 () -> AlchemistRenderer.createBodyLayer().apply(illagerMeshTransformer));
         context.registerLayerDefinition(ModelLayerLocations.BASHER, illagerLayerDefinition);
@@ -117,15 +119,5 @@ public class IllagerInvasionClient implements ClientModConstructor {
     @Override
     public void onRegisterBlockRenderTypes(RenderTypesContext<Block> context) {
         context.registerRenderType(RenderType.cutout(), ModRegistry.MAGIC_FIRE_BLOCK.value());
-    }
-
-    @Override
-    public void onRegisterItemModelProperties(ItemModelPropertiesContext context) {
-        context.registerItemProperty(IllagerInvasion.id("tooting"),
-                (ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) -> {
-                    return livingEntity != null && livingEntity.isUsingItem() &&
-                            livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F;
-                },
-                ModItems.HORN_OF_SIGHT_ITEM.value());
     }
 }

@@ -25,10 +25,9 @@ public class MagicFireBlock extends BaseFireBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (!entity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
-            // just a cheap trick, so no flame overlay shows which would have the wrong fire color
             int remainingFireTicks = entity.getRemainingFireTicks();
             super.entityInside(state, level, pos, entity);
-            entity.setRemainingFireTicks(remainingFireTicks);
+            entity.setRemainingFireTicks(Math.max(20, remainingFireTicks));
         }
     }
 

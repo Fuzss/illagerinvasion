@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "illagerinvasion:item/horn_of_sight"
+    },
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "illagerinvasion:item/horn_of_sight_tooting"
+    },
+    "property": "minecraft:using_item"
+  }
+}

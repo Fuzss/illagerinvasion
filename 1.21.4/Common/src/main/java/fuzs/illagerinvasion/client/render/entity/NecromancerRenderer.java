@@ -30,7 +30,7 @@ public class NecromancerRenderer extends IllagerRenderer<Necromancer, Necromance
                 return ARMOR_TEXTURE_LOCATION;
             }
         });
-        this.addLayer(new ItemInHandLayer<>(this, context.getItemRenderer()) {
+        this.addLayer(new ItemInHandLayer<>(this) {
             @Override
             public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, NecromancerRenderState renderState, float yRot, float xRot) {
                 if (renderState.isCastingSpell) {

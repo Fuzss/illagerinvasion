@@ -23,8 +23,7 @@ public class BasherModel extends CustomIllagerModel<StunnableIllagerRenderState>
     @Override
     public void setupAnim(StunnableIllagerRenderState renderState) {
         super.setupAnim(renderState);
-        ItemStack item = renderState.getMainHandItem();
-        if (renderState.armPose == AbstractIllager.IllagerArmPose.ATTACKING && item.is(Items.SHIELD) &&
+        if (renderState.armPose == AbstractIllager.IllagerArmPose.ATTACKING && renderState.mainHandItem.is(Items.SHIELD) &&
                 !renderState.isStunned) {
             if (renderState.mainArm == HumanoidArm.RIGHT) {
                 this.rightArm.xRot = this.rightArm.xRot * 0.5F;

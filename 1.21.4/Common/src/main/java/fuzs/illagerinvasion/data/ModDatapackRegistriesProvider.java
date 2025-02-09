@@ -54,8 +54,7 @@ public class ModDatapackRegistriesProvider extends AbstractDatapackRegistriesPro
         registerTrimMaterial(context,
                 ModRegistry.PLATINUM_TRIM_MATERIAL,
                 ModItems.PLATINUM_SHEET_ITEM.value(),
-                0x527D7C,
-                0.2F);
+                0x527D7C);
     }
 
     static void boostrapInstruments(BootstrapContext<Instrument> context) {
@@ -69,7 +68,7 @@ public class ModDatapackRegistriesProvider extends AbstractDatapackRegistriesPro
     static void bootstrapStructures(BootstrapContext<Structure> context) {
         context.register(ModStructures.FIRECALLER_HUT_STRUCTURE,
                 new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
-                        .getOrThrow(ModRegistry.HAS_FIRECALLER_HUT_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                        .getOrThrow(ModTags.HAS_FIRECALLER_HUT_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
                         .terrainAdapation(TerrainAdjustment.BEARD_THIN)
                         .build(),
                         context.lookup(Registries.TEMPLATE_POOL)
@@ -80,7 +79,7 @@ public class ModDatapackRegistriesProvider extends AbstractDatapackRegistriesPro
                         Heightmap.Types.WORLD_SURFACE_WG));
         context.register(ModStructures.ILLAGER_FORT_STRUCTURE,
                 new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
-                        .getOrThrow(ModRegistry.HAS_ILLAGER_FORT_BIOME_TAG)).spawnOverrides(Map.of(MobCategory.MONSTER,
+                        .getOrThrow(ModTags.HAS_ILLAGER_FORT_BIOME_TAG)).spawnOverrides(Map.of(MobCategory.MONSTER,
                                 new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE,
                                         WeightedRandomList.create(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER,
                                                         3,
@@ -108,7 +107,7 @@ public class ModDatapackRegistriesProvider extends AbstractDatapackRegistriesPro
                         Heightmap.Types.WORLD_SURFACE_WG));
         context.register(ModStructures.ILLUSIONER_TOWER_STRUCTURE,
                 new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
-                        .getOrThrow(ModRegistry.HAS_ILLUSIONER_TOWER_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                        .getOrThrow(ModTags.HAS_ILLUSIONER_TOWER_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
                         .terrainAdapation(TerrainAdjustment.BEARD_THIN)
                         .build(),
                         context.lookup(Registries.TEMPLATE_POOL)
@@ -119,7 +118,7 @@ public class ModDatapackRegistriesProvider extends AbstractDatapackRegistriesPro
                         Heightmap.Types.WORLD_SURFACE_WG));
         context.register(ModStructures.LABYRINTH_STRUCTURE,
                 new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
-                        .getOrThrow(ModRegistry.HAS_LABYRINTH_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                        .getOrThrow(ModTags.HAS_LABYRINTH_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
                         .terrainAdapation(TerrainAdjustment.ENCAPSULATE)
                         .build(),
                         context.lookup(Registries.TEMPLATE_POOL)
@@ -130,7 +129,7 @@ public class ModDatapackRegistriesProvider extends AbstractDatapackRegistriesPro
                         Heightmap.Types.WORLD_SURFACE_WG));
         context.register(ModStructures.SORCERER_HUT_STRUCTURE,
                 new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
-                        .getOrThrow(ModRegistry.HAS_SORCERER_HUT_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                        .getOrThrow(ModTags.HAS_SORCERER_HUT_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
                         .terrainAdapation(TerrainAdjustment.BEARD_THIN)
                         .build(),
                         context.lookup(Registries.TEMPLATE_POOL).getOrThrow(ModStructures.SORCERER_HUT_TEMPLATE_POOL),

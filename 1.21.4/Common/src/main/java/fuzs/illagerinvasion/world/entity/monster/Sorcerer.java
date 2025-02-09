@@ -1,7 +1,9 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
+import fuzs.illagerinvasion.init.ModIllagerSpells;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.init.ModSoundEvents;
+import fuzs.illagerinvasion.init.ModTags;
 import fuzs.illagerinvasion.util.TeleportUtil;
 import fuzs.puzzleslib.api.core.v1.CommonAbstractions;
 import net.minecraft.core.BlockPos;
@@ -19,7 +21,6 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.creaking.Creaking;
@@ -152,7 +153,7 @@ public class Sorcerer extends SpellcasterIllager {
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return ModRegistry.CONJURE_TELEPORT_ILLAGER_SPELL;
+            return ModIllagerSpells.CONJURE_TELEPORT_ILLAGER_SPELL;
         }
     }
 
@@ -182,10 +183,10 @@ public class Sorcerer extends SpellcasterIllager {
 
         private void placeMagicFire(BlockPos blockPos) {
             BlockState blockState = Sorcerer.this.level().getBlockState(blockPos.below());
-            if (!blockState.is(ModRegistry.MAGIC_FIRE_REPLACEABLE_BLOCK_TAG)) {
+            if (!blockState.is(ModTags.MAGIC_FIRE_REPLACEABLE_BLOCK_TAG)) {
                 for (BlockPos offset : BlockPos.withinManhattan(blockPos, 1, 1, 1)) {
                     blockState = Sorcerer.this.level().getBlockState(offset);
-                    if (blockState.is(ModRegistry.MAGIC_FIRE_REPLACEABLE_BLOCK_TAG)) {
+                    if (blockState.is(ModTags.MAGIC_FIRE_REPLACEABLE_BLOCK_TAG)) {
                         Sorcerer.this.level().setBlockAndUpdate(offset, ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState());
                     }
                 }
@@ -214,7 +215,7 @@ public class Sorcerer extends SpellcasterIllager {
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return ModRegistry.CONJURE_FLAMES_ILLAGER_SPELL;
+            return ModIllagerSpells.CONJURE_FLAMES_ILLAGER_SPELL;
         }
     }
 }

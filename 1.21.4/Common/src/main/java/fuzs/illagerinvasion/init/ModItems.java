@@ -23,7 +23,7 @@ public class ModItems {
             LostCandleItem::new,
             Item.Properties::new);
     public static final Holder.Reference<Item> HORN_OF_SIGHT_ITEM = ModRegistry.REGISTRIES.registerItem("horn_of_sight",
-            (Item.Properties properties) -> new HornOfSightItem(ModRegistry.HORN_OF_SIGHT_INSTRUMENT_TAG, properties),
+            (Item.Properties properties) -> new HornOfSightItem(ModTags.HORN_OF_SIGHT_INSTRUMENT_TAG, properties),
             () -> new Item.Properties().stacksTo(1));
     public static final Holder.Reference<Item> HALLOWED_GEM_ITEM = ModRegistry.REGISTRIES.registerItem("hallowed_gem",
             () -> new Item.Properties().rarity(Rarity.UNCOMMON));

@@ -22,8 +22,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class LostCandleItem extends Item {
 
-    public LostCandleItem(Item.Properties settings) {
-        super(settings);
+    public LostCandleItem(Item.Properties properties) {
+        super(properties);
     }
 
     @Override

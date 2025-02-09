@@ -44,7 +44,7 @@ public class InquisitorModel extends CustomIllagerModel<StunnableIllagerRenderSt
     public void setupAnim(StunnableIllagerRenderState renderState) {
         super.setupAnim(renderState);
         if (renderState.armPose == AbstractIllager.IllagerArmPose.ATTACKING) {
-            if (renderState.getOffHandItem().is(Items.SHIELD)) {
+            if (renderState.offHandItem.is(Items.SHIELD)) {
                 if (renderState.mainArm == HumanoidArm.RIGHT) {
                     this.leftArm.xRot = -1.05F;
                     this.leftArm.yRot = 0.5235988F;

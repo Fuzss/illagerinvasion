@@ -15,7 +15,7 @@ public class InquisitorRenderer extends IllagerRenderer<Inquisitor, StunnableIll
 
     public InquisitorRenderer(final EntityRendererProvider.Context context) {
         super(context, new InquisitorModel(context.bakeLayer(ModelLayerLocations.INQUISITOR)), 0.5F);
-        this.addLayer(new ItemInHandLayer<>(this, context.getItemRenderer()));
+        this.addLayer(new ItemInHandLayer<>(this));
     }
 
     @Override
@@ -26,7 +26,7 @@ public class InquisitorRenderer extends IllagerRenderer<Inquisitor, StunnableIll
     @Override
     public void extractRenderState(Inquisitor entity, StunnableIllagerRenderState reusedState, float partialTick) {
         super.extractRenderState(entity, reusedState, partialTick);
-        reusedState.isStunned = entity.getStunnedState();
+        reusedState.extractRenderState(entity);
     }
 
     @Override

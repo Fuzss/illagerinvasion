@@ -1,5 +1,6 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
+import fuzs.illagerinvasion.init.ModIllagerSpells;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.world.entity.projectile.SkullBolt;
@@ -221,7 +222,7 @@ public class Necromancer extends SpellcasterIllager {
 
         @Override
         protected IllagerSpell getSpell() {
-            return ModRegistry.NECRO_RAISE_ILLAGER_SPELL;
+            return ModIllagerSpells.NECRO_RAISE_ILLAGER_SPELL;
         }
     }
 
@@ -291,7 +292,7 @@ public class Necromancer extends SpellcasterIllager {
 
         @Override
         protected IllagerSpell getSpell() {
-            return ModRegistry.CONJURE_SKULL_BOLT_ILLAGER_SPELL;
+            return ModIllagerSpells.CONJURE_SKULL_BOLT_ILLAGER_SPELL;
         }
     }
 }

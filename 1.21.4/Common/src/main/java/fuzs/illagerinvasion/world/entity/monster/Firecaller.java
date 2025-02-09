@@ -1,6 +1,6 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-import fuzs.illagerinvasion.init.ModRegistry;
+import fuzs.illagerinvasion.init.ModIllagerSpells;
 import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.world.entity.projectile.FlyingMagma;
 import net.minecraft.core.BlockPos;
@@ -284,7 +284,7 @@ public class Firecaller extends SpellcasterIllager {
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return ModRegistry.PROVOKE_ILLAGER_SPELL;
+            return ModIllagerSpells.PROVOKE_ILLAGER_SPELL;
         }
     }
 }

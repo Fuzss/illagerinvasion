@@ -17,7 +17,7 @@ public class BasherRenderer extends IllagerRenderer<Basher, StunnableIllagerRend
 
     public BasherRenderer(EntityRendererProvider.Context context) {
         super(context, new BasherModel(context.bakeLayer(ModelLayerLocations.BASHER)), 0.5F);
-        this.addLayer(new ItemInHandLayer<>(this, context.getItemRenderer()) {
+        this.addLayer(new ItemInHandLayer<>(this) {
             @Override
             public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, StunnableIllagerRenderState renderState, float yRot, float xRot) {
                 if (renderState.isAggressive) {
@@ -35,7 +35,7 @@ public class BasherRenderer extends IllagerRenderer<Basher, StunnableIllagerRend
     @Override
     public void extractRenderState(Basher entity, StunnableIllagerRenderState reusedState, float partialTick) {
         super.extractRenderState(entity, reusedState, partialTick);
-        reusedState.isStunned = entity.isStunned();
+        reusedState.extractRenderState(entity);
     }
 
     @Override

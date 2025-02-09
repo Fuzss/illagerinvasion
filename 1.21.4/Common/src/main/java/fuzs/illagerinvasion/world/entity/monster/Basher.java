@@ -42,7 +42,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
-public class Basher extends AbstractIllager {
+public class Basher extends AbstractIllager implements Stunnable {
     private static final String TAG_STUN_TICKS = "Stunned";
     private static final String TAG_BLOCKED_COUNT = "BlockedCount";
     private static final EntityDataAccessor<Boolean> DATA_STUNNED = SynchedEntityData.defineId(Basher.class, EntityDataSerializers.BOOLEAN);
@@ -100,6 +100,7 @@ public class Basher extends AbstractIllager {
         builder.define(DATA_STUNNED, false);
     }
 
+    @Override
     public boolean isStunned() {
         return this.entityData.get(DATA_STUNNED);
     }

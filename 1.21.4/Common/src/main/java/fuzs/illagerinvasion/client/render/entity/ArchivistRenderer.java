@@ -16,19 +16,19 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.inventory.InventoryMenu;
 
 public class ArchivistRenderer extends IllagerRenderer<Archivist, SpellcasterIllagerRenderState> {
     private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/archivist.png");
-    private static final Material BOOK_LOCATION = new Material(InventoryMenu.BLOCK_ATLAS,
+    private static final Material BOOK_LOCATION = new Material(TextureAtlas.LOCATION_BLOCKS,
             ResourceLocationHelper.withDefaultNamespace("entity/enchanting_table_book"));
 
     public ArchivistRenderer(EntityRendererProvider.Context context) {
         super(context, new CustomIllagerModel<>(context.bakeLayer(ModelLayerLocations.ARCHIVIST)), 0.5F);
-        this.addLayer(new ItemInHandLayer<>(this, context.getItemRenderer()) {
+        this.addLayer(new ItemInHandLayer<>(this) {
             private final BookModel book = new BookModel(context.bakeLayer(ModelLayerLocations.ARCHIVIST_BOOK));
 
             @Override
