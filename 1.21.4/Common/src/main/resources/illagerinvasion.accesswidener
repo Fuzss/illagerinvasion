@@ -15,8 +15,6 @@ accessible  field   net/minecraft/world/entity/AreaEffectCloud  potionContents  
 accessible  field   net/minecraft/world/entity/projectile/EvokerFangs   warmupDelayTicks    I
 accessible  field   net/minecraft/world/entity/projectile/EvokerFangs   clientSideAttackStarted Z
 extendable  method  net/minecraft/world/entity/projectile/EvokerFangs   dealDamageTo    (Lnet/minecraft/world/entity/LivingEntity;)V
-transitive-accessible   field   net/minecraft/client/model/geom/builders/LayerDefinition    mesh    Lnet/minecraft/client/model/geom/builders/MeshDefinition;
-transitive-accessible   field   net/minecraft/client/model/geom/builders/LayerDefinition    material    Lnet/minecraft/client/model/geom/builders/MaterialDefinition;
 accessible  field   net/minecraft/world/entity/monster/Vex  limitedLifeTicks    I
 accessible  field   net/minecraft/world/entity/projectile/ThrownTrident ID_FOIL Lnet/minecraft/network/syncher/EntityDataAccessor;
 accessible  field   net/minecraft/world/entity/ai/goal/RangedAttackGoal attackTime  I

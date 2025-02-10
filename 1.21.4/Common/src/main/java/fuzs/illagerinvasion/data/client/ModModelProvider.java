@@ -3,6 +3,7 @@ package fuzs.illagerinvasion.data.client;
 import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.data.v2.AbstractModelProvider;
+import fuzs.puzzleslib.api.client.data.v2.models.ItemModelGenerationHelper;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
 import net.minecraft.client.data.models.BlockModelGenerators;
