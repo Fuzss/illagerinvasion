@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [8.0.7-1.20.1] - 2025-02-14
+### Changed
+- Allow invokers to spawn in high tier raids (disabled by default)
+
 ## [v8.0.6-1.20.1] - 2024-09-12
 ### Fixed
 - Fix `Illusioner::onSyncedDataUpdated` not calling super method

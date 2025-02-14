@@ -10,17 +10,18 @@ public class RaidWavesConfigHelper {
     public static final int[] MARAUDER_RAID_WAVES = getMarauderRaidWaves();
     public static final int[] INQUISITOR_RAID_WAVES = getInquisitorRaidWaves();
     public static final int[] ALCHEMIST_RAID_WAVES = getAlchemistRaidWaves();
+    public static final int[] INVOKER_RAID_WAVES = getInvokerRaidWaves();
 
     public static int[] getEmptyRaidWaves() {
         return new int[]{0, 0, 0, 0, 0, 0, 0, 0};
     }
 
     public static int[] getBasherRaidWaves() {
-        return new int[]{1, 1, 2, 1, 2, 2, 3, 3};
+        return new int[]{0, 1, 2, 1, 2, 3, 2, 3};
     }
 
     public static int[] getProvokerRaidWaves() {
-        return new int[]{0, 1, 1, 0, 1, 1, 2, 2};
+        return new int[]{0, 1, 1, 0, 2, 1, 3, 2};
     }
 
     public static int[] getNecromancerRaidWaves() {
@@ -32,11 +33,11 @@ public class RaidWavesConfigHelper {
     }
 
     public static int[] getIllusionerRaidWaves() {
-        return new int[]{0, 0, 0, 0, 0, 1, 0, 1};
+        return new int[]{0, 0, 0, 1, 0, 1, 0, 1};
     }
 
     public static int[] getArchivistRaidWaves() {
-        return new int[]{0, 1, 0, 1, 1, 1, 2, 3};
+        return new int[]{0, 1, 0, 1, 2, 1, 2, 3};
     }
 
     public static int[] getMarauderRaidWaves() {
@@ -44,10 +45,14 @@ public class RaidWavesConfigHelper {
     }
 
     public static int[] getInquisitorRaidWaves() {
-        return new int[]{0, 0, 0, 0, 1, 0, 1, 1};
+        return new int[]{0, 0, 0, 1, 0, 1, 0, 2};
     }
 
     public static int[] getAlchemistRaidWaves() {
         return new int[]{0, 0, 0, 1, 2, 1, 2, 2};
+    }
+
+    public static int[] getInvokerRaidWaves() {
+        return new int[]{0, 0, 0, 0, 0, 1, 0, 1};
     }
 }
