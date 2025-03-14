@@ -98,9 +98,5 @@
   "subtitles.item.lost_candle.diamond": "Diamonds ring",
   "subtitles.item.lost_candle.gold": "Gold rings",
   "subtitles.item.lost_candle.iron": "Iron rings",
-  "trim_material.illagerinvasion.platinum": "Platinum Material",
-  "trim_material.illagerinvasion.platinum.effect.agility": "Agility Effect",
-  "trim_material.illagerinvasion.platinum.effect.endurance": "Endurance Effect",
-  "trim_material.illagerinvasion.platinum.effect.featherweight": "Featherweight Effect",
-  "trim_material.illagerinvasion.platinum.effect.insight": "Insight Effect"
+  "trim_material.illagerinvasion.platinum": "Platinum Material"
 }

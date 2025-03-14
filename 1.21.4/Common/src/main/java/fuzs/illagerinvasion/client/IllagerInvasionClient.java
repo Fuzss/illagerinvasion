@@ -1,7 +1,6 @@
 package fuzs.illagerinvasion.client;
 
 import fuzs.illagerinvasion.client.gui.screens.inventory.ImbuingScreen;
-import fuzs.illagerinvasion.client.handler.EnchantmentTooltipHandler;
 import fuzs.illagerinvasion.client.init.ModelLayerLocations;
 import fuzs.illagerinvasion.client.model.FirecallerModel;
 import fuzs.illagerinvasion.client.model.InquisitorModel;
@@ -12,7 +11,6 @@ import fuzs.illagerinvasion.init.ModEntityTypes;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.*;
-import fuzs.puzzleslib.api.client.event.v1.gui.ItemTooltipCallback;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.HumanoidArmorModel;
 import net.minecraft.client.model.IllagerModel;
@@ -30,15 +28,6 @@ import net.minecraft.world.level.block.Block;
 import java.util.function.Supplier;
 
 public class IllagerInvasionClient implements ClientModConstructor {
-
-    @Override
-    public void onConstructMod() {
-        registerEventHandlers();
-    }
-
-    private static void registerEventHandlers() {
-        ItemTooltipCallback.EVENT.register(EnchantmentTooltipHandler::onItemTooltip);
-    }
 
     @Override
     public void onRegisterMenuScreens(MenuScreensContext context) {

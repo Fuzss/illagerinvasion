@@ -1,5 +1,6 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
+import fuzs.illagerinvasion.world.entity.ai.goal.RangedBowAttackWithoutStrafingGoal;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -65,7 +66,7 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
         this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Creaking.class, 8.0F, 1.0, 1.2));
         this.goalSelector.addGoal(2, new Raider.HoldGroundAttackGoal(this, 10.0F));
         this.goalSelector.addGoal(4, new AlchemistRangedAttackGoal(this, 0.85, 20, 15.0F));
-        this.goalSelector.addGoal(4, new RangedBowAttackGoal<>(this, 0.85, 20, 15.0F));
+        this.goalSelector.addGoal(4, new RangedBowAttackWithoutStrafingGoal<>(this, 0.85, 30, 15.0F));
         this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));

@@ -1,7 +1,6 @@
 package fuzs.illagerinvasion;
 
 import fuzs.illagerinvasion.config.ServerConfig;
-import fuzs.illagerinvasion.handler.PlatinumTrimHandler;
 import fuzs.illagerinvasion.handler.VillagerGoalHandler;
 import fuzs.illagerinvasion.init.ModEntityTypes;
 import fuzs.illagerinvasion.init.ModLootTables;
@@ -12,9 +11,6 @@ import fuzs.puzzleslib.api.core.v1.context.EntityAttributesCreateContext;
 import fuzs.puzzleslib.api.core.v1.context.SpawnPlacementsContext;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import fuzs.puzzleslib.api.event.v1.entity.ServerEntityLevelEvents;
-import fuzs.puzzleslib.api.event.v1.entity.living.LivingExperienceDropCallback;
-import fuzs.puzzleslib.api.event.v1.entity.player.BreakSpeedCallback;
-import fuzs.puzzleslib.api.event.v1.level.BlockEvents;
 import fuzs.puzzleslib.api.event.v1.server.LootTableLoadCallback;
 import fuzs.puzzleslib.api.event.v1.server.RegisterPotionBrewingMixesCallback;
 import net.minecraft.resources.ResourceLocation;
@@ -42,17 +38,9 @@ public class IllagerInvasion implements ModConstructor {
     }
 
     private static void registerEventHandlers() {
-        BreakSpeedCallback.EVENT.register(PlatinumTrimHandler::onBreakSpeed);
-        LivingExperienceDropCallback.EVENT.register(PlatinumTrimHandler::onLivingExperienceDrop);
-        BlockEvents.FARMLAND_TRAMPLE.register(PlatinumTrimHandler::onFarmlandTrample);
         ServerEntityLevelEvents.LOAD.register(VillagerGoalHandler::onEntityLoad);
         LootTableLoadCallback.EVENT.register(ModLootTables::onLootTableLoad);
         RegisterPotionBrewingMixesCallback.EVENT.register(IllagerInvasion::registerPotionRecipes);
-    }
-
-    @Override
-    public void onCommonSetup() {
-        VillagerGoalHandler.init();
     }
 
     private static void registerPotionRecipes(RegisterPotionBrewingMixesCallback.Builder builder) {
@@ -61,6 +49,11 @@ public class IllagerInvasion implements ModConstructor {
         builder.registerPotionRecipe(ModRegistry.BERSERKING_POTION,
                 Items.GLOWSTONE_DUST,
                 ModRegistry.STRONG_BERSERKING_POTION);
+    }
+
+    @Override
+    public void onCommonSetup() {
+        VillagerGoalHandler.init();
     }
 
     @Override

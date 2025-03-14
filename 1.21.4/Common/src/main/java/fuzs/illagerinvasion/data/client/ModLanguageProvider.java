@@ -1,7 +1,6 @@
 package fuzs.illagerinvasion.data.client;
 
 import fuzs.illagerinvasion.IllagerInvasion;
-import fuzs.illagerinvasion.handler.PlatinumTrimHandler;
 import fuzs.illagerinvasion.init.ModEntityTypes;
 import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.init.ModRegistry;
@@ -31,10 +30,6 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         builder.add(ModItems.LOST_CANDLE_ITEM.value().getDescriptionId() + ".foundNearby", "%s found nearby");
         builder.add(ResourceKeyHelper.getTranslationKey(ModRegistry.REVEAL_INSTRUMENT), "Reveal");
         builder.add(ResourceKeyHelper.getTranslationKey(ModRegistry.PLATINUM_TRIM_MATERIAL), "Platinum Material");
-        builder.add(PlatinumTrimHandler.INSIGHT_TRANSLATION_KEY, "Insight Effect");
-        builder.add(PlatinumTrimHandler.AGILITY_TRANSLATION_KEY, "Agility Effect");
-        builder.add(PlatinumTrimHandler.ENDURANCE_TRANSLATION_KEY, "Endurance Effect");
-        builder.add(PlatinumTrimHandler.FEATHERWEIGHT_TRANSLATION_KEY, "Featherweight Effect");
         builder.add(ModItems.UNUSUAL_DUST_ITEM.value(), "Unusual Dust");
         builder.add(ModItems.MAGICAL_FIRE_CHARGE_ITEM.value(), "Magical Fire Charge");
         builder.add(ModItems.ILLUSIONARY_DUST_ITEM.value(), "Illusionary Dust");

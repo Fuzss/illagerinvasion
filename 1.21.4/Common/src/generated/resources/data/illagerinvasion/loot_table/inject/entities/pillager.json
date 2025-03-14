@@ -62,5 +62,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "illagerinvasion:entities/inject/pillager"
+  "random_sequence": "illagerinvasion:inject/entities/pillager"
 }

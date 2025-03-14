@@ -92,5 +92,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "illagerinvasion:entities/inject/illusioner"
+  "random_sequence": "illagerinvasion:inject/entities/illusioner"
 }

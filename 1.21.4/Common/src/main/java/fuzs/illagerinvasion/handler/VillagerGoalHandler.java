@@ -60,7 +60,9 @@ public class VillagerGoalHandler {
         VillagerHostilesSensorAccessor.illagerinvasion$setAcceptableDistanceFromHostiles(ImmutableMap.copyOf(map));
     }
 
-    private record AvoidVillagerEnemy<T extends LivingEntity>(Class<T> clazz, Supplier<EntityType<T>> type, float acceptableDistance) {
+    private record AvoidVillagerEnemy<T extends LivingEntity>(Class<T> clazz,
+                                                              Supplier<EntityType<T>> type,
+                                                              float acceptableDistance) {
 
         public void addGoal(AbstractVillager abstractVillager) {
             abstractVillager.goalSelector.addGoal(1, this.makeGoal(abstractVillager));

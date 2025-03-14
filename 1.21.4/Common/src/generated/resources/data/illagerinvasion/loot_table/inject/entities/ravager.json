@@ -27,5 +27,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "illagerinvasion:entities/inject/ravager"
+  "random_sequence": "illagerinvasion:inject/entities/ravager"
 }
