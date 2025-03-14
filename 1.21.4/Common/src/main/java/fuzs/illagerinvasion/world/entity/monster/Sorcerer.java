@@ -1,6 +1,5 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-import fuzs.illagerinvasion.init.ModIllagerSpells;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.init.ModTags;
@@ -153,7 +152,7 @@ public class Sorcerer extends SpellcasterIllager {
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return ModIllagerSpells.CONJURE_TELEPORT_ILLAGER_SPELL;
+            return IllagerSpell.BLINDNESS;
         }
     }
 
@@ -215,7 +214,7 @@ public class Sorcerer extends SpellcasterIllager {
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return ModIllagerSpells.CONJURE_FLAMES_ILLAGER_SPELL;
+            return IllagerSpell.WOLOLO;
         }
     }
 }

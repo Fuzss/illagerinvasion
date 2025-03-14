@@ -1,6 +1,5 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-import fuzs.illagerinvasion.init.ModIllagerSpells;
 import fuzs.illagerinvasion.init.ModSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -223,7 +222,7 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return ModIllagerSpells.PROVOKE_ILLAGER_SPELL;
+            return IllagerSpell.WOLOLO;
         }
     }
 }

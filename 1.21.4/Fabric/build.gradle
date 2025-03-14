@@ -7,8 +7,8 @@ dependencies {
     // Puzzles Lib
     modApi libs.puzzleslib.fabric
 
-    // Extensible Enums
-    modApi(include(libs.extensibleenums.fabric.get()))
+    // Fabric ASM
+    modApi(include(libs.fabricasm.fabric.get()))
 
     // NeoForge Data Pack Extensions
     modApi(include(libs.neoforgedatapackextensions.fabric.get()))

@@ -1,7 +1,5 @@
 package fuzs.illagerinvasion;
 
-import fuzs.extensibleenums.api.v2.BuiltInEnumFactories;
-import fuzs.illagerinvasion.config.RaidWavesConfigHelper;
 import fuzs.illagerinvasion.config.ServerConfig;
 import fuzs.illagerinvasion.handler.PlatinumTrimHandler;
 import fuzs.illagerinvasion.handler.VillagerGoalHandler;
@@ -19,27 +17,16 @@ import fuzs.puzzleslib.api.event.v1.entity.player.BreakSpeedCallback;
 import fuzs.puzzleslib.api.event.v1.level.BlockEvents;
 import fuzs.puzzleslib.api.event.v1.server.LootTableLoadCallback;
 import fuzs.puzzleslib.api.event.v1.server.RegisterPotionBrewingMixesCallback;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.PatrollingMonster;
-import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Optional;
 
 public class IllagerInvasion implements ModConstructor {
     public static final String MOD_ID = "illagerinvasion";
@@ -59,56 +46,13 @@ public class IllagerInvasion implements ModConstructor {
         LivingExperienceDropCallback.EVENT.register(PlatinumTrimHandler::onLivingExperienceDrop);
         BlockEvents.FARMLAND_TRAMPLE.register(PlatinumTrimHandler::onFarmlandTrample);
         ServerEntityLevelEvents.LOAD.register(VillagerGoalHandler::onEntityLoad);
-        LootTableLoadCallback.EVENT.register((ResourceLocation resourceLocation, LootTable.Builder builder, HolderLookup.Provider provider) -> {
-            injectLootPool(resourceLocation,
-                    builder,
-                    EntityType.ILLUSIONER.getDefaultLootTable(),
-                    ModLootTables.ILLUSIONER_INJECT_LOOT_TABLE);
-            injectLootPool(resourceLocation,
-                    builder,
-                    EntityType.PILLAGER.getDefaultLootTable(),
-                    ModLootTables.PILLAGER_INJECT_LOOT_TABLE);
-            injectLootPool(resourceLocation,
-                    builder,
-                    EntityType.RAVAGER.getDefaultLootTable(),
-                    ModLootTables.RAVAGER_INJECT_LOOT_TABLE);
-        });
+        LootTableLoadCallback.EVENT.register(ModLootTables::onLootTableLoad);
         RegisterPotionBrewingMixesCallback.EVENT.register(IllagerInvasion::registerPotionRecipes);
-    }
-
-    private static void injectLootPool(ResourceLocation resourceLocation, LootTable.Builder builder, Optional<ResourceKey<LootTable>> builtInLootTable, ResourceKey<LootTable> injectedLootTable) {
-        if (builtInLootTable.map(ResourceKey::location).filter(resourceLocation::equals).isPresent()) {
-            builder.withPool(LootPool.lootPool()
-                    .setRolls(ConstantValue.exactly(1.0F))
-                    .add(NestedLootTable.lootTableReference(injectedLootTable)));
-        }
     }
 
     @Override
     public void onCommonSetup() {
-        registerRaiderTypes();
         VillagerGoalHandler.init();
-    }
-
-    private static void registerRaiderTypes() {
-        registerRaiderType(ModEntityTypes.BASHER_ENTITY_TYPE, RaidWavesConfigHelper.BASHER_RAID_WAVES);
-        registerRaiderType(ModEntityTypes.PROVOKER_ENTITY_TYPE, RaidWavesConfigHelper.PROVOKER_RAID_WAVES);
-        registerRaiderType(ModEntityTypes.NECROMANCER_ENTITY_TYPE, RaidWavesConfigHelper.NECROMANCER_RAID_WAVES);
-        registerRaiderType(ModEntityTypes.SORCERER_ENTITY_TYPE, RaidWavesConfigHelper.SORCERER_RAID_WAVES);
-        BuiltInEnumFactories.INSTANCE.createRaiderType(id("illusioner"),
-                EntityType.ILLUSIONER,
-                RaidWavesConfigHelper.ILLUSIONER_RAID_WAVES);
-        registerRaiderType(ModEntityTypes.ARCHIVIST_ENTITY_TYPE, RaidWavesConfigHelper.ARCHIVIST_RAID_WAVES);
-        registerRaiderType(ModEntityTypes.MARAUDER_ENTITY_TYPE, RaidWavesConfigHelper.MARAUDER_RAID_WAVES);
-        registerRaiderType(ModEntityTypes.INQUISITOR_ENTITY_TYPE, RaidWavesConfigHelper.INQUISITOR_RAID_WAVES);
-        registerRaiderType(ModEntityTypes.ALCHEMIST_ENTITY_TYPE, RaidWavesConfigHelper.ALCHEMIST_RAID_WAVES);
-        registerRaiderType(ModEntityTypes.INVOKER_ENTITY_TYPE, RaidWavesConfigHelper.INVOKER_RAID_WAVES);
-    }
-
-    private static void registerRaiderType(Holder.Reference<? extends EntityType<? extends Raider>> holder, int[] spawnsPerWaveBeforeBonus) {
-        BuiltInEnumFactories.INSTANCE.createRaiderType(holder.key().location(),
-                holder.value(),
-                spawnsPerWaveBeforeBonus);
     }
 
     private static void registerPotionRecipes(RegisterPotionBrewingMixesCallback.Builder builder) {

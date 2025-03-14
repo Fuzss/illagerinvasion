@@ -7,12 +7,16 @@ import fuzs.illagerinvasion.world.level.block.ImbuingTableBlock;
 import fuzs.illagerinvasion.world.level.block.MagicFireBlock;
 import fuzs.illagerinvasion.world.level.levelgen.structure.pools.LegacySingleNoLiquidPoolElement;
 import fuzs.illagerinvasion.world.level.levelgen.structure.pools.SingleNoLiquidPoolElement;
+import fuzs.illagerinvasion.world.level.levelgen.structure.structures.LabyrinthStructure;
 import fuzs.neoforgedatapackextensions.api.v1.DataMapRegistry;
 import fuzs.neoforgedatapackextensions.api.v1.DataMapToken;
+import fuzs.puzzleslib.api.data.v2.AbstractDatapackRegistriesProvider;
 import fuzs.puzzleslib.api.init.v3.registry.RegistryManager;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -25,12 +29,20 @@ import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pools.LegacySinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementType;
 import net.minecraft.world.level.material.MapColor;
 
 public class ModRegistry {
+    public static final RegistrySetBuilder REGISTRY_SET_BUILDER = new RegistrySetBuilder().add(Registries.TRIM_MATERIAL,
+                    ModRegistry::boostrapTrimMaterials)
+            .add(Registries.INSTRUMENT, ModRegistry::boostrapInstruments)
+            .add(Registries.STRUCTURE, ModStructures::bootstrap)
+            .add(Registries.STRUCTURE_SET, ModStructureSets::bootstrap)
+            .add(Registries.TEMPLATE_POOL, ModTemplatePools::bootstrap);
+
     static final RegistryManager REGISTRIES = RegistryManager.from(IllagerInvasion.MOD_ID);
     public static final Holder.Reference<Block> IMBUING_TABLE_BLOCK = REGISTRIES.registerBlock("imbuing_table",
             ImbuingTableBlock::new,
@@ -71,6 +83,10 @@ public class ModRegistry {
             Registries.STRUCTURE_POOL_ELEMENT,
             "legacy_single_pool_element",
             () -> () -> LegacySingleNoLiquidPoolElement.CODEC);
+    public static final Holder.Reference<StructureType<LabyrinthStructure>> LABYRINTH_STRUCTURE_TYPE = REGISTRIES.register(
+            Registries.STRUCTURE_TYPE,
+            "labyrinth",
+            () -> () -> LabyrinthStructure.CODEC);
 
     public static final ResourceKey<TrimMaterial> PLATINUM_TRIM_MATERIAL = REGISTRIES.makeResourceKey(Registries.TRIM_MATERIAL,
             "platinum");
@@ -89,8 +105,22 @@ public class ModRegistry {
         ModItems.bootstrap();
         ModEntityTypes.bootstrap();
         ModSoundEvents.bootstrap();
-        ModStructures.bootstrap();
         ModLootTables.bootstrap();
-        ModIllagerSpells.bootstrap();
+        ModEnumConstants.bootstrap();
+    }
+
+    public static void boostrapTrimMaterials(BootstrapContext<TrimMaterial> context) {
+        AbstractDatapackRegistriesProvider.registerTrimMaterial(context,
+                PLATINUM_TRIM_MATERIAL,
+                ModItems.PLATINUM_SHEET_ITEM.value(),
+                0x527D7C);
+    }
+
+    public static void boostrapInstruments(BootstrapContext<Instrument> context) {
+        AbstractDatapackRegistriesProvider.registerInstrument(context,
+                REVEAL_INSTRUMENT,
+                ModSoundEvents.HORN_OF_SIGHT_SOUND_EVENT,
+                7.0F,
+                64.0F);
     }
 }

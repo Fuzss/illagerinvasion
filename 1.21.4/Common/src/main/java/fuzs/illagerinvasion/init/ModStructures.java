@@ -1,125 +1,104 @@
 package fuzs.illagerinvasion.init;
 
-import fuzs.illagerinvasion.world.level.levelgen.structure.structures.LabyrinthStructure;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraft.world.level.levelgen.structure.StructureSet;
-import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
+import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
+import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
+
+import java.util.Map;
 
 public class ModStructures {
-    public static final Holder.Reference<StructureType<LabyrinthStructure>> LABYRINTH_STRUCTURE_TYPE = ModRegistry.REGISTRIES.register(
-            Registries.STRUCTURE_TYPE,
-            "labyrinth",
-            () -> () -> LabyrinthStructure.CODEC);
-    public static final ResourceKey<Structure> FIRECALLER_HUT_STRUCTURE = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.STRUCTURE,
+    public static final ResourceKey<Structure> FIRECALLER_HUT = ModRegistry.REGISTRIES.makeResourceKey(Registries.STRUCTURE,
             "firecaller_hut");
-    public static final ResourceKey<Structure> ILLAGER_FORT_STRUCTURE = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.STRUCTURE,
+    public static final ResourceKey<Structure> ILLAGER_FORT = ModRegistry.REGISTRIES.makeResourceKey(Registries.STRUCTURE,
             "illager_fort");
-    public static final ResourceKey<Structure> ILLUSIONER_TOWER_STRUCTURE = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.STRUCTURE,
+    public static final ResourceKey<Structure> ILLUSIONER_TOWER = ModRegistry.REGISTRIES.makeResourceKey(Registries.STRUCTURE,
             "illusioner_tower");
-    public static final ResourceKey<Structure> LABYRINTH_STRUCTURE = ModRegistry.REGISTRIES.makeResourceKey(Registries.STRUCTURE,
+    public static final ResourceKey<Structure> LABYRINTH = ModRegistry.REGISTRIES.makeResourceKey(Registries.STRUCTURE,
             "labyrinth");
-    public static final ResourceKey<Structure> SORCERER_HUT_STRUCTURE = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.STRUCTURE,
+    public static final ResourceKey<Structure> SORCERER_HUT = ModRegistry.REGISTRIES.makeResourceKey(Registries.STRUCTURE,
             "sorcerer_hut");
-    public static final ResourceKey<StructureSet> FIRECALLER_HUT_STRUCTURE_SET = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.STRUCTURE_SET,
-            "firecaller_hut");
-    public static final ResourceKey<StructureSet> ILLAGER_FORT_STRUCTURE_SET = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.STRUCTURE_SET,
-            "illager_fort");
-    public static final ResourceKey<StructureSet> ILLUSIONER_TOWER_STRUCTURE_SET = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.STRUCTURE_SET,
-            "illusioner_tower");
-    public static final ResourceKey<StructureSet> LABYRINTH_STRUCTURE_SET = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.STRUCTURE_SET,
-            "labyrinth");
-    public static final ResourceKey<StructureSet> SORCERER_HUT_STRUCTURE_SET = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.STRUCTURE_SET,
-            "sorcerer_hut");
-    public static final ResourceKey<StructureTemplatePool> FIRECALLER_HUT_BASE_PLATES_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "firecaller_hut/base_plates");
-    public static final ResourceKey<StructureTemplatePool> FIRECALLER_HUT_FEATURES_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "firecaller_hut/features");
-    public static final ResourceKey<StructureTemplatePool> FIRECALLER_HUT_HUTS_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "firecaller_hut/huts");
-    public static final ResourceKey<StructureTemplatePool> ILLAGER_FORT_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "illager_fort/illager_fort");
-    public static final ResourceKey<StructureTemplatePool> ILLUSIONER_TOWER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "illusioner_tower/illusioner_tower");
-    public static final ResourceKey<StructureTemplatePool> LABYRINTH_HALLS_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "labyrinth/halls");
-    public static final ResourceKey<StructureTemplatePool> LABYRINTH_ROOMS_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "labyrinth/rooms");
-    public static final ResourceKey<StructureTemplatePool> LABYRINTH_TOWERS_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "labyrinth/towers");
-    public static final ResourceKey<StructureTemplatePool> SORCERER_HUT_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "sorcerer_hut/sorcerer_hut");
-    public static final ResourceKey<StructureTemplatePool> MOBS_ALCHEMIST_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/alchemist");
-    public static final ResourceKey<StructureTemplatePool> MOBS_ALLAY_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/allay");
-    public static final ResourceKey<StructureTemplatePool> MOBS_ARCHIVIST_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/archivist");
-    public static final ResourceKey<StructureTemplatePool> MOBS_BASHER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/basher");
-    public static final ResourceKey<StructureTemplatePool> MOBS_EVOKER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/evoker");
-    public static final ResourceKey<StructureTemplatePool> MOBS_FIRECALLER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/firecaller");
-    public static final ResourceKey<StructureTemplatePool> MOBS_ILLUSIONER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/illusioner");
-    public static final ResourceKey<StructureTemplatePool> MOBS_INQUISITOR_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/inquisitor");
-    public static final ResourceKey<StructureTemplatePool> MOBS_LLAMA_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/llama");
-    public static final ResourceKey<StructureTemplatePool> MOBS_MARAUDER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/marauder");
-    public static final ResourceKey<StructureTemplatePool> MOBS_NECROMANCER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/necromancer");
-    public static final ResourceKey<StructureTemplatePool> MOBS_PILLAGER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/pillager");
-    public static final ResourceKey<StructureTemplatePool> MOBS_PROVOKER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/provoker");
-    public static final ResourceKey<StructureTemplatePool> MOBS_SORCERER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/sorcerer");
-    public static final ResourceKey<StructureTemplatePool> MOBS_VILLAGER_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/villager");
-    public static final ResourceKey<StructureTemplatePool> MOBS_VINDICATOR_TEMPLATE_POOL = ModRegistry.REGISTRIES.makeResourceKey(
-            Registries.TEMPLATE_POOL,
-            "mobs/vindicator");
 
-    public static void bootstrap() {
-        // NO-OP
+    public static void bootstrap(BootstrapContext<Structure> context) {
+        context.register(FIRECALLER_HUT,
+                new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
+                        .getOrThrow(ModTags.HAS_FIRECALLER_HUT_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                        .terrainAdapation(TerrainAdjustment.BEARD_THIN)
+                        .build(),
+                        context.lookup(Registries.TEMPLATE_POOL)
+                                .getOrThrow(ModTemplatePools.FIRECALLER_HUT_BASE_PLATES),
+                        3,
+                        ConstantHeight.of(VerticalAnchor.absolute(0)),
+                        false,
+                        Heightmap.Types.WORLD_SURFACE_WG));
+        context.register(ILLAGER_FORT,
+                new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
+                        .getOrThrow(ModTags.HAS_ILLAGER_FORT_BIOME_TAG)).spawnOverrides(Map.of(MobCategory.MONSTER,
+                                new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE,
+                                        WeightedRandomList.create(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER,
+                                                        3,
+                                                        1,
+                                                        1),
+                                                new MobSpawnSettings.SpawnerData(ModEntityTypes.MARAUDER_ENTITY_TYPE.value(),
+                                                        3,
+                                                        1,
+                                                        1),
+                                                new MobSpawnSettings.SpawnerData(ModEntityTypes.BASHER_ENTITY_TYPE.value(),
+                                                        1,
+                                                        1,
+                                                        1),
+                                                new MobSpawnSettings.SpawnerData(ModEntityTypes.PROVOKER_ENTITY_TYPE.value(),
+                                                        3,
+                                                        1,
+                                                        1)))))
+                        .generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                        .terrainAdapation(TerrainAdjustment.BEARD_THIN)
+                        .build(),
+                        context.lookup(Registries.TEMPLATE_POOL).getOrThrow(ModTemplatePools.ILLAGER_FORT),
+                        2,
+                        ConstantHeight.of(VerticalAnchor.absolute(0)),
+                        false,
+                        Heightmap.Types.WORLD_SURFACE_WG));
+        context.register(ILLUSIONER_TOWER,
+                new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
+                        .getOrThrow(ModTags.HAS_ILLUSIONER_TOWER_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                        .terrainAdapation(TerrainAdjustment.BEARD_THIN)
+                        .build(),
+                        context.lookup(Registries.TEMPLATE_POOL).getOrThrow(ModTemplatePools.ILLUSIONER_TOWER),
+                        2,
+                        ConstantHeight.of(VerticalAnchor.absolute(0)),
+                        false,
+                        Heightmap.Types.WORLD_SURFACE_WG));
+        context.register(LABYRINTH,
+                new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
+                        .getOrThrow(ModTags.HAS_LABYRINTH_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                        .terrainAdapation(TerrainAdjustment.ENCAPSULATE)
+                        .build(),
+                        context.lookup(Registries.TEMPLATE_POOL).getOrThrow(ModTemplatePools.LABYRINTH_TOWERS),
+                        7,
+                        ConstantHeight.of(VerticalAnchor.belowTop(40)),
+                        false,
+                        Heightmap.Types.WORLD_SURFACE_WG));
+        context.register(SORCERER_HUT,
+                new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
+                        .getOrThrow(ModTags.HAS_SORCERER_HUT_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                        .terrainAdapation(TerrainAdjustment.BEARD_THIN)
+                        .build(),
+                        context.lookup(Registries.TEMPLATE_POOL).getOrThrow(ModTemplatePools.SORCERER_HUT),
+                        2,
+                        ConstantHeight.of(VerticalAnchor.absolute(0)),
+                        false,
+                        Heightmap.Types.WORLD_SURFACE_WG));
     }
 }

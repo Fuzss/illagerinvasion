@@ -18,3 +18,4 @@ extendable  method  net/minecraft/world/entity/projectile/EvokerFangs   dealDama
 accessible  field   net/minecraft/world/entity/monster/Vex  limitedLifeTicks    I
 accessible  field   net/minecraft/world/entity/projectile/ThrownTrident ID_FOIL Lnet/minecraft/network/syncher/EntityDataAccessor;
 accessible  field   net/minecraft/world/entity/ai/goal/RangedAttackGoal attackTime  I
+accessible  class   net/minecraft/world/entity/raid/Raid$RaiderType

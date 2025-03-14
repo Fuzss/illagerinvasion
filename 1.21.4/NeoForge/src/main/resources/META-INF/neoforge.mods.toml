@@ -15,6 +15,8 @@ displayURL = "${modPageUrl}"
 updateJSONURL = "${modUpdateUrl}"
 displayTest = "${modForgeDisplayTest}"
 
+enumExtensions = "enumextensions.json"
+
 [[mixins]]
 config="${modId}.common.mixins.json"
 
@@ -42,14 +44,6 @@ modId = "puzzleslib"
 mandatory = true
 type = "required"
 versionRange = "[${minPuzzlesVersion},)"
-ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.${ modId }]]
-modId = "extensibleenums"
-mandatory = true
-type = "required"
-versionRange = "*"
 ordering = "NONE"
 side = "BOTH"
 

@@ -27,6 +27,9 @@
     ],
     "client": [
       "${clientEntryPoint}"
+    ],
+    "mm:early_risers": [
+      "${modGroup}.fabric.asm.IllagerInvasionFabricCore"
     ]
   },
 
@@ -39,7 +42,7 @@
     "fabricloader": ">=${minFabricVersion}",
     "fabric-api": ">=${minFabricApiVersion}",
     "puzzleslib": ">=${minPuzzlesVersion}",
-    "extensibleenums": "*",
+    "mm": "*",
     "neoforgedatapackextensions": "*",
     "minecraft": "${minecraftVersion}",
     "java": ">=17"

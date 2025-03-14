@@ -4,9 +4,6 @@ dependencies {
     // Puzzles Lib
     modApi libs.puzzleslib.common
 
-    // Extensible Enums
-    modApi libs.extensibleenums.common
-
     // NeoForge Data Pack Extensions
     modApi libs.neoforgedatapackextensions.common
 }

@@ -1,6 +1,5 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
-import fuzs.illagerinvasion.init.ModIllagerSpells;
 import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.util.EnchantToolUtil;
 import net.minecraft.core.particles.ParticleTypes;
@@ -249,7 +248,7 @@ public class Archivist extends SpellcasterIllager {
 
         @Override
         protected SpellcasterIllager.IllagerSpell getSpell() {
-            return ModIllagerSpells.ENCHANT_ILLAGER_SPELL;
+            return IllagerSpell.SUMMON_VEX;
         }
     }
 }
