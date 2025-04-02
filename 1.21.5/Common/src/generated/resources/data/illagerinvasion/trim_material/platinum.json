@@ -1,0 +1,8 @@
+{
+  "asset_name": "platinum",
+  "description": {
+    "color": "#527D7C",
+    "translate": "trim_material.illagerinvasion.platinum"
+  },
+  "ingredient": "illagerinvasion:platinum_sheet"
+}
