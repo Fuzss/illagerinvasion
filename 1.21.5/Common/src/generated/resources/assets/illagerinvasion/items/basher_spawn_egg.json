@@ -1,15 +1,15 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/template_spawn_egg",
+    "model": "illagerinvasion:item/basher_spawn_egg",
     "tints": [
       {
         "type": "minecraft:constant",
-        "value": -7235946
+        "value": -10792129
       },
       {
         "type": "minecraft:constant",
-        "value": -10792129
+        "value": -12305365
       }
     ]
   }

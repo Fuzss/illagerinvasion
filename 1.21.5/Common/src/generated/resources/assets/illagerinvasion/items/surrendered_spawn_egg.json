@@ -1,15 +1,15 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/template_spawn_egg",
+    "model": "illagerinvasion:item/surrendered_spawn_egg",
     "tints": [
       {
         "type": "minecraft:constant",
-        "value": -5516847
+        "value": -4919056
       },
       {
         "type": "minecraft:constant",
-        "value": -4919056
+        "value": -8473421
       }
     ]
   }

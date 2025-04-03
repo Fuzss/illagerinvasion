@@ -90,8 +90,8 @@ public class Basher extends AbstractIllager implements Stunnable {
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        this.setStunTicks(compoundTag.getInt(TAG_STUN_TICKS));
-        this.blockedCount = compoundTag.getInt(TAG_BLOCKED_COUNT);
+        this.setStunTicks(compoundTag.getIntOr(TAG_STUN_TICKS, 0));
+        this.blockedCount = compoundTag.getIntOr(TAG_BLOCKED_COUNT, 0);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class Basher extends AbstractIllager implements Stunnable {
                 ItemStack attackerMainHand = ((LivingEntity) attacker).getMainHandItem();
                 ItemStack basherMainHand = this.getMainHandItem();
                 if ((ToolTypeHelper.INSTANCE.isAxe(attackerMainHand) || attacker instanceof IronGolem || this.blockedCount >= 4) && basherMainHand.is(Items.SHIELD)) {
-                    this.playSound(SoundEvents.SHIELD_BREAK, 1.0F, 1.0F);
+                    this.playSound(SoundEvents.SHIELD_BREAK.value(), 1.0F, 1.0F);
                     this.setStunTicks(60);
                     serverLevel.sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM, basherMainHand), this.getX(), this.getY() + 1.5, this.getZ(), 30, 0.3, 0.2, 0.3, 0.003);
                     this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_AXE));
@@ -166,12 +166,12 @@ public class Basher extends AbstractIllager implements Stunnable {
                 }
             }
             if (damageSource.getDirectEntity() instanceof AbstractArrow && hasShield) {
-                this.playSound(SoundEvents.SHIELD_BLOCK, 1.0F, 1.0F);
+                this.playSound(SoundEvents.SHIELD_BLOCK.value(), 1.0F, 1.0F);
                 ++this.blockedCount;
                 return false;
             }
             if (damageSource.getDirectEntity() instanceof LivingEntity && hasShield) {
-                this.playSound(SoundEvents.SHIELD_BLOCK, 1.0F, 1.0F);
+                this.playSound(SoundEvents.SHIELD_BLOCK.value(), 1.0F, 1.0F);
                 ++this.blockedCount;
                 return false;
             }

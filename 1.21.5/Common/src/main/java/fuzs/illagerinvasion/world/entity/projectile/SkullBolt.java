@@ -42,12 +42,12 @@ public class SkullBolt extends AbstractHurtingProjectile {
                     entityHitResult.getEntity() instanceof LivingEntity target) {
                 if (target.getType().is(EntityTypeTags.UNDEAD)) {
                     target.heal(5.0F);
-                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 2));
+                    target.addEffect(new MobEffectInstance(MobEffects.SPEED, 100, 2));
                 } else {
                     DamageSource damageSource = this.damageSources().indirectMagic(this, owner);
                     target.hurtServer(serverLevel, damageSource, 7.0F);
                     EnchantmentHelper.doPostAttackEffects(serverLevel, target, damageSource);
-                    target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
+                    target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 100, 1));
                 }
             }
         }

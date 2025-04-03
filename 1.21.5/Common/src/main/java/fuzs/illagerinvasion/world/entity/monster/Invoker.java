@@ -113,7 +113,7 @@ public class Invoker extends SpellcasterIllager {
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setShielded(nbt.getBoolean("Invul"));
+        this.setShielded(nbt.getBooleanOr("Invul", false));
         if (this.hasCustomName()) {
             this.bossBar.setName(this.getDisplayName());
         }
@@ -255,7 +255,7 @@ public class Invoker extends SpellcasterIllager {
             Entity entity = damageSource.getDirectEntity();
             if (entity != null && entity.getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
                 if (!this.isShielded() && this.random.nextInt(2) == 0) {
-                    this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 0.8F + serverLevel.random.nextFloat() * 0.4F);
+                    this.playSound(SoundEvents.SHIELD_BLOCK.value(), 1.0f, 0.8F + serverLevel.random.nextFloat() * 0.4F);
                     this.setShielded(true);
                 }
             }
@@ -347,7 +347,7 @@ public class Invoker extends SpellcasterIllager {
                 Surrendered surrendered = ModEntityTypes.SURRENDERED_ENTITY_TYPE.value()
                         .create(Invoker.this.level(), EntitySpawnReason.MOB_SUMMONED);
                 if (surrendered != null) {
-                    surrendered.moveTo(blockPos, 0.0f, 0.0f);
+                    surrendered.snapTo(blockPos, 0.0f, 0.0f);
                     surrendered.finalizeSpawn(serverLevel,
                             Invoker.this.level().getCurrentDifficultyAt(blockPos),
                             EntitySpawnReason.MOB_SUMMONED,

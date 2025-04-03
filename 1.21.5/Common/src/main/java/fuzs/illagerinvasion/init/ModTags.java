@@ -2,9 +2,7 @@ package fuzs.illagerinvasion.init;
 
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.puzzleslib.api.init.v3.tags.TagFactory;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Instrument;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 
@@ -18,8 +16,6 @@ public class ModTags {
     public static final TagKey<Biome> HAS_ILLAGER_FORT_BIOME_TAG = TAGS.registerBiomeTag("has_structure/illager_fort");
     public static final TagKey<Biome> HAS_FIRECALLER_HUT_BIOME_TAG = TAGS.registerBiomeTag(
             "has_structure/firecaller_hut");
-    public static final TagKey<Instrument> HORN_OF_SIGHT_INSTRUMENT_TAG = TAGS.registerTagKey(Registries.INSTRUMENT,
-            "horn_of_sight");
 
     public static void bootstrap() {
         // NO-OP

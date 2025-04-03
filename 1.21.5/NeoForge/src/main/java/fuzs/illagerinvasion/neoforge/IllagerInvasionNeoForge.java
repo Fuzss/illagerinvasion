@@ -6,7 +6,10 @@ import fuzs.illagerinvasion.data.loot.ModBlockLootProvider;
 import fuzs.illagerinvasion.data.loot.ModChestLootProvider;
 import fuzs.illagerinvasion.data.loot.ModEntityInjectionLootProvider;
 import fuzs.illagerinvasion.data.loot.ModEntityTypeLootProvider;
-import fuzs.illagerinvasion.data.tags.*;
+import fuzs.illagerinvasion.data.tags.ModBiomeTagProvider;
+import fuzs.illagerinvasion.data.tags.ModBlockTagProvider;
+import fuzs.illagerinvasion.data.tags.ModEntityTypeTagProvider;
+import fuzs.illagerinvasion.data.tags.ModItemTagProvider;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.neoforge.data.ModDataMapProvider;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
@@ -23,7 +26,6 @@ public class IllagerInvasionNeoForge {
                 ModBiomeTagProvider::new,
                 ModBlockTagProvider::new,
                 ModEntityTypeTagProvider::new,
-                ModInstrumentTagProvider::new,
                 ModItemTagProvider::new,
                 ModBlockLootProvider::new,
                 ModChestLootProvider::new,

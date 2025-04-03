@@ -1,15 +1,15 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/template_spawn_egg",
+    "model": "illagerinvasion:item/marauder_spawn_egg",
     "tints": [
       {
         "type": "minecraft:constant",
-        "value": -7235946
+        "value": -11336186
       },
       {
         "type": "minecraft:constant",
-        "value": -11336186
+        "value": -12713984
       }
     ]
   }

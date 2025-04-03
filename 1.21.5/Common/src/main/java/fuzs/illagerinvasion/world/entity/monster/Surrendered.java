@@ -43,7 +43,7 @@ public class Surrendered extends Vex {
             return false;
         } else {
             if (entity instanceof LivingEntity livingEntity) {
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1), this);
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 1), this);
             }
             return true;
         }

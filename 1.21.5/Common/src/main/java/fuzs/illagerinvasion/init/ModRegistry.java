@@ -52,19 +52,17 @@ public class ModRegistry {
             () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_FIRE).mapColor(MapColor.COLOR_PURPLE).randomTicks());
     public static final Holder.Reference<Potion> BERSERKING_POTION = REGISTRIES.registerPotion("berserking",
             (String name) -> new Potion(name,
-                    new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 1),
-                    new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 1)));
+                    new MobEffectInstance(MobEffects.STRENGTH, 600, 1),
+                    new MobEffectInstance(MobEffects.SPEED, 600, 1)));
     public static final Holder.Reference<Potion> LONG_BERSERKING_POTION = REGISTRIES.registerPotion("long_berserking",
             () -> new Potion("berserking",
-                    new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 0),
-                    new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 0)));
+                    new MobEffectInstance(MobEffects.STRENGTH, 1200, 0),
+                    new MobEffectInstance(MobEffects.SPEED, 1200, 0)));
     public static final Holder.Reference<Potion> STRONG_BERSERKING_POTION = REGISTRIES.registerPotion(
             "strong_berserking",
             () -> new Potion("berserking",
-                    new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 2),
-                    new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, 2)));
-    public static final Holder.Reference<CreativeModeTab> CREATIVE_MODE_TAB = REGISTRIES.registerCreativeModeTab(
-            ModItems.HORN_OF_SIGHT_ITEM);
+                    new MobEffectInstance(MobEffects.STRENGTH, 300, 2),
+                    new MobEffectInstance(MobEffects.SPEED, 300, 2)));
     public static final Holder.Reference<MenuType<ImbuingMenu>> IMBUING_MENU_TYPE = REGISTRIES.registerMenuType(
             "imbuing",
             () -> ImbuingMenu::new);
@@ -87,11 +85,12 @@ public class ModRegistry {
             Registries.STRUCTURE_TYPE,
             "labyrinth",
             () -> () -> LabyrinthStructure.CODEC);
-
     public static final ResourceKey<TrimMaterial> PLATINUM_TRIM_MATERIAL = REGISTRIES.makeResourceKey(Registries.TRIM_MATERIAL,
             "platinum");
     public static final ResourceKey<Instrument> REVEAL_INSTRUMENT = REGISTRIES.makeResourceKey(Registries.INSTRUMENT,
             "reveal");
+    public static final Holder.Reference<CreativeModeTab> CREATIVE_MODE_TAB = REGISTRIES.registerCreativeModeTab(
+            ModItems.HORN_OF_SIGHT_ITEM);
 
     public static final DataMapToken<Enchantment, ImbuingEnchantmentLevel> IMBUING_LEVELS_DATA_MAP_TYPE = DataMapRegistry.INSTANCE.register(
             IllagerInvasion.id("imbuing_levels"),

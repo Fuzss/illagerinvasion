@@ -4,19 +4,16 @@ import fuzs.illagerinvasion.init.ModItems;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.data.v2.AbstractModelProvider;
 import fuzs.puzzleslib.api.client.data.v2.models.ItemModelGenerationHelper;
-import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
-import net.minecraft.client.data.models.blockstates.VariantProperties;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-
-import java.util.List;
 
 public class ModModelProvider extends AbstractModelProvider {
 
@@ -26,26 +23,29 @@ public class ModModelProvider extends AbstractModelProvider {
 
     @Override
     public void addBlockModels(BlockModelGenerators blockModelGenerators) {
-        Block imbuingTableBlock = ModRegistry.IMBUING_TABLE_BLOCK.value();
-        TextureMapping textureMapping = TextureMapping.craftingTable(imbuingTableBlock, imbuingTableBlock)
-                .put(TextureSlot.DOWN, TextureMapping.getBlockTexture(imbuingTableBlock, "_bottom"));
-        blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(imbuingTableBlock,
-                ModelTemplates.CUBE.create(imbuingTableBlock, textureMapping, blockModelGenerators.modelOutput)));
+        this.createImbuingTable(ModRegistry.IMBUING_TABLE_BLOCK.value(), blockModelGenerators);
         this.createSimpleFire(ModRegistry.MAGIC_FIRE_BLOCK.value(), blockModelGenerators);
     }
 
+    public final void createImbuingTable(Block block, BlockModelGenerators blockModelGenerators) {
+        TextureMapping textureMapping = TextureMapping.craftingTable(block, block)
+                .put(TextureSlot.DOWN, TextureMapping.getBlockTexture(block, "_bottom"));
+        ResourceLocation resourceLocation = ModelTemplates.CUBE.create(block,
+                textureMapping,
+                blockModelGenerators.modelOutput);
+        blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block,
+                BlockModelGenerators.plainVariant(resourceLocation)));
+    }
+
     public final void createSimpleFire(Block block, BlockModelGenerators blockModelGenerators) {
-        List<ResourceLocation> list = blockModelGenerators.createFloorFireModels(block);
-        List<ResourceLocation> list2 = blockModelGenerators.createSideFireModels(block);
+        MultiVariant multiVariant = blockModelGenerators.createFloorFireModels(block);
+        MultiVariant multiVariant2 = blockModelGenerators.createSideFireModels(block);
         blockModelGenerators.blockStateOutput.accept(MultiPartGenerator.multiPart(block)
-                .with(BlockModelGenerators.wrapModels(list, variant -> variant))
-                .with(BlockModelGenerators.wrapModels(list2, variant -> variant))
-                .with(BlockModelGenerators.wrapModels(list2,
-                        variant -> variant.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90)))
-                .with(BlockModelGenerators.wrapModels(list2,
-                        variant -> variant.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180)))
-                .with(BlockModelGenerators.wrapModels(list2,
-                        variant -> variant.with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))));
+                .with(multiVariant)
+                .with(multiVariant2)
+                .with(multiVariant2.with(BlockModelGenerators.Y_ROT_90))
+                .with(multiVariant2.with(BlockModelGenerators.Y_ROT_180))
+                .with(multiVariant2.with(BlockModelGenerators.Y_ROT_270)));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ModModelProvider extends AbstractModelProvider {
         itemModelGenerators.generateFlatItem(ModItems.PLATINUM_INFUSED_HATCHET_ITEM.value(),
                 ModelTemplates.FLAT_HANDHELD_ITEM);
         ItemModelGenerationHelper.generateFlatItem(ModItems.MAGICAL_FIRE_CHARGE_ITEM.value(),
-                ResourceLocationHelper.withDefaultNamespace("entity/enderdragon/dragon_fireball"),
+                ModAtlasProvider.DRAGON_FIREBALL_LOCATION.texture(),
                 ModelTemplates.FLAT_ITEM,
                 itemModelGenerators);
         ItemModelGenerationHelper.generateSpawnEgg(ModItems.ALCHEMIST_SPAWN_EGG_ITEM.value(), itemModelGenerators);

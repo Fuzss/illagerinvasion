@@ -1,8 +1,6 @@
 package fuzs.illagerinvasion.world.item;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -10,26 +8,14 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Instrument;
 import net.minecraft.world.item.InstrumentItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
-import java.util.List;
-import java.util.Objects;
-
 public class HornOfSightItem extends InstrumentItem {
 
-    public HornOfSightItem(TagKey<Instrument> tagKey, Properties properties) {
-        super(tagKey, properties);
-        Objects.requireNonNull(tagKey, "tag key is null");
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        // NO-OP
+    public HornOfSightItem(Properties properties) {
+        super(properties);
     }
 
     @Override

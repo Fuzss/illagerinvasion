@@ -7,7 +7,7 @@ import fuzs.illagerinvasion.init.ModLootTables;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
-import fuzs.puzzleslib.api.core.v1.context.EntityAttributesCreateContext;
+import fuzs.puzzleslib.api.core.v1.context.EntityAttributesContext;
 import fuzs.puzzleslib.api.core.v1.context.SpawnPlacementsContext;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import fuzs.puzzleslib.api.event.v1.entity.ServerEntityLevelEvents;
@@ -34,7 +34,12 @@ public class IllagerInvasion implements ModConstructor {
     @Override
     public void onConstructMod() {
         ModRegistry.bootstrap();
+    }
+
+    @Override
+    public void onCommonSetup() {
         registerEventHandlers();
+        VillagerGoalHandler.init();
     }
 
     private static void registerEventHandlers() {
@@ -52,58 +57,53 @@ public class IllagerInvasion implements ModConstructor {
     }
 
     @Override
-    public void onCommonSetup() {
-        VillagerGoalHandler.init();
-    }
-
-    @Override
-    public void onEntityAttributeCreation(EntityAttributesCreateContext context) {
-        context.registerEntityAttributes(ModEntityTypes.ALCHEMIST_ENTITY_TYPE.value(),
+    public void onRegisterEntityAttributes(EntityAttributesContext context) {
+        context.registerAttributes(ModEntityTypes.ALCHEMIST_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 24.0)
                         .add(Attributes.MOVEMENT_SPEED, 0.38));
-        context.registerEntityAttributes(ModEntityTypes.ARCHIVIST_ENTITY_TYPE.value(),
+        context.registerAttributes(ModEntityTypes.ARCHIVIST_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 24.0)
                         .add(Attributes.MOVEMENT_SPEED, 0.36));
-        context.registerEntityAttributes(ModEntityTypes.BASHER_ENTITY_TYPE.value(),
+        context.registerAttributes(ModEntityTypes.BASHER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 32.0)
                         .add(Attributes.MOVEMENT_SPEED, 0.31)
                         .add(Attributes.ATTACK_DAMAGE, 3.0)
                         .add(Attributes.ATTACK_KNOCKBACK, 0.2));
-        context.registerEntityAttributes(ModEntityTypes.FIRECALLER_ENTITY_TYPE.value(),
+        context.registerAttributes(ModEntityTypes.FIRECALLER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 32.0)
                         .add(Attributes.MOVEMENT_SPEED, 0.38));
-        context.registerEntityAttributes(ModEntityTypes.INQUISITOR_ENTITY_TYPE.value(),
+        context.registerAttributes(ModEntityTypes.INQUISITOR_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 80.0)
                         .add(Attributes.MOVEMENT_SPEED, 0.33)
                         .add(Attributes.ATTACK_DAMAGE, 10.0)
                         .add(Attributes.ATTACK_KNOCKBACK, 1.6)
                         .add(Attributes.KNOCKBACK_RESISTANCE, 0.8));
-        context.registerEntityAttributes(ModEntityTypes.INVOKER_ENTITY_TYPE.value(),
+        context.registerAttributes(ModEntityTypes.INVOKER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 250.0)
                         .add(Attributes.MOVEMENT_SPEED, 0.36)
                         .add(Attributes.KNOCKBACK_RESISTANCE, 0.3)
                         .add(Attributes.ATTACK_DAMAGE, 8.0));
-        context.registerEntityAttributes(ModEntityTypes.MARAUDER_ENTITY_TYPE.value(),
+        context.registerAttributes(ModEntityTypes.MARAUDER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 24.0)
                         .add(Attributes.MOVEMENT_SPEED, 0.30));
-        context.registerEntityAttributes(ModEntityTypes.PROVOKER_ENTITY_TYPE.value(),
+        context.registerAttributes(ModEntityTypes.PROVOKER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 24.0)
                         .add(Attributes.MOVEMENT_SPEED, 0.38));
-        context.registerEntityAttributes(ModEntityTypes.SORCERER_ENTITY_TYPE.value(),
+        context.registerAttributes(ModEntityTypes.SORCERER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 32.0)
                         .add(Attributes.MOVEMENT_SPEED, 0.38));
-        context.registerEntityAttributes(ModEntityTypes.SURRENDERED_ENTITY_TYPE.value(),
+        context.registerAttributes(ModEntityTypes.SURRENDERED_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 14.0).add(Attributes.ATTACK_DAMAGE, 5.0));
-        context.registerEntityAttributes(ModEntityTypes.NECROMANCER_ENTITY_TYPE.value(),
+        context.registerAttributes(ModEntityTypes.NECROMANCER_ENTITY_TYPE.value(),
                 Monster.createMonsterAttributes()
                         .add(Attributes.MAX_HEALTH, 32.0)
                         .add(Attributes.MOVEMENT_SPEED, 0.38));

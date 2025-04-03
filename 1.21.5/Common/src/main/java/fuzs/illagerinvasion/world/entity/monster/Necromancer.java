@@ -111,8 +111,8 @@ public class Necromancer extends SpellcasterIllager {
     }
 
     public void doUndeadLinkLogic(LivingEntity entity) {
-        entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 10, 0));
-        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 10, 0));
+        entity.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 10, 0));
+        entity.addEffect(new MobEffectInstance(MobEffects.SPEED, 10, 0));
         entity.clearFire();
         if (entity instanceof Mob mob) {
             mob.setTarget(this.getTarget());
@@ -197,7 +197,7 @@ public class Necromancer extends SpellcasterIllager {
 
         @Override
         protected void performSpellCasting() {
-            int spawnAmount = Necromancer.this.level().isNight() ? 4 : 2;
+            int spawnAmount = Necromancer.this.level().isDarkOutside() ? 4 : 2;
             for (int i = 0; i < spawnAmount; ++i) {
                 this.summonUndead(EntityType.ZOMBIE);
             }
@@ -209,7 +209,7 @@ public class Necromancer extends SpellcasterIllager {
             ServerLevel serverLevel = (ServerLevel) Necromancer.this.level();
             BlockPos blockPos = Necromancer.this.blockPosition().offset(-2 + Necromancer.this.random.nextInt(5), 1, -2 + Necromancer.this.random.nextInt(5));
             Mob mob = entityType.create(serverLevel, EntitySpawnReason.MOB_SUMMONED);
-            mob.moveTo(blockPos, 0.0F, 0.0F);
+            mob.snapTo(blockPos, 0.0F, 0.0F);
             mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(blockPos), EntitySpawnReason.MOB_SUMMONED, null);
             serverLevel.addFreshEntityWithPassengers(mob);
         }

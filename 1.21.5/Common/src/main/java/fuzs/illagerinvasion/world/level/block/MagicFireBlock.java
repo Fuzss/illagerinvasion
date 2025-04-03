@@ -7,6 +7,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.InsideBlockEffectType;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -23,11 +25,13 @@ public class MagicFireBlock extends BaseFireBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    protected void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (!entity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
             int remainingFireTicks = entity.getRemainingFireTicks();
-            super.entityInside(state, level, pos, entity);
-            entity.setRemainingFireTicks(Math.max(20, remainingFireTicks));
+            super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
+            insideBlockEffectApplier.runAfter(InsideBlockEffectType.FIRE_IGNITE, (Entity entityX) -> {
+                entityX.setRemainingFireTicks(Math.max(20, remainingFireTicks));
+            });
         }
     }
 

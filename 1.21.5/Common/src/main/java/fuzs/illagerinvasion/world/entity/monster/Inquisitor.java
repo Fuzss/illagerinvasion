@@ -137,8 +137,8 @@ public class Inquisitor extends AbstractIllager implements Stunnable {
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setStunnedState(nbt.getBoolean("Stunned"));
-        this.setFinalRoarState(nbt.getBoolean("FinalRoar"));
+        this.setStunnedState(nbt.getBooleanOr("Stunned", false));
+        this.setFinalRoarState(nbt.getBooleanOr("FinalRoar", false));
     }
 
     @Override
@@ -194,7 +194,7 @@ public class Inquisitor extends AbstractIllager implements Stunnable {
     }
 
     @Override
-    protected void blockedByShield(LivingEntity target) {
+    protected void blockedByItem(LivingEntity target) {
         this.knockBack(target);
         target.hurtMarked = true;
         target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0));
@@ -235,7 +235,7 @@ public class Inquisitor extends AbstractIllager implements Stunnable {
                 ItemStack shieldItem = this.getOffhandItem();
                 if ((itemInHand.is(ItemTags.AXES) || attacker instanceof IronGolem || this.blockedCount >= 4) &&
                         shieldItem.is(Items.SHIELD)) {
-                    this.playSound(SoundEvents.SHIELD_BREAK, 1.0f, 1.0f);
+                    this.playSound(SoundEvents.SHIELD_BREAK.value(), 1.0f, 1.0f);
                     this.setStunnedState(true);
                     if (this.level() instanceof ServerLevel) {
                         serverLevel.sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM,
@@ -256,18 +256,18 @@ public class Inquisitor extends AbstractIllager implements Stunnable {
                             .getEntitiesOfClass(LivingEntity.class,
                                     this.getBoundingBox().inflate(8.0),
                                     entity -> !(entity instanceof Monster))
-                            .forEach(this::blockedByShield);
+                            .forEach(this::blockedByItem);
                     return super.hurtServer(serverLevel, damageSource, damageAmount);
                 }
             }
             if (damageSource.getDirectEntity() instanceof AbstractArrow && hasShield) {
-                this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 1.0f);
+                this.playSound(SoundEvents.SHIELD_BLOCK.value(), 1.0f, 1.0f);
                 ++this.blockedCount;
                 return false;
             }
             if (damageSource.getDirectEntity() instanceof LivingEntity && hasShield) {
                 ++this.blockedCount;
-                this.playSound(SoundEvents.SHIELD_BLOCK, 1.0f, 1.0f);
+                this.playSound(SoundEvents.SHIELD_BLOCK.value(), 1.0f, 1.0f);
                 return false;
             }
         }

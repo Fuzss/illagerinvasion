@@ -4,7 +4,7 @@ import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.init.ModTags;
 import fuzs.illagerinvasion.util.TeleportUtil;
-import fuzs.puzzleslib.api.core.v1.CommonAbstractions;
+import fuzs.puzzleslib.api.entity.v1.EntityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -172,7 +172,7 @@ public class Sorcerer extends SpellcasterIllager {
         @Override
         protected void performSpellCasting() {
             LivingEntity target = Sorcerer.this.getTarget();
-            if (CommonAbstractions.INSTANCE.getMobGriefingRule((ServerLevel) Sorcerer.this.level(), Sorcerer.this)) {
+            if (EntityHelper.isMobGriefingAllowed((ServerLevel) Sorcerer.this.level(), Sorcerer.this)) {
                 this.placeMagicFire(target.blockPosition());
             }
             Sorcerer.this.conjureFlamesCooldown = 100;

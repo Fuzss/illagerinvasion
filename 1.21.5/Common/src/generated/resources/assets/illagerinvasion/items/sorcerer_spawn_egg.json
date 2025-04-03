@@ -1,15 +1,15 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/template_spawn_egg",
+    "model": "illagerinvasion:item/sorcerer_spawn_egg",
     "tints": [
       {
         "type": "minecraft:constant",
-        "value": -7235946
+        "value": -5877624
       },
       {
         "type": "minecraft:constant",
-        "value": -5877624
+        "value": -8638622
       }
     ]
   }

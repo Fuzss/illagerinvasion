@@ -1,15 +1,15 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/template_spawn_egg",
+    "model": "illagerinvasion:item/archivist_spawn_egg",
     "tints": [
       {
         "type": "minecraft:constant",
-        "value": -7235946
+        "value": -3525323
       },
       {
         "type": "minecraft:constant",
-        "value": -3525323
+        "value": -6876911
       }
     ]
   }

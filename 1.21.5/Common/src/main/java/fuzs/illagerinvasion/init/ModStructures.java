@@ -3,7 +3,7 @@ package fuzs.illagerinvasion.init;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -46,22 +46,18 @@ public class ModStructures {
                 new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
                         .getOrThrow(ModTags.HAS_ILLAGER_FORT_BIOME_TAG)).spawnOverrides(Map.of(MobCategory.MONSTER,
                                 new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE,
-                                        WeightedRandomList.create(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER,
-                                                        3,
+                                        WeightedList.<MobSpawnSettings.SpawnerData>builder()
+                                                .add(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER, 1, 1), 3)
+                                                .add(new MobSpawnSettings.SpawnerData(ModEntityTypes.MARAUDER_ENTITY_TYPE.value(),
                                                         1,
-                                                        1),
-                                                new MobSpawnSettings.SpawnerData(ModEntityTypes.MARAUDER_ENTITY_TYPE.value(),
-                                                        3,
+                                                        1), 3)
+                                                .add(new MobSpawnSettings.SpawnerData(ModEntityTypes.BASHER_ENTITY_TYPE.value(),
                                                         1,
-                                                        1),
-                                                new MobSpawnSettings.SpawnerData(ModEntityTypes.BASHER_ENTITY_TYPE.value(),
+                                                        1), 1)
+                                                .add(new MobSpawnSettings.SpawnerData(ModEntityTypes.PROVOKER_ENTITY_TYPE.value(),
                                                         1,
-                                                        1,
-                                                        1),
-                                                new MobSpawnSettings.SpawnerData(ModEntityTypes.PROVOKER_ENTITY_TYPE.value(),
-                                                        3,
-                                                        1,
-                                                        1)))))
+                                                        1), 3)
+                                                .build())))
                         .generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
                         .terrainAdapation(TerrainAdjustment.BEARD_THIN)
                         .build(),

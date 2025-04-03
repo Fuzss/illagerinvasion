@@ -30,7 +30,7 @@ public class IllusionaryDustItem extends Item {
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.CLOUD, x, y + 1, z, 15, 0.5D, 0.5D, 0.5D, 0.15D);
             player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 1200));
-            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200));
+            player.addEffect(new MobEffectInstance(MobEffects.SPEED, 200));
             player.getCooldowns().addCooldown(itemInHand, 100);
             if (!player.getAbilities().instabuild) {
                 itemInHand.shrink(1);

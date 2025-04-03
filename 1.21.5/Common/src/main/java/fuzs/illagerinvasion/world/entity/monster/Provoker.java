@@ -187,8 +187,8 @@ public class Provoker extends SpellcasterIllager implements RangedAttackMob {
         }
 
         private void buff(LivingEntity livingEntity) {
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 120, 0));
-            livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 120, 0));
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 120, 0));
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.SPEED, 120, 0));
             double x = livingEntity.getX();
             double y = livingEntity.getY() + 1;
             double z = livingEntity.getZ();

@@ -30,7 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.entity.projectile.ThrownLingeringPotion;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -103,7 +103,7 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
             double f = target.getZ() + deltaMovement.z - this.getZ();
             double g = Math.sqrt(d * d + f * f);
             if (this.level() instanceof ServerLevel serverLevel) {
-                ThrownPotion thrownPotion = Projectile.spawnProjectileUsingShoot(ThrownPotion::new,
+                ThrownLingeringPotion thrownPotion = Projectile.spawnProjectileUsingShoot(ThrownLingeringPotion::new,
                         serverLevel,
                         itemStack,
                         this,
@@ -159,8 +159,8 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setPotionState(nbt.getBoolean("PotionState"));
-        this.setBowState(nbt.getBoolean("BowState"));
+        this.setPotionState(nbt.getBooleanOr("PotionState", false));
+        this.setBowState(nbt.getBooleanOr("BowState", false));
     }
 
     @Override
