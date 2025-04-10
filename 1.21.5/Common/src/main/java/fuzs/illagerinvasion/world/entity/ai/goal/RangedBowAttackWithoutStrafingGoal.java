@@ -6,10 +6,15 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 
 public class RangedBowAttackWithoutStrafingGoal<T extends Monster & RangedAttackMob> extends RangedBowAttackGoal<T> {
+    /**
+     * Do not use access widener for this, NeoForge changes the generic type on the class.
+     */
+    private final T mob;
     private int attackIntervalBase;
 
     public RangedBowAttackWithoutStrafingGoal(T mob, double speedModifier, int attackIntervalMin, float attackRadius) {
         super(mob, speedModifier, attackIntervalMin, attackRadius);
+        this.mob = mob;
         this.attackIntervalBase = attackIntervalMin;
     }
 

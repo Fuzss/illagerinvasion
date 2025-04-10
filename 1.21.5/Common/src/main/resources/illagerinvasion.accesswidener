@@ -21,5 +21,4 @@ accessible  field   net/minecraft/world/entity/ai/goal/RangedAttackGoal attackTi
 accessible  class   net/minecraft/world/entity/raid/Raid$RaiderType
 accessible  field   net/minecraft/world/entity/ai/goal/RangedBowAttackGoal  attackRadiusSqr F
 accessible  field   net/minecraft/world/entity/ai/goal/RangedBowAttackGoal  strafingTime    I
-accessible  field   net/minecraft/world/entity/ai/goal/RangedBowAttackGoal  mob Lnet/minecraft/world/entity/monster/Monster;
 accessible  field   net/minecraft/world/entity/ai/goal/RangedBowAttackGoal  attackIntervalMin   I
