@@ -36,7 +36,8 @@ public class ModItems {
     public static final Holder.Reference<Item> PLATINUM_CHUNK_ITEM = ModRegistry.REGISTRIES.registerItem(
             "platinum_chunk");
     public static final Holder.Reference<Item> PLATINUM_SHEET_ITEM = ModRegistry.REGISTRIES.registerItem(
-            "platinum_sheet");
+            "platinum_sheet",
+            () -> new Item.Properties().trimMaterial(ModRegistry.PLATINUM_TRIM_MATERIAL));
     public static final Holder.Reference<Item> PLATINUM_INFUSED_HATCHET_ITEM = ModRegistry.REGISTRIES.registerItem(
             "platinum_infused_hatchet",
             HatchetItem::new,
