@@ -255,7 +255,9 @@ public class Invoker extends SpellcasterIllager {
             Entity entity = damageSource.getDirectEntity();
             if (entity != null && entity.getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
                 if (!this.isShielded() && this.random.nextInt(2) == 0) {
-                    this.playSound(SoundEvents.SHIELD_BLOCK.value(), 1.0f, 0.8F + serverLevel.random.nextFloat() * 0.4F);
+                    this.playSound(SoundEvents.SHIELD_BLOCK.value(),
+                            1.0f,
+                            0.8F + serverLevel.random.nextFloat() * 0.4F);
                     this.setShielded(true);
                 }
             }
@@ -308,6 +310,11 @@ public class Invoker extends SpellcasterIllager {
     @Override
     public void applyRaidBuffs(ServerLevel level, int wave, boolean unused) {
         // NO-OP
+    }
+
+    @Override
+    public boolean canBeLeader() {
+        return false;
     }
 
     class SummonVexGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
@@ -453,38 +460,31 @@ public class Invoker extends SpellcasterIllager {
         }
 
         private void conjureFangs(double x, double z, double maxY, double y, float yaw, int warmup) {
+            ServerLevel serverLevel = getServerLevel(Invoker.this.level());
             BlockPos blockPos = BlockPos.containing(x, y, z);
-            boolean bl = false;
-            double d = 0.0;
-            do {
-                BlockState blockState2;
-                VoxelShape voxelShape;
-                BlockPos blockPos2;
-                BlockState blockState;
-                if (!(blockState = Invoker.this.level().getBlockState(blockPos2 = blockPos.below())).isFaceSturdy(
-                        Invoker.this.level(),
-                        blockPos2,
-                        Direction.UP)) {
-                    continue;
+            int minY = Mth.floor(maxY) - 1;
+
+            while (blockPos.getY() >= minY) {
+                BlockPos blockPosBelow = blockPos.below();
+                if (serverLevel.getBlockState(blockPosBelow).isFaceSturdy(serverLevel, blockPosBelow, Direction.UP)) {
+                    double verticalOffset = 0.0;
+                    if (!serverLevel.isEmptyBlock(blockPos)) {
+                        VoxelShape shape = serverLevel.getBlockState(blockPos).getCollisionShape(serverLevel, blockPos);
+                        if (!shape.isEmpty()) {
+                            verticalOffset = shape.max(Direction.Axis.Y);
+                        }
+                    }
+
+                    serverLevel.addFreshEntity(new InvokerFangs(serverLevel,
+                            x,
+                            (double) blockPos.getY() + 0.2 + verticalOffset,
+                            z,
+                            yaw,
+                            warmup,
+                            Invoker.this));
+                    break;
                 }
-                if (!Invoker.this.level().isEmptyBlock(blockPos) &&
-                        !(voxelShape = (blockState2 = Invoker.this.level().getBlockState(blockPos)).getCollisionShape(
-                                Invoker.this.level(),
-                                blockPos)).isEmpty()) {
-                    d = voxelShape.max(Direction.Axis.Y);
-                }
-                bl = true;
-                break;
-            } while ((blockPos = blockPos.below()).getY() >= Mth.floor(maxY) - 1);
-            if (bl) {
-                Invoker.this.level()
-                        .addFreshEntity(new InvokerFangs(Invoker.this.level(),
-                                x,
-                                (double) blockPos.getY() + 0.2 + d,
-                                z,
-                                yaw,
-                                warmup,
-                                Invoker.this));
+                blockPos = blockPosBelow;
             }
         }
 
@@ -505,12 +505,12 @@ public class Invoker extends SpellcasterIllager {
         public boolean canUse() {
             if (Invoker.this.getTarget() == null) {
                 return false;
-            }
-            if (Invoker.this.areaDamageCooldown < 0) {
+            } else if (Invoker.this.areaDamageCooldown < 0) {
                 Invoker.this.isAoeCasting = true;
                 return true;
+            } else {
+                return false;
             }
-            return false;
         }
 
         private void knockBack(Entity entity) {
@@ -533,15 +533,15 @@ public class Invoker extends SpellcasterIllager {
 
         private void buff(LivingEntity entity) {
             this.knockback(entity);
-            entity.hurtServer((ServerLevel) Invoker.this.level(),
+            entity.hurtServer(getServerLevel(Invoker.this.level()),
                     Invoker.this.damageSources().indirectMagic(Invoker.this, Invoker.this),
                     11.0F);
             double x = entity.getX();
-            double y = entity.getY() + 1;
+            double y = entity.getY() + 2.0;
             double z = entity.getZ();
             ((ServerLevel) Invoker.this.level()).sendParticles(ParticleTypes.SMOKE,
                     x,
-                    y + 1,
+                    y,
                     z,
                     10,
                     0.2D,
@@ -607,11 +607,11 @@ public class Invoker extends SpellcasterIllager {
         public boolean canUse() {
             if (Invoker.this.getTarget() == null) {
                 return false;
-            }
-            if (Invoker.this.isCastingSpell()) {
+            } else if (Invoker.this.isCastingSpell()) {
                 return false;
+            } else {
+                return Invoker.this.teleportCooldown < 0 && !(this.getTargets().isEmpty());
             }
-            return Invoker.this.teleportCooldown < 0 && !(this.getTargets().isEmpty());
         }
 
         private List<LivingEntity> getTargets() {
@@ -641,7 +641,7 @@ public class Invoker extends SpellcasterIllager {
         @Override
         protected void performSpellCasting() {
             double x = Invoker.this.getX();
-            double y = Invoker.this.getY() + 1;
+            double y = Invoker.this.getY() + 1.0;
             double z = Invoker.this.getZ();
             if (Invoker.this.level() instanceof ServerLevel) {
                 ((ServerLevel) Invoker.this.level()).sendParticles(ParticleTypes.SMOKE,
@@ -689,14 +689,13 @@ public class Invoker extends SpellcasterIllager {
         public boolean canUse() {
             if (Invoker.this.getTarget() == null) {
                 return false;
-            }
-            if (this.getTargets().isEmpty()) {
+            } else if (this.getTargets().isEmpty()) {
                 return false;
-            }
-            if (Invoker.this.isCastingSpell()) {
+            } else if (Invoker.this.isCastingSpell()) {
                 return false;
+            } else {
+                return Invoker.this.fangaoecooldown < 0;
             }
-            return Invoker.this.fangaoecooldown < 0;
         }
 
         private List<LivingEntity> getTargets() {
@@ -707,40 +706,34 @@ public class Invoker extends SpellcasterIllager {
         }
 
         private void conjureFangs(double x, double z, double maxY, double y, float yaw, int warmup) {
-            BlockPos blockPos = BlockPos.containing(x, y, z);
-            boolean bl = false;
-            double d = 0.0;
-            do {
-                VoxelShape voxelShape;
-                BlockPos blockPos2;
-                if (!Invoker.this.level()
-                        .getBlockState(blockPos2 = blockPos.below())
-                        .isFaceSturdy(Invoker.this.level(), blockPos2, Direction.UP)) {
-                    continue;
-                }
-                if (!Invoker.this.level().isEmptyBlock(blockPos) && !(voxelShape = Invoker.this.level()
-                        .getBlockState(blockPos)
-                        .getCollisionShape(Invoker.this.level(), blockPos)).isEmpty()) {
-                    d = voxelShape.max(Direction.Axis.Y);
-                }
-                bl = true;
-                break;
-            } while ((blockPos = blockPos.below()).getY() >= Mth.floor(maxY) - 1);
-            if (bl) {
-                Invoker.this.level()
-                        .addFreshEntity(new InvokerFangs(Invoker.this.level(),
-                                x,
-                                (double) blockPos.getY() + 0.2 + d,
-                                z,
-                                yaw,
-                                warmup + 4,
-                                Invoker.this));
-            }
-        }
+            ServerLevel serverLevel = getServerLevel(Invoker.this.level());
+            BlockPos currentPos = BlockPos.containing(x, y, z);
+            int minY = Mth.floor(maxY) - 1;
 
-        @Override
-        public void stop() {
-            super.stop();
+            while (currentPos.getY() >= minY) {
+                BlockPos belowPos = currentPos.below();
+                if (!serverLevel.getBlockState(belowPos).isFaceSturdy(serverLevel, belowPos, Direction.UP)) {
+                    currentPos = belowPos;
+                } else {
+                    double verticalOffset = 0.0;
+                    if (!serverLevel.isEmptyBlock(currentPos)) {
+                        VoxelShape shape = serverLevel.getBlockState(currentPos)
+                                .getCollisionShape(serverLevel, currentPos);
+                        if (!shape.isEmpty()) {
+                            verticalOffset = shape.max(Direction.Axis.Y);
+                        }
+                    }
+
+                    serverLevel.addFreshEntity(new InvokerFangs(serverLevel,
+                            x,
+                            (double) currentPos.getY() + 0.2 + verticalOffset,
+                            z,
+                            yaw,
+                            warmup,
+                            Invoker.this));
+                    break;
+                }
+            }
         }
 
         @Override
@@ -750,16 +743,14 @@ public class Invoker extends SpellcasterIllager {
                 double e = Math.max(livingEntity.getY(), Invoker.this.getY()) + 1.0;
                 float f = (float) Mth.atan2(livingEntity.getZ() - Invoker.this.getZ(),
                         livingEntity.getX() - Invoker.this.getX());
-                float g;
-                int i;
-                for (i = 0; i < 5; ++i) {
-                    g = f + (float) i * (float) Math.PI * 0.4f;
+                for (int i = 0; i < 5; ++i) {
+                    float g = f + (float) i * (float) Math.PI * 0.4f;
                     this.conjureFangs(livingEntity.getX() + (double) Mth.cos(g) * 1.5,
                             livingEntity.getZ() + (double) Mth.sin(g) * 1.5,
                             d,
                             e,
                             g,
-                            0);
+                            4);
                 }
             }
             Invoker.this.fangaoecooldown = 100;
