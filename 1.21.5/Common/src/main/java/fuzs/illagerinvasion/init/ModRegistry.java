@@ -105,7 +105,6 @@ public class ModRegistry {
         ModEntityTypes.bootstrap();
         ModSoundEvents.bootstrap();
         ModLootTables.bootstrap();
-        ModEnumConstants.bootstrap();
     }
 
     public static void boostrapTrimMaterials(BootstrapContext<TrimMaterial> context) {

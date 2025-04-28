@@ -3,6 +3,7 @@ package fuzs.illagerinvasion;
 import fuzs.illagerinvasion.config.ServerConfig;
 import fuzs.illagerinvasion.handler.VillagerGoalHandler;
 import fuzs.illagerinvasion.init.ModEntityTypes;
+import fuzs.illagerinvasion.init.ModEnumConstants;
 import fuzs.illagerinvasion.init.ModLootTables;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.config.v3.ConfigHolder;
@@ -34,11 +35,12 @@ public class IllagerInvasion implements ModConstructor {
     @Override
     public void onConstructMod() {
         ModRegistry.bootstrap();
+        registerEventHandlers();
     }
 
     @Override
     public void onCommonSetup() {
-        registerEventHandlers();
+        ModEnumConstants.bootstrap();
         VillagerGoalHandler.init();
     }
 
