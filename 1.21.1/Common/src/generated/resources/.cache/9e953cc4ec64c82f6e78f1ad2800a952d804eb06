@@ -1,4 +1,5 @@
-// 1.21.1	2024-09-12T17:34:10.353877	Tags for minecraft:entity_type mod id vanilla
+// 1.21.1	2025-05-03T22:28:28.800071	Tags for minecraft:entity_type mod id vanilla
 c2102c9e48b1ca39d548c7c72faee6ad45389f7c data/minecraft/tags/entity_type/fall_damage_immune.json
-a50589471f49cbe4fe20cf2d3764136c8c8de54a data/minecraft/tags/entity_type/raiders.json
+36ed65eeb467a018905ce735a3d0621b465f4f1d data/minecraft/tags/entity_type/illager.json
+4132f38ddf180023542dbe133694f21799e7f65a data/minecraft/tags/entity_type/raiders.json
 a50589471f49cbe4fe20cf2d3764136c8c8de54a data/numismatic-overhaul/tags/entity_type/the_bourgeoisie.json
