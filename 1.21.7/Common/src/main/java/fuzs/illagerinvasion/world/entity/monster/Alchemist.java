@@ -3,7 +3,6 @@ package fuzs.illagerinvasion.world.entity.monster;
 import fuzs.illagerinvasion.world.entity.ai.goal.RangedBowAttackWithoutStrafingGoal;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -40,6 +39,8 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -95,8 +96,8 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
     @Override
     public void performRangedAttack(LivingEntity target, float pullProgress) {
         ItemStack itemStack = this.getItemBySlot(EquipmentSlot.MAINHAND);
-        if (itemStack.is(Items.LINGERING_POTION) &&
-                itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).potion().isPresent()) {
+        if (itemStack.is(Items.LINGERING_POTION) && itemStack.getOrDefault(DataComponents.POTION_CONTENTS,
+                PotionContents.EMPTY).potion().isPresent()) {
             Vec3 deltaMovement = target.getDeltaMovement();
             double d = target.getX() + deltaMovement.x - this.getX();
             double e = target.getEyeY() - 1.1 - this.getY();
@@ -139,28 +140,17 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
-        nbt.putBoolean("BowState", this.getBowState());
-        nbt.putBoolean("PotionState", this.getPotionState());
-        super.addAdditionalSaveData(nbt);
-    }
-
-    private void removeEffectsInCloud(AreaEffectCloud cloudEntity) {
-        List<? extends LivingEntity> nearbyIllagers = this.level()
-                .getEntitiesOfClass(AbstractIllager.class, cloudEntity.getBoundingBox().inflate(0.3), Entity::isAlive);
-        for (LivingEntity entity : nearbyIllagers) {
-            StreamSupport.stream(cloudEntity.potionContents.getAllEffects().spliterator(), false)
-                    .findAny()
-                    .map(MobEffectInstance::getEffect)
-                    .ifPresent(entity::removeEffect);
-        }
+    protected void addAdditionalSaveData(ValueOutput valueOutput) {
+        valueOutput.putBoolean("BowState", this.getBowState());
+        valueOutput.putBoolean("PotionState", this.getPotionState());
+        super.addAdditionalSaveData(valueOutput);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
-        this.setPotionState(nbt.getBooleanOr("PotionState", false));
-        this.setBowState(nbt.getBooleanOr("BowState", false));
+    protected void readAdditionalSaveData(ValueInput valueInput) {
+        super.readAdditionalSaveData(valueInput);
+        this.setPotionState(valueInput.getBooleanOr("PotionState", false));
+        this.setBowState(valueInput.getBooleanOr("BowState", false));
     }
 
     @Override
@@ -220,6 +210,17 @@ public class Alchemist extends AbstractIllager implements RangedAttackMob {
             this.setBowState(false);
         }
         super.customServerAiStep(serverLevel);
+    }
+
+    private void removeEffectsInCloud(AreaEffectCloud cloudEntity) {
+        List<? extends LivingEntity> nearbyIllagers = this.level()
+                .getEntitiesOfClass(AbstractIllager.class, cloudEntity.getBoundingBox().inflate(0.3), Entity::isAlive);
+        for (LivingEntity entity : nearbyIllagers) {
+            StreamSupport.stream(cloudEntity.potionContents.getAllEffects().spliterator(), false)
+                    .findAny()
+                    .map(MobEffectInstance::getEffect)
+                    .ifPresent(entity::removeEffect);
+        }
     }
 
     @Override

@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -42,6 +41,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
@@ -111,9 +112,15 @@ public class Invoker extends SpellcasterIllager {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
-        this.setShielded(nbt.getBooleanOr("Invul", false));
+    protected void addAdditionalSaveData(ValueOutput valueOutput) {
+        super.addAdditionalSaveData(valueOutput);
+        valueOutput.putBoolean("Invul", this.isShielded());
+    }
+
+    @Override
+    protected void readAdditionalSaveData(ValueInput valueInput) {
+        super.readAdditionalSaveData(valueInput);
+        this.setShielded(valueInput.getBooleanOr("Invul", false));
         if (this.hasCustomName()) {
             this.bossBar.setName(this.getDisplayName());
         }
@@ -128,12 +135,6 @@ public class Invoker extends SpellcasterIllager {
     @Override
     public SoundEvent getCelebrateSound() {
         return SoundEvents.EVOKER_CELEBRATE;
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
-        nbt.putBoolean("Invul", this.isShielded());
-        super.addAdditionalSaveData(nbt);
     }
 
     public boolean isShielded() {
@@ -282,9 +283,8 @@ public class Invoker extends SpellcasterIllager {
 
     @Override
     public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
-        return super.isInvulnerableTo(serverLevel, damageSource) ||
-                damageSource.is(DamageTypeTags.WITCH_RESISTANT_TO) ||
-                this.isShielded() && damageSource.is(DamageTypeTags.IS_PROJECTILE);
+        return super.isInvulnerableTo(serverLevel, damageSource) || damageSource.is(DamageTypeTags.WITCH_RESISTANT_TO)
+                || this.isShielded() && damageSource.is(DamageTypeTags.IS_PROJECTILE);
     }
 
     @Override
@@ -556,9 +556,9 @@ public class Invoker extends SpellcasterIllager {
             Invoker.this.level()
                     .getEntitiesOfClass(LivingEntity.class,
                             Invoker.this.getBoundingBox().inflate(6),
-                            entity -> !(entity instanceof AbstractIllager) && !(entity instanceof Surrendered) &&
-                                    !(entity instanceof Ravager) &&
-                                    EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity))
+                            entity -> !(entity instanceof AbstractIllager) && !(entity instanceof Surrendered)
+                                    && !(entity instanceof Ravager) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(
+                                    entity))
                     .forEach(this::buff);
             Invoker.this.isAoeCasting = false;
             double posx = Invoker.this.getX();
@@ -618,8 +618,8 @@ public class Invoker extends SpellcasterIllager {
             return Invoker.this.level()
                     .getEntitiesOfClass(LivingEntity.class,
                             Invoker.this.getBoundingBox().inflate(6),
-                            entity -> ((entity instanceof Player && !((Player) entity).getAbilities().instabuild)) ||
-                                    (entity instanceof IronGolem));
+                            entity -> ((entity instanceof Player && !((Player) entity).getAbilities().instabuild))
+                                    || (entity instanceof IronGolem));
         }
 
         @Override

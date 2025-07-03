@@ -5,7 +5,7 @@ import fuzs.illagerinvasion.client.IllagerInvasionClient;
 import fuzs.illagerinvasion.data.client.ModAtlasProvider;
 import fuzs.illagerinvasion.data.client.ModLanguageProvider;
 import fuzs.illagerinvasion.data.client.ModModelProvider;
-import fuzs.illagerinvasion.neoforge.data.client.ModParticleProvider;
+import fuzs.illagerinvasion.data.client.ModParticleProvider;
 import fuzs.illagerinvasion.neoforge.data.client.ModSoundProvider;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;

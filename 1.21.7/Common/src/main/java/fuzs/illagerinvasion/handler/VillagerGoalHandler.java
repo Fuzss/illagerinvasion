@@ -35,7 +35,7 @@ public class VillagerGoalHandler {
             .add(new AvoidVillagerEnemy<>(Surrendered.class, ModEntityTypes.SURRENDERED_ENTITY_TYPE::value, 8.0F))
             .build();
 
-    public static EventResult onEntityLoad(Entity entity, ServerLevel level) {
+    public static EventResult onEntityLoad(Entity entity, ServerLevel serverLevel, boolean isNewlySpawned) {
 
         // do not do this for generic abstract villager, villagers that use the brain system instead of the goals seem to try to run both and flee much slower than they should
         if (entity.getType() == EntityType.WANDERING_TRADER) {

@@ -65,7 +65,7 @@ public class ModRegistry {
                     new MobEffectInstance(MobEffects.SPEED, 300, 2)));
     public static final Holder.Reference<MenuType<ImbuingMenu>> IMBUING_MENU_TYPE = REGISTRIES.registerMenuType(
             "imbuing",
-            () -> ImbuingMenu::new);
+            ImbuingMenu::new);
     public static final Holder.Reference<SimpleParticleType> MAGIC_FLAME_PARTICLE_TYPE = REGISTRIES.register(Registries.PARTICLE_TYPE,
             "magic_flame",
             () -> new SimpleParticleType(false));

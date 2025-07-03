@@ -18,18 +18,15 @@ public class ModBiomeTagProvider extends AbstractTagProvider<Biome> {
     @Override
     public void addTags(HolderLookup.Provider provider) {
         this.tag(ModTags.HAS_FIRECALLER_HUT_BIOME_TAG).addTag(BiomeTags.IS_BADLANDS);
-        this.tag(ModTags.HAS_ILLAGER_FORT_BIOME_TAG).addTag(BiomeTags.IS_TAIGA).add(Biomes.SNOWY_PLAINS);
+        this.tag(ModTags.HAS_ILLAGER_FORT_BIOME_TAG).addTag(BiomeTags.IS_TAIGA).addKey(Biomes.SNOWY_PLAINS);
         this.tag(ModTags.HAS_ILLUSIONER_TOWER_BIOME_TAG)
-                .add(Biomes.TAIGA)
-                .add(Biomes.OLD_GROWTH_PINE_TAIGA)
-                .add(Biomes.OLD_GROWTH_SPRUCE_TAIGA)
-                .add(Biomes.DARK_FOREST)
-                .add(Biomes.SWAMP);
-        this.tag(ModTags.HAS_SORCERER_HUT_BIOME_TAG).add(Biomes.DARK_FOREST);
+                .addKey(Biomes.TAIGA,
+                        Biomes.OLD_GROWTH_PINE_TAIGA,
+                        Biomes.OLD_GROWTH_SPRUCE_TAIGA,
+                        Biomes.DARK_FOREST,
+                        Biomes.SWAMP);
+        this.tag(ModTags.HAS_SORCERER_HUT_BIOME_TAG).addKey(Biomes.DARK_FOREST);
         this.tag(ModTags.HAS_LABYRINTH_BIOME_TAG)
-                .addTag(BiomeTags.IS_TAIGA)
-                .addTag(BiomeTags.IS_JUNGLE)
-                .addTag(BiomeTags.IS_FOREST)
-                .addTag(BiomeTags.IS_SAVANNA);
+                .addTag(BiomeTags.IS_TAIGA, BiomeTags.IS_JUNGLE, BiomeTags.IS_FOREST, BiomeTags.IS_SAVANNA);
     }
 }

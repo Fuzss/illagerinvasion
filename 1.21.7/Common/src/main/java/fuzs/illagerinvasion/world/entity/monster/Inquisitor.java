@@ -1,13 +1,12 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
 import fuzs.illagerinvasion.init.ModSoundEvents;
-import fuzs.puzzleslib.api.init.v3.registry.LookupHelper;
+import fuzs.puzzleslib.api.item.v2.EnchantingHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -50,6 +49,8 @@ import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.WebBlock;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
@@ -97,8 +98,8 @@ public class Inquisitor extends AbstractIllager implements Stunnable {
 
     @Override
     public void aiStep() {
-        if (this.horizontalCollision && this.level() instanceof ServerLevel serverLevel &&
-                serverLevel.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+        if (this.horizontalCollision && this.level() instanceof ServerLevel serverLevel && serverLevel.getGameRules()
+                .getBoolean(GameRules.RULE_MOBGRIEFING)) {
             AABB box = this.getBoundingBox().inflate(1.0);
             for (BlockPos blockPos : BlockPos.betweenClosed(Mth.floor(box.minX),
                     Mth.floor(box.minY),
@@ -128,17 +129,17 @@ public class Inquisitor extends AbstractIllager implements Stunnable {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
-        nbt.putBoolean("Stunned", this.isStunned);
-        nbt.putBoolean("FinalRoar", this.finalRoar);
-        super.addAdditionalSaveData(nbt);
+    protected void addAdditionalSaveData(ValueOutput valueOutput) {
+        valueOutput.putBoolean("Stunned", this.isStunned);
+        valueOutput.putBoolean("FinalRoar", this.finalRoar);
+        super.addAdditionalSaveData(valueOutput);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
-        super.readAdditionalSaveData(nbt);
-        this.setStunnedState(nbt.getBooleanOr("Stunned", false));
-        this.setFinalRoarState(nbt.getBooleanOr("FinalRoar", false));
+    protected void readAdditionalSaveData(ValueInput valueInput) {
+        super.readAdditionalSaveData(valueInput);
+        this.setStunnedState(valueInput.getBooleanOr("Stunned", false));
+        this.setFinalRoarState(valueInput.getBooleanOr("FinalRoar", false));
     }
 
     @Override
@@ -233,8 +234,8 @@ public class Inquisitor extends AbstractIllager implements Stunnable {
             if (attacker instanceof LivingEntity livingEntity) {
                 ItemStack itemInHand = livingEntity.getMainHandItem();
                 ItemStack shieldItem = this.getOffhandItem();
-                if ((itemInHand.is(ItemTags.AXES) || attacker instanceof IronGolem || this.blockedCount >= 4) &&
-                        shieldItem.is(Items.SHIELD)) {
+                if ((itemInHand.is(ItemTags.AXES) || attacker instanceof IronGolem || this.blockedCount >= 4)
+                        && shieldItem.is(Items.SHIELD)) {
                     this.playSound(SoundEvents.SHIELD_BREAK.value(), 1.0f, 1.0f);
                     this.setStunnedState(true);
                     if (this.level() instanceof ServerLevel) {
@@ -296,7 +297,7 @@ public class Inquisitor extends AbstractIllager implements Stunnable {
         Raid raid = this.getCurrentRaid();
         if (this.random.nextFloat() <= raid.getEnchantOdds()) {
             int enchantmentLevel = wave > raid.getNumGroups(Difficulty.NORMAL) ? 2 : 1;
-            Holder<Enchantment> enchantment = LookupHelper.lookupEnchantment(serverLevel, Enchantments.SHARPNESS);
+            Holder<Enchantment> enchantment = EnchantingHelper.lookup(serverLevel, Enchantments.SHARPNESS);
             mainHandItem.enchant(enchantment, enchantmentLevel);
         }
         this.setItemSlot(EquipmentSlot.MAINHAND, mainHandItem);

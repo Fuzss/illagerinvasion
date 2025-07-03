@@ -1,4 +1,4 @@
-// 1.21.5	2025-04-03T09:13:07.984297	Tags for minecraft:entity_type mod id vanilla
+// 1.21.7	2025-07-03T16:47:52.383431	Tags for minecraft:entity_type mod id vanilla
 c2102c9e48b1ca39d548c7c72faee6ad45389f7c data/minecraft/tags/entity_type/fall_damage_immune.json
 36ed65eeb467a018905ce735a3d0621b465f4f1d data/minecraft/tags/entity_type/illager.json
 4132f38ddf180023542dbe133694f21799e7f65a data/minecraft/tags/entity_type/raiders.json

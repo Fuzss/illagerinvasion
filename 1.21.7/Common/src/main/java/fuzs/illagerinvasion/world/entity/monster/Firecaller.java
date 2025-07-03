@@ -62,6 +62,11 @@ public class Firecaller extends SpellcasterIllager {
     }
 
     @Override
+    public boolean canBeLeader() {
+        return false;
+    }
+
+    @Override
     public SoundEvent getCelebrateSound() {
         return SoundEvents.ILLUSIONER_AMBIENT;
     }

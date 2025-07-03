@@ -21,7 +21,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.particle.HeartParticle;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.entity.WitherSkullRenderer;
 import net.minecraft.world.level.block.Block;
 
@@ -107,6 +107,6 @@ public class IllagerInvasionClient implements ClientModConstructor {
 
     @Override
     public void onRegisterBlockRenderTypes(RenderTypesContext<Block> context) {
-        context.registerRenderType(RenderType.cutout(), ModRegistry.MAGIC_FIRE_BLOCK.value());
+        context.registerChunkRenderType(ModRegistry.MAGIC_FIRE_BLOCK.value(), ChunkSectionLayer.CUTOUT);
     }
 }

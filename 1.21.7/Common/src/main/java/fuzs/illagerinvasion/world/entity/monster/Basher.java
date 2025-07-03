@@ -1,14 +1,13 @@
 package fuzs.illagerinvasion.world.entity.monster;
 
 import fuzs.illagerinvasion.init.ModSoundEvents;
-import fuzs.puzzleslib.api.init.v3.registry.LookupHelper;
+import fuzs.puzzleslib.api.item.v2.EnchantingHelper;
 import fuzs.puzzleslib.api.item.v2.ToolTypeHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -40,12 +39,15 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 public class Basher extends AbstractIllager implements Stunnable {
     private static final String TAG_STUN_TICKS = "Stunned";
     private static final String TAG_BLOCKED_COUNT = "BlockedCount";
-    private static final EntityDataAccessor<Boolean> DATA_STUNNED = SynchedEntityData.defineId(Basher.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_STUNNED = SynchedEntityData.defineId(Basher.class,
+            EntityDataSerializers.BOOLEAN);
 
     private int stunTicks;
     private int blockedCount;
@@ -81,17 +83,17 @@ public class Basher extends AbstractIllager implements Stunnable {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
-        compoundTag.putInt(TAG_STUN_TICKS, this.stunTicks);
-        compoundTag.putInt(TAG_BLOCKED_COUNT, this.blockedCount);
-        super.addAdditionalSaveData(compoundTag);
+    protected void addAdditionalSaveData(ValueOutput valueOutput) {
+        valueOutput.putInt(TAG_STUN_TICKS, this.stunTicks);
+        valueOutput.putInt(TAG_BLOCKED_COUNT, this.blockedCount);
+        super.addAdditionalSaveData(valueOutput);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
-        super.readAdditionalSaveData(compoundTag);
-        this.setStunTicks(compoundTag.getIntOr(TAG_STUN_TICKS, 0));
-        this.blockedCount = compoundTag.getIntOr(TAG_BLOCKED_COUNT, 0);
+    protected void readAdditionalSaveData(ValueInput valueInput) {
+        super.readAdditionalSaveData(valueInput);
+        this.setStunTicks(valueInput.getIntOr(TAG_STUN_TICKS, 0));
+        this.blockedCount = valueInput.getIntOr(TAG_BLOCKED_COUNT, 0);
     }
 
     @Override
@@ -157,10 +159,12 @@ public class Basher extends AbstractIllager implements Stunnable {
             if (attacker instanceof LivingEntity) {
                 ItemStack attackerMainHand = ((LivingEntity) attacker).getMainHandItem();
                 ItemStack basherMainHand = this.getMainHandItem();
-                if ((ToolTypeHelper.INSTANCE.isAxe(attackerMainHand) || attacker instanceof IronGolem || this.blockedCount >= 4) && basherMainHand.is(Items.SHIELD)) {
+                if ((ToolTypeHelper.INSTANCE.isAxe(attackerMainHand) || attacker instanceof IronGolem
+                        || this.blockedCount >= 4) && basherMainHand.is(Items.SHIELD)) {
                     this.playSound(SoundEvents.SHIELD_BREAK.value(), 1.0F, 1.0F);
                     this.setStunTicks(60);
-                    serverLevel.sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM, basherMainHand), this.getX(), this.getY() + 1.5, this.getZ(), 30, 0.3, 0.2, 0.3, 0.003);
+                    serverLevel.sendParticles((ParticleOptions) new ItemParticleOption(ParticleTypes.ITEM,
+                            basherMainHand), this.getX(), this.getY() + 1.5, this.getZ(), 30, 0.3, 0.2, 0.3, 0.003);
                     this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_AXE));
                     return super.hurtServer(serverLevel, damageSource, damageAmount);
                 }
@@ -217,7 +221,7 @@ public class Basher extends AbstractIllager implements Stunnable {
         Raid raid = this.getCurrentRaid();
         int enchantmentLevel = wave > raid.getNumGroups(Difficulty.NORMAL) ? 2 : 1;
         if (this.random.nextFloat() <= raid.getEnchantOdds()) {
-            Holder<Enchantment> enchantment = LookupHelper.lookupEnchantment(level, Enchantments.UNBREAKING);
+            Holder<Enchantment> enchantment = EnchantingHelper.lookup(level, Enchantments.UNBREAKING);
             itemStack.enchant(enchantment, enchantmentLevel);
         }
         this.setItemSlot(EquipmentSlot.MAINHAND, itemStack);

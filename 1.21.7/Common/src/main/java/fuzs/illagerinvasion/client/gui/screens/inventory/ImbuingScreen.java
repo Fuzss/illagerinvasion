@@ -5,7 +5,7 @@ import fuzs.illagerinvasion.world.inventory.ImbuingMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -67,14 +67,14 @@ public class ImbuingScreen extends AbstractContainerScreen<ImbuingMenu> {
         this.renderTooltip(guiGraphics, mouseX, mouseY);
         if (this.menu.getImbuingState().showTooltip()) {
             if (this.isHovering(74, 32, 28, 20, mouseX, mouseY)) {
-                this.setTooltipForNextRenderPass(this.menu.getImbuingState().getComponent());
+                guiGraphics.setTooltipForNextFrame(this.menu.getImbuingState().getComponent(), mouseX, mouseY);
             }
         }
     }
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        guiGraphics.blit(RenderType::guiTextured,
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                 TEXTURE_LOCATION,
                 this.leftPos,
                 this.topPos,
@@ -88,7 +88,7 @@ public class ImbuingScreen extends AbstractContainerScreen<ImbuingMenu> {
         this.toolIcon.render(this.menu, guiGraphics, partialTick, this.leftPos, this.topPos);
         this.gemIcon.render(this.menu, guiGraphics, partialTick, this.leftPos, this.topPos);
         if (this.menu.getImbuingState().showTooltip()) {
-            guiGraphics.blit(RenderType::guiTextured,
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                     TEXTURE_LOCATION,
                     this.leftPos + 74,
                     this.topPos + 32,

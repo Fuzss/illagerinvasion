@@ -4,7 +4,7 @@ import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.illagerinvasion.init.ModTags;
 import fuzs.illagerinvasion.util.TeleportUtil;
-import fuzs.puzzleslib.api.entity.v1.EntityHelper;
+import fuzs.puzzleslib.api.util.v1.EntityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -53,8 +53,10 @@ public class Sorcerer extends SpellcasterIllager {
         this.goalSelector.addGoal(5, new AvoidEntityGoal<>(this, Player.class, 8.0f, 0.6, 1.0));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
+        this.targetSelector.addGoal(2,
+                new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
+        this.targetSelector.addGoal(3,
+                new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, false));
     }
 
@@ -109,7 +111,10 @@ public class Sorcerer extends SpellcasterIllager {
         }
 
         private List<LivingEntity> getTargets() {
-            return Sorcerer.this.level().getEntitiesOfClass(LivingEntity.class, Sorcerer.this.getBoundingBox().inflate(8), entity -> (entity instanceof Player) || (entity instanceof IronGolem));
+            return Sorcerer.this.level()
+                    .getEntitiesOfClass(LivingEntity.class,
+                            Sorcerer.this.getBoundingBox().inflate(8),
+                            entity -> (entity instanceof Player) || (entity instanceof IronGolem));
         }
 
         @Override
@@ -176,8 +181,18 @@ public class Sorcerer extends SpellcasterIllager {
                 this.placeMagicFire(target.blockPosition());
             }
             Sorcerer.this.conjureFlamesCooldown = 100;
-            target.hurtServer((ServerLevel) Sorcerer.this.level(), Sorcerer.this.damageSources().indirectMagic(Sorcerer.this, Sorcerer.this), 3.0F);
-            ((ServerLevel) Sorcerer.this.level()).sendParticles(ModRegistry.MAGIC_FLAME_PARTICLE_TYPE.value(), target.getX(), target.getY() + 1, target.getZ(), 30, 0.3D, 0.5D, 0.3D, 0.08D);
+            target.hurtServer((ServerLevel) Sorcerer.this.level(),
+                    Sorcerer.this.damageSources().indirectMagic(Sorcerer.this, Sorcerer.this),
+                    3.0F);
+            ((ServerLevel) Sorcerer.this.level()).sendParticles(ModRegistry.MAGIC_FLAME_PARTICLE_TYPE.value(),
+                    target.getX(),
+                    target.getY() + 1,
+                    target.getZ(),
+                    30,
+                    0.3D,
+                    0.5D,
+                    0.3D,
+                    0.08D);
         }
 
         private void placeMagicFire(BlockPos blockPos) {
@@ -186,7 +201,8 @@ public class Sorcerer extends SpellcasterIllager {
                 for (BlockPos offset : BlockPos.withinManhattan(blockPos, 1, 1, 1)) {
                     blockState = Sorcerer.this.level().getBlockState(offset);
                     if (blockState.is(ModTags.MAGIC_FIRE_REPLACEABLE_BLOCK_TAG)) {
-                        Sorcerer.this.level().setBlockAndUpdate(offset, ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState());
+                        Sorcerer.this.level()
+                                .setBlockAndUpdate(offset, ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState());
                     }
                 }
             }
