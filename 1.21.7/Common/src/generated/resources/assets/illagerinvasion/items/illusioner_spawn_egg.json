@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "illagerinvasion:item/illusioner_spawn_egg",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -15509357
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -16762002
+      }
+    ]
+  }
+}

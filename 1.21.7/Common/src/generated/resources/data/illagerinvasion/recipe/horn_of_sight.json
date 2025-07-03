@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": "minecraft:gold_ingot",
+    "G": "illagerinvasion:hallowed_gem",
+    "H": "minecraft:goat_horn"
+  },
+  "pattern": [
+    " G ",
+    "#H#",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "illagerinvasion:horn_of_sight"
+  }
+}
