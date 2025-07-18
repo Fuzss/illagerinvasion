@@ -7,9 +7,3 @@ dependencies {
     // NeoForge Data Pack Extensions
     modApi(include(libs.neoforgedatapackextensions.neoforge.get()))
 }
-
-tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
-    doFirst {
-        patchLaunchCfg()
-    }
-}
