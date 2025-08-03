@@ -63,18 +63,18 @@ public class ModModelProvider extends AbstractModelProvider {
                 ModAtlasProvider.DRAGON_FIREBALL_LOCATION.texture(),
                 ModelTemplates.FLAT_ITEM,
                 itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.ALCHEMIST_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.ARCHIVIST_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.BASHER_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.FIRECALLER_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.INQUISITOR_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.MARAUDER_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.INVOKER_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.NECROMANCER_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.PROVOKER_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.SORCERER_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.SURRENDERED_SPAWN_EGG_ITEM.value(), itemModelGenerators);
-        ItemModelGenerationHelper.generateSpawnEgg(ModItems.ILLUSIONER_SPAWN_EGG_ITEM.value(), itemModelGenerators);
+        itemModelGenerators.generateFlatItem(ModItems.ALCHEMIST_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.ARCHIVIST_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.BASHER_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.FIRECALLER_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.INQUISITOR_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.MARAUDER_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.INVOKER_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.NECROMANCER_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.PROVOKER_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.SORCERER_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.SURRENDERED_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.ILLUSIONER_SPAWN_EGG_ITEM.value(), ModelTemplates.FLAT_ITEM);
         ItemModelGenerationHelper.generateHorn(ModItems.HORN_OF_SIGHT_ITEM.value(), itemModelGenerators);
     }
 }

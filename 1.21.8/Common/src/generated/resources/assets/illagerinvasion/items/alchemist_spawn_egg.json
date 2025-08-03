@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "illagerinvasion:item/alchemist_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -9227117
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -11462290
-      }
-    ]
+    "model": "illagerinvasion:item/alchemist_spawn_egg"
   }
 }

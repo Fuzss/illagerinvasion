@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "illagerinvasion:item/necromancer_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -7192006
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -9624546
-      }
-    ]
+    "model": "illagerinvasion:item/necromancer_spawn_egg"
   }
 }
