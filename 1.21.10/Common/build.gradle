@@ -8,6 +8,3 @@ dependencies {
     modApi libs.neoforgedatapackextensions.common
 }
 
-tasks.withType(net.fabricmc.loom.task.AbstractRemapJarTask).configureEach {
-    targetNamespace = "named"
-}

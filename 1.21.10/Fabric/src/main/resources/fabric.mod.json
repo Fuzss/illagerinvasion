@@ -44,7 +44,6 @@
     "puzzleslib": ">=${minPuzzlesVersion}",
     "mm": "*",
     "neoforgedatapackextensions": "*",
-    "minecraft": "${minecraftVersion}",
-    "java": ">=17"
+    "minecraft": ">=${minecraftVersion}- <${upcomingMinecraftVersion}-"
   }
 }
