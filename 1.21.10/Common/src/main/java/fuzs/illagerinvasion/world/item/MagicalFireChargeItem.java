@@ -23,12 +23,13 @@ public class MagicalFireChargeItem extends FireChargeItem {
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         BlockPos blockPos = context.getClickedPos().relative(context.getClickedFace());
-        if (ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState().canSurvive(level, blockPos) && BaseFireBlock.canBePlacedAt(level, blockPos, context.getHorizontalDirection())) {
+        if (ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState().canSurvive(level, blockPos)
+                && BaseFireBlock.canBePlacedAt(level, blockPos, context.getHorizontalDirection())) {
             this.playSound(level, blockPos);
             level.setBlockAndUpdate(blockPos, ModRegistry.MAGIC_FIRE_BLOCK.value().defaultBlockState());
             level.gameEvent(context.getPlayer(), GameEvent.BLOCK_PLACE, blockPos);
             context.getItemInHand().consume(1, context.getPlayer());
-            return InteractionResultHelper.sidedSuccess(level.isClientSide);
+            return InteractionResultHelper.sidedSuccess(level.isClientSide());
         } else {
             return InteractionResult.FAIL;
         }
@@ -36,6 +37,11 @@ public class MagicalFireChargeItem extends FireChargeItem {
 
     private void playSound(Level level, BlockPos pos) {
         RandomSource randomSource = level.getRandom();
-        level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1.0F, (randomSource.nextFloat() - randomSource.nextFloat()) * 0.2F + 1.0F);
+        level.playSound(null,
+                pos,
+                SoundEvents.FIRECHARGE_USE,
+                SoundSource.BLOCKS,
+                1.0F,
+                (randomSource.nextFloat() - randomSource.nextFloat()) * 0.2F + 1.0F);
     }
 }

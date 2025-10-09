@@ -4,10 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import fuzs.illagerinvasion.client.render.entity.state.FlyingMagmaRenderState;
 import fuzs.illagerinvasion.world.entity.projectile.FlyingMagma;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.level.block.Blocks;
 
@@ -33,16 +34,16 @@ public class FlyingMagmaRenderer extends EntityRenderer<FlyingMagma, FlyingMagma
     }
 
     @Override
-    public void render(FlyingMagmaRenderState renderState, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void submit(FlyingMagmaRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(renderState.yRot));
         poseStack.mulPose(Axis.ZP.rotationDegrees(renderState.xRot));
-        this.blockRenderDispatcher.renderSingleBlock(Blocks.MAGMA_BLOCK.defaultBlockState(),
-                poseStack,
-                bufferSource,
-                packedLight,
-                OverlayTexture.NO_OVERLAY);
+        nodeCollector.submitBlock(poseStack,
+                Blocks.MAGMA_BLOCK.defaultBlockState(),
+                renderState.lightCoords,
+                OverlayTexture.NO_OVERLAY,
+                renderState.outlineColor);
         poseStack.popPose();
-        super.render(renderState, poseStack, bufferSource, packedLight);
+        super.submit(renderState, poseStack, nodeCollector, cameraRenderState);
     }
 }

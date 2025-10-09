@@ -2,7 +2,7 @@ package fuzs.illagerinvasion.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.illagerinvasion.IllagerInvasion;
-import fuzs.illagerinvasion.client.init.ModelLayerLocations;
+import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.client.model.InvokerModel;
 import fuzs.illagerinvasion.client.render.entity.layers.IllagerArmorLayer;
 import fuzs.illagerinvasion.client.render.entity.layers.InvokerGoldLayer;
@@ -21,10 +21,10 @@ public class InvokerRenderer extends IllagerRenderer<Invoker, InvokerRenderState
             "textures/entity/wither/wither_armor.png");
 
     public InvokerRenderer(EntityRendererProvider.Context context) {
-        super(context, new InvokerModel(context.bakeLayer(ModelLayerLocations.INVOKER)), 0.0F);
+        super(context, new InvokerModel(context.bakeLayer(ModModelLayers.INVOKER)), 0.0F);
         this.addLayer(new InvokerGoldLayer(this));
         this.addLayer(new IllagerArmorLayer<>(this,
-                new InvokerModel(context.bakeLayer(ModelLayerLocations.INVOKER_ARMOR))) {
+                new InvokerModel(context.bakeLayer(ModModelLayers.INVOKER_ARMOR))) {
             @Override
             protected ResourceLocation getTextureLocation() {
                 return ARMOR_TEXTURE_LOCATION;

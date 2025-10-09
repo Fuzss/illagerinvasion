@@ -120,11 +120,11 @@
     ],
     "subtitle": "subtitles.entity.invoker.big_cast"
   },
-  "entity.invoker.completecast": {
+  "entity.invoker.complete_cast": {
     "sounds": [
       "illagerinvasion:mob/invoker/completecast"
     ],
-    "subtitle": "subtitles.entity.invoker.completecast"
+    "subtitle": "subtitles.entity.invoker.complete_cast"
   },
   "entity.invoker.death": {
     "sounds": [
@@ -280,38 +280,20 @@
   },
   "item.horn_of_sight.blow": {
     "sounds": [
-      "illagerinvasion:item/horn_of_sight/blow"
+      {
+        "type": "event",
+        "name": "event.raid.horn"
+      }
     ],
     "subtitle": "subtitles.item.horn_of_sight.blow"
   },
-  "item.lost_candle.coal": {
+  "item.lost_candle.find_ore": {
     "sounds": [
-      "illagerinvasion:item/lost_candle/coal"
+      {
+        "type": "event",
+        "name": "block.bell.resonate"
+      }
     ],
-    "subtitle": "subtitles.item.lost_candle.coal"
-  },
-  "item.lost_candle.copper": {
-    "sounds": [
-      "illagerinvasion:item/lost_candle/copper"
-    ],
-    "subtitle": "subtitles.item.lost_candle.copper"
-  },
-  "item.lost_candle.diamond": {
-    "sounds": [
-      "illagerinvasion:item/lost_candle/diamond"
-    ],
-    "subtitle": "subtitles.item.lost_candle.diamond"
-  },
-  "item.lost_candle.gold": {
-    "sounds": [
-      "illagerinvasion:item/lost_candle/gold"
-    ],
-    "subtitle": "subtitles.item.lost_candle.gold"
-  },
-  "item.lost_candle.iron": {
-    "sounds": [
-      "illagerinvasion:item/lost_candle/iron"
-    ],
-    "subtitle": "subtitles.item.lost_candle.iron"
+    "subtitle": "subtitles.item.lost_candle.find_ore"
   }
 }

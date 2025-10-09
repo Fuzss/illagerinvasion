@@ -71,11 +71,7 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
         builder.add(ModEntityTypes.INVOKER_FANGS_ENTITY_TYPE.value(), "Invoker Fangs");
         builder.add(ModEntityTypes.FLYING_MAGMA_ENTITY_TYPE.value(), "Flying Magma");
         builder.add(ModSoundEvents.HORN_OF_SIGHT_SOUND_EVENT.value(), "Horn of Sight blows");
-        builder.add(ModSoundEvents.LOST_CANDLE_DIAMOND_SOUND_EVENT.value(), "Diamonds ring");
-        builder.add(ModSoundEvents.LOST_CANDLE_IRON_SOUND_EVENT.value(), "Iron rings");
-        builder.add(ModSoundEvents.LOST_CANDLE_COAL_SOUND_EVENT.value(), "Coal rings");
-        builder.add(ModSoundEvents.LOST_CANDLE_COPPER_SOUND_EVENT.value(), "Copper rings");
-        builder.add(ModSoundEvents.LOST_CANDLE_GOLD_SOUND_EVENT.value(), "Gold rings");
+        builder.add(ModSoundEvents.LOST_CANDLE_FIND_ORE_SOUND_EVENT.value(), "Ore rings");
         builder.add(ModSoundEvents.SURRENDERED_AMBIENT_SOUND_EVENT.value(), "Surrendered clanks");
         builder.add(ModSoundEvents.SURRENDERED_HURT_SOUND_EVENT.value(), "Surrendered hurts");
         builder.add(ModSoundEvents.SURRENDERED_CHARGE_SOUND_EVENT.value(), "Surrendered charges");

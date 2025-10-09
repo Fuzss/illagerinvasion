@@ -1,16 +1,4 @@
 accessWidener   v2  named
-extendable  class   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure
-accessible  field   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure startPool   Lnet/minecraft/core/Holder;
-accessible  field   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure startJigsawName Ljava/util/Optional;
-accessible  field   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure maxDepth    I
-accessible  field   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure startHeight Lnet/minecraft/world/level/levelgen/heightproviders/HeightProvider;
-accessible  field   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure useExpansionHack    Z
-accessible  field   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure projectStartToHeightmap Ljava/util/Optional;
-accessible  field   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure maxDistanceFromCenter   I
-accessible  field   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure poolAliases Ljava/util/List;
-accessible  field   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure dimensionPadding    Lnet/minecraft/world/level/levelgen/structure/pools/DimensionPadding;
-accessible  field   net/minecraft/world/level/levelgen/structure/structures/JigsawStructure liquidSettings  Lnet/minecraft/world/level/levelgen/structure/templatesystem/LiquidSettings;
-accessible  method  net/minecraft/world/level/levelgen/structure/structures/JigsawStructure verifyRange (Lnet/minecraft/world/level/levelgen/structure/structures/JigsawStructure;)Lcom/mojang/serialization/DataResult;
 accessible  field   net/minecraft/world/entity/AreaEffectCloud  potionContents  Lnet/minecraft/world/item/alchemy/PotionContents;
 accessible  field   net/minecraft/world/entity/projectile/EvokerFangs   warmupDelayTicks    I
 accessible  field   net/minecraft/world/entity/projectile/EvokerFangs   clientSideAttackStarted Z

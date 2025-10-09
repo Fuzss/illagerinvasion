@@ -1,18 +1,17 @@
-package fuzs.illagerinvasion.client.init;
+package fuzs.illagerinvasion.client.model.geom;
 
 import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.puzzleslib.api.client.init.v1.ModelLayerFactory;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.entity.ArmorModelSet;
 
-public class ModelLayerLocations {
+public class ModModelLayers {
     static final ModelLayerFactory MODEL_LAYERS = ModelLayerFactory.from(IllagerInvasion.MOD_ID);
     public static final ModelLayerLocation ARCHIVIST = MODEL_LAYERS.registerModelLayer("provoker");
     public static final ModelLayerLocation ARCHIVIST_BOOK = MODEL_LAYERS.registerModelLayer("archivist");
     public static final ModelLayerLocation PROVOKER = MODEL_LAYERS.registerModelLayer("archivist", "book");
     public static final ModelLayerLocation SURRENDERED = MODEL_LAYERS.registerModelLayer("surrendered");
-    public static final ModelLayerLocation SURRENDERED_INNER_ARMOR = MODEL_LAYERS.registerInnerArmorModelLayer(
-            "surrendered");
-    public static final ModelLayerLocation SURRENDERED_OUTER_ARMOR = MODEL_LAYERS.registerOuterArmorModelLayer(
+    public static final ArmorModelSet<ModelLayerLocation> SURRENDERED_ARMOR = MODEL_LAYERS.registerArmorSet(
             "surrendered");
     public static final ModelLayerLocation INVOKER = MODEL_LAYERS.registerModelLayer("invoker");
     public static final ModelLayerLocation INVOKER_ARMOR = MODEL_LAYERS.registerModelLayer("invoker", "armor");

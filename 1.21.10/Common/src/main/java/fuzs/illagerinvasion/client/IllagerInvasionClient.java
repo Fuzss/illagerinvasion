@@ -1,31 +1,27 @@
 package fuzs.illagerinvasion.client;
 
 import fuzs.illagerinvasion.client.gui.screens.inventory.ImbuingScreen;
-import fuzs.illagerinvasion.client.init.ModelLayerLocations;
-import fuzs.illagerinvasion.client.model.FirecallerModel;
-import fuzs.illagerinvasion.client.model.InquisitorModel;
-import fuzs.illagerinvasion.client.model.InvokerFangsModel;
-import fuzs.illagerinvasion.client.model.InvokerModel;
+import fuzs.illagerinvasion.client.model.*;
+import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.client.render.entity.*;
 import fuzs.illagerinvasion.init.ModEntityTypes;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.*;
 import net.minecraft.client.model.BookModel;
-import net.minecraft.client.model.HumanoidArmorModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.SkeletonModel;
 import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.particle.HeartParticle;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.entity.WitherSkullRenderer;
 import net.minecraft.world.level.block.Block;
-
-import java.util.function.Supplier;
 
 public class IllagerInvasionClient implements ClientModConstructor {
 
@@ -63,46 +59,47 @@ public class IllagerInvasionClient implements ClientModConstructor {
 
     @Override
     public void onRegisterLayerDefinitions(LayerDefinitionsContext context) {
-        MeshTransformer illagerMeshTransformer = MeshTransformer.scaling(0.9375F);
-        Supplier<LayerDefinition> illagerLayerDefinition = () -> {
-            return IllagerModel.createBodyLayer().apply(illagerMeshTransformer);
-        };
-        context.registerLayerDefinition(ModelLayerLocations.ARCHIVIST, illagerLayerDefinition);
-        context.registerLayerDefinition(ModelLayerLocations.ARCHIVIST_BOOK, BookModel::createBodyLayer);
+        context.registerLayerDefinition(ModModelLayers.ARCHIVIST, () -> {
+            return IllagerModel.createBodyLayer().apply(CustomIllagerModel.SCALE_TRANSFORMER);
+        });
+        context.registerLayerDefinition(ModModelLayers.ARCHIVIST_BOOK, BookModel::createBodyLayer);
         MeshTransformer surrenderedMeshTransformer = MeshTransformer.scaling(0.85F);
-        context.registerLayerDefinition(ModelLayerLocations.SURRENDERED,
+        context.registerLayerDefinition(ModModelLayers.SURRENDERED,
                 () -> SkeletonModel.createBodyLayer().apply(surrenderedMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.SURRENDERED_INNER_ARMOR,
-                () -> LayerDefinition.create(HumanoidArmorModel.createBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION),
-                        64,
-                        32).apply(surrenderedMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.SURRENDERED_OUTER_ARMOR,
-                () -> LayerDefinition.create(HumanoidArmorModel.createBodyLayer(LayerDefinitions.OUTER_ARMOR_DEFORMATION),
-                        64,
-                        32).apply(surrenderedMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.PROVOKER, illagerLayerDefinition);
-        context.registerLayerDefinition(ModelLayerLocations.INVOKER,
-                () -> InvokerModel.createBodyLayer(CubeDeformation.NONE).apply(illagerMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.INVOKER_ARMOR,
+        context.registerArmorDefinition(ModModelLayers.SURRENDERED_ARMOR,
+                HumanoidModel.createArmorMeshSet(LayerDefinitions.INNER_ARMOR_DEFORMATION,
+                                LayerDefinitions.OUTER_ARMOR_DEFORMATION)
+                        .map((MeshDefinition meshDefinition) -> LayerDefinition.create(meshDefinition, 64, 32)));
+        context.registerLayerDefinition(ModModelLayers.PROVOKER, () -> {
+            return IllagerModel.createBodyLayer().apply(CustomIllagerModel.SCALE_TRANSFORMER);
+        });
+        context.registerLayerDefinition(ModModelLayers.INVOKER,
+                () -> InvokerModel.createBodyLayer(CubeDeformation.NONE).apply(CustomIllagerModel.SCALE_TRANSFORMER));
+        context.registerLayerDefinition(ModModelLayers.INVOKER_ARMOR,
                 () -> InvokerModel.createBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION)
-                        .apply(illagerMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.NECROMANCER,
-                () -> NecromancerRenderer.createBodyLayer(CubeDeformation.NONE).apply(illagerMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.NECROMANCER_ARMOR,
+                        .apply(CustomIllagerModel.SCALE_TRANSFORMER));
+        context.registerLayerDefinition(ModModelLayers.NECROMANCER,
+                () -> NecromancerRenderer.createBodyLayer(CubeDeformation.NONE)
+                        .apply(CustomIllagerModel.SCALE_TRANSFORMER));
+        context.registerLayerDefinition(ModModelLayers.NECROMANCER_ARMOR,
                 () -> NecromancerRenderer.createBodyLayer(LayerDefinitions.INNER_ARMOR_DEFORMATION)
-                        .apply(illagerMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.INVOKER_FANGS, InvokerFangsModel::createBodyLayer);
-        context.registerLayerDefinition(ModelLayerLocations.INQUISITOR,
+                        .apply(CustomIllagerModel.SCALE_TRANSFORMER));
+        context.registerLayerDefinition(ModModelLayers.INVOKER_FANGS, InvokerFangsModel::createBodyLayer);
+        context.registerLayerDefinition(ModModelLayers.INQUISITOR,
                 () -> InquisitorModel.createBodyLayer().apply(MeshTransformer.scaling(1.1F)));
-        context.registerLayerDefinition(ModelLayerLocations.SORCERER,
-                () -> SorcererRenderer.createBodyLayer().apply(illagerMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.FIRECALLER,
-                () -> FirecallerModel.createBodyLayer().apply(illagerMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.ALCHEMIST,
-                () -> AlchemistRenderer.createBodyLayer().apply(illagerMeshTransformer));
-        context.registerLayerDefinition(ModelLayerLocations.BASHER, illagerLayerDefinition);
-        context.registerLayerDefinition(ModelLayerLocations.MARAUDER, illagerLayerDefinition);
-        context.registerLayerDefinition(ModelLayerLocations.SKULL_BOLT, WitherSkullRenderer::createSkullLayer);
+        context.registerLayerDefinition(ModModelLayers.SORCERER,
+                () -> SorcererRenderer.createBodyLayer().apply(CustomIllagerModel.SCALE_TRANSFORMER));
+        context.registerLayerDefinition(ModModelLayers.FIRECALLER,
+                () -> FirecallerModel.createBodyLayer().apply(CustomIllagerModel.SCALE_TRANSFORMER));
+        context.registerLayerDefinition(ModModelLayers.ALCHEMIST,
+                () -> AlchemistRenderer.createBodyLayer().apply(CustomIllagerModel.SCALE_TRANSFORMER));
+        context.registerLayerDefinition(ModModelLayers.BASHER, () -> {
+            return IllagerModel.createBodyLayer().apply(CustomIllagerModel.SCALE_TRANSFORMER);
+        });
+        context.registerLayerDefinition(ModModelLayers.MARAUDER, () -> {
+            return IllagerModel.createBodyLayer().apply(CustomIllagerModel.SCALE_TRANSFORMER);
+        });
+        context.registerLayerDefinition(ModModelLayers.SKULL_BOLT, WitherSkullRenderer::createSkullLayer);
     }
 
     @Override

@@ -21,12 +21,12 @@ public class HornOfSightItem extends InstrumentItem {
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand usedHand) {
         InteractionResult interactionResult = super.use(level, player, usedHand);
-        if (interactionResult.consumesAction() && !level.isClientSide) {
+        if (interactionResult.consumesAction() && !level.isClientSide()) {
             BlockPos pos = player.blockPosition();
             for (LivingEntity livingentity : level.getEntitiesOfClass(LivingEntity.class,
                     new AABB(pos).inflate(48.0))) {
-                if (livingentity instanceof Enemy && livingentity.isAlive() && !livingentity.isRemoved() &&
-                        pos.closerToCenterThan(livingentity.position(), 48.0)) {
+                if (livingentity instanceof Enemy && livingentity.isAlive() && !livingentity.isRemoved()
+                        && pos.closerToCenterThan(livingentity.position(), 48.0)) {
                     livingentity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 60));
                 }
             }
@@ -35,4 +35,3 @@ public class HornOfSightItem extends InstrumentItem {
         return interactionResult;
     }
 }
-

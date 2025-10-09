@@ -16,6 +16,7 @@ public class ModTags {
     public static final TagKey<Biome> HAS_ILLAGER_FORT_BIOME_TAG = TAGS.registerBiomeTag("has_structure/illager_fort");
     public static final TagKey<Biome> HAS_FIRECALLER_HUT_BIOME_TAG = TAGS.registerBiomeTag(
             "has_structure/firecaller_hut");
+    public static final TagKey<Block> ORES_BLOCK_TAG = TagFactory.COMMON.registerBlockTag("ores");
 
     public static void bootstrap() {
         // NO-OP

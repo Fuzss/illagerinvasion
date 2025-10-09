@@ -15,8 +15,11 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
+import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ModStructures {
     public static final ResourceKey<Structure> FIRECALLER_HUT = ModRegistry.REGISTRIES.makeResourceKey(Registries.STRUCTURE,
@@ -79,13 +82,18 @@ public class ModStructures {
         context.register(LABYRINTH,
                 new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
                         .getOrThrow(ModTags.HAS_LABYRINTH_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
-                        .terrainAdapation(TerrainAdjustment.ENCAPSULATE)
+                        .terrainAdapation(TerrainAdjustment.BURY)
                         .build(),
                         context.lookup(Registries.TEMPLATE_POOL).getOrThrow(ModTemplatePools.LABYRINTH_TOWERS),
+                        Optional.empty(),
                         7,
-                        ConstantHeight.of(VerticalAnchor.belowTop(40)),
+                        ConstantHeight.of(VerticalAnchor.absolute(-40)),
                         false,
-                        Heightmap.Types.WORLD_SURFACE_WG));
+                        Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
+                        80,
+                        List.of(),
+                        JigsawStructure.DEFAULT_DIMENSION_PADDING,
+                        LiquidSettings.IGNORE_WATERLOGGING));
         context.register(SORCERER_HUT,
                 new JigsawStructure(new Structure.StructureSettings.Builder(context.lookup(Registries.BIOME)
                         .getOrThrow(ModTags.HAS_SORCERER_HUT_BIOME_TAG)).generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)

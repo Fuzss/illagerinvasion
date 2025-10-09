@@ -4,6 +4,7 @@ import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.init.ModSoundEvents;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
 import fuzs.puzzleslib.neoforge.api.client.data.v2.AbstractSoundProvider;
+import net.minecraft.sounds.SoundEvents;
 
 public class ModSoundProvider extends AbstractSoundProvider {
 
@@ -13,18 +14,8 @@ public class ModSoundProvider extends AbstractSoundProvider {
 
     @Override
     public void addSounds() {
-        this.add(ModSoundEvents.HORN_OF_SIGHT_SOUND_EVENT.value(),
-                sound(IllagerInvasion.id("item/horn_of_sight/blow")));
-        this.add(ModSoundEvents.LOST_CANDLE_COAL_SOUND_EVENT.value(),
-                sound(IllagerInvasion.id("item/lost_candle/coal")));
-        this.add(ModSoundEvents.LOST_CANDLE_COPPER_SOUND_EVENT.value(),
-                sound(IllagerInvasion.id("item/lost_candle/copper")));
-        this.add(ModSoundEvents.LOST_CANDLE_DIAMOND_SOUND_EVENT.value(),
-                sound(IllagerInvasion.id("item/lost_candle/diamond")));
-        this.add(ModSoundEvents.LOST_CANDLE_GOLD_SOUND_EVENT.value(),
-                sound(IllagerInvasion.id("item/lost_candle/gold")));
-        this.add(ModSoundEvents.LOST_CANDLE_IRON_SOUND_EVENT.value(),
-                sound(IllagerInvasion.id("item/lost_candle/iron")));
+        this.add(ModSoundEvents.HORN_OF_SIGHT_SOUND_EVENT.value(), sound(SoundEvents.RAID_HORN.value()));
+        this.add(ModSoundEvents.LOST_CANDLE_FIND_ORE_SOUND_EVENT.value(), sound(SoundEvents.BELL_RESONATE));
         this.add(ModSoundEvents.ARCHIVIST_DEATH_SOUND_EVENT.value(),
                 sound(IllagerInvasion.id("mob/archivist/death1")),
                 sound(IllagerInvasion.id("mob/archivist/death2")),

@@ -1,6 +1,8 @@
 package fuzs.illagerinvasion.world.entity.projectile;
 
 import fuzs.illagerinvasion.init.ModEntityTypes;
+import net.minecraft.SharedConstants;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
@@ -9,37 +11,43 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.WitherSkull;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class SkullBolt extends AbstractHurtingProjectile {
+public class SkullBolt extends WitherSkull {
 
     public SkullBolt(EntityType<? extends SkullBolt> entityType, Level level) {
         super(entityType, level);
     }
 
-    public SkullBolt(Level level, LivingEntity owner, double directionX, double directionY, double directionZ) {
-        super(ModEntityTypes.SKULL_BOLT_ENTITY_TYPE.value(),
-                owner,
-                new Vec3(directionX, directionY, directionZ),
-                level);
+    public SkullBolt(Level level, LivingEntity owner, Vec3 movement) {
+        this(ModEntityTypes.SKULL_BOLT_ENTITY_TYPE.value(), level);
+        this.setOwner(owner);
+        this.setRot(owner.getYRot(), owner.getXRot());
+        this.snapTo(owner.getX(), owner.getY(), owner.getZ(), this.getYRot(), this.getXRot());
+        this.reapplyPosition();
+        this.assignDirectionalMovement(movement, this.accelerationPower);
     }
 
     @Override
-    public boolean isOnFire() {
-        return false;
+    public float getBlockExplosionResistance(Explosion explosion, BlockGetter level, BlockPos pos, BlockState blockState, FluidState fluidState, float explosionPower) {
+        // this should not cause explosions
+        return SharedConstants.MAXIMUM_BLOCK_EXPLOSION_RESISTANCE;
     }
 
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
-        super.onHitEntity(entityHitResult);
         if (this.level() instanceof ServerLevel serverLevel) {
-            if (this.getOwner() instanceof LivingEntity owner &&
-                    entityHitResult.getEntity() instanceof LivingEntity target) {
+            if (this.getOwner() instanceof LivingEntity owner
+                    && entityHitResult.getEntity() instanceof LivingEntity target) {
                 if (target.getType().is(EntityTypeTags.UNDEAD)) {
                     target.heal(5.0F);
                     target.addEffect(new MobEffectInstance(MobEffects.SPEED, 100, 2));
@@ -66,7 +74,7 @@ public class SkullBolt extends AbstractHurtingProjectile {
     }
 
     @Override
-    protected boolean shouldBurn() {
+    public boolean isDangerous() {
         return false;
     }
 }

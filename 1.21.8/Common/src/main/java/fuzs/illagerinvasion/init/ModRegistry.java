@@ -5,9 +5,6 @@ import fuzs.illagerinvasion.world.inventory.ImbuingMenu;
 import fuzs.illagerinvasion.world.item.enchantment.ImbuingEnchantmentLevel;
 import fuzs.illagerinvasion.world.level.block.ImbuingTableBlock;
 import fuzs.illagerinvasion.world.level.block.MagicFireBlock;
-import fuzs.illagerinvasion.world.level.levelgen.structure.pools.LegacySingleNoLiquidPoolElement;
-import fuzs.illagerinvasion.world.level.levelgen.structure.pools.SingleNoLiquidPoolElement;
-import fuzs.illagerinvasion.world.level.levelgen.structure.structures.LabyrinthStructure;
 import fuzs.neoforgedatapackextensions.api.v1.DataMapRegistry;
 import fuzs.neoforgedatapackextensions.api.v1.DataMapToken;
 import fuzs.puzzleslib.api.data.v2.AbstractDatapackRegistriesProvider;
@@ -29,10 +26,6 @@ import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.pools.LegacySinglePoolElement;
-import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
-import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementType;
 import net.minecraft.world.level.material.MapColor;
 
 public class ModRegistry {
@@ -73,18 +66,6 @@ public class ModRegistry {
             Registries.PARTICLE_TYPE,
             "necromancer_buff",
             () -> new SimpleParticleType(false));
-    public static final Holder.Reference<StructurePoolElementType<SinglePoolElement>> SINGLE_POOL_ELEMENT_TYPE = REGISTRIES.register(
-            Registries.STRUCTURE_POOL_ELEMENT,
-            "single_pool_element",
-            () -> () -> SingleNoLiquidPoolElement.CODEC);
-    public static final Holder.Reference<StructurePoolElementType<LegacySinglePoolElement>> LEGACY_SINGLE_POOL_ELEMENT_TYPE = REGISTRIES.register(
-            Registries.STRUCTURE_POOL_ELEMENT,
-            "legacy_single_pool_element",
-            () -> () -> LegacySingleNoLiquidPoolElement.CODEC);
-    public static final Holder.Reference<StructureType<LabyrinthStructure>> LABYRINTH_STRUCTURE_TYPE = REGISTRIES.register(
-            Registries.STRUCTURE_TYPE,
-            "labyrinth",
-            () -> () -> LabyrinthStructure.CODEC);
     public static final ResourceKey<TrimMaterial> PLATINUM_TRIM_MATERIAL = REGISTRIES.makeResourceKey(Registries.TRIM_MATERIAL,
             "platinum");
     public static final ResourceKey<Instrument> REVEAL_INSTRUMENT = REGISTRIES.makeResourceKey(Registries.INSTRUMENT,

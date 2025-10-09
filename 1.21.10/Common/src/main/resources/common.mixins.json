@@ -6,8 +6,7 @@
   "mixins": [
     "IllusionerMixin",
     "PatrolSpawnerMixin",
-    "WoodlandMansionPieceMixin",
-    "accessor.VillagerHostilesSensorAccessor"
+    "WoodlandMansionPieceMixin"
   ],
   "client": [
   ],

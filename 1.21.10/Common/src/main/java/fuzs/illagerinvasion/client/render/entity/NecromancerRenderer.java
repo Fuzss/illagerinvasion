@@ -2,15 +2,15 @@ package fuzs.illagerinvasion.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.illagerinvasion.IllagerInvasion;
-import fuzs.illagerinvasion.client.init.ModelLayerLocations;
 import fuzs.illagerinvasion.client.model.CustomIllagerModel;
+import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.client.render.entity.layers.IllagerArmorLayer;
 import fuzs.illagerinvasion.client.render.entity.state.NecromancerRenderState;
 import fuzs.illagerinvasion.world.entity.monster.Necromancer;
 import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
@@ -22,9 +22,9 @@ public class NecromancerRenderer extends IllagerRenderer<Necromancer, Necromance
             "textures/entity/necromancer_armor.png");
 
     public NecromancerRenderer(EntityRendererProvider.Context context) {
-        super(context, new CustomIllagerModel<>(context.bakeLayer(ModelLayerLocations.NECROMANCER)), 0.5F);
+        super(context, new CustomIllagerModel<>(context.bakeLayer(ModModelLayers.NECROMANCER)), 0.5F);
         this.addLayer(new IllagerArmorLayer<>(this,
-                new CustomIllagerModel<>(context.bakeLayer(ModelLayerLocations.NECROMANCER_ARMOR))) {
+                new CustomIllagerModel<>(context.bakeLayer(ModModelLayers.NECROMANCER_ARMOR))) {
             @Override
             protected ResourceLocation getTextureLocation() {
                 return ARMOR_TEXTURE_LOCATION;
@@ -32,9 +32,9 @@ public class NecromancerRenderer extends IllagerRenderer<Necromancer, Necromance
         });
         this.addLayer(new ItemInHandLayer<>(this) {
             @Override
-            public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, NecromancerRenderState renderState, float yRot, float xRot) {
+            public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, NecromancerRenderState renderState, float yRot, float xRot) {
                 if (renderState.isCastingSpell) {
-                    super.render(poseStack, bufferSource, packedLight, renderState, yRot, xRot);
+                    super.submit(poseStack, nodeCollector, packedLight, renderState, yRot, xRot);
                 }
             }
         });

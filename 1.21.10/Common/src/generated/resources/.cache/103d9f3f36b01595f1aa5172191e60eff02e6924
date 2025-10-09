@@ -1,10 +1,10 @@
-// 1.21.8	2025-07-18T14:05:50.666418	Registries
+// 1.21.10	2025-10-09T13:20:35.857496	Registries
 df6b4becc917d46afc823608eeccbb4f9b82aa8e data/illagerinvasion/instrument/reveal.json
 fc69ddbb7cabad4f925e277851a8fe902502388f data/illagerinvasion/trim_material/platinum.json
 f5387f7cd1cb490d199171e0c73b1f38ee4ec8e9 data/illagerinvasion/worldgen/structure/firecaller_hut.json
 9d7416486bcc696e5aac43dbfb022e1476d7f902 data/illagerinvasion/worldgen/structure/illager_fort.json
 5b1f8ae7433f8d23be4e0bd4f7615956fb0b1903 data/illagerinvasion/worldgen/structure/illusioner_tower.json
-dee3872d2a7d9644e9746857fb1d3df99dc4c3e8 data/illagerinvasion/worldgen/structure/labyrinth.json
+a8da4e30d8b5dc9ab184d67d42f049b24f687f0d data/illagerinvasion/worldgen/structure/labyrinth.json
 9b61a99bf0f22e6c5dbbb80c8e226f06defc42d3 data/illagerinvasion/worldgen/structure/sorcerer_hut.json
 96506ad0679111680cc63993cb1b0a26048aecb9 data/illagerinvasion/worldgen/structure_set/firecaller_hut.json
 fe4e400c7be1871601e0e6de2b4f08665af285e1 data/illagerinvasion/worldgen/structure_set/illager_fort.json

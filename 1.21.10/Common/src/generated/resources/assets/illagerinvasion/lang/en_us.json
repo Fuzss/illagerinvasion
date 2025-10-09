@@ -68,7 +68,7 @@
   "subtitles.entity.illager_brute.hurt": "Illager Brute hurts",
   "subtitles.entity.invoker.ambient": "Invoker murmurs",
   "subtitles.entity.invoker.big_cast": "Invoker casts",
-  "subtitles.entity.invoker.completecast": "Invoker casts",
+  "subtitles.entity.invoker.complete_cast": "Invoker casts",
   "subtitles.entity.invoker.death": "Invoker dies",
   "subtitles.entity.invoker.fangs": "Fangs attack",
   "subtitles.entity.invoker.fangs_cast": "Invoker casts",
@@ -93,10 +93,6 @@
   "subtitles.entity.surrendered.death": "Surrendered dies",
   "subtitles.entity.surrendered.hurt": "Surrendered hurts",
   "subtitles.item.horn_of_sight.blow": "Horn of Sight blows",
-  "subtitles.item.lost_candle.coal": "Coal rings",
-  "subtitles.item.lost_candle.copper": "Copper rings",
-  "subtitles.item.lost_candle.diamond": "Diamonds ring",
-  "subtitles.item.lost_candle.gold": "Gold rings",
-  "subtitles.item.lost_candle.iron": "Iron rings",
+  "subtitles.item.lost_candle.find_ore": "Ore rings",
   "trim_material.illagerinvasion.platinum": "Platinum Material"
 }

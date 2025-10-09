@@ -36,31 +36,48 @@ abstract class IllusionerMixin extends SpellcasterIllager {
     @Inject(method = "aiStep", at = @At("HEAD"), cancellable = true)
     public void aiStep(CallbackInfo callback) {
         super.aiStep();
-        if (this.level().isClientSide && this.isInvisible()) {
+        if (this.level().isClientSide() && this.isInvisible()) {
             if (this.clientSideIllusionTicks > 0) {
                 --this.clientSideIllusionTicks;
             }
         }
+
         callback.cancel();
     }
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
-        if (this.level().isClientSide && DATA_SHARED_FLAGS_ID.equals(key) && this.isInvisible()) {
+        if (this.level().isClientSide() && DATA_SHARED_FLAGS_ID.equals(key) && this.isInvisible()) {
             this.clientSideIllusionTicks = 3;
-
-            int j;
-            for (j = 0; j < 4; ++j) {
-                this.clientSideIllusionOffsets[0][j] = Vec3.ZERO;
-                this.clientSideIllusionOffsets[1][j] = new Vec3((double) (-6.0F + (float) this.random.nextInt(13)) * 0.5, Math.max(0, this.random.nextInt(6) - 4), (double) (-6.0F + (float) this.random.nextInt(13)) * 0.5);
+            for (int i = 0; i < 4; ++i) {
+                this.clientSideIllusionOffsets[0][i] = Vec3.ZERO;
+                this.clientSideIllusionOffsets[1][i] = new Vec3(
+                        (double) (-6.0F + (float) this.random.nextInt(13)) * 0.5,
+                        Math.max(0, this.random.nextInt(6) - 4),
+                        (double) (-6.0F + (float) this.random.nextInt(13)) * 0.5);
             }
 
-            for (j = 0; j < 16; ++j) {
-                this.level().addParticle(ParticleTypes.CLOUD, this.getRandomX(0.5), this.getRandomY(), this.getZ(0.5), 0.0, 0.0, 0.0);
+            for (int i = 0; i < 16; ++i) {
+                this.level()
+                        .addParticle(ParticleTypes.CLOUD,
+                                this.getRandomX(0.5),
+                                this.getRandomY(),
+                                this.getZ(0.5),
+                                0.0,
+                                0.0,
+                                0.0);
             }
 
-            this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ILLUSIONER_MIRROR_MOVE, this.getSoundSource(), 1.0F, 1.0F, false);
+            this.level()
+                    .playLocalSound(this.getX(),
+                            this.getY(),
+                            this.getZ(),
+                            SoundEvents.ILLUSIONER_MIRROR_MOVE,
+                            this.getSoundSource(),
+                            1.0F,
+                            1.0F,
+                            false);
         }
     }
 
@@ -79,7 +96,8 @@ abstract class IllusionerMixin extends SpellcasterIllager {
 
     @Inject(method = "performRangedAttack", at = @At("HEAD"), cancellable = true)
     public void performRangedAttack(LivingEntity target, float velocity, CallbackInfo callback) {
-        if (this.getRandom().nextInt(3) == 0 && this.level().getNearestPlayer(this.getX(), this.getY(), this.getZ(), 4.0, true) == null) {
+        if (this.getRandom().nextInt(3) == 0
+                && this.level().getNearestPlayer(this.getX(), this.getY(), this.getZ(), 4.0, true) == null) {
             if (FireworksShootingHelper.performShooting(this, target)) callback.cancel();
         }
     }

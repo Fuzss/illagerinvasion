@@ -3,7 +3,6 @@ package fuzs.illagerinvasion.handler;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import fuzs.illagerinvasion.init.ModEntityTypes;
-import fuzs.illagerinvasion.mixin.accessor.VillagerHostilesSensorAccessor;
 import fuzs.illagerinvasion.world.entity.monster.*;
 import fuzs.puzzleslib.api.event.v1.core.EventResult;
 import net.minecraft.server.level.ServerLevel;
@@ -12,6 +11,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.sensing.VillagerHostilesSensor;
 import net.minecraft.world.entity.npc.AbstractVillager;
 
 import java.util.IdentityHashMap;
@@ -36,12 +36,9 @@ public class VillagerGoalHandler {
             .build();
 
     public static EventResult onEntityLoad(Entity entity, ServerLevel serverLevel, boolean isNewlySpawned) {
-
         // do not do this for generic abstract villager, villagers that use the brain system instead of the goals seem to try to run both and flee much slower than they should
         if (entity.getType() == EntityType.WANDERING_TRADER) {
-
             for (AvoidVillagerEnemy<?> villagerEnemy : VILLAGER_ENEMIES) {
-
                 villagerEnemy.addGoal((AbstractVillager) entity);
             }
         }
@@ -50,14 +47,12 @@ public class VillagerGoalHandler {
     }
 
     public static void init() {
-
-        Map<EntityType<?>, Float> map = new IdentityHashMap<>(VillagerHostilesSensorAccessor.illagerinvasion$getAcceptableDistanceFromHostiles());
+        Map<EntityType<?>, Float> map = new IdentityHashMap<>(VillagerHostilesSensor.ACCEPTABLE_DISTANCE_FROM_HOSTILES);
         for (AvoidVillagerEnemy<?> villagerEnemy : VILLAGER_ENEMIES) {
-
             villagerEnemy.addAcceptableDistance(map::put);
         }
 
-        VillagerHostilesSensorAccessor.illagerinvasion$setAcceptableDistanceFromHostiles(ImmutableMap.copyOf(map));
+        VillagerHostilesSensor.ACCEPTABLE_DISTANCE_FROM_HOSTILES = ImmutableMap.copyOf(map);
     }
 
     private record AvoidVillagerEnemy<T extends LivingEntity>(Class<T> clazz,

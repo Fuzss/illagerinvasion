@@ -1,7 +1,7 @@
 package fuzs.illagerinvasion.client.render.entity;
 
 import fuzs.illagerinvasion.IllagerInvasion;
-import fuzs.illagerinvasion.client.init.ModelLayerLocations;
+import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.client.model.InquisitorModel;
 import fuzs.illagerinvasion.client.render.entity.state.StunnableIllagerRenderState;
 import fuzs.illagerinvasion.world.entity.monster.Inquisitor;
@@ -14,7 +14,7 @@ public class InquisitorRenderer extends IllagerRenderer<Inquisitor, StunnableIll
     private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/inquisitor.png");
 
     public InquisitorRenderer(final EntityRendererProvider.Context context) {
-        super(context, new InquisitorModel(context.bakeLayer(ModelLayerLocations.INQUISITOR)), 0.5F);
+        super(context, new InquisitorModel(context.bakeLayer(ModModelLayers.INQUISITOR)), 0.5F);
         this.addLayer(new ItemInHandLayer<>(this));
     }
 

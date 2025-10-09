@@ -1,7 +1,7 @@
 package fuzs.illagerinvasion.client.render.entity;
 
 import fuzs.illagerinvasion.IllagerInvasion;
-import fuzs.illagerinvasion.client.init.ModelLayerLocations;
+import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.client.model.FirecallerModel;
 import fuzs.illagerinvasion.world.entity.monster.Firecaller;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -13,7 +13,7 @@ public class FirecallerRenderer extends IllagerRenderer<Firecaller, IllagerRende
     private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/firecaller.png");
 
     public FirecallerRenderer(EntityRendererProvider.Context context) {
-        super(context, new FirecallerModel(context.bakeLayer(ModelLayerLocations.FIRECALLER)), 0.5F);
+        super(context, new FirecallerModel(context.bakeLayer(ModModelLayers.FIRECALLER)), 0.5F);
         this.model.getHat().visible = true;
     }
 

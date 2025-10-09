@@ -48,40 +48,28 @@ public class ModItems {
                     .enchantable(1)
                     .repairable(ModItems.PLATINUM_SHEET_ITEM.value()));
     public static final Holder.Reference<Item> PROVOKER_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.PROVOKER_ENTITY_TYPE,
-            9399876);
+            ModEntityTypes.PROVOKER_ENTITY_TYPE);
     public static final Holder.Reference<Item> BASHER_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.BASHER_ENTITY_TYPE,
-            5985087);
+            ModEntityTypes.BASHER_ENTITY_TYPE);
     public static final Holder.Reference<Item> SORCERER_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.SORCERER_ENTITY_TYPE,
-            10899592);
+            ModEntityTypes.SORCERER_ENTITY_TYPE);
     public static final Holder.Reference<Item> ARCHIVIST_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.ARCHIVIST_ENTITY_TYPE,
-            13251893);
+            ModEntityTypes.ARCHIVIST_ENTITY_TYPE);
     public static final Holder.Reference<Item> INQUISITOR_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.INQUISITOR_ENTITY_TYPE,
-            4934471);
+            ModEntityTypes.INQUISITOR_ENTITY_TYPE);
     public static final Holder.Reference<Item> MARAUDER_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.MARAUDER_ENTITY_TYPE,
-            5441030);
+            ModEntityTypes.MARAUDER_ENTITY_TYPE);
     public static final Holder.Reference<Item> INVOKER_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.INVOKER_ENTITY_TYPE,
-            13552007);
+            ModEntityTypes.INVOKER_ENTITY_TYPE);
     public static final Holder.Reference<Item> ALCHEMIST_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.ALCHEMIST_ENTITY_TYPE,
-            7550099);
+            ModEntityTypes.ALCHEMIST_ENTITY_TYPE);
     public static final Holder.Reference<Item> FIRECALLER_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.FIRECALLER_ENTITY_TYPE,
-            14185784);
+            ModEntityTypes.FIRECALLER_ENTITY_TYPE);
     public static final Holder.Reference<Item> NECROMANCER_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.NECROMANCER_ENTITY_TYPE,
-            9585210);
+            ModEntityTypes.NECROMANCER_ENTITY_TYPE);
     public static final Holder.Reference<Item> SURRENDERED_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem(
-            ModEntityTypes.SURRENDERED_ENTITY_TYPE,
-            11858160);
-    public static final Holder.Reference<Item> ILLUSIONER_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem((Holder<? extends EntityType<? extends Mob>>) (Holder<?>) EntityType.ILLUSIONER.builtInRegistryHolder(),
-            1267859);
+            ModEntityTypes.SURRENDERED_ENTITY_TYPE);
+    public static final Holder.Reference<Item> ILLUSIONER_SPAWN_EGG_ITEM = ModRegistry.REGISTRIES.registerSpawnEggItem((Holder<? extends EntityType<? extends Mob>>) (Holder<?>) EntityType.ILLUSIONER.builtInRegistryHolder());
 
     public static void bootstrap() {
         // NO-OP

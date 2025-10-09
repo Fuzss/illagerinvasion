@@ -1,7 +1,7 @@
 package fuzs.illagerinvasion.client.render.entity;
 
 import fuzs.illagerinvasion.IllagerInvasion;
-import fuzs.illagerinvasion.client.init.ModelLayerLocations;
+import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.client.model.CustomIllagerModel;
 import fuzs.illagerinvasion.world.entity.monster.Sorcerer;
 import net.minecraft.client.model.IllagerModel;
@@ -16,7 +16,7 @@ public class SorcererRenderer extends IllagerRenderer<Sorcerer, IllagerRenderSta
     private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/sorcerer.png");
 
     public SorcererRenderer(EntityRendererProvider.Context context) {
-        super(context, new CustomIllagerModel<>(context.bakeLayer(ModelLayerLocations.SORCERER)), 0.5F);
+        super(context, new CustomIllagerModel<>(context.bakeLayer(ModModelLayers.SORCERER)), 0.5F);
         this.model.getHat().visible = true;
     }
 

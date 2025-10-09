@@ -35,11 +35,13 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
 public class Necromancer extends SpellcasterIllager {
-    private static final EntityDataAccessor<Boolean> DATA_IS_SHIELDED = SynchedEntityData.defineId(Necromancer.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_IS_SHIELDED = SynchedEntityData.defineId(Necromancer.class,
+            EntityDataSerializers.BOOLEAN);
 
     private int conjureSkullCooldown;
 
@@ -61,8 +63,10 @@ public class Necromancer extends SpellcasterIllager {
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0f, 1.0f));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0f));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
+        this.targetSelector.addGoal(2,
+                new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
+        this.targetSelector.addGoal(3,
+                new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, false));
     }
 
@@ -89,7 +93,9 @@ public class Necromancer extends SpellcasterIllager {
     protected void customServerAiStep(ServerLevel serverLevel) {
         super.customServerAiStep(serverLevel);
         --this.conjureSkullCooldown;
-        List<Mob> mobs = serverLevel.getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(10.0), (Mob mob) -> mob.getType().is(EntityTypeTags.UNDEAD));
+        List<Mob> mobs = serverLevel.getEntitiesOfClass(Mob.class,
+                this.getBoundingBox().inflate(10.0),
+                (Mob mob) -> mob.getType().is(EntityTypeTags.UNDEAD));
         if (!mobs.isEmpty()) {
             mobs.forEach(this::doUndeadLinkLogic);
             if (this.tickCount % 10 == 0) {
@@ -100,7 +106,9 @@ public class Necromancer extends SpellcasterIllager {
             this.setShieldedState(!mobs.isEmpty());
         }
         if (this.getTarget() != null) {
-            mobs = serverLevel.getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(30.0), (Mob mob) -> mob.getType().is(EntityTypeTags.UNDEAD));
+            mobs = serverLevel.getEntitiesOfClass(Mob.class,
+                    this.getBoundingBox().inflate(30.0),
+                    (Mob mob) -> mob.getType().is(EntityTypeTags.UNDEAD));
             mobs.forEach(this::setUndeadTarget);
         }
     }
@@ -130,14 +138,32 @@ public class Necromancer extends SpellcasterIllager {
             double x = entity.getX();
             double y = entity.getY();
             double z = entity.getZ();
-            serverLevel.sendParticles(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.value(), x, y + 1.0, z, 1, 0.4, 0.5, 0.4, 0.015);
-            serverLevel.sendParticles(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.value(), this.getX(), this.getY() + 1.0, this.getZ(), 1, 0.4, 0.5, 0.4, 0.015);
+            serverLevel.sendParticles(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.value(),
+                    x,
+                    y + 1.0,
+                    z,
+                    1,
+                    0.4,
+                    0.5,
+                    0.4,
+                    0.015);
+            serverLevel.sendParticles(ModRegistry.NECROMANCER_BUFF_PARTICLE_TYPE.value(),
+                    this.getX(),
+                    this.getY() + 1.0,
+                    this.getZ(),
+                    1,
+                    0.4,
+                    0.5,
+                    0.4,
+                    0.015);
         }
     }
 
     @Override
     public boolean hurtServer(ServerLevel serverLevel, DamageSource damageSource, float damageAmount) {
-        return super.hurtServer(serverLevel, damageSource, this.getShieldedState() ? damageAmount / 2.0F : damageAmount);
+        return super.hurtServer(serverLevel,
+                damageSource,
+                this.getShieldedState() ? damageAmount / 2.0F : damageAmount);
     }
 
     @Override
@@ -170,7 +196,10 @@ public class Necromancer extends SpellcasterIllager {
     }
 
     class SummonUndeadGoal extends SpellcasterUseSpellGoal {
-        private TargetingConditions closeVexPredicate = TargetingConditions.forNonCombat().range(16.0).ignoreLineOfSight().ignoreInvisibilityTesting();
+        private TargetingConditions closeVexPredicate = TargetingConditions.forNonCombat()
+                .range(16.0)
+                .ignoreLineOfSight()
+                .ignoreInvisibilityTesting();
         private int spellcount;
 
         @Override
@@ -181,7 +210,10 @@ public class Necromancer extends SpellcasterIllager {
             if (this.spellcount >= 4) {
                 return false;
             }
-            int i = ((ServerLevel) Necromancer.this.level()).getNearbyEntities(Zombie.class, this.closeVexPredicate, Necromancer.this, Necromancer.this.getBoundingBox().inflate(16.0)).size();
+            int i = ((ServerLevel) Necromancer.this.level()).getNearbyEntities(Zombie.class,
+                    this.closeVexPredicate,
+                    Necromancer.this,
+                    Necromancer.this.getBoundingBox().inflate(16.0)).size();
             return Necromancer.this.random.nextInt(5) + 1 > i;
         }
 
@@ -201,16 +233,21 @@ public class Necromancer extends SpellcasterIllager {
             for (int i = 0; i < spawnAmount; ++i) {
                 this.summonUndead(EntityType.ZOMBIE);
             }
+
             this.summonUndead(EntityType.SKELETON);
             ++this.spellcount;
         }
 
         private void summonUndead(EntityType<? extends Mob> entityType) {
             ServerLevel serverLevel = (ServerLevel) Necromancer.this.level();
-            BlockPos blockPos = Necromancer.this.blockPosition().offset(-2 + Necromancer.this.random.nextInt(5), 1, -2 + Necromancer.this.random.nextInt(5));
+            BlockPos blockPos = Necromancer.this.blockPosition()
+                    .offset(-2 + Necromancer.this.random.nextInt(5), 1, -2 + Necromancer.this.random.nextInt(5));
             Mob mob = entityType.create(serverLevel, EntitySpawnReason.MOB_SUMMONED);
             mob.snapTo(blockPos, 0.0F, 0.0F);
-            mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(blockPos), EntitySpawnReason.MOB_SUMMONED, null);
+            mob.finalizeSpawn(serverLevel,
+                    serverLevel.getCurrentDifficultyAt(blockPos),
+                    EntitySpawnReason.MOB_SUMMONED,
+                    null);
             serverLevel.addFreshEntityWithPassengers(mob);
         }
 
@@ -240,6 +277,10 @@ public class Necromancer extends SpellcasterIllager {
             }
         }
 
+        /**
+         * @see net.minecraft.world.entity.boss.wither.WitherBoss#performRangedAttack(int, double, double, double,
+         *         boolean)
+         */
         private void shootSkullAt(double targetX, double targetY, double targetZ) {
             double d = Necromancer.this.getX();
             double e = Necromancer.this.getY() + 2.5;
@@ -247,7 +288,8 @@ public class Necromancer extends SpellcasterIllager {
             double g = targetX - d;
             double h = targetY - e;
             double i = targetZ - f;
-            SkullBolt skullbolt = new SkullBolt(Necromancer.this.level(), Necromancer.this, g, h, i);
+            Vec3 vec3 = new Vec3(g, h, i);
+            SkullBolt skullbolt = new SkullBolt(Necromancer.this.level(), Necromancer.this, vec3.normalize());
             skullbolt.setOwner(Necromancer.this);
             skullbolt.setPosRaw(d, e, f);
             Necromancer.this.level().addFreshEntity(skullbolt);
@@ -256,12 +298,13 @@ public class Necromancer extends SpellcasterIllager {
         @Override
         protected void performSpellCasting() {
             this.shootSkullAt(Necromancer.this.getTarget());
-            if (!Necromancer.this.level().isClientSide) {
+            if (Necromancer.this.level() instanceof ServerLevel serverLevel) {
                 double x = Necromancer.this.getX();
                 double y = Necromancer.this.getY() + 2.5;
                 double z = Necromancer.this.getZ();
-                ((ServerLevel) Necromancer.this.level()).sendParticles(ParticleTypes.SMOKE, x, y, z, 40, 0.4D, 0.4D, 0.4D, 0.15D);
+                serverLevel.sendParticles(ParticleTypes.SMOKE, x, y, z, 40, 0.4D, 0.4D, 0.4D, 0.15D);
             }
+
             Necromancer.this.conjureSkullCooldown = 100;
         }
 

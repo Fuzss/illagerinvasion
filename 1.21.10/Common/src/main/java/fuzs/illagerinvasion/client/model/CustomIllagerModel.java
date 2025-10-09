@@ -3,12 +3,15 @@ package fuzs.illagerinvasion.client.model;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.renderer.entity.state.IllagerRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.monster.AbstractIllager;
 
 public class CustomIllagerModel<T extends IllagerRenderState> extends IllagerModel<T> {
+    public static final MeshTransformer SCALE_TRANSFORMER = MeshTransformer.scaling(0.9375F);
+
     private final ModelPart head;
     private final ModelPart rightArm;
     private final ModelPart leftArm;
@@ -27,11 +30,13 @@ public class CustomIllagerModel<T extends IllagerRenderState> extends IllagerMod
         if (renderState.armPose == AbstractIllager.IllagerArmPose.ATTACKING) {
             if (!renderState.getMainHandItem().isEmpty()) {
                 if (renderState.mainArm == HumanoidArm.RIGHT) {
-                    this.leftArm.xRot = Mth.cos(renderState.walkAnimationPos * 0.19F) * Math.min(0.5F, 2.0F * renderState.walkAnimationSpeed * 0.5F);
+                    this.leftArm.xRot = Mth.cos(renderState.walkAnimationPos * 0.19F) * Math.min(0.5F,
+                            2.0F * renderState.walkAnimationSpeed * 0.5F);
                     this.leftArm.yRot = this.leftArm.zRot = 0.0F;
                     AnimationUtils.bobModelPart(this.leftArm, renderState.ageInTicks, -1.0F);
                 } else {
-                    this.rightArm.xRot = Mth.cos(renderState.walkAnimationPos * 0.19F + Mth.PI) * Math.min(0.5F, 2.0F * renderState.walkAnimationSpeed * 0.5F);
+                    this.rightArm.xRot = Mth.cos(renderState.walkAnimationPos * 0.19F + Mth.PI) * Math.min(0.5F,
+                            2.0F * renderState.walkAnimationSpeed * 0.5F);
                     this.rightArm.yRot = this.rightArm.zRot = 0.0F;
                     AnimationUtils.bobModelPart(this.rightArm, renderState.ageInTicks, 1.0F);
                 }

@@ -2,11 +2,11 @@ package fuzs.illagerinvasion.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.illagerinvasion.IllagerInvasion;
-import fuzs.illagerinvasion.client.init.ModelLayerLocations;
 import fuzs.illagerinvasion.client.model.BasherModel;
+import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.client.render.entity.state.StunnableIllagerRenderState;
 import fuzs.illagerinvasion.world.entity.monster.Basher;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
@@ -16,12 +16,12 @@ public class BasherRenderer extends IllagerRenderer<Basher, StunnableIllagerRend
     private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/basher.png");
 
     public BasherRenderer(EntityRendererProvider.Context context) {
-        super(context, new BasherModel(context.bakeLayer(ModelLayerLocations.BASHER)), 0.5F);
+        super(context, new BasherModel(context.bakeLayer(ModModelLayers.BASHER)), 0.5F);
         this.addLayer(new ItemInHandLayer<>(this) {
             @Override
-            public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, StunnableIllagerRenderState renderState, float yRot, float xRot) {
+            public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, StunnableIllagerRenderState renderState, float yRot, float xRot) {
                 if (renderState.isAggressive) {
-                    super.render(poseStack, bufferSource, packedLight, renderState, yRot, xRot);
+                    super.submit(poseStack, nodeCollector, packedLight, renderState, yRot, xRot);
                 }
             }
         });
