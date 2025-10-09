@@ -25,10 +25,10 @@ public class MagicFireBlock extends BaseFireBlock {
     }
 
     @Override
-    protected void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier, boolean intersectsPosition) {
+    protected void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (!entity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
             int remainingFireTicks = entity.getRemainingFireTicks();
-            super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier, intersectsPosition);
+            super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
             insideBlockEffectApplier.runAfter(InsideBlockEffectType.FIRE_IGNITE, (Entity entityX) -> {
                 entityX.setRemainingFireTicks(Math.max(20, remainingFireTicks));
             });
