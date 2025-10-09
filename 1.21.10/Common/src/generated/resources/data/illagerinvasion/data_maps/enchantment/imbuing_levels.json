@@ -1,0 +1,85 @@
+{
+  "values": {
+    "minecraft:bane_of_arthropods": {
+      "enchantment_level": 10
+    },
+    "minecraft:blast_protection": {
+      "enchantment_level": 8
+    },
+    "minecraft:breach": {
+      "enchantment_level": 5
+    },
+    "minecraft:density": {
+      "enchantment_level": 5
+    },
+    "minecraft:efficiency": {
+      "enchantment_level": 10
+    },
+    "minecraft:feather_falling": {
+      "enchantment_level": 8
+    },
+    "minecraft:fire_aspect": {
+      "enchantment_level": 5
+    },
+    "minecraft:fire_protection": {
+      "enchantment_level": 8
+    },
+    "minecraft:fortune": {
+      "enchantment_level": 10
+    },
+    "minecraft:impaling": {
+      "enchantment_level": 10
+    },
+    "minecraft:knockback": {
+      "enchantment_level": 5
+    },
+    "minecraft:looting": {
+      "enchantment_level": 10
+    },
+    "minecraft:loyalty": {
+      "enchantment_level": 5
+    },
+    "minecraft:luck_of_the_sea": {
+      "enchantment_level": 10
+    },
+    "minecraft:lure": {
+      "enchantment_level": 10
+    },
+    "minecraft:piercing": {
+      "enchantment_level": 10
+    },
+    "minecraft:power": {
+      "enchantment_level": 10
+    },
+    "minecraft:projectile_protection": {
+      "enchantment_level": 8
+    },
+    "minecraft:protection": {
+      "enchantment_level": 10
+    },
+    "minecraft:punch": {
+      "enchantment_level": 3
+    },
+    "minecraft:riptide": {
+      "enchantment_level": 5
+    },
+    "minecraft:sharpness": {
+      "enchantment_level": 10
+    },
+    "minecraft:smite": {
+      "enchantment_level": 10
+    },
+    "minecraft:sweeping_edge": {
+      "enchantment_level": 5
+    },
+    "minecraft:thorns": {
+      "enchantment_level": 5
+    },
+    "minecraft:unbreaking": {
+      "enchantment_level": 10
+    },
+    "minecraft:wind_burst": {
+      "enchantment_level": 5
+    }
+  }
+}

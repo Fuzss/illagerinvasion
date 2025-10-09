@@ -1,0 +1,94 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "ILLAGERINVASION_BASHER",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "fuzs/illagerinvasion/neoforge/init/NeoForgeModEnumConstants",
+        "field": "BASHER_RAIDER_TYPE"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "ILLAGERINVASION_PROVOKER",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "fuzs/illagerinvasion/neoforge/init/NeoForgeModEnumConstants",
+        "field": "PROVOKER_RAIDER_TYPE"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "ILLAGERINVASION_NECROMANCER",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "fuzs/illagerinvasion/neoforge/init/NeoForgeModEnumConstants",
+        "field": "NECROMANCER_RAIDER_TYPE"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "ILLAGERINVASION_SORCERER",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "fuzs/illagerinvasion/neoforge/init/NeoForgeModEnumConstants",
+        "field": "SORCERER_RAIDER_TYPE"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "ILLAGERINVASION_ILLUSIONER",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "fuzs/illagerinvasion/neoforge/init/NeoForgeModEnumConstants",
+        "field": "ILLUSIONER_RAIDER_TYPE"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "ILLAGERINVASION_ARCHIVIST",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "fuzs/illagerinvasion/neoforge/init/NeoForgeModEnumConstants",
+        "field": "ARCHIVIST_RAIDER_TYPE"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "ILLAGERINVASION_MARAUDER",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "fuzs/illagerinvasion/neoforge/init/NeoForgeModEnumConstants",
+        "field": "MARAUDER_RAIDER_TYPE"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "ILLAGERINVASION_INQUISITOR",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "fuzs/illagerinvasion/neoforge/init/NeoForgeModEnumConstants",
+        "field": "INQUISITOR_RAIDER_TYPE"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "ILLAGERINVASION_ALCHEMIST",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "fuzs/illagerinvasion/neoforge/init/NeoForgeModEnumConstants",
+        "field": "ALCHEMIST_RAIDER_TYPE"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/entity/raid/Raid$RaiderType",
+      "name": "ILLAGERINVASION_INVOKER",
+      "constructor": "(Ljava/util/function/Supplier;[I)V",
+      "parameters": {
+        "class": "fuzs/illagerinvasion/neoforge/init/NeoForgeModEnumConstants",
+        "field": "INVOKER_RAIDER_TYPE"
+      }
+    }
+  ]
+}

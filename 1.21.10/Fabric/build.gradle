@@ -1,0 +1,15 @@
+apply from: "https://raw.githubusercontent.com/Fuzss/modresources/main/gradle/${libs.versions.minecraft.get()}/fabric.gradle"
+
+dependencies {
+    // Fabric Api
+    modApi libs.fabricapi.fabric
+
+    // Puzzles Lib
+    modApi libs.puzzleslib.fabric
+
+    // Fabric ASM
+    modApi(include(libs.fabricasm.fabric.get()))
+
+    // NeoForge Data Pack Extensions
+    modApi(include(libs.neoforgedatapackextensions.fabric.get()))
+}
