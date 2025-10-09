@@ -1,0 +1,4 @@
+// 1.21.10	2025-10-09T13:20:35.85674	Tags for minecraft:item mod id vanilla
+f567686c4abca196b656a69259ae387827bfecef data/minecraft/tags/item/enchantable/durability.json
+f567686c4abca196b656a69259ae387827bfecef data/minecraft/tags/item/enchantable/sharp_weapon.json
+394933b692921369e344a2d3c78e08de4fd58532 data/minecraft/tags/item/trim_materials.json

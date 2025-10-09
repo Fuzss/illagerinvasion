@@ -1,0 +1,8 @@
+{
+  "description": {
+    "translate": "instrument.illagerinvasion.reveal"
+  },
+  "range": 64.0,
+  "sound_event": "illagerinvasion:item.horn_of_sight.blow",
+  "use_duration": 7.0
+}

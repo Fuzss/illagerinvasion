@@ -1,0 +1,6 @@
+// 1.21.10	2025-10-09T13:20:35.854986	Tags for minecraft:worldgen/biome mod id vanilla
+45707864d688ef531d52bd0287366ea1e7736874 data/illagerinvasion/tags/worldgen/biome/has_structure/firecaller_hut.json
+eb607ad56f6cb9e9a2c03a883162cf77c9cb1994 data/illagerinvasion/tags/worldgen/biome/has_structure/illager_fort.json
+a75912bfa7d5bbd62d92cc1be80555b49e454bc6 data/illagerinvasion/tags/worldgen/biome/has_structure/illusioner_tower.json
+50f58b229b859171fce633286203e346632352c9 data/illagerinvasion/tags/worldgen/biome/has_structure/labyrinth.json
+5f176659fa27569cc678ddae4a306c2055a89a16 data/illagerinvasion/tags/worldgen/biome/has_structure/sorcerer_hut.json

@@ -1,0 +1,17 @@
+accessWidener   v2  named
+accessible  field   net/minecraft/world/entity/AreaEffectCloud  potionContents  Lnet/minecraft/world/item/alchemy/PotionContents;
+accessible  field   net/minecraft/world/entity/projectile/EvokerFangs   warmupDelayTicks    I
+accessible  field   net/minecraft/world/entity/projectile/EvokerFangs   clientSideAttackStarted Z
+extendable  method  net/minecraft/world/entity/projectile/EvokerFangs   dealDamageTo    (Lnet/minecraft/world/entity/LivingEntity;)V
+accessible  field   net/minecraft/world/entity/monster/Vex  limitedLifeTicks    I
+accessible  field   net/minecraft/world/entity/projectile/ThrownTrident ID_FOIL Lnet/minecraft/network/syncher/EntityDataAccessor;
+accessible  field   net/minecraft/world/entity/ai/goal/RangedAttackGoal attackTime  I
+accessible  class   net/minecraft/world/entity/raid/Raid$RaiderType
+accessible  field   net/minecraft/world/entity/ai/goal/RangedBowAttackGoal  attackRadiusSqr F
+accessible  field   net/minecraft/world/entity/ai/goal/RangedBowAttackGoal  strafingTime    I
+accessible  field   net/minecraft/world/entity/ai/goal/RangedBowAttackGoal  attackIntervalMin   I
+accessible  field   net/minecraft/world/entity/ai/sensing/VillagerHostilesSensor    ACCEPTABLE_DISTANCE_FROM_HOSTILES   Lcom/google/common/collect/ImmutableMap;
+mutable field   net/minecraft/world/entity/ai/sensing/VillagerHostilesSensor    ACCEPTABLE_DISTANCE_FROM_HOSTILES   Lcom/google/common/collect/ImmutableMap;
+extendable  method  net/minecraft/world/entity/projectile/AbstractHurtingProjectile assignDirectionalMovement   (Lnet/minecraft/world/phys/Vec3;D)V
+accessible  field   net/minecraft/client/renderer/entity/WitherSkullRenderer    model   Lnet/minecraft/client/model/SkullModel;
+extendable  method  net/minecraft/client/renderer/entity/WitherSkullRenderer    getTextureLocation  (Lnet/minecraft/client/renderer/entity/state/WitherSkullRenderState;)Lnet/minecraft/resources/ResourceLocation;
