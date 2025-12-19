@@ -1,0 +1,8 @@
+// 1.21.10	2025-10-09T13:20:35.858154	Mod Chest Loot Provider
+82014fc7977b696ec271a7cab2a0eba8bd394676 data/illagerinvasion/loot_table/chests/illager_fort_ground.json
+5bf25d3f7cb23776ac36dd43f12feefadb38c792 data/illagerinvasion/loot_table/chests/illager_fort_tower.json
+1bf346f7e929c396782c7d721e4dc721f80957e5 data/illagerinvasion/loot_table/chests/illusioner_tower_entrance.json
+af868c47513f02dec2c3402d08fd0d8432b85104 data/illagerinvasion/loot_table/chests/illusioner_tower_stairs.json
+d3112cb134038e0ecad1c6d010de17cb7ba3291e data/illagerinvasion/loot_table/chests/labyrinth.json
+c3e0978c1170a1d62865db723085ff415b8915bc data/illagerinvasion/loot_table/chests/labyrinth_map.json
+310cf87f6b1db2908483f9516a54783c66ed2390 data/illagerinvasion/loot_table/chests/sorcerer_hut.json

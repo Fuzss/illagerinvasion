@@ -1,0 +1,12 @@
+// 1.21.10	2025-10-09T13:20:35.856055	Entity Type Loot Tables
+d38e65e872842dcd99556ea878235aca257bec69 data/illagerinvasion/loot_table/entities/alchemist.json
+19b68b035335c9c375bb183b3ceada3d93950459 data/illagerinvasion/loot_table/entities/archivist.json
+d6627b8e8a189fd337baebec9aa1006f635d8347 data/illagerinvasion/loot_table/entities/basher.json
+926dc02c235fefd0c26a6f0bb02c501da9ad0edf data/illagerinvasion/loot_table/entities/firecaller.json
+400e6a4526cb11d222d506169b3f149c4eeafbd9 data/illagerinvasion/loot_table/entities/inquisitor.json
+8fd641cdc2ffed18c760f3ab4b0a6582a52a1c50 data/illagerinvasion/loot_table/entities/invoker.json
+b40fc50e645eb145ae478846bdf00bec23d94c6e data/illagerinvasion/loot_table/entities/marauder.json
+507e2394453640566f3832c8d32884c4779fb202 data/illagerinvasion/loot_table/entities/necromancer.json
+719b92cdf44c1af34d942656a394a047a5d7b32c data/illagerinvasion/loot_table/entities/provoker.json
+3bb10131a2b91602bb196c144f8008651c3ce30c data/illagerinvasion/loot_table/entities/sorcerer.json
+2afddd65d0db9bc13f509d57c312f7538337e94a data/illagerinvasion/loot_table/entities/surrendered.json
