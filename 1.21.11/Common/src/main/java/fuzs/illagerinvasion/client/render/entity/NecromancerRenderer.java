@@ -7,26 +7,25 @@ import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.client.render.entity.layers.IllagerArmorLayer;
 import fuzs.illagerinvasion.client.render.entity.state.NecromancerRenderState;
 import fuzs.illagerinvasion.world.entity.monster.Necromancer;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class NecromancerRenderer extends IllagerRenderer<Necromancer, NecromancerRenderState> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/necromancer.png");
-    private static final ResourceLocation ARMOR_TEXTURE_LOCATION = IllagerInvasion.id(
-            "textures/entity/necromancer_armor.png");
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/necromancer.png");
+    private static final Identifier ARMOR_TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/necromancer_armor.png");
 
     public NecromancerRenderer(EntityRendererProvider.Context context) {
         super(context, new CustomIllagerModel<>(context.bakeLayer(ModModelLayers.NECROMANCER)), 0.5F);
         this.addLayer(new IllagerArmorLayer<>(this,
                 new CustomIllagerModel<>(context.bakeLayer(ModModelLayers.NECROMANCER_ARMOR))) {
             @Override
-            protected ResourceLocation getTextureLocation() {
+            protected Identifier getTextureLocation() {
                 return ARMOR_TEXTURE_LOCATION;
             }
         });
@@ -113,7 +112,7 @@ public class NecromancerRenderer extends IllagerRenderer<Necromancer, Necromance
     }
 
     @Override
-    public ResourceLocation getTextureLocation(NecromancerRenderState renderState) {
+    public Identifier getTextureLocation(NecromancerRenderState renderState) {
         return TEXTURE_LOCATION;
     }
 }

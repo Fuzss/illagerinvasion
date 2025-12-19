@@ -8,10 +8,10 @@ import fuzs.illagerinvasion.world.entity.monster.Marauder;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class MarauderRenderer extends IllagerRenderer<Marauder, MarauderRenderState> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/marauder.png");
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/marauder.png");
 
     public MarauderRenderer(EntityRendererProvider.Context context) {
         super(context, new MarauderModel(context.bakeLayer(ModModelLayers.MARAUDER)), 0.5F);
@@ -30,7 +30,7 @@ public class MarauderRenderer extends IllagerRenderer<Marauder, MarauderRenderSt
     }
 
     @Override
-    public ResourceLocation getTextureLocation(MarauderRenderState renderState) {
+    public Identifier getTextureLocation(MarauderRenderState renderState) {
         return TEXTURE_LOCATION;
     }
 }

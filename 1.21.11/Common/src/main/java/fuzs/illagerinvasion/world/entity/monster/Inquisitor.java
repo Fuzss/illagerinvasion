@@ -27,32 +27,32 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.creaking.Creaking;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.WebBlock;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class Inquisitor extends AbstractIllager implements Stunnable {
     private static final EntityDataAccessor<Boolean> STUNNED = SynchedEntityData.defineId(Inquisitor.class,
@@ -99,7 +99,7 @@ public class Inquisitor extends AbstractIllager implements Stunnable {
     @Override
     public void aiStep() {
         if (this.horizontalCollision && this.level() instanceof ServerLevel serverLevel && serverLevel.getGameRules()
-                .getBoolean(GameRules.RULE_MOBGRIEFING)) {
+                .get(GameRules.MOB_GRIEFING)) {
             AABB box = this.getBoundingBox().inflate(1.0);
             for (BlockPos blockPos : BlockPos.betweenClosed(Mth.floor(box.minX),
                     Mth.floor(box.minY),

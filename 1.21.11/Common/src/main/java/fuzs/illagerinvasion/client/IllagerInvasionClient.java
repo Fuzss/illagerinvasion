@@ -8,15 +8,15 @@ import fuzs.illagerinvasion.init.ModEntityTypes;
 import fuzs.illagerinvasion.init.ModRegistry;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.*;
-import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.IllagerModel;
-import net.minecraft.client.model.SkeletonModel;
 import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
+import net.minecraft.client.model.monster.illager.IllagerModel;
+import net.minecraft.client.model.monster.skeleton.SkeletonModel;
+import net.minecraft.client.model.object.book.BookModel;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.particle.HeartParticle;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
@@ -67,7 +67,7 @@ public class IllagerInvasionClient implements ClientModConstructor {
         context.registerLayerDefinition(ModModelLayers.SURRENDERED,
                 () -> SkeletonModel.createBodyLayer().apply(surrenderedMeshTransformer));
         context.registerArmorDefinition(ModModelLayers.SURRENDERED_ARMOR,
-                HumanoidModel.createArmorMeshSet(LayerDefinitions.INNER_ARMOR_DEFORMATION,
+                () -> HumanoidModel.createArmorMeshSet(LayerDefinitions.INNER_ARMOR_DEFORMATION,
                                 LayerDefinitions.OUTER_ARMOR_DEFORMATION)
                         .map((MeshDefinition meshDefinition) -> LayerDefinition.create(meshDefinition, 64, 32)));
         context.registerLayerDefinition(ModModelLayers.PROVOKER, () -> {

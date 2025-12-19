@@ -5,22 +5,22 @@ import fuzs.illagerinvasion.IllagerInvasion;
 import fuzs.illagerinvasion.client.model.CustomIllagerModel;
 import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.world.entity.monster.Alchemist;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.state.IllagerRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class AlchemistRenderer extends IllagerRenderer<Alchemist, IllagerRenderState> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/alchemist.png");
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/alchemist.png");
 
     public AlchemistRenderer(final EntityRendererProvider.Context context) {
         super(context, new CustomIllagerModel<>(context.bakeLayer(ModModelLayers.ALCHEMIST)), 0.5F);
@@ -50,7 +50,7 @@ public class AlchemistRenderer extends IllagerRenderer<Alchemist, IllagerRenderS
     }
 
     @Override
-    public ResourceLocation getTextureLocation(IllagerRenderState renderState) {
+    public Identifier getTextureLocation(IllagerRenderState renderState) {
         return TEXTURE_LOCATION;
     }
 }

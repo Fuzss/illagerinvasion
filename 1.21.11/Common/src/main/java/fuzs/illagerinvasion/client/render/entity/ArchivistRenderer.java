@@ -7,24 +7,23 @@ import fuzs.illagerinvasion.client.model.CustomIllagerModel;
 import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.client.render.entity.state.ArchivistRenderState;
 import fuzs.illagerinvasion.world.entity.monster.Archivist;
-import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
-import net.minecraft.client.model.BookModel;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.model.object.book.BookModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.MaterialSet;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class ArchivistRenderer extends IllagerRenderer<Archivist, ArchivistRenderState> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/archivist.png");
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/archivist.png");
     private static final Material BOOK_LOCATION = new Material(TextureAtlas.LOCATION_BLOCKS,
-            ResourceLocationHelper.withDefaultNamespace("entity/enchanting_table_book"));
+            Identifier.withDefaultNamespace("entity/enchanting_table_book"));
 
     private final MaterialSet materials;
 
@@ -51,7 +50,7 @@ public class ArchivistRenderer extends IllagerRenderer<Archivist, ArchivistRende
                 nodeCollector.submitModel(this.book,
                         renderState.book,
                         poseStack,
-                        BOOK_LOCATION.renderType(RenderType::entitySolid),
+                        BOOK_LOCATION.renderType(RenderTypes::entitySolid),
                         renderState.lightCoords,
                         OverlayTexture.NO_OVERLAY,
                         -1,
@@ -81,7 +80,7 @@ public class ArchivistRenderer extends IllagerRenderer<Archivist, ArchivistRende
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ArchivistRenderState renderState) {
+    public Identifier getTextureLocation(ArchivistRenderState renderState) {
         return TEXTURE_LOCATION;
     }
 }

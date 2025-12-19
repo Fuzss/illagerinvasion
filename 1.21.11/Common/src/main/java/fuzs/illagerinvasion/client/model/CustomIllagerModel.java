@@ -1,13 +1,13 @@
 package fuzs.illagerinvasion.client.model;
 
 import net.minecraft.client.model.AnimationUtils;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.MeshTransformer;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 import net.minecraft.client.renderer.entity.state.IllagerRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
 
 public class CustomIllagerModel<T extends IllagerRenderState> extends IllagerModel<T> {
     public static final MeshTransformer SCALE_TRANSFORMER = MeshTransformer.scaling(0.9375F);
@@ -28,7 +28,7 @@ public class CustomIllagerModel<T extends IllagerRenderState> extends IllagerMod
         super.setupAnim(renderState);
         // rework arm swing for other arm when attacking with a melee weapon to take walking animation into account
         if (renderState.armPose == AbstractIllager.IllagerArmPose.ATTACKING) {
-            if (!renderState.getMainHandItem().isEmpty()) {
+            if (!renderState.getMainHandItemState().isEmpty()) {
                 if (renderState.mainArm == HumanoidArm.RIGHT) {
                     this.leftArm.xRot = Mth.cos(renderState.walkAnimationPos * 0.19F) * Math.min(0.5F,
                             2.0F * renderState.walkAnimationSpeed * 0.5F);

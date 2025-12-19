@@ -8,10 +8,10 @@ import fuzs.illagerinvasion.world.entity.monster.Inquisitor;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class InquisitorRenderer extends IllagerRenderer<Inquisitor, StunnableIllagerRenderState> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/inquisitor.png");
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/inquisitor.png");
 
     public InquisitorRenderer(final EntityRendererProvider.Context context) {
         super(context, new InquisitorModel(context.bakeLayer(ModModelLayers.INQUISITOR)), 0.5F);
@@ -30,7 +30,7 @@ public class InquisitorRenderer extends IllagerRenderer<Inquisitor, StunnableIll
     }
 
     @Override
-    public ResourceLocation getTextureLocation(StunnableIllagerRenderState renderState) {
+    public Identifier getTextureLocation(StunnableIllagerRenderState renderState) {
         return TEXTURE_LOCATION;
     }
 }

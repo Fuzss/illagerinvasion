@@ -1,19 +1,19 @@
 package fuzs.illagerinvasion.client.render.entity;
 
 import fuzs.illagerinvasion.IllagerInvasion;
-import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.client.model.CustomIllagerModel;
+import fuzs.illagerinvasion.client.model.geom.ModModelLayers;
 import fuzs.illagerinvasion.world.entity.monster.Sorcerer;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.state.IllagerRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class SorcererRenderer extends IllagerRenderer<Sorcerer, IllagerRenderState> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/sorcerer.png");
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/sorcerer.png");
 
     public SorcererRenderer(EntityRendererProvider.Context context) {
         super(context, new CustomIllagerModel<>(context.bakeLayer(ModModelLayers.SORCERER)), 0.5F);
@@ -45,7 +45,7 @@ public class SorcererRenderer extends IllagerRenderer<Sorcerer, IllagerRenderSta
     }
 
     @Override
-    public ResourceLocation getTextureLocation(IllagerRenderState renderState) {
+    public Identifier getTextureLocation(IllagerRenderState renderState) {
         return TEXTURE_LOCATION;
     }
 }

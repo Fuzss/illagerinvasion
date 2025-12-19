@@ -1,8 +1,8 @@
 package fuzs.illagerinvasion.client.model;
 
 import fuzs.illagerinvasion.client.render.entity.state.SurrenderedRenderState;
-import net.minecraft.client.model.SkeletonModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.monster.skeleton.SkeletonModel;
 
 public class SurrenderedModel extends SkeletonModel<SurrenderedRenderState> {
 

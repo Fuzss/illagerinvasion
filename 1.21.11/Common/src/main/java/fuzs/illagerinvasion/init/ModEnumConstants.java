@@ -2,8 +2,8 @@ package fuzs.illagerinvasion.init;
 
 import fuzs.illagerinvasion.IllagerInvasion;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.raid.Raid;
 
@@ -26,15 +26,15 @@ public class ModEnumConstants {
         // NO-OP
     }
 
-    static Raid.RaiderType getRaiderType(Holder<?> holder) {
-        ResourceLocation resourceLocation = IllagerInvasion.id(holder.unwrapKey()
-                .map(ResourceKey::location)
-                .map(ResourceLocation::getPath)
+    private static Raid.RaiderType getRaiderType(Holder<?> holder) {
+        Identifier identifier = IllagerInvasion.id(holder.unwrapKey()
+                .map(ResourceKey::identifier)
+                .map(Identifier::getPath)
                 .orElseThrow());
-        return getEnumConstant(resourceLocation, Raid.RaiderType::valueOf);
+        return getEnumConstant(identifier, Raid.RaiderType::valueOf);
     }
 
-    static <E extends Enum<E>> E getEnumConstant(ResourceLocation resourceLocation, Function<String, E> valueOfInvoker) {
-        return valueOfInvoker.apply(resourceLocation.toDebugFileName().toUpperCase(Locale.ROOT));
+    private static <E extends Enum<E>> E getEnumConstant(Identifier identifier, Function<String, E> valueOfInvoker) {
+        return valueOfInvoker.apply(identifier.toDebugFileName().toUpperCase(Locale.ROOT));
     }
 }

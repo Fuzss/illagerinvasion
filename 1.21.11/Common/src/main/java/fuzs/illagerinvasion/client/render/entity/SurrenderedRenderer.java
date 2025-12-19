@@ -9,13 +9,13 @@ import net.minecraft.client.renderer.entity.ArmorModelSet;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 
 
 public class SurrenderedRenderer extends HumanoidMobRenderer<Surrendered, SurrenderedRenderState, SurrenderedModel> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/surrendered.png");
-    private static final ResourceLocation CHARGING_TEXTURE_LOCATION = IllagerInvasion.id(
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/surrendered.png");
+    private static final Identifier CHARGING_TEXTURE_LOCATION = IllagerInvasion.id(
             "textures/entity/surrendered_charge.png");
 
     public SurrenderedRenderer(EntityRendererProvider.Context context) {
@@ -43,8 +43,7 @@ public class SurrenderedRenderer extends HumanoidMobRenderer<Surrendered, Surren
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SurrenderedRenderState renderState) {
+    public Identifier getTextureLocation(SurrenderedRenderState renderState) {
         return renderState.isCharging ? CHARGING_TEXTURE_LOCATION : TEXTURE_LOCATION;
     }
 }
-

@@ -12,7 +12,7 @@ import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 public class ModModelProvider extends AbstractModelProvider {
@@ -30,11 +30,11 @@ public class ModModelProvider extends AbstractModelProvider {
     public final void createImbuingTable(Block block, BlockModelGenerators blockModelGenerators) {
         TextureMapping textureMapping = TextureMapping.craftingTable(block, block)
                 .put(TextureSlot.DOWN, TextureMapping.getBlockTexture(block, "_bottom"));
-        ResourceLocation resourceLocation = ModelTemplates.CUBE.create(block,
+        Identifier identifier = ModelTemplates.CUBE.create(block,
                 textureMapping,
                 blockModelGenerators.modelOutput);
         blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block,
-                BlockModelGenerators.plainVariant(resourceLocation)));
+                BlockModelGenerators.plainVariant(identifier)));
     }
 
     public final void createSimpleFire(Block block, BlockModelGenerators blockModelGenerators) {

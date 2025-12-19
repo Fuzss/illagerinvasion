@@ -9,7 +9,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.InsideBlockEffectType;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
@@ -65,7 +64,7 @@ public class MagicFireBlock extends BaseFireBlock {
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         level.scheduleTick(pos, this, getFireTickDelay(level.random));
-        if (level.getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
+        if (level.canSpreadFireAround(pos)) {
             level.removeBlock(pos, false);
         }
     }
@@ -80,4 +79,3 @@ public class MagicFireBlock extends BaseFireBlock {
         return 300 + random.nextInt(100);
     }
 }
-

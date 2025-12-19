@@ -1,7 +1,7 @@
 package fuzs.illagerinvasion.client.render.entity.layers;
 
 import fuzs.illagerinvasion.client.render.entity.state.PowerableRenderState;
-import net.minecraft.client.model.IllagerModel;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
 import net.minecraft.client.renderer.entity.state.IllagerRenderState;

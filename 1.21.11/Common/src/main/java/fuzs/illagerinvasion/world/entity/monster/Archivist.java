@@ -15,17 +15,17 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.creaking.Creaking;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
+import net.minecraft.world.entity.monster.illager.SpellcasterIllager;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -52,8 +52,10 @@ public class Archivist extends SpellcasterIllager {
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
+        this.targetSelector.addGoal(2,
+                new NearestAttackableTargetGoal<>(this, Player.class, true).setUnseenMemoryTicks(300));
+        this.targetSelector.addGoal(3,
+                new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false).setUnseenMemoryTicks(300));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, false));
     }
 
@@ -126,9 +128,10 @@ public class Archivist extends SpellcasterIllager {
         }
 
         private List<LivingEntity> getTargets() {
-            return Archivist.this.level().getEntitiesOfClass(LivingEntity.class, Archivist.this.getBoundingBox().inflate(6), entity -> {
-                return !(entity instanceof Monster) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity);
-            });
+            return Archivist.this.level()
+                    .getEntitiesOfClass(LivingEntity.class, Archivist.this.getBoundingBox().inflate(6), entity -> {
+                        return !(entity instanceof Monster) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(entity);
+                    });
         }
 
         @Override
@@ -138,12 +141,22 @@ public class Archivist extends SpellcasterIllager {
             double x = Archivist.this.getX();
             double y = Archivist.this.getY() + 1;
             double z = Archivist.this.getZ();
-            ((ServerLevel) Archivist.this.level()).sendParticles(ParticleTypes.ENCHANT, x, y, z, 150, 3.0D, 3.0D, 3.0D, 0.1D);
+            ((ServerLevel) Archivist.this.level()).sendParticles(ParticleTypes.ENCHANT,
+                    x,
+                    y,
+                    z,
+                    150,
+                    3.0D,
+                    3.0D,
+                    3.0D,
+                    0.1D);
         }
 
         private void buff(LivingEntity entity) {
             this.knockback(entity);
-            entity.hurtServer((ServerLevel) Archivist.this.level(), Archivist.this.damageSources().indirectMagic(Archivist.this, Archivist.this), 4.0f);
+            entity.hurtServer((ServerLevel) Archivist.this.level(),
+                    Archivist.this.damageSources().indirectMagic(Archivist.this, Archivist.this),
+                    4.0f);
         }
 
         @Override
@@ -173,7 +186,9 @@ public class Archivist extends SpellcasterIllager {
     }
 
     public class EnchantAllyGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
-        private final TargetingConditions closeEnchantableMobPredicate = TargetingConditions.forNonCombat().range(16.0).selector((LivingEntity livingEntity, ServerLevel serverLevel) -> !(livingEntity instanceof Archivist));
+        private final TargetingConditions closeEnchantableMobPredicate = TargetingConditions.forNonCombat()
+                .range(16.0)
+                .selector((LivingEntity livingEntity, ServerLevel serverLevel) -> !(livingEntity instanceof Archivist));
         private int targetId;
 
         public boolean canEnchant() {
@@ -192,7 +207,10 @@ public class Archivist extends SpellcasterIllager {
             if (Archivist.this.isCastingSpell()) {
                 return false;
             }
-            List<AbstractIllager> list = ((ServerLevel) Archivist.this.level()).getNearbyEntities(AbstractIllager.class, this.closeEnchantableMobPredicate, Archivist.this, Archivist.this.getBoundingBox().inflate(16.0, 4.0, 16.0));
+            List<AbstractIllager> list = ((ServerLevel) Archivist.this.level()).getNearbyEntities(AbstractIllager.class,
+                    this.closeEnchantableMobPredicate,
+                    Archivist.this,
+                    Archivist.this.getBoundingBox().inflate(16.0, 4.0, 16.0));
             if (list.isEmpty()) {
                 return false;
             }
@@ -221,7 +239,15 @@ public class Archivist extends SpellcasterIllager {
             double y = hostileEntity.getY() + 1.5;
             double z = hostileEntity.getZ();
             if (Archivist.this.level() instanceof ServerLevel) {
-                ((ServerLevel) Archivist.this.level()).sendParticles(ParticleTypes.ENCHANT, x, y, z, 50, 1.0D, 2.0D, 1.0D, 0.1D);
+                ((ServerLevel) Archivist.this.level()).sendParticles(ParticleTypes.ENCHANT,
+                        x,
+                        y,
+                        z,
+                        50,
+                        1.0D,
+                        2.0D,
+                        1.0D,
+                        0.1D);
             }
             Archivist.this.enchantAlliesCooldown = 300;
         }
@@ -252,4 +278,3 @@ public class Archivist extends SpellcasterIllager {
         }
     }
 }
-

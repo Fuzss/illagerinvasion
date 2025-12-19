@@ -2,10 +2,10 @@ package fuzs.illagerinvasion.client.model;
 
 import fuzs.illagerinvasion.client.render.entity.NecromancerRenderer;
 import fuzs.illagerinvasion.client.render.entity.state.InvokerRenderState;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 
 public class InvokerModel extends IllagerModel<InvokerRenderState> {
     private final ModelPart body;
@@ -38,5 +38,3 @@ public class InvokerModel extends IllagerModel<InvokerRenderState> {
         this.body.xRot = this.rightLeg.xRot = this.leftLeg.xRot = 0.15F * renderState.floatAnimationSpeed;
     }
 }
-
-

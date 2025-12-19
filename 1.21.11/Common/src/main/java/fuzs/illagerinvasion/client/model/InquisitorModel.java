@@ -1,13 +1,13 @@
 package fuzs.illagerinvasion.client.model;
 
 import fuzs.illagerinvasion.client.render.entity.state.StunnableIllagerRenderState;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
 import net.minecraft.world.item.Items;
 
 public class InquisitorModel extends CustomIllagerModel<StunnableIllagerRenderState> {

@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -22,11 +22,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.creaking.Creaking;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.raid.Raider;
@@ -34,13 +34,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class Marauder extends AbstractIllager implements RangedAttackMob {
-    private static final ResourceLocation SPEED_MODIFIER_AGGRESSIVE_ID = ResourceLocation.withDefaultNamespace("aggressive");
+    private static final Identifier SPEED_MODIFIER_AGGRESSIVE_ID = Identifier.withDefaultNamespace("aggressive");
     private static final AttributeModifier SPEED_MODIFIER_AGGRESSIVE = new AttributeModifier(
-            SPEED_MODIFIER_AGGRESSIVE_ID, -0.06, AttributeModifier.Operation.ADD_VALUE
-    );
+            SPEED_MODIFIER_AGGRESSIVE_ID,
+            -0.06,
+            AttributeModifier.Operation.ADD_VALUE);
     private static final EntityDataAccessor<Integer> RANGED_ATTACK_TIME = SynchedEntityData.defineId(Marauder.class,
             EntityDataSerializers.INT);
     private static final int RANGED_ATTACK_INTERVAL = 40;

@@ -17,13 +17,13 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Ravager;
-import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.creaking.Creaking;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
+import net.minecraft.world.entity.monster.illager.SpellcasterIllager;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
@@ -117,8 +117,8 @@ public class Firecaller extends SpellcasterIllager {
             } else if (Firecaller.this.conjureSkullCooldown > 0) {
                 return false;
             } else {
-                return Firecaller.this.conjureSkullCooldown < 0 && !Firecaller.this.isCastingSpell() &&
-                        this.getTargets().isEmpty();
+                return Firecaller.this.conjureSkullCooldown < 0 && !Firecaller.this.isCastingSpell()
+                        && this.getTargets().isEmpty();
             }
         }
 
@@ -165,10 +165,10 @@ public class Firecaller extends SpellcasterIllager {
             double g = targetX - d;
             double h = targetY - e;
             double i = targetZ - f;
-            FlyingMagma Magma = new FlyingMagma(Firecaller.this.level(), Firecaller.this, g, h, i);
-            Magma.setOwner(Firecaller.this);
-            Magma.setPosRaw(d, e, f);
-            Firecaller.this.level().addFreshEntity(Magma);
+            FlyingMagma flyingMagma = new FlyingMagma(Firecaller.this.level(), Firecaller.this, g, h, i);
+            flyingMagma.setOwner(Firecaller.this);
+            flyingMagma.setPosRaw(d, e, f);
+            Firecaller.this.level().addFreshEntity(flyingMagma);
         }
 
         @Override
@@ -234,8 +234,8 @@ public class Firecaller extends SpellcasterIllager {
             return Firecaller.this.level()
                     .getEntitiesOfClass(LivingEntity.class,
                             Firecaller.this.getBoundingBox().inflate(6),
-                            entity -> !(entity instanceof AbstractIllager) && !(entity instanceof Surrendered) &&
-                                    !(entity instanceof Ravager));
+                            entity -> !(entity instanceof AbstractIllager) && !(entity instanceof Surrendered)
+                                    && !(entity instanceof Ravager));
         }
 
         @Override
@@ -292,4 +292,3 @@ public class Firecaller extends SpellcasterIllager {
         }
     }
 }
-

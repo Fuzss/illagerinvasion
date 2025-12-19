@@ -4,7 +4,7 @@ import fuzs.illagerinvasion.client.render.entity.state.MarauderRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
 
 public class MarauderModel extends CustomIllagerModel<MarauderRenderState> {
     private final ModelPart rightArm;
@@ -20,7 +20,7 @@ public class MarauderModel extends CustomIllagerModel<MarauderRenderState> {
     public void setupAnim(MarauderRenderState renderState) {
         super.setupAnim(renderState);
         if (renderState.armPose == AbstractIllager.IllagerArmPose.ATTACKING) {
-            if (!renderState.getMainHandItem().isEmpty()) {
+            if (!renderState.getMainHandItemState().isEmpty()) {
                 if (renderState.mainArm == HumanoidArm.RIGHT) {
                     this.rightArm.xRot -= Mth.PI / 4.0F * renderState.chargingProgress;
                 } else {

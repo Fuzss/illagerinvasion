@@ -1,0 +1,79 @@
+{
+    "mod": {
+        "id": "illagerinvasion",
+        "group": "fuzs.illagerinvasion",
+        "name": "Illager Invasion",
+        "version": "21.11.0",
+        "authors": [
+            "Dricky",
+            "Safro",
+            "Zeckemith",
+            "Fuzs"
+        ],
+        "description": "The illagers are back! Be ready to fight new foes. A port of Illager Expansion.",
+        "license": "MIT"
+    },
+    "dependencies": [
+        {
+            "name": "mm",
+            "type": "embedded",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "neoforgedatapackextensions",
+            "type": "embedded",
+            "platforms": [
+                "fabric",
+                "neoforge"
+            ]
+        },
+        {
+            "name": "fabricapi",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "forgeconfigapiport",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "puzzleslib",
+            "type": "required",
+            "platforms": [
+                "fabric",
+                "neoforge"
+            ]
+        }
+    ],
+    "links": [
+        {
+            "name": "github",
+            "slug": "illagerinvasion"
+        },
+        {
+            "name": "curseforge",
+            "slug": "illager-invasion",
+            "id": "891324"
+        },
+        {
+            "name": "modrinth",
+            "slug": "illager-invasion",
+            "id": "jSV9w0J5"
+        }
+    ],
+    "environments": {
+        "client": "required",
+        "server": "required"
+    },
+    "platforms": [
+        "fabric",
+        "neoforge"
+    ]
+}

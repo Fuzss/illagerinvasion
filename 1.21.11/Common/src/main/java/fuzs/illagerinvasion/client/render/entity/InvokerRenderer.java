@@ -8,16 +8,16 @@ import fuzs.illagerinvasion.client.render.entity.layers.IllagerArmorLayer;
 import fuzs.illagerinvasion.client.render.entity.layers.InvokerGoldLayer;
 import fuzs.illagerinvasion.client.render.entity.state.InvokerRenderState;
 import fuzs.illagerinvasion.world.entity.monster.Invoker;
-import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
+import net.minecraft.resources.Identifier;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.joml.Quaternionf;
 
 public class InvokerRenderer extends IllagerRenderer<Invoker, InvokerRenderState> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/invoker.png");
-    private static final ResourceLocation ARMOR_TEXTURE_LOCATION = ResourceLocationHelper.withDefaultNamespace(
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/invoker.png");
+    private static final Identifier ARMOR_TEXTURE_LOCATION = Identifier.withDefaultNamespace(
             "textures/entity/wither/wither_armor.png");
 
     public InvokerRenderer(EntityRendererProvider.Context context) {
@@ -26,7 +26,7 @@ public class InvokerRenderer extends IllagerRenderer<Invoker, InvokerRenderState
         this.addLayer(new IllagerArmorLayer<>(this,
                 new InvokerModel(context.bakeLayer(ModModelLayers.INVOKER_ARMOR))) {
             @Override
-            protected ResourceLocation getTextureLocation() {
+            protected Identifier getTextureLocation() {
                 return ARMOR_TEXTURE_LOCATION;
             }
         });
@@ -58,7 +58,7 @@ public class InvokerRenderer extends IllagerRenderer<Invoker, InvokerRenderState
     }
 
     @Override
-    public ResourceLocation getTextureLocation(InvokerRenderState renderState) {
+    public Identifier getTextureLocation(InvokerRenderState renderState) {
         return TEXTURE_LOCATION;
     }
 }

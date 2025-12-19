@@ -7,34 +7,34 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.List;
 
 public class ImbuingScreen extends AbstractContainerScreen<ImbuingMenu> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id(
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id(
             "textures/gui/container/imbuing_table.png");
-    private static final ResourceLocation EMPTY_SLOT_HELMET = ResourceLocation.withDefaultNamespace(
+    private static final Identifier EMPTY_SLOT_HELMET = Identifier.withDefaultNamespace(
             "container/slot/helmet");
-    private static final ResourceLocation EMPTY_SLOT_CHESTPLATE = ResourceLocation.withDefaultNamespace(
+    private static final Identifier EMPTY_SLOT_CHESTPLATE = Identifier.withDefaultNamespace(
             "container/slot/chestplate");
-    private static final ResourceLocation EMPTY_SLOT_LEGGINGS = ResourceLocation.withDefaultNamespace(
+    private static final Identifier EMPTY_SLOT_LEGGINGS = Identifier.withDefaultNamespace(
             "container/slot/leggings");
-    private static final ResourceLocation EMPTY_SLOT_BOOTS = ResourceLocation.withDefaultNamespace(
+    private static final Identifier EMPTY_SLOT_BOOTS = Identifier.withDefaultNamespace(
             "container/slot/boots");
-    private static final ResourceLocation EMPTY_SLOT_HOE = ResourceLocation.withDefaultNamespace("container/slot/hoe");
-    private static final ResourceLocation EMPTY_SLOT_AXE = ResourceLocation.withDefaultNamespace("container/slot/axe");
-    private static final ResourceLocation EMPTY_SLOT_SWORD = ResourceLocation.withDefaultNamespace(
+    private static final Identifier EMPTY_SLOT_HOE = Identifier.withDefaultNamespace("container/slot/hoe");
+    private static final Identifier EMPTY_SLOT_AXE = Identifier.withDefaultNamespace("container/slot/axe");
+    private static final Identifier EMPTY_SLOT_SWORD = Identifier.withDefaultNamespace(
             "container/slot/sword");
-    private static final ResourceLocation EMPTY_SLOT_SHOVEL = ResourceLocation.withDefaultNamespace(
+    private static final Identifier EMPTY_SLOT_SHOVEL = Identifier.withDefaultNamespace(
             "container/slot/shovel");
-    private static final ResourceLocation EMPTY_SLOT_PICKAXE = ResourceLocation.withDefaultNamespace(
+    private static final Identifier EMPTY_SLOT_PICKAXE = Identifier.withDefaultNamespace(
             "container/slot/pickaxe");
-    private static final ResourceLocation EMPTY_SLOT_BOOK = IllagerInvasion.id("container/slot/book");
-    private static final ResourceLocation EMPTY_SLOT_GEM = IllagerInvasion.id("container/slot/ruby");
-    private static final List<ResourceLocation> EMPTY_SLOT_BOOK_ICONS = List.of(EMPTY_SLOT_BOOK);
-    private static final List<ResourceLocation> EMPTY_SLOT_TOOL_ICONS = List.of(EMPTY_SLOT_HELMET,
+    private static final Identifier EMPTY_SLOT_BOOK = IllagerInvasion.id("container/slot/book");
+    private static final Identifier EMPTY_SLOT_GEM = IllagerInvasion.id("container/slot/ruby");
+    private static final List<Identifier> EMPTY_SLOT_BOOK_ICONS = List.of(EMPTY_SLOT_BOOK);
+    private static final List<Identifier> EMPTY_SLOT_TOOL_ICONS = List.of(EMPTY_SLOT_HELMET,
             EMPTY_SLOT_CHESTPLATE,
             EMPTY_SLOT_LEGGINGS,
             EMPTY_SLOT_BOOTS,
@@ -43,7 +43,7 @@ public class ImbuingScreen extends AbstractContainerScreen<ImbuingMenu> {
             EMPTY_SLOT_SWORD,
             EMPTY_SLOT_SHOVEL,
             EMPTY_SLOT_PICKAXE);
-    private static final List<ResourceLocation> EMPTY_SLOT_GEM_ICONS = List.of(EMPTY_SLOT_GEM);
+    private static final List<Identifier> EMPTY_SLOT_GEM_ICONS = List.of(EMPTY_SLOT_GEM);
 
     private final CyclingSlotBackground bookIcon = new CyclingSlotBackground(0);
     private final CyclingSlotBackground toolIcon = new CyclingSlotBackground(1);

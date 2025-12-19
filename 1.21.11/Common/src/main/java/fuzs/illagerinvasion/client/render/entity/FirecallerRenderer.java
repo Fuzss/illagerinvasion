@@ -7,10 +7,10 @@ import fuzs.illagerinvasion.world.entity.monster.Firecaller;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.state.IllagerRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class FirecallerRenderer extends IllagerRenderer<Firecaller, IllagerRenderState> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/firecaller.png");
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/firecaller.png");
 
     public FirecallerRenderer(EntityRendererProvider.Context context) {
         super(context, new FirecallerModel(context.bakeLayer(ModModelLayers.FIRECALLER)), 0.5F);
@@ -23,7 +23,7 @@ public class FirecallerRenderer extends IllagerRenderer<Firecaller, IllagerRende
     }
 
     @Override
-    public ResourceLocation getTextureLocation(IllagerRenderState renderState) {
+    public Identifier getTextureLocation(IllagerRenderState renderState) {
         return TEXTURE_LOCATION;
     }
 }

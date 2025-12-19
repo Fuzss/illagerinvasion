@@ -31,6 +31,7 @@ abstract class WoodlandMansionPieceMixin {
         if (entityType != null) {
             list.add(entityType.create(level.getLevel(), EntitySpawnReason.STRUCTURE));
         }
+
         return list;
     }
 }

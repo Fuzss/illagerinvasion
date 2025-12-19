@@ -1,0 +1,37 @@
+{
+  "values": {
+    "illagerinvasion:alchemist": {
+      "acceptable_villager_distance": 12.0
+    },
+    "illagerinvasion:archivist": {
+      "acceptable_villager_distance": 12.0
+    },
+    "illagerinvasion:basher": {
+      "acceptable_villager_distance": 8.0
+    },
+    "illagerinvasion:firecaller": {
+      "acceptable_villager_distance": 12.0
+    },
+    "illagerinvasion:inquisitor": {
+      "acceptable_villager_distance": 15.0
+    },
+    "illagerinvasion:invoker": {
+      "acceptable_villager_distance": 15.0
+    },
+    "illagerinvasion:marauder": {
+      "acceptable_villager_distance": 12.0
+    },
+    "illagerinvasion:necromancer": {
+      "acceptable_villager_distance": 15.0
+    },
+    "illagerinvasion:provoker": {
+      "acceptable_villager_distance": 12.0
+    },
+    "illagerinvasion:sorcerer": {
+      "acceptable_villager_distance": 12.0
+    },
+    "illagerinvasion:surrendered": {
+      "acceptable_villager_distance": 8.0
+    }
+  }
+}

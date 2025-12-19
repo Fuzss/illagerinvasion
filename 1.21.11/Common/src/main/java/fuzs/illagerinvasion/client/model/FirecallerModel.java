@@ -2,16 +2,16 @@ package fuzs.illagerinvasion.client.model;
 
 
 import net.minecraft.client.model.AnimationUtils;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 import net.minecraft.client.renderer.entity.state.IllagerRenderState;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
 
 public class FirecallerModel extends CustomIllagerModel<IllagerRenderState> {
     private final ModelPart body;
@@ -40,8 +40,8 @@ public class FirecallerModel extends CustomIllagerModel<IllagerRenderState> {
         this.body.xRot = 0.2F;
         if (!renderState.isRiding && renderState.armPose == AbstractIllager.IllagerArmPose.NEUTRAL) {
             this.leftArm.xRot =
-                    Mth.cos(renderState.walkAnimationPos * 0.6662F) * 0.5F * renderState.walkAnimationSpeed * 0.5F -
-                            1.2F;
+                    Mth.cos(renderState.walkAnimationPos * 0.6662F) * 0.5F * renderState.walkAnimationSpeed * 0.5F
+                            - 1.2F;
             AnimationUtils.bobModelPart(this.leftArm, renderState.ageInTicks, -1.0F);
             this.staff.visible = true;
         } else {
@@ -49,4 +49,3 @@ public class FirecallerModel extends CustomIllagerModel<IllagerRenderState> {
         }
     }
 }
-

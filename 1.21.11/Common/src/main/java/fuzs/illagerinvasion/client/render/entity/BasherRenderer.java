@@ -10,10 +10,10 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BasherRenderer extends IllagerRenderer<Basher, StunnableIllagerRenderState> {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/basher.png");
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/basher.png");
 
     public BasherRenderer(EntityRendererProvider.Context context) {
         super(context, new BasherModel(context.bakeLayer(ModModelLayers.BASHER)), 0.5F);
@@ -39,7 +39,7 @@ public class BasherRenderer extends IllagerRenderer<Basher, StunnableIllagerRend
     }
 
     @Override
-    public ResourceLocation getTextureLocation(StunnableIllagerRenderState renderState) {
+    public Identifier getTextureLocation(StunnableIllagerRenderState renderState) {
         return TEXTURE_LOCATION;
     }
 }

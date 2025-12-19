@@ -33,9 +33,14 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.*;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.animal.golem.IronGolem;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Ravager;
+import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
+import net.minecraft.world.entity.monster.illager.SpellcasterIllager;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
@@ -44,7 +49,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -347,11 +352,11 @@ public class Invoker extends SpellcasterIllager {
                 BlockPos blockPos = Invoker.this.blockPosition()
                         .offset(-2 + Invoker.this.random.nextInt(5), 1, -2 + Invoker.this.random.nextInt(5));
                 Surrendered surrendered = ModEntityTypes.SURRENDERED_ENTITY_TYPE.value()
-                        .create(Invoker.this.level(), EntitySpawnReason.MOB_SUMMONED);
+                        .create(serverLevel, EntitySpawnReason.MOB_SUMMONED);
                 if (surrendered != null) {
                     surrendered.snapTo(blockPos, 0.0f, 0.0f);
                     surrendered.finalizeSpawn(serverLevel,
-                            Invoker.this.level().getCurrentDifficultyAt(blockPos),
+                            serverLevel.getCurrentDifficultyAt(blockPos),
                             EntitySpawnReason.MOB_SUMMONED,
                             null);
                     surrendered.setOwner(Invoker.this);
@@ -772,4 +777,3 @@ public class Invoker extends SpellcasterIllager {
         }
     }
 }
-

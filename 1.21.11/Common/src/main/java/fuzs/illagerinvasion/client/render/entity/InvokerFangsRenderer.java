@@ -11,10 +11,10 @@ import net.minecraft.client.renderer.entity.EvokerFangsRenderer;
 import net.minecraft.client.renderer.entity.state.EvokerFangsRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class InvokerFangsRenderer extends EvokerFangsRenderer {
-    private static final ResourceLocation TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/invoker_fangs.png");
+    private static final Identifier TEXTURE_LOCATION = IllagerInvasion.id("textures/entity/invoker_fangs.png");
 
     private final InvokerFangsModel model;
 

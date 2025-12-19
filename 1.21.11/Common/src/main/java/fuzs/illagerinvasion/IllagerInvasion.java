@@ -10,11 +10,10 @@ import fuzs.puzzleslib.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.api.core.v1.context.EntityAttributesContext;
 import fuzs.puzzleslib.api.core.v1.context.SpawnPlacementsContext;
-import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import fuzs.puzzleslib.api.event.v1.entity.ServerEntityLevelEvents;
 import fuzs.puzzleslib.api.event.v1.server.LootTableLoadCallback;
 import fuzs.puzzleslib.api.event.v1.server.RegisterPotionBrewingMixesCallback;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
@@ -41,7 +40,6 @@ public class IllagerInvasion implements ModConstructor {
     @Override
     public void onCommonSetup() {
         ModEnumConstants.bootstrap();
-        VillagerGoalHandler.init();
     }
 
     private static void registerEventHandlers() {
@@ -159,7 +157,7 @@ public class IllagerInvasion implements ModConstructor {
                 PatrollingMonster::checkPatrollingMonsterSpawnRules);
     }
 
-    public static ResourceLocation id(String path) {
-        return ResourceLocationHelper.fromNamespaceAndPath(MOD_ID, path);
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
 }

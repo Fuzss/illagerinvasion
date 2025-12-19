@@ -74,4 +74,3 @@ public class InvokerFangsModel extends EntityModel<EvokerFangsRenderState> {
         this.spike4.y = this.upperJaw.y * Mth.cos(h / 4.0F) + 1.6F;
     }
 }
-
