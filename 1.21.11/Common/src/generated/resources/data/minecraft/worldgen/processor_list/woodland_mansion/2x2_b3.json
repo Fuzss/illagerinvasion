@@ -1,0 +1,41 @@
+{
+  "processors": [
+    {
+      "metadata": [
+        {
+          "data_marker": "illagerinvasion:archivist",
+          "position": [
+            1,
+            1,
+            2
+          ]
+        },
+        {
+          "data_marker": "illagerinvasion:basher",
+          "position": [
+            1,
+            1,
+            4
+          ]
+        },
+        {
+          "data_marker": "illagerinvasion:archivist",
+          "position": [
+            1,
+            1,
+            12
+          ]
+        },
+        {
+          "data_marker": "ChestEast",
+          "position": [
+            0,
+            1,
+            7
+          ]
+        }
+      ],
+      "processor_type": "illagerinvasion:data_marker"
+    }
+  ]
+}

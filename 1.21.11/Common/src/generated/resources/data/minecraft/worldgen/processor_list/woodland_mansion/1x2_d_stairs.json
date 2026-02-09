@@ -1,0 +1,17 @@
+{
+  "processors": [
+    {
+      "metadata": [
+        {
+          "data_marker": "illagerinvasion:invoker",
+          "position": [
+            3,
+            11,
+            3
+          ]
+        }
+      ],
+      "processor_type": "illagerinvasion:data_marker"
+    }
+  ]
+}

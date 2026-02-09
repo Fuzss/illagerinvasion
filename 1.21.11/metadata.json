@@ -54,13 +54,13 @@
     ],
     "links": [
         {
-            "name": "github",
-            "slug": "illagerinvasion"
-        },
-        {
             "name": "curseforge",
             "slug": "illager-invasion",
             "id": "891324"
+        },
+        {
+            "name": "github",
+            "slug": "illagerinvasion"
         },
         {
             "name": "modrinth",

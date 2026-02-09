@@ -1,0 +1,25 @@
+{
+  "processors": [
+    {
+      "metadata": [
+        {
+          "data_marker": "illagerinvasion:provoker",
+          "position": [
+            9,
+            1,
+            6
+          ]
+        },
+        {
+          "data_marker": "ChestEast",
+          "position": [
+            0,
+            1,
+            0
+          ]
+        }
+      ],
+      "processor_type": "illagerinvasion:data_marker"
+    }
+  ]
+}

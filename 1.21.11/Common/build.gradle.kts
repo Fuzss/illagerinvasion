@@ -9,6 +9,6 @@ dependencies {
 
 multiloader {
     mixins {
-        mixin("IllusionerMixin", "PatrolSpawnerMixin", "WoodlandMansionPieceMixin")
+        mixin("IllusionerMixin", "PatrolSpawnerMixin", "TemplateStructurePieceMixin", "WoodlandMansionPieceMixin")
     }
 }
